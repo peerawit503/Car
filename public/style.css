@@ -1,0 +1,5 @@
+#modalView { 
+  width: 95% !important;
+  max-height: 100vh !important;
+  overflow: visible !important ;
+}

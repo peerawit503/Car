@@ -1,0 +1,127 @@
+Receive Date / วันที่รับเคส	
+Contact Customer Date / วันที่ติดต่อลูกค้า	
+Account Closing Date / วันที่ปิดเล่ม	
+Transfer Doc. Received / วันรับชุดโอน	
+Transfer Doc. Submitted / วันยื่นชุดโอน	
+Book Received Date / วันที่ได้รับเล่ม	
+Submit Book Transfer Date / วันที่ส่งงานโอนทะเบียน	
+Car Check-Up / วันตรวจสภาพรถ	
+Book Transfer Date / โอนเล่มทะเบียน	
+Book Copy Received / รับสำเนาเล่ม	
+ส่งเอกสารเบิกเงินธนาคารใหม่	
+Submit Book Deposit Return / ทำเรื่องเบิกมัดจำคืน	
+Book Received/ รับเล่มคืน	
+Cash Received / เงินเข้าบัญชีคาร์ทรัส	
+Book Deposit Received/ เงินมัดจำคืนเข้าบัญชี	
+Submit Book to New Finance / ส่งเล่มให้ไฟแนนซ์ใหม่
+
+1. receive
+2. contact_customer
+3. account_closing
+4. transfer_doc_received
+5. transfer_doc_submitted
+6. book_received
+7. submit_book_transfer
+8. car_check_up
+9. book_transfer
+10. book_copy_received
+11. deposit_doc_to_new_bank
+12. submit_book_deposit_return
+13. book_received_back
+14. cash_received
+15. book_deposit_received
+16. submit_book_to_new_financ
+
+
+Receive Date / วันที่รับเคส	
+Contact Customer Date / วันที่ติดต่อลูกค้า	
+Account Closing Date / วันที่ปิดเล่ม	
+Transfer Doc. Received / วันรับชุดโอน	
+Transfer Doc. Submitted / วันยื่นชุดโอน	
+Book Received Date / วันที่ได้รับเล่ม	
+Submit Book Transfer Date / วันที่ส่งงานโอนทะเบียน	
+Car Check-Up / วันตรวจสภาพรถ	
+Book Transfer Date / โอนเล่มทะเบียน	
+Book Copy Received / รับสำเนาเล่ม	
+deposit_doc_to_new_bank / ส่งเอกสารเบิกเงินธนาคารใหม่	
+Submit Book Deposit Return / ทำเรื่องเบิกมัดจำคืน	
+Book Received/ รับเล่มคืน	
+Cash Received / เงินเข้าบัญชีคาร์ทรัส	
+Book Deposit Received/ เงินมัดจำคืนเข้าบัญชี	
+Submit Book to New Finance / ส่งเล่มให้ไฟแนนซ์ใหม่
+
+{
+  "message": {
+    "F2_picture": null,
+    "account_closing_date": null,
+    "account_closing_id": null,
+    "account_closing_note": null,
+    "approve_amount": null,
+    "book_copy_received_date": null,
+    "book_copy_received_id": null,
+    "book_copy_received_note": null,
+    "book_deposit_received_date": null,
+    "book_deposit_received_id": null,
+    "book_deposit_received_note": null,
+    "book_received_back_date": null,
+    "book_received_back_id": null,
+    "book_received_back_note": null,
+    "book_received_date": null,
+    "book_received_id": null,
+    "book_received_note": null,
+    "book_transfer_date": null,
+    "book_transfer_id": null,
+    "book_transfer_note": null,
+    "car": "3",
+    "car_check_up_date": null,
+    "car_check_up_id": null,
+    "car_check_up_note": null,
+    "car_license_book_picture": null,
+    "case_id": "C_hRxiUhFvB0",
+    "case_receiver": "3291521000001907178",
+    "case_source": " Kiatnakin",
+    "case_type": " refinance ",
+    "cash_received_date": null,
+    "cash_received_id": null,
+    "cash_received_note": null,
+    "contact_customer_date": null,
+    "contact_customer_id": null,
+    "contact_customer_note": null,
+    "contact_user_id": "None",
+    "contract_officer": "somsri",
+    "customer_id": "VTT8HnDp98PsR9slYPKTaote1xKDnQw22W7nHRrZJ8fzGbkBPgwp3YaDgfCM0WT6",
+    "date_create": "Fri, 17 Jan 2020 15:45:34 GMT",
+    "date_update": "Fri, 17 Jan 2020 15:45:34 GMT",
+    "deposit_doc_to_new_bank_date": null,
+    "deposit_doc_to_new_bank_id": null,
+    "deposit_doc_to_new_bank_note": null,
+    "document_id": "123456",
+    "finance_staff": "somchai",
+    "id": 1,
+    "job_id": "",
+    "new_bank": "kbank",
+    "note_status": "ยื่นชุดโอนไม่ได้ขาดตราประทับบริษัทตรงลายเซ็นมอบอำนาจ",
+    "old_bank": "ktb",
+    "old_finance": "Krungsri Auto",
+    "receive_date": "Fri, 17 Jan 2020 15:45:34 GMT",
+    "receive_id": "O3qSo47rZ1ka0Av3wp29ipaWziN5yoiAGryb8i2vOL0xC9ZrE6sxxR0C3KL20mVz",
+    "receive_note": "ยื่นชุดโอนไม่ได้ขาดตราประทับบริษัทตรงลายเซ็นมอบอำนาจ",
+    "status": "receive",  // complete ,cancle, 16status
+    "submit_book_deposit_return_date": null,
+    "submit_book_deposit_return_id": null,
+    "submit_book_deposit_return_note": null,
+    "submit_book_to_new_finance_date": null,
+    "submit_book_to_new_finance_id": null,
+    "submit_book_to_new_finance_note": null,
+    "submit_book_transfer_date": null,
+    "submit_book_transfer_id": null,
+    "submit_book_transfer_note": null,
+    "take_car_picture": null,
+    "team": "team_1",
+    "transfer_doc_received_date": null,
+    "transfer_doc_received_id": null,
+    "transfer_doc_received_note": null,
+    "transfer_doc_submitted_date": null,
+    "transfer_doc_submitted_id": null,
+    "transfer_doc_submitted_note": null,
+    "user_id": "O3qSo47rZ1ka0Av3wp29ipaWziN5yoiAGryb8i2vOL0xC9ZrE6sxxR0C3KL20mVz"

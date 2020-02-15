@@ -1,0 +1,72 @@
+{
+    "message": [
+    {
+    "firstname": "Pornteera",
+    "lastname": "Anunak",
+    "address": "บริษัท อินเทอร์เน็ตประเทศไทย จำกัด (มหาชน)1768 อาคารไทยซัมมิท ทาวเวอร์ ชั้น 10-12 และชั้น IT ",
+    "attribute": "attribute_1",
+    "date_create": "Thu, 09 Jan 2020 10:51:53 GMT",
+    "date_update": "Thu, 09 Jan 2020 16:04:23 GMT",
+    "id": 8,
+    "picture": "fgvajsoijgfkgokfzdjkn",
+    "position": "SE",
+    "role_1": {
+    "delete": "0",
+    "read": "1",
+    "update": "1",
+    "write": "0"
+    },
+    "role_2": {
+    "delete": "0",
+    "read": "0",
+    "update": "1",
+    "write": "1"
+    },
+    "role_3": {
+    "delete": "1",
+    "read": "1",
+    "update": "0",
+    "write": "0"
+    },
+    "team_id": 8,
+    "team_name": "team_9",
+    "type": "SE",
+    "user_id": "Uc0lRR89Eaq1HlC6tJMrvfa5m9Rh8kYgO7H6P1Kv71aJGLpyxhNedw7IpxuNRiiL",
+    "username": "irinmelona"
+    },
+    {
+    "firstname": "Manop",
+    "lastname": "Prasobsuk",
+    "address": "บริษัท อินเทอร์เน็ตประเทศไทย จำกัด (มหาชน)1768 อาคารไทยซัมมิท ทาวเวอร์ ชั้น 10-12 และชั้น IT ",
+    "attribute": "attribute_1",
+    "date_create": "Thu, 09 Jan 2020 11:01:03 GMT",
+    "date_update": "Thu, 09 Jan 2020 11:01:03 GMT",
+    "id": 9,
+    "picture": "fgvajsoijgfkgokfzdjkn",
+    "position": "SE",
+    "role_1": {
+    "delete": "0",
+    "read": "1",
+    "update": "1",
+    "write": "0"
+    },
+    "role_2": {
+    "delete": "0",
+    "read": "0",
+    "update": "1",
+    "write": "1"
+    },
+    "role_3": {
+    "delete": "0",
+    "read": "1",
+    "update": "0",
+    "write": "1"
+    },
+    "team_id": 3,
+    "team_name": "team_1",
+    "type": "SE",
+    "user_id": "dljnKXhcx2hYnmyKsnXZEulL3FtauaZSqOxUBHlsr3kg63mFuWInT2S3NT8LVy3A",
+    "username": "irinmelona2"
+    }
+    ]
+    }

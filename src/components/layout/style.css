@@ -1,0 +1,19 @@
+.theme-color-bg{
+    background-color: #3B4A8A !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.no-scrollbar {
+    -ms-overflow-style: none;
+}
+.nav-noclor{
+    background-color: #FFFFFF;
+}
+.sidenavbar{
+    top:auto !important ;
+    height: 100% !important;
+}
+

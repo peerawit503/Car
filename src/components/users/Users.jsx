@@ -1,0 +1,182 @@
+import React, { useEffect, useState } from 'react'
+import Search from './Search'
+import Navbar from './../layout/Navbar';
+import ModalDetail from './ModalDetail';
+import ModalEdit from './ModalEdit';
+import ModalDelete from './ModalDelete';
+import ModalCreate from './ModalCreate';
+import TableHead from './TableHead';
+import axios from "axios";
+import url from '../../Utility/url';
+import M from 'materialize-css/dist/js/materialize.min.js';
+
+/* modify */
+import '../table.css';
+import './style.css';
+import userData from './data.json';
+/* image */ 
+
+import userImage from '../../img/imageProfile.jpg';
+import viewicon from '../../img/eye.png';
+import editicon from '../../img/edit.png';
+import deleteicon from '../../img/bin.png';
+
+import plusicon from '../../img/plus-white.png';
+/* end modify */
+
+const Users = () => {
+
+  const [users, setUsers] = useState([])
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    M.Modal.init(document.querySelectorAll('.modal'), {})
+    getAllUsers()
+  }, [])
+
+  const readUser = (u) => setUser(u)
+
+  const deleteUser = (id) => {
+
+    axios.delete(`${url}/delete_user?user_id=${id}`)
+      .then((res) => {
+        console.log(res.data.message)
+
+        M.toast({ html: `${res.data.message}` })
+        getAllUsers()
+      })
+      .catch(err => { console.log(err) })
+  }
+
+  const addUser = (u) => {
+
+    const body = {
+      firstname: u.firstname,
+      lastname: u.lastname,
+      position: u.position,
+      team: u.team,
+      picture: u.file,
+      email: u.email,
+      tel: u.phone,
+      address: u.address,
+      username: u.username,
+      password: u.password,
+      role_1: u.role_1,
+      role_2: u.role_2,
+      role_3: u.role_3,
+      type: "SE",
+      attribute: "attribute_1"
+    }
+
+
+    axios.post(`${url}/register`, body)
+      .then(res => {
+
+        M.toast({ html: `${res.data.message}` })
+        getAllUsers()
+      })
+      .catch(err => console.error(err))
+
+  }
+
+  const editUser = (id, body) => {
+    console.log(`usersPage`)
+  }
+
+  const searchUser = (name) => {
+    axios.get(`${url}/search_user?value=${name}&parameter=firstname`)
+      .then(res => {
+        if (res.data.message.length === 0) {
+          M.toast({ html: 'No name this' })
+          setUsers([])
+        }
+        else { setUsers(res.data.message) }
+      })
+      .catch(err => console.error(err))
+  }
+
+  const getAllUsers = () => {
+    // setUsers(fackeAccount)
+    // axios.get(`${url}/user_limit?size=50&page=1`)
+    //   .then(res => {
+    //     setUsers(res.data.message)
+    //     // console.log(res.data.message)
+
+    //   })
+    //   .catch(err => { console.log(err) })
+    setUsers(userData.message);
+  }
+
+  return (
+    <>
+      <Navbar />
+      <main>
+        <div className="nContainer">
+           <div className="row">
+            <div className="col s12 m6">
+            <h3>Account : <span className="chip  orange">{ users.length }</span></h3>
+            </div>
+            <div className="new-button col m3">
+              <div className="new-button-iner">
+              <a className="btn modal-trigger tde" href="#modalCreate" ><img  src={plusicon} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Add User</a>
+              </div>
+            
+            </div>
+            <div className="input-field col s12 m3">
+              <div class="search">
+                <input placeholder="Search term"/>
+                <span class="fa fa-search"></span>
+              </div>
+            </div>
+           
+          </div>
+         <br/>
+          <div className="row">
+          <table className="centered responsive-table ">
+            <TableHead />
+            <tbody>
+              { users.map((item, index) => (
+                <tr key={ `${item.user_id ? item.user_id : index}` }>
+                  <td>{ item.id }</td>
+                  <td>
+                    <img  src={userImage} className="userImage" alt="userimge"/>
+                  </td>
+                  <td>{ item.firstname }</td>
+                  <td>{ item.lastname }</td>
+                  <td>{ item.team_name }</td>
+                  <td>{ item.position }</td>
+                  <td>{ item.authority }</td>
+                  <td>{ item.tel }</td>
+                  <td>{ item.email }</td>
+                  <td>
+                    <a href="#view" ><img  src={viewicon} className="png-icon" alt="print"/></a>
+                    <a href="#edit" ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
+                    <a href="#delete" ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
+                  </td>
+                </tr>
+              )) }
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <ul className="pagination">
+                <li className={ 'disabled' }><a href="#!"><i className="material-icons">chevron_left</i></a></li>
+                <li className="active waves-effect"><a href="#!">1</a></li>
+                <li className={'disabled'}><a href="#!"><i className="material-icons">chevron_right</i></a></li>
+              </ul>
+          </div> 
+          </div>          
+        <ModalDetail user={ user } />
+
+        <ModalEdit user={ user } editUser={ editUser } />
+
+        <ModalDelete user={ user } deleteUser={ deleteUser } />
+
+        <ModalCreate addUser={ addUser } />
+
+      </main>
+    </>
+  )
+}
+
+export default Users

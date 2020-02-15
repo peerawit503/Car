@@ -1,0 +1,134 @@
+.no-padding-left{
+    padding-left: 0;
+}
+.no-padding th,.no-padding td{
+    padding: 0 !important;
+}
+.pd5 th{
+    padding:5px !important;
+}
+.white-text{
+    text-decoration: none !important;
+}
+
+.errspan {
+    float: right;
+    margin-right: 6px;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
+    color: #000000;
+}
+
+.search { position: relative; }
+.search input { text-indent: 30px;}
+.search .fa-search { 
+  position: absolute;
+  top: 24px;
+  right: 7px;
+  font-size: 15px;
+}
+.input-field{
+    margin-top: 30px !important;
+}
+.new-button{
+    margin-top: 35px !important;
+    float: right;
+}
+.new-button-iner{
+    float: right;
+}
+.tde{
+    text-decoration: none !important;
+    background-color: #3B4A8A !important;
+    border-radius: 5px !important;
+}
+.tde:hover{
+background-color:#F07124 !important ;
+color: #FFFFFF;
+
+}
+.png-icon {
+    width: 20px;
+}
+td .png-icon{
+    margin-right: 10px;
+}
+.alert-icon{
+    width: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.table-caseID{
+    width: 10px;
+}
+.pagination{
+    margin: auto;
+    text-align: center;
+}
+.table-head{
+    background-color: #3B4A8A2b ;
+}
+
+.header-title{
+    padding-top: 2rem;
+    /* padding-left: 2rem; */
+    color: #3B4A8A;
+    width: 90%;
+    margin: auto;
+     margin-bottom: 2rem;
+}
+   
+.head-section{
+    width: 90%;
+    margin: auto;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 2rem;
+}
+    
+
+.cotent-field{
+    width: 90%;
+    margin: auto;
+}
+
+.content{
+    margin-bottom: 1rem;
+    color: #000000;
+}
+.content label{
+    color: #000000 !important;
+}
+.no-col-padding{
+    padding-left: 0px !important;
+}
+.content input, .content select{
+    border: 1px solid #0000006b !important;
+    background-color: #FFFFFF !important;
+    height:2rem !important;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+.hidden{
+    visibility: hidden;
+
+}
+.crop{
+    padding: 0 !important;
+    width: 100%;
+}
+/* .Li:hover{
+    background-color: #F07124 !important;
+} */

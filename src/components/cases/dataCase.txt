@@ -1,0 +1,144 @@
+ valueTrack step3
+ onChange={handleChangeTracking}
+        "tracking" : "account_closing",
+        "note_status" : "ติดต่อลูกค้า",
+        "date" : "2020-01-30",
+        "user_id" : "sdfvdho",
+        "yes_no" : "yes"
+
+        "F2_picture" : "soiavjdfovjs;fkvj;sf",
+        "take_car_picture" : "spgklpsglrgpl",
+        "approve_amount" : "471,941",
+
+        "job_id" : "job1",
+        "old_finance_closing_fee" : "265,982",
+        "old_finance_transfer_fee" : "0",
+        "book_closing_fee" : "6,300",
+        "vat7_fee" : "441",
+        "transfer_fee" : "2,500",
+        "duty_fee" : "2,832",
+        "discount_fee" : "0",
+        "car_shield_fee" : "0",
+        "car_insurance_fee" : "0",
+        "transfer_service_fee" : "0",
+        "contract_fee" : "0",
+        "outside_transfer_fee" : "0",
+        "tax_renewal_fee" : "0",
+        "act_renewal_fee" : "0",
+
+        (ต้องกรอกขู้มูล)
+        (number only)
+
+
+F2_picture: null
+account_closing_date: "Mon, 14 Jan 2019 00:00:00 GMT"
+account_closing_id: null
+account_closing_note: null
+account_closing_yn: "yes"
+act_renewal_fee: null
+approve_amount: 0
+book_closing_fee: null
+book_copy_received_date: "Mon, 04 Feb 2019 00:00:00 GMT"
+book_copy_received_id: null
+book_copy_received_note: null
+book_copy_received_yn: "yes"
+book_deposit_received_date: null
+book_deposit_received_id: null
+book_deposit_received_note: null
+book_deposit_received_yn: null
+book_received_back_date: "Wed, 06 Feb 2019 00:00:00 GMT"
+book_received_back_id: null
+book_received_back_note: null
+book_received_back_yn: "yes"
+book_received_date: "Mon, 28 Jan 2019 00:00:00 GMT"
+book_received_id: null
+book_received_note: null
+book_received_yn: "yes"
+book_transfer_date: "Mon, 04 Feb 2019 00:00:00 GMT"
+book_transfer_id: null
+book_transfer_note: null
+book_transfer_yn: "yes"
+car_brand: null
+car_carname: null
+car_check_up_date: "Mon, 04 Feb 2019 00:00:00 GMT"
+car_check_up_id: null
+car_check_up_note: null
+car_check_up_yn: "yes"
+car_date_create: "Mon, 03 Feb 2020 17:06:33 GMT"
+car_date_update: "Mon, 03 Feb 2020 17:06:33 GMT"
+car_detail: "สระแก้ว"
+car_id: "CAR_m9sBAkhAui"
+car_insurance_fee: null
+car_license: "กค 50"
+car_license_book_picture: null
+car_model: null
+car_shield_fee: null
+case_id: "CASE_VnFX2OoZKS"
+case_receiver: null
+case_source: null
+case_type: null
+cash_received_date: "Wed, 06 Feb 2019 00:00:00 GMT"
+cash_received_id: null
+cash_received_note: null
+cash_received_yn: "yes"
+contact_customer_date: "Thu, 03 Jan 2019 00:00:00 GMT"
+contact_customer_id: null
+contact_customer_note: null
+contact_customer_yn: "yes"
+contact_user_id: null
+contract_fee: null
+contract_officer: ""
+customer_id: "CTM_GLTfSPvkVM"
+date_create: "Mon, 03 Feb 2020 17:06:33 GMT"
+date_update: "Mon, 03 Feb 2020 17:06:33 GMT"
+deposit_doc_to_new_bank_date: "Mon, 04 Feb 2019 00:00:00 GMT"
+deposit_doc_to_new_bank_id: null
+deposit_doc_to_new_bank_note: null
+deposit_doc_to_new_bank_yn: "yes"
+discount_fee: null
+document_id: "2755581.0"
+duty_fee: null
+finance_staff: "Nun"
+id: 2130
+job_id: "KK049/19"
+name: "ภัสพร ด่านจับกุม"
+new_bank: null
+note_status: "ส่งเอกสารมาแล้วแต่ส่งไม่ครบต้องส่งใหม่"
+old_bank: "โตโยต้า"
+old_finance: null
+old_finance_closing_fee: null
+old_finance_transfer_fee: null
+outside_transfer_fee: null
+process: "complete"
+province: "สระแก้ว"
+receive_date: "Thu, 03 Jan 2019 00:00:00 GMT"
+receive_id: null
+receive_note: null
+status: "submit_book_to_new_finance"
+submit_book_deposit_return_date: null
+submit_book_deposit_return_id: null
+submit_book_deposit_return_note: null
+submit_book_deposit_return_yn: null
+submit_book_to_new_finance_date: "Thu, 07 Feb 2019 00:00:00 GMT"
+submit_book_to_new_finance_id: null
+submit_book_to_new_finance_note: null
+submit_book_to_new_finance_yn: "yes"
+submit_book_transfer_date: "Tue, 29 Jan 2019 00:00:00 GMT"
+submit_book_transfer_id: null
+submit_book_transfer_note: null
+submit_book_transfer_yn: "yes"
+take_car_picture: null
+tax_renewal_fee: null
+team: "ทีมใหญ่KK"
+transfer_doc_received_date: "Thu, 03 Jan 2019 00:00:00 GMT"
+transfer_doc_received_id: null
+transfer_doc_received_note: null
+transfer_doc_received_yn: "yes"
+transfer_doc_submitted_date: "Tue, 15 Jan 2019 00:00:00 GMT"
+transfer_doc_submitted_id: null
+transfer_doc_submitted_note: null
+transfer_doc_submitted_yn: "yes"
+transfer_fee: null
+transfer_service_fee: null
+user_id: null
+vat7_fee: null

@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/ctayproject/cartrust_fe/static/css/main.481e2617.chunk.css",
+    "main.js": "/ctayproject/cartrust_fe/static/js/main.87bd5086.chunk.js",
+    "main.js.map": "/ctayproject/cartrust_fe/static/js/main.87bd5086.chunk.js.map",
+    "runtime-main.js": "/ctayproject/cartrust_fe/static/js/runtime-main.4570235d.js",
+    "runtime-main.js.map": "/ctayproject/cartrust_fe/static/js/runtime-main.4570235d.js.map",
+    "static/css/2.9590bdea.chunk.css": "/ctayproject/cartrust_fe/static/css/2.9590bdea.chunk.css",
+    "static/js/2.42b3f262.chunk.js": "/ctayproject/cartrust_fe/static/js/2.42b3f262.chunk.js",
+    "static/js/2.42b3f262.chunk.js.map": "/ctayproject/cartrust_fe/static/js/2.42b3f262.chunk.js.map",
+    "index.html": "/ctayproject/cartrust_fe/index.html",
+    "precache-manifest.aa7ab7e3e20bd749cc380b9ce0155759.js": "/ctayproject/cartrust_fe/precache-manifest.aa7ab7e3e20bd749cc380b9ce0155759.js",
+    "service-worker.js": "/ctayproject/cartrust_fe/service-worker.js",
+    "static/css/2.9590bdea.chunk.css.map": "/ctayproject/cartrust_fe/static/css/2.9590bdea.chunk.css.map",
+    "static/css/main.481e2617.chunk.css.map": "/ctayproject/cartrust_fe/static/css/main.481e2617.chunk.css.map",
+    "static/js/2.42b3f262.chunk.js.LICENSE": "/ctayproject/cartrust_fe/static/js/2.42b3f262.chunk.js.LICENSE",
+    "static/media/Bootstrap.png": "/ctayproject/cartrust_fe/static/media/Bootstrap.dad0fc66.png",
+    "static/media/cartrustLogo.svg": "/ctayproject/cartrust_fe/static/media/cartrustLogo.c4b76b3a.svg",
+    "static/media/imageProfile.jpg": "/ctayproject/cartrust_fe/static/media/imageProfile.b188c680.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4570235d.js",
+    "static/css/2.9590bdea.chunk.css",
+    "static/js/2.42b3f262.chunk.js",
+    "static/css/main.481e2617.chunk.css",
+    "static/js/main.87bd5086.chunk.js"
+  ]
+}

@@ -1,0 +1,91 @@
+.modal-content-override{
+    height: calc(100% - 100px) !important;
+}
+
+.element {
+    -moz-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+    -webkit-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+
+  }
+
+
+  .highlight {
+    opacity: 0.5;
+  }
+
+  @-moz-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+
+@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+/* IE */
+@-ms-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+/* Opera and prob css3 final iteration */
+@keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+} 
+.blink-image {
+    -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+    -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+    -ms-animation: blink normal 2s infinite ease-in-out; /* IE */
+    animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}
+
+.summaryIcon{
+    width: 50px;
+}
+.summaryIcon-div{
+    width: 50px;
+    border-radius: 50%;
+    
+}
+.green{
+    background-color: green;
+}
+.gray{
+    background-color: gray;
+}
+.red{
+    background-color: red;
+}
+.yellow{
+    background-color: yellow;
+}
