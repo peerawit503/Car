@@ -88,7 +88,7 @@ const Cases = () => {
 
   }
   const setKpiForUse = (kpiData) => {
-    var result = [];
+    
     var result = new Object();
     var red;
     var orange;
@@ -101,7 +101,7 @@ const Cases = () => {
       result[orange] = x.orange;
 
     }
-
+   
     setKpi(result);
 
   }
@@ -155,7 +155,7 @@ const Cases = () => {
 
   function previousDate(state){
     var prevDate = '';
-    if(state === 'receive'){ prevDate = 'date_update';}
+    if(state === 'receive'){ prevDate = 'create_date';}
     else if(state === 'contact_customer'){prevDate = 'receive_date'}
     else if(state === 'account_closing'){prevDate = 'contact_customer_date'}
     else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_received_date'}
@@ -241,7 +241,7 @@ const Cases = () => {
     var noteDateString = caseInRow.status + "_note";
     var alertRed = caseInRow.status + "_red";
     var alertOrange = caseInRow.status + "_orange";
-    // console.log(datetomow);
+    console.log(datetomow);
 
     // console.log(caseInRow[statusString])
     // console.log(caseInRow['receive_date']);
@@ -306,7 +306,7 @@ const Cases = () => {
                     <td>{displayStarRating(c)}</td>
                     <td className="tale-caseId" >{c.id}</td>
                     <td >{c.name}</td>
-                    <td >{c.date_update.split(" ")[0] + ' ' + c.date_update.split(" ")[1] + ' ' + c.date_update.split(" ")[2] + ' ' + c.date_update.split(" ")[3]} <br /> {c.date_update.split(" ")[4]} </td>
+                    <td >{c.date_update.split(" ")[0] + ' ' + c.date_update.split(" ")[1] + ' ' + c.date_update.split(" ")[2] + ' ' + c.date_update.split(" ")[3]} </td>
                     <td>{c.status}</td>
                     <td >{c.case_source}</td>
                     <td>{c.job_id}</td>

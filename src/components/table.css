@@ -93,6 +93,23 @@ td .png-icon{
     margin: auto;
 }
 
+.content-radonly{
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+.content-radonly input, .content-radonly select{
+    border: 0 !important;
+    background-color:transparent !important;
+    height:2rem !important;
+}
+
+.content-radonly label{
+    color: #3B4A8A !important;
+    font-size: 20px !important;
+    
+}
+
 .content{
     margin-bottom: 1rem;
     color: #000000;

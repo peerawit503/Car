@@ -39,8 +39,6 @@ const ModalCreate = ({ addUser }) => {
   }, [])
 
 
-
-
   useEffect(() => {
     setUser({ ...user, role_1: Object.values(rol1), role_2: Object.values(rol2), role_3: Object.values(rol3) })
     // eslint-disable-next-line
@@ -65,6 +63,7 @@ const ModalCreate = ({ addUser }) => {
   const saveUser = () => {
     // setUser({ ...user, role_1: Object.values(rol1), role_2: Object.values(rol2), role_3: Object.values(rol3) })
     addUser(user)
+    console.log(user);
     setUser({
       firstname: "", lastname: "", email: "", phone: "", team: "", position: "",
       address: "", file: '', username: "", password: "", password2: ""
@@ -155,7 +154,7 @@ const ModalCreate = ({ addUser }) => {
                 <input
                   type="tel"
                   name="phone"
-                  value={user.phone}
+                  value={user.tel}
                   onChange={handleChange}
                 />
               </div>
@@ -169,6 +168,36 @@ const ModalCreate = ({ addUser }) => {
                   type="text"
                   name="address"
                   value={user.address}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label htmlFor="Address">Position</label>
+                <input
+                  type="text"
+                  name="position"
+                  value={user.position}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label htmlFor="Address">Type</label>
+                <input
+                  type="text"
+                  name="type"
+                  value={user.type}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label htmlFor="Address">Attr</label>
+                <input
+                  type="text"
+                  name="attribute"
+                  value={user.attribute}
                   onChange={handleChange}
                 />
               </div>

@@ -28,13 +28,25 @@ const Users = () => {
 
   const [users, setUsers] = useState([])
   const [user, setUser] = useState({})
+  const [edituser, setEdituserUser] = useState({})
 
   useEffect(() => {
     M.Modal.init(document.querySelectorAll('.modal'), {})
     getAllUsers()
   }, [])
 
-  const readUser = (u) => setUser(u)
+  const readUser = (u) =>{ 
+    console.log(u)
+    setUser(u)
+  }
+
+  const readUser2 = (u) =>{ 
+    console.log(u)
+    setEdituserUser(u)
+  }
+  
+  
+
 
   const deleteUser = (id) => {
 
@@ -64,8 +76,8 @@ const Users = () => {
       role_1: u.role_1,
       role_2: u.role_2,
       role_3: u.role_3,
-      type: "SE",
-      attribute: "attribute_1"
+      type: u.type,
+      attribute: u.attribute
     }
 
 
@@ -80,7 +92,14 @@ const Users = () => {
   }
 
   const editUser = (id, body) => {
-    console.log(`usersPage`)
+    console.log(id);
+    console.log(body);
+     axios.put(`${url}/edit_user?user_id=${id}`, body)
+      .then(res => {
+        console.log(res.data.message);
+        getAllUsers()
+      })
+      .catch(err => console.error(err))
   }
 
   const searchUser = (name) => {
@@ -96,15 +115,15 @@ const Users = () => {
   }
 
   const getAllUsers = () => {
-    // setUsers(fackeAccount)
-    // axios.get(`${url}/user_limit?size=50&page=1`)
-    //   .then(res => {
-    //     setUsers(res.data.message)
-    //     // console.log(res.data.message)
+    // setUsers(fackeAccount) user_limit?size=50&page=1
+    axios.get(`${url}/user_all`)
+      .then(res => {
+        setUsers(res.data.message)
+        // console.log(res.data.message)
 
-    //   })
-    //   .catch(err => { console.log(err) })
-    setUsers(userData.message);
+      })
+      .catch(err => { console.log(err) })
+    // setUsers(userData.message);
   }
 
   return (
@@ -139,7 +158,9 @@ const Users = () => {
                 <tr key={ `${item.user_id ? item.user_id : index}` }>
                   <td>{ item.id }</td>
                   <td>
-                    <img  src={userImage} className="userImage" alt="userimge"/>
+                    { item.picture
+                    ? <img src={ item.picture } alt="img.profile" className="userImage"   />
+                    : <img src={ userImage } alt="img.profile" className="userImage"  /> }
                   </td>
                   <td>{ item.firstname }</td>
                   <td>{ item.lastname }</td>
@@ -149,9 +170,9 @@ const Users = () => {
                   <td>{ item.tel }</td>
                   <td>{ item.email }</td>
                   <td>
-                    <a href="#view" ><img  src={viewicon} className="png-icon" alt="print"/></a>
-                    <a href="#edit" ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
-                    <a href="#delete" ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
+                    <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(item) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
+                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(item) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
+                    <a href="#modal3" className="modal-trigger" onClick={ () => readUser(item) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
                   </td>
                 </tr>
               )) }
@@ -168,7 +189,7 @@ const Users = () => {
           </div>          
         <ModalDetail user={ user } />
 
-        <ModalEdit user={ user } editUser={ editUser } />
+        <ModalEdit edituser={ edituser } />
 
         <ModalDelete user={ user } deleteUser={ deleteUser } />
 

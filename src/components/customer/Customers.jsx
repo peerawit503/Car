@@ -59,9 +59,11 @@ const Customers = () => {
   }
 
   const addCustomer = (c) => {
+    console.log(c);
     axios.post(`${url}/add_customer`, c)
       .then(res => {
         M.toast({ html: `${res.data.message}` })
+        console.log(res.data.message);
         getAllCustomers()
       })
       .catch(err => { console.log(err) })
@@ -70,17 +72,24 @@ const Customers = () => {
   const readCustermer = (c) => setCustomer(c)
 
   const deleteCustomer = (id) => {
+    console.log('sdasdasdasd')
     axios.delete(`${url}/delete_customer?customer_id=${id}`)
       .then(res => {
         M.toast({ html: `${res.data.message}` })
+        console.log(res.data.message)
         getAllCustomers()
       })
   }
 
   const editCustomer = (id, newCustomer) => {
-
-    axios.put(`${url}/edit_customer?customer_id=${id}`, newCustomer)
-      .then(res => { getAllCustomers() })
+   
+    var data = JSON.stringify(newCustomer) ;
+    console.log(data);
+    axios.put(`${url}/edit_customer?customer_id=${id}`, newCustomer )
+      .then(res => { 
+        console.log(res.data.message)
+      
+       })
       .catch(err => { console.log(err) })
 
   }
@@ -127,9 +136,9 @@ const Customers = () => {
                   
                   
                   <td>
-                    <a href="#view" ><img  src={viewicon} className="png-icon" alt="print"/></a>
-                    <a href="#edit" ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
-                    <a href="#delete" ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
+                    <a href="#modalRead" className="modal-trigger" onClick={ () => readCustermer(cust) } ><img  src={viewicon} className="png-icon" alt="print"/></a>
+                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readCustermer(cust) }  ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
+                    <a href="#modalDelete" className="modal-trigger" onClick={ () => readCustermer(cust) }  ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
                   </td>
                 </tr>
               )) }

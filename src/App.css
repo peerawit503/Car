@@ -149,9 +149,13 @@ text-decoration: none !important;
       margin: 10px;
 }
 
-#modalAddCase, #modalAddCaseCustomer , #modalCreate, #modalSummary { 
+#modalAddCase, #modalAddCaseCustomer , #modalCreate, #modalSummary  { 
   width: 95% !important;
 } 
+
+#modalDetail , #modalRead{
+      width: 70% !important;
+}
 
 
 

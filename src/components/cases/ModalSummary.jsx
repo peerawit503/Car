@@ -3,6 +3,7 @@ import { financeInstitution, caseSourceAll, caseTypeAll, caseStatus, provinceAll
 import uuid from "uuid"
 import { Link } from 'react-router-dom';
 import confirm from '../../img/confirm.png';
+import url from '../../Utility/url';
 /* img */
 import cartrustLogo from '../../img/cartrustLogo.svg'
 import { isNull } from 'pdfmake/build/pdfmake';
@@ -145,6 +146,8 @@ const ModalSummary = ({ singleCase , kpi}) => {
               </div>
               <div className="col m2 ">
               <div className="new-button-iner">
+
+              <a className='btn green  waves-effect waves-light right' href={`${url}/case_excel`} target='blank' download> download excel (not yet)</a>
               <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
               </div>
             
@@ -538,7 +541,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
         </div>
 
         <div className="modal-footer">
-          <button className="waves-effect btn blue lighten left ">Save</button>
+          {/* <button className="waves-effect btn blue lighten left ">Save</button> */}
           <button className="modal-close waves-effect btn white black-text right">close</button>
         </div>
       </div>

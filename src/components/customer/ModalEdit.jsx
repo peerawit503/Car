@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react'
-
+import cartrustLogo from '../../img/cartrustLogo.svg'
 const ModalEdit = ({ customer, editCustomer }) => {
 
   const [customer2, setCustomer2] = useState({
-    firstname: '',
-    lastname: '',
-    tel: '',
-    line: '',
-    email: '',
-    address: ''
+    firstname: "",
+    lastname: "",
+    tel: "",
+    email: "",
+    line: "",
+    license_id: "",
+    birthday: "",
+    home_no: "",
+    moo: "",
+    soy: "",
+    road: "",
+    district: "",
+    district2: "",
+    province: "",
+    post_code: ""
   })
 
   useEffect(() => {
@@ -20,7 +29,16 @@ const ModalEdit = ({ customer, editCustomer }) => {
       tel: customer.tel ? customer.tel : "",
       line: customer.line ? customer.line : "",
       email: customer.email ? customer.email : "",
-      address: customer.address ? customer.address : ""
+      license_id: customer.license_id ? customer.license_id : "",
+      birthday: customer.birthday ? customer.birthday : "",
+      home_no: customer.home_no ? customer.home_no : "",
+      moo: customer.moo ? customer.moo : "",
+      soy: customer.soy ? customer.soy : "",
+      road: customer.road ? customer.road : "",
+      district: customer.district ? customer.district : "",
+      district2: customer.district2 ? customer.district2 : "",
+      province: customer.province ? customer.province : "",
+      post_code: customer.post_code ? customer.post_code : ""
     })
   }, [customer])
 
@@ -34,85 +52,194 @@ const ModalEdit = ({ customer, editCustomer }) => {
   }
 
   return (
-    <div>
+    
       <div id="modalEdit" className="modal modal-fixed-footer">
-        <div className="modal-content">
-          <h4>EDITE CUSTOMER</h4>
-          <hr className="line1" />
-          <div className="row">
-            <div className="input-field col s12 m6">
-              <i className="material-icons prefix">account_circle</i>
-              <input
-                type="text"
-                name="firstname"
-                value={ customer2.firstname }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="name"></label>
-            </div>
+       <div className="navbar-fixed">
+        <nav className="no-padding-left nav-noclor">
+          <div className="nav-wrapper">
+            <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
+            <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+          </div>
+        </nav>
+      </div>
 
-            <div className="input-field col s12 m6">
-              <i className="material-icons prefix">L</i>
-              <input
-                type="text"
-                name="lastname"
-                value={ customer2.lastname }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="name"></label>
-            </div>
-
-            <div className="input-field col s12 m6">
-              <i className="material-icons prefix">email</i>
-              <input
-                type="email"
-                name="email"
-                value={ customer2.email }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="Email"></label>
-            </div>
-
-            <div className="input-field col s12 m6">
-              <i className="material-icons prefix">phone</i>
-              <input
-                type="tel"
-                name="tel"
-                value={ customer2.tel }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="Phone"></label>
-            </div>
-
-            <div className="input-field col s12 m6">
-              <i className="material-icons prefix">L</i>
-              <input
-                type="text"
-                name="line"
-                value={ customer2.line }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="line"></label>
-            </div>
-
-            <div className="input-field col s12">
-              <i className="material-icons prefix">home_work</i>
-              <input
-                type="text"
-                name="address"
-                value={ customer2.address }
-                onChange={ handleChangeCustomer }
-              />
-              <label htmlFor="address"></label>
+      <div className="modal-content modal-content-override">
+        <div className="row">
+          <div className="header-title">
+            <div className="col s12 m12 no-col-padding">
+  <h4>Customer : {customer.customer_id}</h4>
             </div>
           </div>
         </div>
+        {/* process bar */}
+
+        {/* body */}
+        <div className="cotent-field">
+          <div className="row content">
+            <div className="col s12 m12  head-section no-col-padding">
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="name">First name</label>
+              <input
+                type="text"
+                name="firstname"
+                value={customer2.firstname}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="name">Last name</label>
+              <input
+                type="text"
+                name="lastname"
+                value={customer2.lastname}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="Email">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={customer2.email}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="Phone">Phone</label>
+              <input
+                type="tel"
+                name="tel"
+                value={customer2.tel}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="line">Line</label>
+              <input
+                type="text"
+                name="line"
+                value={customer2.line}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="birthday">Birthday</label>
+              <input
+                type="date"
+                name="birthday"
+                value={customer2.birthday}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="license_id">หมายเลขใบอนุญาติ</label>
+              <input
+                type="text"
+                name="license_id"
+                value={customer2.license_id}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="home_no">บ้านเลขที่</label>
+              <input
+                type="text"
+                name="home_no"
+                value={customer2.home_no}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="moo">หมู่</label>
+              <input
+                type="text"
+                name="moo"
+                value={customer2.moo}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="soy">ซอย</label>
+              <input
+                type="text"
+                name="soy"
+                value={customer2.soy}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="road">ถนน</label>
+              <input
+                type="text"
+                name="road"
+                value={customer2.road}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="district">เขต1</label>
+              <input
+                type="text"
+                name="district"
+                value={customer2.district}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="district2">เขต2</label>
+              <input
+                type="text"
+                name="district2"
+                value={customer2.district2}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="province">จังหวัด</label>
+              <input
+                type="text"
+                name="province"
+                value={customer2.province}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="post_code">รหัสไปรษณี</label>
+              <input
+                type="text"
+                name="post_code"
+                value={customer2.post_code}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
         <div className="modal-footer">
           <a href="#!" className="modal-close waves-effect yellow btn black-text left" onClick={ handlerEditCustomer }>edit</a>
           <a href="#!" className="modal-close waves-effect grey lighten-2 btn black-text ">close</a>
         </div>
       </div>
-    </div>
+    
   )
 }
 
