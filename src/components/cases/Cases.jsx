@@ -185,7 +185,7 @@ const Cases = () => {
 
   function previousDate(state){
     var prevDate = '';
-    if(state === 'receive'){ prevDate = 'create_date';}
+    if(state === 'receive'){ prevDate = 'receive_date';}
     else if(state === 'contact_customer'){prevDate = 'receive_date'}
     else if(state === 'account_closing'){prevDate = 'contact_customer_date'}
     else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_received_date'}
@@ -253,8 +253,13 @@ const Cases = () => {
       var year = parseInt(yearString);
   
       var date2 = new Date(year, month, day);
+     
+      
       var date1 = new Date();
-  
+      console.log("#########")
+      console.log(date2)
+      console.log(date1)
+      console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
       return (Math.floor((date1 - date2) / (24 * 3600 * 1000)));
       // console.log(Math.floor((date1-date2)/(24*3600*1000)));
     }
@@ -270,7 +275,9 @@ const Cases = () => {
     var noteDateString = caseInRow.status + "_note";
     var alertRed = caseInRow.status + "_red";
     var alertOrange = caseInRow.status + "_orange";
-    console.log(datetomow);
+    // console.log("#######################")
+    // console.log(kpi[alertOrange]);
+    // console.log(kpi[alertRed]);
 
     // console.log(caseInRow[statusString])
     // console.log(caseInRow['receive_date']);
@@ -309,12 +316,22 @@ const Cases = () => {
             <div className="col s12 m6">
               <h3>Cases : <span className="chip  orange">{totalCase}</span></h3>
             </div>
-            <div className="new-button col m3">
+            <div className="new-button col m2">
               <div className="new-button-iner">
-                <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add Case</a>
+                <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
+                 
               </div>
 
             </div>
+
+            <div className="new-button col m1">
+              <div className="new-button-iner">
+                  <a className="btn modal-trigger tde-g" href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} >Excel</a>
+             
+              </div>
+
+            </div>
+
             <div className="input-field col s12 m3">
               <div className="search">
                 <input placeholder="Search term" />

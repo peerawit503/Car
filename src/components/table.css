@@ -48,6 +48,12 @@ background-color:#F07124 !important ;
 color: #FFFFFF;
 
 }
+
+.tde-g{
+    text-decoration: none !important;
+    background-color: rgb(33, 251, 51) !important;
+    border-radius: 5px !important;
+}
 .png-icon {
     width: 20px;
 }
