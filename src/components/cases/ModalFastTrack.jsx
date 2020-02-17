@@ -26,7 +26,14 @@ const ModalFastTrack = ({ singleCase }) => {
     else if(state === 'deposit_doc_to_new_bank'){prevDate = 'submit_book_deposit_return'}
     else if(state === 'submit_book_deposit_return'){prevDate = 'book_received_back'}
     else if(state === 'book_received_back'){prevDate = 'cash_received'}
-    else if(state === 'cash_received'){prevDate = 'book_deposit_received'}
+    else if(state === 'cash_received'){
+      //for skip 14 to 16 if no deposit received
+      if (singleCase.f2_old_finance_transfer_fee === null || singleCase.f2_old_finance_transfer_fee  <= 0){
+        prevDate = 'submit_book_to_new_finance'
+      } else {
+        prevDate = 'book_deposit_received'
+      }
+    }
     else if(state === 'book_deposit_received'){prevDate = 'submit_book_to_new_finance'}
     else if(state === 'submit_book_to_new_finance'){prevDate = 'submit_book_to_new_finance'}
     
@@ -34,36 +41,42 @@ const ModalFastTrack = ({ singleCase }) => {
   }
 
   function ValidateCase(props) {
-    // if in case 3
-    if (props.singleCase.status === 'transfer_doc_received') {
+    // if in case 3 transfer_doc_received and F2_status ===null
+    if (props.singleCase.status === 'transfer_doc_received' && props.singleCase.F2_status === null) {
       console.log(props.singleCase.F2_status);
       console.log(props.singleCase.contact_customer_date);
-      if (props.singleCase.F2_status === null && props.singleCase.contact_customer_date === null){
-       //return +F2 button
+     
+         //return +F2 button
         return ( 
         <div>
           <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
           <a className="btn modal-trigger tde" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
         </div>
        );
-      }
-      if (props.singleCase.F2_status === null ){
-        return (
-        <div>
-          <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
-        </div>
-        )
-      }
-      if (props.singleCase.contact_customer_date === null)
-        //return +Contract info button
-        return (
-          <a className="btn modal-trigger tde" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
-        );
+      
     }
+    // in case 11 deposit_doc_to_new_bank
+    if (props.singleCase.status === 'deposit_doc_to_new_bank'){
+      console.log(props.singleCase.close_amount);
+
+      return (
+        <div>
+         <h5>ยอดปิด: {singleCase.close_amount}</h5>
+        </div>
+      )
+    }
+    // in case 15 book_deposit_received
+    if (props.singleCase.status === 'book_deposit_received' ){
+      console.log(props.singleCase.f2_old_finance_transfer_fee);
+      return (
+        <div>
+         <h5>เงินมัดจำ (ค่าโอนไฟแนนซ์เก่า): {singleCase.f2_old_finance_transfer_fee}</h5>
+        </div>
+      )
+    }
+
     //nomal case return Confirm button
-    return (
-    <button className="waves-effect btn blue lighten left " onClick={() => confirm()}>Confirm</button>
-    );
+    return null
   }
 
 
@@ -99,6 +112,7 @@ const ModalFastTrack = ({ singleCase }) => {
           <div className="cotent-field">
             <div className="row content">
             <ValidateCase singleCase={singleCase} />
+            <button className="waves-effect btn blue lighten left " onClick={() => confirm()}>Confirm</button>
             <button className="modal-close waves-effect btn white black-text right">Cancle</button>
             </div>
           </div>
