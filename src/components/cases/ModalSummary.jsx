@@ -9,6 +9,8 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 import { isNull } from 'pdfmake/build/pdfmake';
 import plus from '../../img/plus-white.png';
 import ModalAddF2 from './ModalAddF2';
+import ModalAddContractInfo from './ModalAddContractInfo';
+
 const ModalSummary = ({ singleCase , kpi}) => {
   const [newCase, setNewCase] = useState({})
 
@@ -546,6 +548,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
         </div>
       </div>
       <ModalAddF2 singleCase={singleCase} />
+      <ModalAddContractInfo singleCase={singleCase} />
     </div >
 
    
