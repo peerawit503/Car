@@ -12,50 +12,75 @@ const ModalAddCase = ({ customers }) => {
 
   var userId = 'UserID';
   const [newCase, setNewCase] = useState({
-    user_id : userId,
-    customer_id : "",
-    document_id : "",
-    old_bank : "",
-    new_bank : "",
-    status : "receive",
-    note_status : "",
-    team : "",
-    contract_officer : "",
-    finance_staff : "",
-    case_type : "  ",
-    case_receiver : "",
-    case_source : " ",
-    job_id : "",
-    down_amount : "",
-    approve_amount : "",
-    close_amount : "",
-    case_status : "",
-    
-    car_name : "",
-    car_brand : "",
-    car_model : "",
-    car_sub_model : "",
-    car_year : "",
-    car_license : "",
-    car_province : "",
-    car_detail : "",
-    
-    old_finance_closing_fee : "0",
-    old_finance_transfer_fee : "0",
-    book_closing_fee : "0",
-    vat7_fee : "0",
-    transfer_fee : "0",
-    duty_fee : "0",
-    discount_fee : "0",
-    car_shield_fee : "0",
-    car_insurance_fee : "0",
-    transfer_service_fee : "0",
-    contract_fee : "0",
-    outside_transfer_fee : "0",
-    tax_renewal_fee : "0",
-    act_renewal_fee : "0",
-    f2_status : null
+    user_id: userId,
+    customer_id: "",
+    document_id: "",
+    old_bank: "",
+    new_bank: "",
+    status: "receive",
+    note_status: "",
+    team: "",
+    contract_officer: "",
+    finance_staff: "",
+    case_type: "  ",
+    case_receiver: "",
+    case_source: " ",
+    job_id: "",
+    down_amount: "",
+    approve_amount: "",
+    close_amount: "",
+    case_status: "ติดต่อลูกค้าไม่ได้",
+
+    car_name: "",
+    car_brand: "",
+    car_model: "",
+    car_sub_model: "",
+    car_year: "",
+    car_license: "",
+    car_province: "",
+    car_detail: "",
+    take_car_picture: "",
+    car_license_book_picture: "",
+    license_id_picture: "",
+
+    old_finance_closing_fee: "",
+    old_finance_transfer_fee: "",
+    book_closing_fee: "",
+    vat7_fee: "",
+    transfer_fee: "",
+    duty_fee: "",
+    discount_fee: "",
+    car_shield_fee: "",
+    car_insurance_fee: "",
+    transfer_service_fee: "",
+    contract_fee: "",
+    outside_transfer_fee: "",
+    tax_renewal_fee: "",
+    act_renewal_fee: "",
+    f2_status: null,
+    cheque : "",
+    cheque_receiver : "",
+    deposit_receiver : ""
   })
+
+  const [customer, setCustomer] = useState({
+    firstname: "",
+    lastname: "",
+    tel: "",
+    email: "",
+    line: "",
+    license_id: "",
+    birthday: "",
+    home_no: "",
+    moo: "",
+    soy: "",
+    road: "",
+    district: "",
+    district2: "",
+    province: "",
+    post_code: ""
+  })
+
   const [formState, setformState] = useState(1)
 
   const [bank, setBank] = useState({ b1: true, b2: false })
@@ -69,12 +94,19 @@ const ModalAddCase = ({ customers }) => {
 
   })
 
+  const handleChangeCustomer = (e) => setCustomer({ ...customer, [e.target.name]: e.target.value })
+
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  const handleChangeFile = (e) => {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => setNewCase({ ...newCase, file: reader.result });
+  }
 
-  
   const handleChangeB_1 = (e) => setBank({ b1: true, b2: false })
   const handleChangeB_2 = (e) => setBank({ b1: false, b2: true })
 
@@ -83,19 +115,19 @@ const ModalAddCase = ({ customers }) => {
   const handleChangeD_2 = (e) => setDifference({ d1: false, d2: true })
 
 
-  const handleCustomerChange = (e) => {
+  // const handleCustomerChange = (e) => {
 
-    setNewCase({
-      ...newCase, [e.target.name]: e.target.value,
-      ["firstname"]: customers[e.target.value].firstname,
-      ["lastname"]: customers[e.target.value].lastname,
-      ["license_id"]: customers[e.target.value].license_id,
-      ["tel"]: customers[e.target.value].tel,
-      ["customer_id"]: customers[e.target.value].customer_id,
-      
-    });
+  //   setNewCase({
+  //     ...newCase, [e.target.name]: e.target.value,
+  //     ["firstname"]: customers[e.target.value].firstname,
+  //     ["lastname"]: customers[e.target.value].lastname,
+  //     ["license_id"]: customers[e.target.value].license_id,
+  //     ["tel"]: customers[e.target.value].tel,
+  //     ["customer_id"]: customers[e.target.value].customer_id,
 
-  }
+  //   });
+
+  // }
 
   const nextpage = () => {
     console.log(newCase);
@@ -119,7 +151,62 @@ const ModalAddCase = ({ customers }) => {
       setformState(2);
     }
   }
-  
+
+  function disableNext() {
+    var result = [];
+
+    if (formState === 3) {
+      result.push(<button className="waves-effect btn blue lighten right " onClick={() => saveNewCase(newCase,customer)}>Save</button>);
+
+    } else {
+      result.push(<button className="waves-effect btn blue lighten right " onClick={() => nextpage()}> Next</button>);
+    }
+    return result ? result : null;
+  }
+
+
+  function saveNewCase() {
+    // var data = setNewCase({...newCase,car_license:c})
+    // console.log(JSON.stringify(newCase));
+    console.log(JSON.stringify(customer));
+
+    console.log('######## add customer #########');
+    axios.post(`${url}/add_customer`, customer)
+      .then(res => {
+        // M.toast({ html: `${res.data.message}` })
+        console.log('######## add customer result #########');
+        console.log(res.data.customer_id);
+        // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
+        var data = ({...newCase,customer_id:res.data.customer_id })
+        console.log(JSON.stringify(data))
+        axios.post(`${url}/add_case`, data)
+          .then(res => {
+            // M.toast({ html: `${res.data.message}` })
+            console.log('######## add case result #########');
+            console.log(res);
+
+            
+
+          })
+          .catch(err => { console.log(err) })
+
+      })
+      .catch(err => { console.log(err) })
+
+  }
+
+  function disableBack() {
+    var result = [];
+
+    if (formState === 1) {
+      result.push(<button className="waves-effect btn blue lighten right " disabled onClick={() => backpage()}> Back</button>);
+
+    } else {
+      result.push(<button className="waves-effect btn blue lighten right " onClick={() => backpage()}> Back</button>);
+    }
+    return result ? result : null;
+  }
+
   function payment() {
     var result = [];
     if (difference.d1) {
@@ -130,50 +217,50 @@ const ModalAddCase = ({ customers }) => {
             type="number"
             min="0"
             step="any"
-            value={newCase.cheque_receiver || ""}
-            name="cheque_receiver"
+            value={newCase.cheque || ""}
+            name="cheque"
             onChange={handleChange}
           />
         </div>
- 
+
       );
       result.push(<div className="col s6 m4 l4 content">
-      <label >จ่ายมัดจำ </label>
-      <input
-        type="number"
-        min="0"
-        step="any"
-        value={newCase.deposit || ""}
-        name="deposit"
-        onChange={handleChange}
-      />
-    </div>
+        <label >จ่ายมัดจำ </label>
+        <input
+          type="number"
+          min="0"
+          step="any"
+          value={newCase.deposit || ""}
+          name="deposit"
+          onChange={handleChange}
+        />
+      </div>
 
-   );
-      result.push( <div className="col s6 m4 l4 content">
-      <label >ชื่อผู้รับเช็ค </label>
-      <input
-        type="text"
-        value={newCase.cheque_receiver || ""}
-        name="cheque_receiver"
-        onChange={handleChange}
-      />
-    </div>
-
-    );
+      );
       result.push(<div className="col s6 m4 l4 content">
-      <label >ชื่อผู้รับเงินมัดจำ </label>
-      <input
-        type="text"
-        min="0"
-        step="any"
-        
-        value={newCase.deposit_receiver || ""}
-        name="deposit_receiver"
-        onChange={handleChange}
-      />
-    </div>);
-      
+        <label >ชื่อผู้รับเช็ค </label>
+        <input
+          type="text"
+          value={newCase.cheque_receiver || ""}
+          name="cheque_receiver"
+          onChange={handleChange}
+        />
+      </div>
+
+      );
+      result.push(<div className="col s6 m4 l4 content">
+        <label >ชื่อผู้รับเงินมัดจำ </label>
+        <input
+          type="text"
+          min="0"
+          step="any"
+
+          value={newCase.deposit_receiver || ""}
+          name="deposit_receiver"
+          onChange={handleChange}
+        />
+      </div>);
+
     }
     return result;
   }
@@ -183,24 +270,177 @@ const ModalAddCase = ({ customers }) => {
     if (formState === 1) {
       form.push(<div className="cotent-field">
         <div className="row content">
+
+          <input
+            type="text"
+            name="customer_id"
+            hidden
+            value={newCase.customer_id || ""}
+            onChange={handleChange}
+            className="validate"
+
+          />
+
+          <div className="col s12 m12  head-section no-col-padding">
+            <h5>Customer Information</h5>
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="name">First name</label>
+            <input
+              type="text"
+              name="firstname"
+              value={customer.firstname}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="name">Last name</label>
+            <input
+              type="text"
+              name="lastname"
+              value={customer.lastname}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="Email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={customer.email}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="Phone">Phone</label>
+            <input
+              type="tel"
+              name="tel"
+              value={customer.tel}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="line">Line</label>
+            <input
+              type="text"
+              name="line"
+              value={customer.line}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="birthday">Birthday</label>
+            <input
+              type="date"
+              name="birthday"
+              value={customer.birthday}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="license_id">เลขที่ใบอนุญาติ</label>
+            <input
+              type="text"
+              name="license_id"
+              value={customer.license_id}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="home_no">บ้านเลขที่</label>
+            <input
+              type="text"
+              name="home_no"
+              value={customer.home_no}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="moo">หมู่</label>
+            <input
+              type="text"
+              name="moo"
+              value={customer.moo}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="soy">ซอย</label>
+            <input
+              type="text"
+              name="soy"
+              value={customer.soy}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="road">ถนน</label>
+            <input
+              type="text"
+              name="road"
+              value={customer.road}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="district">เขต1</label>
+            <input
+              type="text"
+              name="district"
+              value={customer.district}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="district2">เขต2</label>
+            <input
+              type="text"
+              name="district2"
+              value={customer.district2}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="province">จังหวัด</label>
+            <input
+              type="text"
+              name="province"
+              value={customer.province}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="post_code">รหัสไปรษณี</label>
+            <input
+              type="text"
+              name="post_code"
+              value={customer.post_code}
+              onChange={handleChangeCustomer}
+            />
+          </div>
+
+
           <div className="col s12 m12  head-section no-col-padding">
           </div>
 
 
-          
-            <input
-              type="text"
-              name="customer_id"
-              hidden
-              value={newCase.customer_id || ""}
-              onChange={handleChange}
-              className="validate"
-
-            />
-          
-
-
-          <div className="col s6 m4 l4 content">
+          {/* <div className="col s6 m4 l4 content">
             <label >Customer</label>
             <select
               name="customer"
@@ -211,10 +451,10 @@ const ModalAddCase = ({ customers }) => {
               <option value="DEFAULT" disabled>Customer</option>
               {customers.map((c, i) => <option key={i} value={i}>{c.firstname}</option>)}
             </select>
-          </div>
+          </div> */}
 
 
-          <div className="col s6 m4 l4 content">
+          {/* <div className="col s6 m4 l4 content">
             <label >Case Status / สถานะเคส</label>
             <select
               name="case_status"
@@ -225,7 +465,7 @@ const ModalAddCase = ({ customers }) => {
               <option value="DEFAULT" disabled>เลือกสถานะเคส </option>
               {caseStatus.map((c) => <option key={uuid.v4()} value={c}>{c}</option>)}
             </select>
-          </div>
+          </div> */}
 
           <div className="col s6 m4 l4 content">
             <label >JOB No.</label>
@@ -255,15 +495,14 @@ const ModalAddCase = ({ customers }) => {
             <label >Receiver Date/ วันที่รับเคส</label>
             <input
               type="date"
-              value={newCase.receive_date || ""}
+              value={newCase.receive_date || Date()}
               name='receive_date'
               onChange={handleChange}
-
             />
           </div>
 
           <div className="col s6 m4 l4 content">
-            <label >Case Receiver/ ผู้ลงข้อมูล</label>
+            <label >Case Source / รับเคสจาก</label>
             <select
               name='case_receiver'
               value={newCase.case_receiver || 'DEFAULT'}
@@ -293,7 +532,7 @@ const ModalAddCase = ({ customers }) => {
             <h5>Case Information</h5>
           </div>
 
-          <div className="col s6 m4 l4 content">
+          {/* <div className="col s6 m4 l4 content">
             <label>First Name</label>
             <input
               type="text"
@@ -324,25 +563,23 @@ const ModalAddCase = ({ customers }) => {
               onChange={handleChange}
               className="validate"
             />
-          </div>
+          </div> */}
 
 
 
-          <div className="col s12 m12  head-section no-col-padding">
-          </div>
-        
-          <div className="col s6 m4 l4 content">
+
+          {/* <div className="col s6 m4 l4 content">
             <label>Licence ID / เลขที่ใบอนุญาติ</label>
             <input
               type="text"
               name="license_id"
-              value={newCase.license_id || ""}
-              onChange={handleChange}
+              value={customer.license_id || ""}
+              onChange={handleChangeCustomer}
               className="validate"
             />
-          </div>
+          </div> */}
 
-          
+
 
           <div className="col s6 m4 l4 content">
             <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
@@ -367,9 +604,9 @@ const ModalAddCase = ({ customers }) => {
               {provinceAll.map((pv) => <option key={uuid.v4()} value={pv}>{pv}</option>)}
             </select>
           </div>
-          
 
-         
+
+
 
           <div className="col s6 m4 l4 content">
             <label>Bran / ยี่ห้อ</label>
@@ -403,13 +640,24 @@ const ModalAddCase = ({ customers }) => {
               className="validate"
             />
           </div>
-         
+
           <div className="col s6 m4 l4 content">
             <label>Car Year / ปีรถ</label>
             <input
               type="text"
               name="car_year"
               value={newCase.car_year || ""}
+              onChange={handleChange}
+              className="validate"
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label>Car Name</label>
+            <input
+              type="text"
+              name="car_name"
+              value={newCase.car_name || ""}
               onChange={handleChange}
               className="validate"
             />
@@ -441,12 +689,12 @@ const ModalAddCase = ({ customers }) => {
               {financeInstitution.map((ct) => <option key={uuid.v4()} value={ct}>{ct}</option>)}
             </select>
           </div>
-          
+
 
           <div className="col s6 m4 l4 content">
             <label>Approved Amount / ยอดจัด </label>
             <input
-              type="text"
+              type="number"
               name="approve_amount"
               value={newCase.approve_amount || ""}
               onChange={handleChange}
@@ -457,7 +705,7 @@ const ModalAddCase = ({ customers }) => {
           <div className="col s6 m4 l4 content">
             <label>Close Amount / ยอดเงินเข้าบริษัท </label>
             <input
-              type="text"
+              type="number"
               name="close_amount"
               value={newCase.close_amount || ""}
               onChange={handleChange}
@@ -468,12 +716,27 @@ const ModalAddCase = ({ customers }) => {
           <div className="col s6 m4 l4 content">
             <label>Down Payment / ยอดดาวน์</label>
             <input
-              type="text"
+              type="number"
               name="down_amount"
               value={newCase.down_amount || ""}
               onChange={handleChange}
               className="validate"
             />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="Picture">รูปรถ</label>
+            <input type="file" name="take_car_picture" onChange={handleChangeFile} />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="Picture">รูปเล่มทะเบียน</label>
+            <input type="file" name="car_license_book_picture" onChange={handleChangeFile} />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="Picture">รูปใบขับขี่</label>
+            <input type="file" name="license_id_picture" onChange={handleChangeFile} />
           </div>
 
 
@@ -672,7 +935,7 @@ const ModalAddCase = ({ customers }) => {
           <div className="col s6 m4 l4 content">
             <label >ค่าโอนนอก</label>
             <input
-             
+
               type="number"
               min="0"
               step="any"
@@ -733,7 +996,7 @@ const ModalAddCase = ({ customers }) => {
               disabled
               value={newCase.total_cost || ""}
               name="total_cost"
-              
+
             />
           </div>
 
@@ -744,7 +1007,7 @@ const ModalAddCase = ({ customers }) => {
               type="number"
               min="0"
               step="any"
-             
+
               value={newCase.amount_received || ""}
               name="amount_received"
               onChange={handleChange}
@@ -757,7 +1020,7 @@ const ModalAddCase = ({ customers }) => {
               type="number"
               min="0"
               step="any"
-              
+
               value={newCase.old_finance_total_cost || ""}
               name="old_finance_total_cost"
               onChange={handleChange}
@@ -770,7 +1033,7 @@ const ModalAddCase = ({ customers }) => {
               type="number"
               min="0"
               step="any"
-             
+
               value={newCase.bank_transfer || ""}
               name="bank_transfer"
               onChange={handleChange}
@@ -787,18 +1050,7 @@ const ModalAddCase = ({ customers }) => {
         <div className="row content">
           <div className="col s12 m12  head-section no-col-padding">
           </div>
-          <div className="col s6 m4 l4 content">
-            <label >Case Status / สถานะเคส</label>
-            <select
-              name="case_status"
-              className="browser-default"
-              value={newCase.case_status || "DEFAULT"}
-              onChange={handleChange}
-            >
-              <option value="DEFAULT" disabled>เลือกสถานะเคส </option>
-              {caseStatus.map((c) => <option key={uuid.v4()} value={c}>{c}</option>)}
-            </select>
-          </div>
+         
 
           <div className="col s6 m4 l4 content">
             <label >JOB No.</label>
@@ -855,7 +1107,7 @@ const ModalAddCase = ({ customers }) => {
             <input
               type="text"
               name="firstname"
-              value={newCase.firstname || ""}
+              value={customer.firstname || ""}
               onChange={handleChange}
               className="validate"
             />
@@ -866,7 +1118,7 @@ const ModalAddCase = ({ customers }) => {
             <input
               type="text"
               name="lastname"
-              value={newCase.lastname || ""}
+              value={customer.lastname || ""}
               onChange={handleChange}
               className="validate"
             />
@@ -877,7 +1129,7 @@ const ModalAddCase = ({ customers }) => {
             <input
               type="text"
               name="tel"
-              value={newCase.tel || ""}
+              value={customer.tel || ""}
               onChange={handleChange}
               className="validate"
             />
@@ -886,21 +1138,6 @@ const ModalAddCase = ({ customers }) => {
           <div className="col s12 m12  head-section no-col-padding">
             <h5>Contract Information</h5>
           </div>
-
-
-        
-        
-          <div className="col s6 m4 l4 content">
-            <label>Licence ID / เลขที่ใบอนุญาติ</label>
-            <input
-              type="text"
-              name="license_id"
-              value={newCase.license_id || ""}
-              onChange={handleChange}
-              className="validate"
-            />
-          </div>
-
 
           <div className="col s6 m4 l4 content">
             <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
@@ -924,9 +1161,9 @@ const ModalAddCase = ({ customers }) => {
               <option value="DEFAULT" disabled>เลือกป้ายทะเบียนจังหวัด </option>
               {provinceAll.map((pv) => <option key={uuid.v4()} value={pv}>{pv}</option>)}
             </select>
-         
+
           </div>
-         
+
 
 
           <div className="col s6 m4 l4 content">
@@ -961,7 +1198,7 @@ const ModalAddCase = ({ customers }) => {
               className="validate"
             />
           </div>
-          
+
           <div className="col s6 m4 l4 content">
             <label>Car Year / ปีรถ</label>
             <input
@@ -972,7 +1209,7 @@ const ModalAddCase = ({ customers }) => {
               className="validate"
             />
           </div>
-          
+
 
           <div className="col s6 m4 l4 content">
             <label>Current Finance ไฟแนนซ์เดิม</label>
@@ -1078,6 +1315,7 @@ const ModalAddCase = ({ customers }) => {
             <input
               type="text"
               name="total_cost"
+              readOnly
               value={newCase.total_cost || ""}
               onChange={handleChange}
               className="validate"
@@ -1103,56 +1341,23 @@ const ModalAddCase = ({ customers }) => {
     return form;
   }
 
-  function disableNext() {
-    var result = [];
-
-    if (formState === 3) {
-      result.push(<button className="waves-effect btn blue lighten right " onClick={() => saveNewCase()}>Save</button>);
-
-    } else {
-      result.push(<button className="waves-effect btn blue lighten right " onClick={() => nextpage()}> Next</button>);
-    }
-    return result ? result : null;
-  }
 
 
-  function saveNewCase (){
-    console.log(JSON.stringify(newCase));
 
-    axios.post(`${url}/add_case`, newCase)
-      .then(res => {
-        // M.toast({ html: `${res.data.message}` })
-        console.log(res.data.message);
-        
-      })
-      .catch(err => { console.log(err) })
-
-  }
-  function disableBack() {
-    var result = [];
-
-    if (formState === 1) {
-      result.push(<button className="waves-effect btn blue lighten right " disabled onClick={() => backpage()}> Back</button>);
-
-    } else {
-      result.push(<button className="waves-effect btn blue lighten right " onClick={() => backpage()}> Back</button>);
-    }
-    return result ? result : null;
-  }
-
-  
   return (
     <div>
       <div id="modalAddCase" className="modal modal-fixed-footer">
 
-        <div className="navbar-fixed">
+        {/* <div className="navbar-fixed">
           <nav className="no-padding-left nav-noclor">
             <div className="nav-wrapper">
               <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
               <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             </div>
           </nav>
-        </div>
+        </div> */}
+
+
 
         <div className="modal-content modal-content-override">
           <div className="row">

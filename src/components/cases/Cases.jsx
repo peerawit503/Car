@@ -153,6 +153,36 @@ const Cases = () => {
     // setCustomers(customerData.message);
   }
 
+  const saveNewCase = (newCase,customer) => {
+    // var data = setNewCase({...newCase,car_license:c})
+    // console.log(JSON.stringify(newCase));
+    console.log(JSON.stringify(customer));
+
+    console.log('######## add customer #########');
+    axios.post(`${url}/add_customer`, customer)
+      .then(res => {
+        // M.toast({ html: `${res.data.message}` })
+        console.log('######## add customer result #########');
+        console.log(res.data.customer_id);
+        // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
+        var data = ({...newCase,customer_id:res.data.customer_id })
+        console.log(JSON.stringify(data))
+        axios.post(`${url}/add_case`, data)
+          .then(res => {
+            M.toast({ html: `${res.data.message}` })
+            console.log('######## add case result #########');
+            console.log(res);
+            getAllCase()
+            
+
+          })
+          .catch(err => { console.log(err) })
+
+      })
+      .catch(err => { console.log(err) })
+
+  }
+
   function previousDate(state){
     var prevDate = '';
     if(state === 'receive'){ prevDate = 'create_date';}
@@ -171,7 +201,6 @@ const Cases = () => {
     else if(state === 'cash_received'){prevDate = 'book_received_back_date'}
     else if(state === 'book_deposit_received'){prevDate = 'cash_received_date'}
     else if(state === 'submit_book_to_new_finance'){prevDate = 'book_deposit_received_date'}
-    
     return prevDate;
   }
 
@@ -306,7 +335,7 @@ const Cases = () => {
                     <td>{displayStarRating(c)}</td>
                     <td className="tale-caseId" >{c.id}</td>
                     <td >{c.name}</td>
-                    <td >{c.date_update.split(" ")[0] + ' ' + c.date_update.split(" ")[1] + ' ' + c.date_update.split(" ")[2] + ' ' + c.date_update.split(" ")[3]} </td>
+                    <td >{c.date_update.split(" ")[1] + ' ' + c.date_update.split(" ")[2] + ' ' + c.date_update.split(" ")[3]} </td>
                     <td>{c.status}</td>
                     <td >{c.case_source}</td>
                     <td>{c.job_id}</td>
@@ -337,7 +366,7 @@ const Cases = () => {
           <ModalAddNote singleCase={singleCase} />
           <ModalFastTrack singleCase={singleCase} />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
-          <ModalAddCase customers={customers} />
+          <ModalAddCase customers={customers} saveNewCase={saveNewCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
 

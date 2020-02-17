@@ -43,7 +43,7 @@ const Customers = () => {
   const getAllCustomers = () => {
     // setCustomers(fackeCustomer)
 
-    axios.get(`${url}/customer_limit?size=50&page=2`)
+    axios.get(`${url}/customer_all`)
       .then(res => { setCustomers(res.data.message) })
       .catch(err => { console.log(err) })
     // setCustomers(customerData.message);
