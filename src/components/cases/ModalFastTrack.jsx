@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import axios from 'axios';
 import url from '../../Utility/url'
+import plus from '../../img/plus-white.png';
+import ModalAddContractInfo from './ModalAddContractInfo'
 /* img */
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
@@ -31,6 +33,39 @@ const ModalFastTrack = ({ singleCase }) => {
     return prevDate;
   }
 
+  function ValidateCase(props) {
+    // if in case 3
+    if (props.singleCase.status === 'transfer_doc_received') {
+      console.log(props.singleCase.F2_status);
+      console.log(props.singleCase.contact_customer_date);
+      if (props.singleCase.F2_status === null && props.singleCase.contact_customer_date === null){
+       //return +F2 button
+        return ( 
+        <div>
+          <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
+          <a className="btn modal-trigger tde" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
+        </div>
+       );
+      }
+      if (props.singleCase.F2_status === null ){
+        return (
+        <div>
+          <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
+        </div>
+        )
+      }
+      if (props.singleCase.contact_customer_date === null)
+        //return +Contract info button
+        return (
+          <a className="btn modal-trigger tde" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
+        );
+    }
+    //nomal case return Confirm button
+    return (
+    <button className="waves-effect btn blue lighten left " onClick={() => confirm()}>Confirm</button>
+    );
+  }
+
 
   const confirm = () => {
     var data = JSON.stringify({tracking: nextStep(singleCase.status) , user_id : 'mock' });
@@ -49,7 +84,7 @@ const ModalFastTrack = ({ singleCase }) => {
   return (
     <div>
       <div id="modalFastTrack" className="modal modal-fixed-footer">
-
+  
         <div className="modal-content modal-content-override">
           <div className="row">
             <div className="header-title">
@@ -61,20 +96,14 @@ const ModalFastTrack = ({ singleCase }) => {
           {/* process bar */}
 
           {/* body */}
-
-
-
           <div className="cotent-field">
             <div className="row content">
-            <button className="waves-effect btn blue lighten left " onClick={() => confirm()}>Confirm</button>
+            <ValidateCase singleCase={singleCase} />
             <button className="modal-close waves-effect btn white black-text right">Cancle</button>
             </div>
           </div>
         </div>
-
-
       </div>
-
     </div >
   )
 }
