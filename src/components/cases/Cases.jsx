@@ -204,7 +204,7 @@ const Cases = () => {
     return prevDate;
   }
 
-  function dateToNow(caseDate) {
+  function dateToNow(caseDate,case_id) {
     if(caseDate == null){
       return 0;
     }else{
@@ -259,6 +259,7 @@ const Cases = () => {
       console.log("#########")
       console.log(date2)
       console.log(date1)
+      console.log(case_id)
       console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
       return (Math.floor((date1 - date2) / (24 * 3600 * 1000)));
       // console.log(Math.floor((date1-date2)/(24*3600*1000)));
@@ -271,7 +272,8 @@ const Cases = () => {
     // console.log(caseInRow.date_update)
     var result = [];
     var stausDate = previousDate(caseInRow.status);
-    var datetomow = dateToNow(caseInRow[stausDate]);
+    var datetomow = dateToNow(caseInRow[stausDate] , caseInRow.case_id);
+    // console.log('case Id', caseInRow.case_id)
     var noteDateString = caseInRow.status + "_note";
     var alertRed = caseInRow.status + "_red";
     var alertOrange = caseInRow.status + "_orange";
