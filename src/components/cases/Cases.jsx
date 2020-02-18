@@ -74,6 +74,8 @@ const Cases = () => {
     getAllCustomers()
   }, [])
 
+
+
   const getAllCase = () => {
 
 
@@ -87,6 +89,7 @@ const Cases = () => {
 
 
   }
+
   const setKpiForUse = (kpiData) => {
     
     var result = new Object();
@@ -183,13 +186,26 @@ const Cases = () => {
 
   }
 
+  function statusDate(c){
+    var DateString = c.status + '_date';
+    // console.log("#########")
+    // console.log(c.status);
+    var pDate = c[DateString];
+    if(pDate == null){
+      return " ";
+    }else{
+return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[3])
+    }
+    
+  }
+
   function previousDate(state){
     var prevDate = '';
-    if(state === 'receive'){ prevDate = 'receive_date';}
+    if(state === 'receive'){ prevDate = 'receive_date'}
     else if(state === 'contact_customer'){prevDate = 'receive_date'}
     else if(state === 'account_closing'){prevDate = 'contact_customer_date'}
     else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_received_date'}
-    else if(state === 'transfer_doc_submitted'){prevDate = 'transfer_doc_submitted'}
+    else if(state === 'transfer_doc_submitted'){prevDate = 'transfer_doc_submitted_date'}
     else if(state === 'book_received'){prevDate = 'book_received_date'}
     else if(state === 'submit_book_transfer'){prevDate = 'book_received_date'}
     else if(state === 'car_check_up'){prevDate = 'submit_book_transfer_date'}
@@ -204,7 +220,7 @@ const Cases = () => {
     return prevDate;
   }
 
-  function dateToNow(caseDate,case_id) {
+  function dateToNow(caseDate) {
     if(caseDate == null){
       return 0;
     }else{
@@ -256,11 +272,11 @@ const Cases = () => {
      
       
       var date1 = new Date();
-      console.log("#########")
-      console.log(date2)
-      console.log(date1)
-      console.log(case_id)
-      console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
+      // console.log("#########")
+      // console.log(date2)
+      // console.log(date1)
+      // console.log(case_id)
+      // console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
       return (Math.floor((date1 - date2) / (24 * 3600 * 1000)));
       // console.log(Math.floor((date1-date2)/(24*3600*1000)));
     }
@@ -270,16 +286,21 @@ const Cases = () => {
 
   function displayStarRating(caseInRow) {
     // console.log(caseInRow.date_update)
-    var result = [];
-    var stausDate = previousDate(caseInRow.status);
-    var datetomow = dateToNow(caseInRow[stausDate] , caseInRow.case_id);
+    let result = [];
+    let statusDateString = caseInRow.status + '_date';
+    let datetomow = dateToNow(caseInRow[statusDateString]);
     // console.log('case Id', caseInRow.case_id)
-    var noteDateString = caseInRow.status + "_note";
-    var alertRed = caseInRow.status + "_red";
-    var alertOrange = caseInRow.status + "_orange";
-    // console.log("#######################")
-    // console.log(kpi[alertOrange]);
-    // console.log(kpi[alertRed]);
+    let noteDateString = caseInRow.status + "_note";
+    let alertRed = caseInRow.status + "_red";
+    let alertOrange = caseInRow.status + "_orange";
+
+    console.log("#######################")
+    console.log(statusDate(caseInRow));
+    console.log(caseInRow[statusDateString]);
+    console.log(datetomow);
+    console.log(kpi[alertOrange]);
+    console.log(kpi[alertRed]);
+    
 
     // console.log(caseInRow[statusString])
     // console.log(caseInRow['receive_date']);
@@ -354,7 +375,7 @@ const Cases = () => {
                     <td>{displayStarRating(c)}</td>
                     <td className="tale-caseId" >{c.id}</td>
                     <td >{c.name}</td>
-                    <td >{c.date_update.split(" ")[1] + ' ' + c.date_update.split(" ")[2] + ' ' + c.date_update.split(" ")[3]} </td>
+                    <td >{statusDate(c)} </td>
                     <td>{c.status}</td>
                     <td >{c.case_source}</td>
                     <td>{c.job_id}</td>

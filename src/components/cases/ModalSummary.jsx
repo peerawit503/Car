@@ -141,7 +141,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
           <div className="row">
             <div className="header-title">
               <div className="col s8 m8 no-col-padding">
-                <h4>Case : {singleCase.job_id}</h4>
+                <h4>Case : {singleCase.case_id}</h4>
               </div>
               <div className="col m2 no-col-padding">
               <h6> {singleCase.F2_status == null?'F2 Complete':'F2 Incomplete'}</h6>
