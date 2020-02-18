@@ -100,7 +100,7 @@ const ModalAddCaseCustomer = ({ customer }) => {
         </div>
         <div className="row">
           <div className="col s6 m6 l1">
-            <label >Bran / ยี่ห้อ</label>
+            <label >Brand / ยี่ห้อ</label>
             <input type="text" name="car_brand" value={ newCase.car_brand } onChange={ handleChange } />
           </div>
           <div className="col s6 m6 l1">

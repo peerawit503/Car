@@ -43,7 +43,7 @@ const Customers = () => {
   const getAllCustomers = () => {
     // setCustomers(fackeCustomer)
 
-    axios.get(`${url}/customer_all`)
+    axios.get(`${url}/customer_limit?size=50&page=1`)
       .then(res => { setCustomers(res.data.message) })
       .catch(err => { console.log(err) })
     // setCustomers(customerData.message);
@@ -108,7 +108,7 @@ const Customers = () => {
             </div>
             <div className="new-button col m3">
               <div className="new-button-iner">
-              <a className="btn modal-trigger tde" href="#modalCreate" ><img  src={plusicon} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Add CCustomer</a>
+              {/* <a className="btn modal-trigger tde" href="#modalCreate" ><img  src={plusicon} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Add CCustomer</a> */}
               </div>
             
             </div>

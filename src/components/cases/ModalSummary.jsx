@@ -72,7 +72,14 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
     return newDate;
   }
-  
+  function dateFormated(date){
+    if(date == null){
+      return null;
+    }else{
+      return(date.split(" ")[1] + ' ' + date.split(" ")[2] + ' ' + date.split(" ")[3])
+    }
+    
+  }
   function calculateProcessDate(processBefore, processCurrent) {
 
     if (processCurrent == null) {
@@ -138,7 +145,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
         </div>
 
         <div className="modal-content modal-content-override">
-          <div className="row">
+          <div className="row ">
             <div className="header-title">
               <div className="col s8 m8 no-col-padding">
                 <h4>Case : {singleCase.case_id}</h4>
@@ -149,7 +156,6 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="col m2 ">
               <div className="new-button-iner">
 
-              <a className='btn green  waves-effect waves-light right' href={`${url}/case_excel`} target='blank' download> download excel (not yet)</a>
               <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
               </div>
             
@@ -164,174 +170,175 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
 
           <div className="cotent-field row" >
-            <div className="row content col m8">
-              <div className="col s12 m12  head-section no-col-padding">
+            <div className="row content-radonly col m8 ">
+              <div className="col s12 m12  head-section no-col-padding ">
               </div>
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label >{singleCase.case_status}Case Status / สถานะเคส</label>
-                <select
+                <input
                   name="caseStatus"
-                  className='browser-default'
+                   type="text"
                   value={singleCase.case_status || "DEFAULT"}
-                  onChange={handleChange}
+                  readOnly
                 >
-                  <option value="DEFAULT" disabled>เลือกสถานะเคส </option>
-                  {caseStatus.map((c) => <option key={uuid.v4()} value={c}>{c}</option>)}
-                </select>
+                  
+                </input>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label >JOB No.</label>
                 <input
                   type="text"
                   name="jobNum"
                   value={singleCase.job_id}
-                  onChange={handleChange}
+                  
                   className="validate"
+                  readOnly
 
                 />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label >Receiver Date/ วันที่รับเคส</label>
                 <input
-                  type="date"
-                  value={singleCase.date_create}
+                  type="text"
+                  value={dateFormated(singleCase.date_create)}
                   name='dateAddCase'
-                  onChange={handleChange}
+                 
+                  readOnly
 
                 />
               </div>
 
-              <div className="col s6 m6 l6 content">
-                <label >Case Receiver/ ผู้ลงข้อมูล</label>
+              <div className="col s6 m6 l6 content-radonly">
+                <label >Case Source / รับเคสจาก</label>
                 <input
                   name='receiver'
                   value={singleCase.case_source || ''}
-                  onChange={handleChange}
+                  
                   type="text"
-                  className="validate" />
+                  className="validate"
+                  readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label >Case Type / ประเภทเคส</label>
-                <select
+                <input
                   name='caseType'
                   value={singleCase.case_type || 'DEFAULT'}
-                  onChange={handleChange}
+                  readOnly
                   className='browser-default'
                 >
-                  <option value="DEFAULT" disabled>เลือกประเภทเคส </option>
-                  {caseTypeAll.map((ct) => <option key={uuid.v4()} value={ct}>{ct}</option>)}
-                </select>
+                
+                </input>
               </div>
 
               <div className="col s12 m12  head-section no-col-padding">
                 <h5>Case Information</h5>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>First Name - Last Name</label>
                 <input type="text"
-                  value={singleCase.name || ''}  />
+                  value={singleCase.name || ''} 
+                  readOnly />
               </div>
 
-
-
-              <div className="col s6 m6 l6 content">
-                <label>Phone 1</label>
-                <input type="text" />
-              </div>
-
-              <div className="col s6 m6 l6 content">
-                <label>Phone 2</label>
-                <input type="text" />
-              </div>
-
-              <div className="col s12 m12  head-section no-col-padding">
-              </div>
-
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
                 <input type="text"
-                  value={singleCase.car_license} />
+                  value={singleCase.car_license}
+                  readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label >Province / ป้ายทะเบียนจังหวัด</label>
-                <select
+                <input
                   name='province'
                   value={singleCase.car_province || "DEFAULT"}
                   className='browser-default'
-                  onChange={handleChange}
+                  readOnly
                 >
-                  <option value="DEFAULT" disabled>เลือกป้ายทะเบียนจังหวัด </option>
-                  {provinceAll.map((pv) => <option key={uuid.v4()} value={pv}>{pv}</option>)}
-                </select>
+                 
+                </input>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Bran / ยี่ห้อ</label>
                 <input type="text"
-                  value={singleCase.car_brand} />
+                  value={singleCase.car_brand}
+                  readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Model / รุ่นรถ</label>
                 <input type="text"
-                  value={singleCase.car_brand} />
+                  value={singleCase.car_brand}
+                  readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Sub-model / รุ่นย่อย</label>
-                <input type="text" />
+                <input type="text"
+                value={singleCase.car_sub_model || ""}
+                name="car_sub_model" 
+                readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Car Year / ปีรถ</label>
-                <input type="text" />
+                <input type="text" 
+                 value={singleCase.car_year || ""}
+                 name="car_year"
+                 readOnly
+                 />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Current Finance ไฟแนนซ์เดิม</label>
-                <select
+                <input
                   name="oldFinance"
-                  value={newCase.oldFinance || "DEFAULT"}
+                  value={singleCase.oldFinance || ""}
                   className='browser-default'
-                  onChange={handleChange}
+                 readOnly
                 >
-                  <option value="DEFAULT" disabled>เลือกไฟแนนซ์เดิม </option>
-                  {financeInstitution.map((ct) => <option key={uuid.v4()} value={ct}>{ct}</option>)}
+                 
 
-                </select>
+                </input>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Finance Institution / สถาบันการเงิน</label>
-                <select
-                  name="newFinance"
-                  value={newCase.newFinance || "DEFAULT"}
+                <input
+                  name="new_bank"
+                  value={singleCase.new_bank || ""}
                   className='browser-default'
                   onChange={handleChange}
                 >
-                  <option value="DEFAULT" disabled>เลือกสถาบันการเงิน </option>
-                  {financeInstitution.map((ct) => <option key={uuid.v4()} value={ct}>{ct}</option>)}
-                </select>
+                 
+                </input>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Approved Amount / ยอดจัด </label>
-                <input type="text" />
+                <input type="text"
+                value={singleCase.approve_amount || ""}
+                name="approve_amount"
+                readOnly />
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Close Amount / ยอดปิด </label>
-                <input type="text" />
+                <input type="text" 
+                value ={singleCase.close_amount || ""}
+                name="close_amount" readOnly/>
               </div>
 
-              <div className="col s6 m6 l6 content">
+              <div className="col s6 m6 l6 content-radonly">
                 <label>Down Payment / ยอดดาวน์</label>
-                <input type="text" />
+                <input type="text" 
+                value ={singleCase.down_amount || ""} 
+                name="down_payment" readOnly/>
               </div>
 
 

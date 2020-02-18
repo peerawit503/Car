@@ -49,7 +49,11 @@ const ModalAddF2 = ({ singleCase }) => {
     outside_transfer_fee: "0",
     tax_renewal_fee: "0",
     act_renewal_fee: "0",
-    f2_status: "done"
+    f2_status: "done",
+    cheque : "0",
+    cheque_receiver : "0",
+    deposit_receiver : "0",
+    deposit : "0"
   })
   const [formState, setformState] = useState(1)
   const [newCase, setNewCase] = useState({})
@@ -105,7 +109,7 @@ const ModalAddF2 = ({ singleCase }) => {
   function saveF2() {
     newF2.approve_amount = numberWithCommas(newF2.approve_amount)
     newF2.old_finance_closing_fee = numberWithCommas(newF2.old_finance_closing_fee)
-    newF2.old_finafer_fnce_transee = numberWithCommas(newF2.old_finafer_fnce_transee)
+    newF2.old_finance_transfer_fee = numberWithCommas(newF2.old_finance_transfer_fee)
     newF2.book_closing_fee = numberWithCommas(newF2.book_closing_fee)
     newF2.vat7_fee = numberWithCommas(newF2.vat7_fee)
     newF2.transfer_fee = numberWithCommas(newF2.transfer_fee)
@@ -118,6 +122,10 @@ const ModalAddF2 = ({ singleCase }) => {
     newF2.outside_transfer_fee = numberWithCommas(newF2.outside_transfer_fee)
     newF2.tax_renewal_fee = numberWithCommas(newF2.tax_renewal_fee)
     newF2.act_renewal_fee = numberWithCommas(newF2.act_renewal_fee)
+    newF2.cheque = numberWithCommas(newF2.cheque)
+    newF2.deposit = numberWithCommas(newF2.deposit)
+    newF2.cheque_receiver = newF2.cheque_receiver
+    newF2.act_renewal_fee = newF2.act_renewal_fee
     var data = JSON.stringify(newF2);
     axios.post(`${url}/F2?case_id=${singleCase.case_id}`, data, {
       headers: {
@@ -126,6 +134,7 @@ const ModalAddF2 = ({ singleCase }) => {
     }).then(res => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
+      printPDF();
     })
       .catch(err => console.log(err))
 
@@ -261,11 +270,11 @@ const ModalAddF2 = ({ singleCase }) => {
           <label >จ่ายเป็นเช็ค </label>
           <input
             type="number"
-            min="0"
+            min="1"
             step="any"
-            value={newCase.check_pay || ""}
-            name="check_pay"
-            onChange={handleChange}
+            value={newF2.cheque || singleCase.f2_cheque || ""}
+            name="cheque"
+            onChange={handleChangeF2}
           />
         </div>
 
@@ -276,9 +285,9 @@ const ModalAddF2 = ({ singleCase }) => {
           type="number"
           min="0"
           step="any"
-          value={newCase.pledge_pay || ""}
-          name="pledge_pay"
-          onChange={handleChange}
+          value={newF2.deposit || singleCase.f2_deposit || ""}
+          name="deposit"
+          onChange={handleChangeF2}
         />
       </div>
 
@@ -287,9 +296,9 @@ const ModalAddF2 = ({ singleCase }) => {
         <label >ชื่อผู้รับเช็ค </label>
         <input
           type="text"
-          value={newCase.check_reciever_name || ""}
-          name="check_reciever_name"
-          onChange={handleChange}
+          value={newF2.cheque_receiver || singleCase.f2_cheque_receiver}
+          name="cheque_receiver"
+          onChange={handleChangeF2}
         />
       </div>
 
@@ -301,9 +310,9 @@ const ModalAddF2 = ({ singleCase }) => {
           min="0"
           step="any"
 
-          value={newCase.pledge_reciever_name || ""}
-          name="pledge_reciever_name"
-          onChange={handleChange}
+          value={newF2.cheque_receiver || singleCase.f2_cheque_receiver}
+          name="deposit_receiver"
+          onChange={handleChangeF2}
         />
       </div>);
 
@@ -425,7 +434,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   name="old_finance_closing_fee"
                   onFocus={deletezero}
-                  value={newF2.old_finance_closing_fee || ""}
+                  value={newF2.old_finance_closing_fee ||  singleCase.f2_old_finance_closing_fee || ""}
                   onChange={handleChangeF2}
                   className="validate"
                 />
@@ -438,7 +447,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.old_finance_transfer_fee || ""}
+                  value={newF2.old_finance_transfer_fee ||  singleCase.f2_old_finance_transfer_fee || ""}
                   name="old_finance_transfer_fee"
                   onChange={handleChangeF2}
                 />
@@ -451,7 +460,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.book_closing_fee || ""}
+                  value={newF2.book_closing_fee ||  singleCase.f2_book_closing_fee || ""}
                   name="book_closing_fee"
                   onChange={handleChangeF2}
                 />
@@ -464,7 +473,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.vat7_fee || ""}
+                  value={newF2.vat7_fee ||  singleCase.f2_vat7_fee || ""}
                   name="vat7_fee"
                   onChange={handleChangeF2}
                 />
@@ -477,7 +486,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.discount_fee || ""}
+                  value={newF2.discount_fee ||  singleCase.f2_discount_fee || ""}
                   name="discount_fee"
                   onChange={handleChangeF2}
                 />
@@ -490,7 +499,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   disabled
-                  value={newF2.cartrust_total_cost || ""}
+                  value={newF2.cartrust_total_cost ||  singleCase.f2_cartrust_total_cost || ""}
                   name="cartrust_total_cost"
                 />
               </div>
@@ -506,7 +515,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.car_shield_fee || ""}
+                  value={newF2.car_shield_fee ||  singleCase.f2_car_shield_fee || ""}
                   name="car_shield_fee"
                   onChange={handleChangeF2}
                 />
@@ -519,7 +528,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.car_insurance_fee || ""}
+                  value={newF2.car_insurance_fee ||  singleCase.f2_car_insurance_fee || ""}
                   name="car_insurance_fee"
                   onChange={handleChangeF2}
                 />
@@ -532,7 +541,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.transfer_service_fee || ""}
+                  value={newF2.transfer_service_fee ||  singleCase.f2_transfer_service_fee || ""}
                   name="transfer_service_fee"
                   onChange={handleChangeF2}
                 />
@@ -545,7 +554,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.contract_fee || ""}
+                  value={newF2.contract_fee ||  singleCase.f2_contract_fee || ""}
                   name="contract_fee"
                   onChange={handleChangeF2}
                 />
@@ -559,7 +568,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.outside_transfer_fee || ""}
+                  value={newF2.outside_transfer_fee ||  singleCase.f2_outside_transfer_fee || ""}
                   name="outside_transfer_fee"
                   onChange={handleChangeF2}
                 />
@@ -572,7 +581,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.tax_renewal_fee || ""}
+                  value={newF2.tax_renewal_fee ||  singleCase.f2_tax_renewal_fee || ""}
                   name="tax_renewal_fee"
                   onChange={handleChangeF2}
                 />
@@ -585,7 +594,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.act_renewal_fee || ""}
+                  value={newF2.act_renewal_fee ||  singleCase.f2_act_renewal_fee || ""}
                   name="act_renewal_fee"
                   onChange={handleChangeF2}
                 />
@@ -598,7 +607,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   disabled
-                  value={newCase.new_finance_total_cost || ""}
+                  value={newCase.new_finance_total_cost ||  singleCase.f2_new_finance_total_cost|| "" }
                   name="new_finance_total_cost"
                   onChange={handleChangeF2}
                 />
@@ -609,18 +618,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <h5>Customer payment summary</h5>
               </div>
 
-              <div className="col s6 m4 l4 content">
-                <label >รวมค่าใช้จ่ายทั้งหมด </label>
-                <input
-                  type="number"
-                  min="0"
-                  step="any"
-                  disabled
-                  value={newCase.total_cost || ""}
-                  name="total_cost"
-
-                />
-              </div>
+             
 
 
               <div className="col s6 m4 l4 content">
@@ -629,22 +627,21 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-
-                  value={newCase.recieve_amount || ""}
-                  name="recieve_amount"
+                  value={newCase.amount_received ||  singleCase.f2_amount_received || ""}
+                  name="amount_received"
                   onChange={handleChange}
                 />
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label >จ่ายเป็นเงินสด </label>
+                <label >จ่ายเป็นเงินสดให้ ธนาคาร </label>
                 <input
                   type="number"
                   min="0"
                   step="any"
 
-                  value={newCase.cash_pay || ""}
-                  name="cash_pay"
+                  value={newCase.old_finance_total_cost ||  singleCase.f2_old_finance_total_cost || ""}
+                  name="old_finance_total_cost"
                   onChange={handleChange}
                 />
               </div>
@@ -656,9 +653,22 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
 
-                  value={newCase.bank_transfer || ""}
-                  name="bank_transfer"
+                  value={newCase.old_finance_total_cost ||  singleCase.f2_old_finance_total_cost|| "" }
+                  name="old_finance_total_cost"
                   onChange={handleChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label >รวมค่าใช้จ่ายทั้งหมด </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  disabled
+                  value={newCase.total_cost ||  singleCase.f2_total_cost || ""}
+                  name="total_cost"
+
                 />
               </div>
 
@@ -675,7 +685,7 @@ const ModalAddF2 = ({ singleCase }) => {
 
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()} >close</button>
           {/* <button className="waves-effect btn orange black-text right " onClick={ resetForm } style={ { marginRight: '10px' ,marginLeft: '10px' } }>reset</button> */}
-          <button className="waves-effect btn blue lighten right " onClick={() => printPDF()}>Save</button>
+          <button className="waves-effect btn blue lighten right " onClick={() => saveF2()}>Save</button>
 
         </div>
       </div>

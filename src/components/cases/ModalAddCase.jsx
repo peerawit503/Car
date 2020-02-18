@@ -24,7 +24,7 @@ const ModalAddCase = ({ customers }) => {
     finance_staff: "",
     case_type: "  ",
     case_receiver: "",
-    case_source: " ",
+    case_source: "",
     job_id: "",
     down_amount: "",
     approve_amount: "",
@@ -62,7 +62,7 @@ const ModalAddCase = ({ customers }) => {
     cheque_receiver : "",
     deposit_receiver : ""
   })
-
+  
   const [customer, setCustomer] = useState({
     firstname: "",
     lastname: "",
@@ -80,18 +80,71 @@ const ModalAddCase = ({ customers }) => {
     province: "",
     post_code: ""
   })
-
+  function doint(){
+    setNewCase({user_id: userId,
+      customer_id: "",
+      document_id: "",
+      old_bank: "",
+      new_bank: "",
+      status: "receive",
+      note_status: "",
+      team: "",
+      contract_officer: "",
+      finance_staff: "",
+      case_type: "  ",
+      case_receiver: "",
+      case_source: "",
+      job_id: "",
+      down_amount: "",
+      approve_amount: "",
+      close_amount: "",
+      case_status: "ติดต่อลูกค้าไม่ได้",
+  
+      car_name: "",
+      car_brand: "",
+      car_model: "",
+      car_sub_model: "",
+      car_year: "",
+      car_license: "",
+      car_province: "",
+      car_detail: "",
+      take_car_picture: "",
+      car_license_book_picture: "",
+      license_id_picture: "",
+  
+      old_finance_closing_fee: "",
+      old_finance_transfer_fee: "",
+      book_closing_fee: "",
+      vat7_fee: "",
+      transfer_fee: "",
+      duty_fee: "",
+      discount_fee: "",
+      car_shield_fee: "",
+      car_insurance_fee: "",
+      transfer_service_fee: "",
+      contract_fee: "",
+      outside_transfer_fee: "",
+      tax_renewal_fee: "",
+      act_renewal_fee: "",
+      f2_status: null,
+      cheque : "",
+      cheque_receiver : "",
+      deposit_receiver : ""})
+  }
   const [formState, setformState] = useState(1)
-
+  const [totalCost, setTotalCost] = useState(0)
   const [bank, setBank] = useState({ b1: true, b2: false })
   const [difference, setDifference] = useState({ d1: true, d2: false })
   const handleChange = (e) => {
-    setNewCase({ ...newCase, [e.target.name]: e.target.value })
-    setNewCase({ ...newCase, [e.target.name]: e.target.value })
+    setNewCase({ ...newCase, [e.target.name]: e.target.value  })
+    // setNewCase({ ...newCase, [e.target.name]: e.target.value  })
+    console.log(newCase);
+    setTotalCost((parseInt(newCase.old_finance_closing_fee?newCase.old_finance_closing_fee:0) + parseInt(newCase.old_finance_transfer_fee?newCase.old_finance_transfer_fee:0) + parseInt(newCase.book_closing_fee?newCase.book_closing_fee:0) ))
+    
 
   }
   useEffect(() => {
-
+  
   })
 
   const handleChangeCustomer = (e) => setCustomer({ ...customer, [e.target.name]: e.target.value })
@@ -504,8 +557,8 @@ const ModalAddCase = ({ customers }) => {
           <div className="col s6 m4 l4 content">
             <label >Case Source / รับเคสจาก</label>
             <select
-              name='case_receiver'
-              value={newCase.case_receiver || 'DEFAULT'}
+              name='case_source'
+              value={newCase.case_source || 'DEFAULT'}
               onChange={handleChange}
               type="text"
               className="browser-default" >
@@ -874,9 +927,10 @@ const ModalAddCase = ({ customers }) => {
               type="number"
               min="0"
               step="any"
-              value={newCase.cartrust_total_cost || ""}
+              readOnly
+              value={totalCost || ""}
               name="cartrust_total_cost"
-              onChange={handleChange}
+              
             />
           </div>
 
@@ -988,20 +1042,6 @@ const ModalAddCase = ({ customers }) => {
           </div>
 
           <div className="col s6 m4 l4 content">
-            <label >รวมค่าใช้จ่ายทั้งหมด </label>
-            <input
-              type="number"
-              min="0"
-              step="any"
-              disabled
-              value={newCase.total_cost || ""}
-              name="total_cost"
-
-            />
-          </div>
-
-
-          <div className="col s6 m4 l4 content">
             <label >ยอดเงินที่จะได้รับ </label>
             <input
               type="number"
@@ -1037,6 +1077,19 @@ const ModalAddCase = ({ customers }) => {
               value={newCase.bank_transfer || ""}
               name="bank_transfer"
               onChange={handleChange}
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label >รวมค่าใช้จ่ายทั้งหมด </label>
+            <input
+              type="number"
+              min="0"
+              step="any"
+              disabled
+              value={newCase.total_cost || ""}
+              name="total_cost"
+
             />
           </div>
 

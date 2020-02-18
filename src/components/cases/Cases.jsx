@@ -156,6 +156,15 @@ const Cases = () => {
     // setCustomers(customerData.message);
   }
 
+  const filter = (filter,value) =>{
+    axios.get(`${url}/search_case?parameter=${filter}&value=${value}`)
+      .then(res => {
+  console.log(res.data.message)
+  setCases(res.data.message)
+      })
+      .catch(err => console.log(err))
+
+  }
   const saveNewCase = (newCase,customer) => {
     // var data = setNewCase({...newCase,car_license:c})
     // console.log(JSON.stringify(newCase));
@@ -194,7 +203,7 @@ const Cases = () => {
     if(pDate == null){
       return " ";
     }else{
-return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[3])
+      return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[3])
     }
     
   }
@@ -294,12 +303,12 @@ return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-    console.log("#######################")
-    console.log(statusDate(caseInRow));
-    console.log(caseInRow[statusDateString]);
-    console.log(datetomow);
-    console.log(kpi[alertOrange]);
-    console.log(kpi[alertRed]);
+    // console.log("#######################")
+    // console.log(statusDate(caseInRow));
+    // console.log(caseInRow[statusDateString]);
+    // console.log(datetomow);
+    // console.log(kpi[alertOrange]);
+    // console.log(kpi[alertRed]);
     
 
     // console.log(caseInRow[statusString])
@@ -320,11 +329,31 @@ return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[
       }
     }
     
-
+    
     return result;
   }
 
 
+  function caseStatusShift(state){
+    let nextstate = "";
+    if(state === 'receive'){ nextstate = 'contact_customer'}
+    else if(state === 'contact_customer'){nextstate = 'account_closing'}
+    else if(state === 'account_closing'){nextstate = 'transfer_doc_received'}
+    else if(state === 'transfer_doc_received'){nextstate = 'transfer_doc_submitted'}
+    else if(state === 'transfer_doc_submitted'){nextstate = 'book_received'}
+    else if(state === 'book_received'){nextstate = 'submit_book_transfer'}
+    else if(state === 'submit_book_transfer'){nextstate = 'car_check_up'}
+    else if(state === 'car_check_up'){nextstate = 'book_transfer'}
+    else if(state === 'book_transfer'){nextstate = 'book_copy_received'}
+    else if(state === 'book_copy_received'){nextstate = 'deposit_doc_to_new_bank'}
+    else if(state === 'deposit_doc_to_new_bank'){nextstate = 'submit_book_deposit_return'}
+    else if(state === 'submit_book_deposit_return'){nextstate = 'book_received_back'}
+    else if(state === 'book_received_back'){nextstate = 'cash_received'}
+    else if(state === 'cash_received'){nextstate = 'book_deposit_received'}
+    else if(state === 'book_deposit_received'){nextstate = 'submit_book_to_new_finance'}
+    else if(state === 'submit_book_to_new_finance'){nextstate = 'book_deposit_received'}
+    return nextstate;
+  }
 
   return (
     <>
@@ -347,6 +376,8 @@ return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[
 
             </div>
 
+            
+
             <div className="new-button col m1">
               <div className="new-button-iner">
                   <a className="btn modal-trigger tde-g" href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} >Excel</a>
@@ -360,6 +391,14 @@ return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[
                 <input placeholder="Search term" />
                 <span className="fa fa-search"></span>
               </div>
+            </div>
+
+            <div className="new-button col m12">
+              <div className="new-button-iner">
+                <a className="btn tde" href="#" onClick={() => filter('status','contact_customer')} >Filter contact_customer</a>
+                 
+              </div>
+
             </div>
 
           </div>

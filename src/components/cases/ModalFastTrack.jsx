@@ -42,7 +42,7 @@ const ModalFastTrack = ({ singleCase }) => {
 
   function ValidateCase(props) {
     // if in case 3 transfer_doc_received and F2_status ===null
-    if (props.singleCase.status === 'transfer_doc_received' && props.singleCase.F2_status === null) {
+    if (props.singleCase.status === 'account_closing' && props.singleCase.F2_status === null) {
       console.log(props.singleCase.F2_status);
       console.log(props.singleCase.contact_customer_date);
      
