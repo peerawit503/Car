@@ -1,5 +1,5 @@
 .modal-content-override{
-    height: calc(100% - 100px) !important;
+    height: calc(100%) !important;
 }
 
 .element {
@@ -10,7 +10,10 @@
 
   }
 
-
+.modal90height{
+    height:90%!important;
+    max-height:90%!important;
+}
   .highlight {
     opacity: 0.5;
   }
@@ -70,10 +73,11 @@
 }
 
 .summaryIcon{
-    width: 50px;
+    width: 2em;
+    height: 2em;
 }
 .summaryIcon-div{
-    width: 50px;
+    width: 2em;
     border-radius: 50%;
     
 }
