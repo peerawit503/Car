@@ -133,16 +133,16 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
   return (
     <div>
-      <div id="modalSummary" className="modal modal-fixed-footer">
+      <div id="modalSummary" className="modal modal-fixed-footer modal90height">
 
-        <div className="navbar-fixed">
-          <nav className="no-padding-left nav-noclor">
-            <div className="nav-wrapper">
+        {/* <div className="navbar-fixed"> */}
+          {/* <nav className="no-padding-left nav-noclor"> */}
+            {/* <div className="nav-wrapper">
               <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
               <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-            </div>
-          </nav>
-        </div>
+            </div> */}
+          {/* </nav> */}
+        {/* </div> */}
 
         <div className="modal-content modal-content-override">
           <div className="row ">
@@ -348,195 +348,195 @@ const ModalSummary = ({ singleCase , kpi}) => {
             {/* summaryIcon-div col s3 m3 */}
             <div className="row content col m4">
               <div className="row">
-                <div className="col s3 m3">
+                <div className="col s3 m1">
                   <div className={singleCase.receive_date != null ? "summaryIcon-div green" : "summaryIcon-div gray"}>
                     <img src={confirm} className="summaryIcon" alt="fireSpot" />
                   </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  รับเคส{' '}:{'    '}
+                  1.รับเคส{' '}:{'    '}
                   {dateTimeFormatted(singleCase.receive_date) || ''}
                 </div>
 
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.receive_date, singleCase.contact_customer_date,"contact_customer")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ติดต่อลูกค้า{' '}:{'    '}
+                  2.ติดต่อลูกค้า{' '}:{'    '}
                   {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.contact_customer_date, singleCase.account_closing_date,"account_closing")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ปิดเล่ม{' '}:{'    '}
+                  3.ปิดเล่ม{' '}:{'    '}
                   {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"transfer_doc_received")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  รับชุดโอน{' '}:{'    '}
+                  4.รับชุดโอน{' '}:{'    '}
                   {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date) || ''}
                 </div>
               </div>
 
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date , "transfer_doc_submitted")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ยื่นชุดโอน{' '}:{'    '}
+                  5.ยื่นชุดโอน{' '}:{'    '}
                   {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"book_received")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ได้รับเล่ม{' '}:{'    '}
+                  6.ได้รับเล่ม{' '}:{'    '}
                   {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"submit_book_transfer")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ส่งงานโอนทะเบียน{' '}:{'    '}
+                  7.ส่งงานโอนทะเบียน{' '}:{'    '}
                   {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"car_check_up")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ตรวจสภาพรถ{' '}:{'    '}
+                  8.ตรวจสภาพรถ{' '}:{'    '}
                   {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"book_transfer")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  โอนเล่มทะเบียน{' '}:{'    '}
+                  9.โอนเล่มทะเบียน{' '}:{'    '}
                   {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_copy_received")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  รับสำเนาเล่ม{' '}:{'    '}
+                  10.รับสำเนาเล่ม{' '}:{'    '}
                   {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"deposit_doc_to_new_bank")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:{'    '}
+                  11.ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:{'    '}
                   {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"submit_book_deposit_return")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ทำเรื่องเบิกมัดจำคืน{' '}:{'    '}
+                  12.ทำเรื่องเบิกมัดจำคืน{' '}:{'    '}
                   {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"book_received_back")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  รับเล่มคืน{' '}:{'    '}
+                  13.รับเล่มคืน{' '}:{'    '}
                   {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.cash_received_date,"cash_received")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  เงินเข้าบัญชีคาร์ทรัส{' '}:{'    '}
+                  14.เงินเข้าบัญชีคาร์ทรัส{' '}:{'    '}
                   {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"book_deposit_received")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  เงินมัดจำคืนเข้าบัญชี{' '}:{'    '}
+                  15.เงินมัดจำคืนเข้าบัญชี{' '}:{'    '}
                   {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date) || ''}
                 </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m3">
+              <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"submit_book_to_new_finance")}>
                   <img src={confirm} className="summaryIcon" alt="fireSpot" />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
-                  ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:{'    '}
+                  16.ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:{'    '}
                   {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date) || ''}
                 </div>
               </div>
