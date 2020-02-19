@@ -35,26 +35,26 @@ pdfMake.fonts = {
 
 const ModalAddF2 = ({ singleCase }) => {
   const [newF2, setNewF2] = useState({
-    approve_amount: "0",
-    old_finance_closing_fee: "0",
-    old_finance_transfer_fee: "0",
-    book_closing_fee: "0",
-    vat7_fee: "0",
-    transfer_fee: "0",
-    duty_fee: "0",
-    discount_fee: "0",
-    car_shield_fee: "0",
-    car_insurance_fee: "0",
-    transfer_service_fee: "0",
-    contract_fee: "0",
-    outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
+    approve_amount: singleCase.approve_amount?singleCase.approve_amount:"0",
+    old_finance_closing_fee: singleCase.f2_old_finance_closing_fee?singleCase.f2_old_finance_closing_fee:"0",
+    old_finance_transfer_fee: singleCase.f2_old_finance_transfer_fee?singleCase.f2_old_finance_transfer_fee:"0",
+    book_closing_fee: singleCase.f2_book_closing_fee?singleCase.f2_book_closing_fee:"0",
+    vat7_fee: singleCase.f2_vat7_fee?singleCase.f2_vat7_fee:"0",
+    transfer_fee: singleCase.f2_transfer_fee?singleCase.f2_transfer_fee:"0",
+    duty_fee: singleCase.f2_duty_fee?singleCase.f2_duty_fee:"0",
+    discount_fee: singleCase.f2_discount_fee?singleCase.f2_discount_fee:"0",
+    car_shield_fee: singleCase.f2_car_shield_fee?singleCase.f2_car_shield_fee:"0",
+    car_insurance_fee: singleCase.f2_car_insurance_fee?singleCase.f2_car_insurance_fee:"0",
+    transfer_service_fee: singleCase.f2_transfer_service_fee?singleCase.f2_transfer_service_fee:"0",
+    contract_fee: singleCase.f2_contract_fee?singleCase.f2_contract_fee:"0",
+    outside_transfer_fee: singleCase.f2_outside_transfer_fee?singleCase.f2_outside_transfer_fee:"0",
+    tax_renewal_fee: singleCase.f2_tax_renewal_fee?singleCase.f2_tax_renewal_fee:"0",
+    act_renewal_fee: singleCase.f2_act_renewal_fee?singleCase.f2_act_renewal_fee:"0",
     f2_status: "done",
-    cheque: "0",
-    cheque_receiver: "0",
-    deposit_receiver: "0",
-    deposit: "0"
+    cheque: singleCase.f2_cheque?singleCase.f2_cheque:"0",
+    cheque_receiver: singleCase.f2_cheque_receiver?singleCase.f2_cheque_receiver:"0",
+    deposit_receiver: singleCase.f2_deposit_receiver?singleCase.f2_deposit_receiver:"0",
+    deposit: singleCase.f2_deposit?singleCase.f2_deposit:"0"
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -69,7 +69,9 @@ const ModalAddF2 = ({ singleCase }) => {
   });
 
   var summary = 0;
-  useEffect(() => {});
+  useEffect(() => {
+    
+  });
   function setCartrustCost() {
     var summary =
       parseInt(newF2.old_finance_closing_fee) +
@@ -139,6 +141,7 @@ const ModalAddF2 = ({ singleCase }) => {
     newF2.cheque_receiver = newF2.cheque_receiver;
     newF2.act_renewal_fee = newF2.act_renewal_fee;
     var data = JSON.stringify(newF2);
+    console.log('data',data)
     axios
       .post(`${url}/F2?case_id=${singleCase.case_id}`, data, {
         headers: {
@@ -458,7 +461,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 parseInt(newF2.outside_transfer_fee) +
                 parseInt(newF2.tax_renewal_fee) +
                 parseInt(newF2.act_renewal_fee) -
-                singleCase.approve_amount
+                parseInt(newF2.approve_amount)
             },
             { width: 25, text: `บาท` },
             ``
@@ -542,7 +545,7 @@ const ModalAddF2 = ({ singleCase }) => {
             type="number"
             min="1"
             step="any"
-            value={newF2.cheque || singleCase.f2_cheque || ""}
+            value={newF2.cheque ||  ""}
             name="cheque"
             onChange={handleChangeF2}
           />
@@ -555,7 +558,7 @@ const ModalAddF2 = ({ singleCase }) => {
             type="number"
             min="0"
             step="any"
-            value={newF2.deposit || singleCase.f2_deposit || ""}
+            value={newF2.deposit ||  ""}
             name="deposit"
             onChange={handleChangeF2}
           />
@@ -566,7 +569,7 @@ const ModalAddF2 = ({ singleCase }) => {
           <label>ชื่อผู้รับเช็ค </label>
           <input
             type="text"
-            value={newF2.cheque_receiver || singleCase.f2_cheque_receiver}
+            value={newF2.cheque_receiver }
             name="cheque_receiver"
             onChange={handleChangeF2}
           />
@@ -579,7 +582,7 @@ const ModalAddF2 = ({ singleCase }) => {
             type="text"
             min="0"
             step="any"
-            value={newF2.cheque_receiver || singleCase.f2_cheque_receiver}
+            value={newF2.cheque_receiver }
             name="deposit_receiver"
             onChange={handleChangeF2}
           />
@@ -755,6 +758,21 @@ const ModalAddF2 = ({ singleCase }) => {
                       />
                     </label>
                   </span>
+                <span className="col s12 m12">
+                <label>approve Amount / ยอดจัด</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  value={
+                    newF2.approve_amount ||
+                    
+                    ""
+                  }
+                  name="approve_amount"
+                  onChange={handleChangeF2}
+                />
+              </span>
                 </div>
               </div>
               <div className="col s12 m12  head-section no-col-padding">
@@ -770,7 +788,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.old_finance_closing_fee ||
-                    singleCase.f2_old_finance_closing_fee ||
+                    
                     ""
                   }
                   onChange={handleChangeF2}
@@ -787,7 +805,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.old_finance_transfer_fee ||
-                    singleCase.f2_old_finance_transfer_fee ||
+           
                     ""
                   }
                   name="old_finance_transfer_fee"
@@ -804,7 +822,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.book_closing_fee ||
-                    singleCase.f2_book_closing_fee ||
+                  
                     ""
                   }
                   name="book_closing_fee"
@@ -819,7 +837,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.vat7_fee || singleCase.f2_vat7_fee || ""}
+                  value={newF2.vat7_fee || ""}
                   name="vat7_fee"
                   onChange={handleChangeF2}
                 />
@@ -832,7 +850,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.discount_fee || singleCase.f2_discount_fee || ""}
+                  value={newF2.discount_fee ||  ""}
                   name="discount_fee"
                   onChange={handleChangeF2}
                 />
@@ -870,7 +888,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   onFocus={deletezero}
                   value={
-                    newF2.car_shield_fee || singleCase.f2_car_shield_fee || ""
+                    newF2.car_shield_fee || ""
                   }
                   name="car_shield_fee"
                   onChange={handleChangeF2}
@@ -886,7 +904,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.car_insurance_fee ||
-                    singleCase.f2_car_insurance_fee ||
+                  
                     ""
                   }
                   name="car_insurance_fee"
@@ -903,7 +921,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.transfer_service_fee ||
-                    singleCase.f2_transfer_service_fee ||
+                  
                     ""
                   }
                   name="transfer_service_fee"
@@ -918,7 +936,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.contract_fee || singleCase.f2_contract_fee || ""}
+                  value={newF2.contract_fee || ""}
                   name="contract_fee"
                   onChange={handleChangeF2}
                 />
@@ -933,7 +951,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   onFocus={deletezero}
                   value={
                     newF2.outside_transfer_fee ||
-                    singleCase.f2_outside_transfer_fee ||
+                 
                     ""
                   }
                   name="outside_transfer_fee"
@@ -949,7 +967,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   onFocus={deletezero}
                   value={
-                    newF2.tax_renewal_fee || singleCase.f2_tax_renewal_fee || ""
+                    newF2.tax_renewal_fee || ""
                   }
                   name="tax_renewal_fee"
                   onChange={handleChangeF2}
@@ -964,7 +982,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   onFocus={deletezero}
                   value={
-                    newF2.act_renewal_fee || singleCase.f2_act_renewal_fee || ""
+                    newF2.act_renewal_fee ||  ""
                   }
                   name="act_renewal_fee"
                   onChange={handleChangeF2}
@@ -1004,7 +1022,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   value={
                     newCase.amount_received ||
-                    singleCase.f2_amount_received ||
+                    
                     ""
                   }
                   name="amount_received"
@@ -1020,7 +1038,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   value={
                     newCase.old_finance_total_cost ||
-                    singleCase.f2_old_finance_total_cost ||
+                    
                     ""
                   }
                   name="old_finance_total_cost"
@@ -1036,7 +1054,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   step="any"
                   value={
                     newCase.old_finance_total_cost ||
-                    singleCase.f2_old_finance_total_cost ||
+               
                     ""
                   }
                   name="old_finance_total_cost"
@@ -1051,7 +1069,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   disabled
-                  value={newCase.total_cost || singleCase.f2_total_cost || ""}
+                  value={newCase.total_cost || ""}
                   name="total_cost"
                 />
               </div>
