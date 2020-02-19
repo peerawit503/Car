@@ -14,6 +14,7 @@ import axios from 'axios';
 import uuid from "uuid"
 import M from 'materialize-css/dist/js/materialize.min.js'
 
+import MaterialTable from 'material-table';
 /* modify*/
 import '../table.css';
 import './style.css';
@@ -45,8 +46,9 @@ const Cases = () => {
     starDate: '',
     endDate: ""
   })
-
+ 
   const [textSearch, setTextSearch] = useState('')
+  const [isLoading, setisLoading] = useState(true)
 
   // page
   const [currPage, setCurrPage] = useState(1)
@@ -83,6 +85,7 @@ const Cases = () => {
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
+        setisLoading(false);
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
@@ -194,6 +197,7 @@ const Cases = () => {
       .catch(err => { console.log(err) })
 
   }
+
 
   function statusDate(c){
     var DateString = c.status + '_date';
@@ -386,26 +390,29 @@ const Cases = () => {
 
             </div>
 
-            <div className="input-field col s12 m3">
+            {/* <div className="input-field col s12 m3">
               <div className="search">
                 <input placeholder="Search term" />
                 <span className="fa fa-search"></span>
               </div>
-            </div>
-
+            </div> */}
+  
             {/* <div className="new-button col m12">
               <div className="new-button-iner">
                 <a className="btn tde" href="#" onClick={() => filter('status','contact_customer')} >Filter contact_customer</a>
+                 
+              </div>
+              <div className="new-button-iner">
+                <a className="btn tde" href="#" onClick={() => filter('status','submit_book_to_new_finance')} >Filter submit_book_to_new_finance</a>
                  
               </div>
             </div> */}
 
           </div>
 
-
           {/* TABALE */}
           <div className="row">
-            <table className="responsive-table">
+            {/* <table className="responsive-table">
               <TheadCase />
               <tbody className="no-padding">
                 {cases.map(c => (
@@ -421,16 +428,72 @@ const Cases = () => {
                     <td >{c.new_bank}</td>
 
                     <td >
-                      {/* <a href="#modalTracking"  className="modal-trigger" onClick={ () => handleSingleCase(c) }> <img  src={sumary} className="png-icon" alt="sumary-icon"/></a> */}
+                      <a href="#modalTracking"  className="modal-trigger" onClick={ () => handleSingleCase(c) }> <img  src={sumary} className="png-icon" alt="sumary-icon"/></a>
                       <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(c)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
 
                       <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(c)}><img src={confirm} className="png-icon" alt="confirm-icon" /></a>
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
+              </tbody> 
+            </table>*/}
             <br />
+            <MaterialTable
+                title="Case"
+                columns={[
+                  {
+                    title: '',
+                    render: rowData => <div style={{width: 50, borderRadius: '10%'}}>{displayStarRating(rowData)}</div>
+                  }, 
+                  { title: 'id', field: 'id' },
+                  { title: 'name', field: 'name' },
+                  {
+                    title: 'Customers Name',
+                    field: 'status_date',
+                    render: rowData => <div>{statusDate(rowData)}</div>
+                  }, 
+                
+                  { title: 'Last Update', field: 'status', 
+                  lookup: {
+                    'receive': 'receive',
+                    'contact_customer': 'contact_customer',
+                    'account_closing':'account_closing',
+                    'transfer_doc_received':'transfer_doc_received',
+                    'transfer_doc_submitted':'transfer_doc_submitted',
+                    'book_received':'book_received',
+                    'submit_book_transfer':'submit_book_transfer',
+                    'car_check_up':'car_check_up',
+                    'book_transfer':'book_transfer',
+                    'book_copy_received':'book_copy_received',
+                    'deposit_doc_to_new_bank':'deposit_doc_to_new_bank',
+                    'submit_book_deposit_return':'submit_book_deposit_return',
+                    'book_received_back':'book_received_back',
+                    'cash_received':'cash_received',
+                    'book_deposit_received':'book_deposit_received',
+                    'submit_book_to_new_finance':'submit_book_to_new_finance',
+                   },},
+                  { title: 'Case Soure', field: 'case_source'},
+                  { title: 'JOB No', field: 'job_id'},
+                  { title: 'car_license', field: 'car_license'},
+                  { title: 'New Finance', field: 'new_bank'},{
+                    title: '',
+                    render: rowData => 
+                    <div> 
+                      <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
+                      <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(rowData)}><img src={confirm} className="png-icon" alt="confirm-icon" /></a>
+                    </div>
+                  }, 
+                ]}
+                isLoading={isLoading}
+                data={cases}        
+                options={{
+                  filtering: true,
+                  pageSize: 10,
+                  pageSizeOptions:[10,20,50],
+                }}
+              />
+
+{/* 
             <div>
               <ul className="pagination">
                 <li className={'disabled'}><a href="#!"><i className="material-icons" onClick={prevPage}>chevron_left</i></a></li>
@@ -438,7 +501,7 @@ const Cases = () => {
 
                 <li className={'disabled'}><a href="#!"><i className="material-icons" onClick={nextPage}>chevron_right</i></a></li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           <ModalAddNote singleCase={singleCase} />
