@@ -155,7 +155,7 @@ const ModalAddCase = () => {
                 </select>
               </div>
               <div className="col s12 m6 l2 ">
-                <label>Bran / ยี่ห้อ</label>
+                <label>Brand / ยี่ห้อ</label>
                 <input type="text" />
               </div>
               <div className="col s12 m6 l2 ">

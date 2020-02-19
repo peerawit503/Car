@@ -264,7 +264,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Bran / ยี่ห้อ</label>
+                <label>Brand / ยี่ห้อ</label>
                 <input type="text"
                   value={singleCase.car_brand}
                   readOnly />
@@ -298,11 +298,10 @@ const ModalSummary = ({ singleCase , kpi}) => {
                 <label>Current Finance ไฟแนนซ์เดิม</label>
                 <input
                   name="oldFinance"
-                  value={singleCase.oldFinance || ""}
+                  value={singleCase.old_bank || ""}
                   className='browser-default'
                  readOnly
                 >
-                 
 
                 </input>
               </div>

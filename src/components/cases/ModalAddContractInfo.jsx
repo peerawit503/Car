@@ -407,7 +407,7 @@ const ModalContractInfo = ({ singleCase }) => {
 
 
           <div className="col s6 m4 l4 content">
-            <label>Bran / ยี่ห้อ</label>
+            <label>Brand / ยี่ห้อ</label>
             <input
               type="text"
               name="car_brand"

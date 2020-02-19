@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "apexcharts": "^3.15.2",
     "axios": "^0.19.1",
+    "gulp": "^4.0.2",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
     "pdfmake": "^0.1.64",

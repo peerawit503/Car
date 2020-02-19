@@ -139,7 +139,7 @@ const ModalRead = ({ customer }) => {
             </div>
 
             <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="district">เขต1</label>
+              <label htmlFor="district">เขต</label>
               <input
                 type="text"
                 name="district"
@@ -149,7 +149,7 @@ const ModalRead = ({ customer }) => {
             </div>
 
             <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="district2">เขต2</label>
+              <label htmlFor="district2">แขวง</label>
               <input
                 type="text"
                 name="district2"
@@ -169,7 +169,7 @@ const ModalRead = ({ customer }) => {
             </div>
 
             <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="post_code">รหัสไปรษณี</label>
+              <label htmlFor="post_code">รหัสไปรษณีย์</label>
               <input
                 type="text"
                 name="post_code"

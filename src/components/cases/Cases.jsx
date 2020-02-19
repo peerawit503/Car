@@ -393,13 +393,12 @@ const Cases = () => {
               </div>
             </div>
 
-            <div className="new-button col m12">
+            {/* <div className="new-button col m12">
               <div className="new-button-iner">
                 <a className="btn tde" href="#" onClick={() => filter('status','contact_customer')} >Filter contact_customer</a>
                  
               </div>
-
-            </div>
+            </div> */}
 
           </div>
 
