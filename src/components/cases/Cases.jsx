@@ -372,7 +372,7 @@ const Cases = () => {
             <div className="col s12 m6">
               <h3>Cases : <span className="chip  orange">{totalCase}</span></h3>
             </div>
-            <div className="new-button col m2">
+            <div className="new-button col m5">
               <div className="new-button-iner">
                 <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
                  
@@ -443,7 +443,7 @@ const Cases = () => {
                 columns={[
                   {
                     title: '',
-                    render: rowData => <div style={{width: 50, borderRadius: '10%'}}>{displayStarRating(rowData)}</div>
+                    render: rowData => <div style={{width: 10, borderRadius: '50%'}}>{displayStarRating(rowData)}</div>
                   }, 
                   { title: 'id', field: 'id' },
                   { title: 'name', field: 'name' },
@@ -490,6 +490,7 @@ const Cases = () => {
                   filtering: true,
                   pageSize: 10,
                   pageSizeOptions:[10,20,50],
+                  exportButton:true
                 }}
               />
 
