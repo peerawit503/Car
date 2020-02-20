@@ -102,7 +102,8 @@ const ModalFastTrack = ({ singleCase }) => {
           <div className="row">
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
-                <h4>Fast Track : {singleCase.job_id}</h4>
+                <h4>Fast Track : {singleCase.job_id}</h4><br/>
+                <h5>Case Status : {singleCase.status}</h5>
               </div>
             </div>
           </div>
