@@ -21,7 +21,25 @@ const ModalSummary = ({ singleCase , kpi}) => {
   const handleChange = (e) => {
     setNewCase({ ...newCase, [e.target.name]: e.target.value })
   }
+  
+  function summaryCaseTime(reciveD ,caseS){
+  
+    if(caseS == null){
 
+      return "";
+    }else{
+      let lessThan = parseStringToDate(caseS)
+      var moreThan = parseStringToDate(reciveD);
+
+      return (Math.floor((lessThan - moreThan) / (24 * 3600 * 1000)));
+    }
+   
+  }
+
+
+  function statusTodate(cStatus){
+    return cStatus+'_date';
+  }
   function parseStringToDate(sringDate) {
     var mountCaracterString = sringDate.split(" ")[2];
     var dayString = sringDate.split(" ")[1];
@@ -72,6 +90,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
     return newDate;
   }
+
   function dateFormated(date){
     if(date == null){
       return null;
@@ -135,14 +154,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
     <div>
       <div id="modalSummary" className="modal modal-fixed-footer modal90height">
 
-        {/* <div className="navbar-fixed"> */}
-          {/* <nav className="no-padding-left nav-noclor"> */}
-            {/* <div className="nav-wrapper">
-              <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
-              <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-            </div> */}
-          {/* </nav> */}
-        {/* </div> */}
+
 
         <div className="modal-content modal-content-override">
           <div className="row ">
@@ -345,8 +357,16 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
 
             </div>
-            {/* summaryIcon-div col s3 m3 */}
+            {/* summaryCaseTime */}
             <div className="row content col m4">
+
+            <div className="row">
+                <div className="col s12 m12">
+                <h6> ระยะเวลาที่เคสอยู่ในระบบ {summaryCaseTime(singleCase.receive_date, singleCase[statusTodate(singleCase.status)])} วัน </h6>  
+                </div>
+              </div>
+
+
               <div className="row">
                 <div className="col s3 m1">
                   <div className={singleCase.receive_date != null ? "summaryIcon-div green" : "summaryIcon-div gray"}>

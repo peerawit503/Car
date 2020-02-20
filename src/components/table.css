@@ -151,6 +151,7 @@ input[type=number] {
 .crop{
     padding: 0 !important;
     width: 100%;
+   margin-bottom: 0px !important;
 }
 /* .Li:hover{
     background-color: #F07124 !important;
