@@ -10,9 +10,10 @@
 
   }
 
-.modal90height{
+.modal{
     height:90%!important;
     max-height:90%!important;
+    top:5%!important;
 }
   .highlight {
     opacity: 0.5;
