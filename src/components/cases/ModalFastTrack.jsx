@@ -79,7 +79,27 @@ const ModalFastTrack = ({ singleCase }) => {
     return null
   }
 
-
+  function translate(state){
+    var trans = '';
+    if(state === 'receive'){ trans = '1.วันที่รับเคส';}
+    else if(state === 'contact_customer'){trans = '2.วันที่ติดต่อลูกค้า'}
+    else if(state === 'account_closing'){trans = '3.วันที่ปิดเล่ม'}
+    else if(state === 'transfer_doc_received'){trans = '4.วันรับชุดโอน'}
+    else if(state === 'transfer_doc_submitted'){trans = '5.วันยื่นชุดโอน'}
+    else if(state === 'book_received'){trans = '6.วันที่ได้รับเล่ม'}
+    else if(state === 'submit_book_transfer'){trans = '7.วันที่ส่งงานโอนทะเบียน'}
+    else if(state === 'car_check_up'){trans = '8.วันตรวจสภาพรถ'}
+    else if(state === 'book_transfer'){trans = '9.โอนเล่มทะเบียน'}
+    else if(state === 'book_copy_received'){trans = '10.รับสำเนาเล่ม'}
+    else if(state === 'deposit_doc_to_new_bank'){trans = '11.ส่งเอกสารเบิกเงินธนาคารใหม่'}
+    else if(state === 'submit_book_deposit_return'){trans = '12.ทำเรื่องเบิกมัดจำคืน'}
+    else if(state === 'book_received_back'){trans = '13.รับเล่มคืน'}
+    else if(state === 'cash_received'){trans = '14.เงินเข้าบัญชีคาร์ทรัส'}
+    else if(state === 'book_deposit_received'){trans = '15.เงินมัดจำคืนเข้าบัญชี'}
+    else if(state === 'submit_book_to_new_finance'){trans = '16.ส่งเล่มให้ไฟแนนซ์ใหม่'}
+    
+    return trans;
+  }
   const confirm = () => {
     var data = JSON.stringify({tracking: nextStep(singleCase.status) , user_id : 'mock' });
     console.log('###### data ########');
@@ -103,7 +123,7 @@ const ModalFastTrack = ({ singleCase }) => {
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
                 <h4>Fast Track : {singleCase.job_id}</h4><br/>
-                <h5>Case Status : {singleCase.status}</h5>
+                <h5>Case Status : {translate(singleCase.status)}</h5>
               </div>
             </div>
           </div>
