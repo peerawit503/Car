@@ -72,7 +72,7 @@ const Customers = () => {
   const readCustermer = (c) => setCustomer(c)
 
   const deleteCustomer = (id) => {
-    console.log('sdasdasdasd')
+    // console.log('sdasdasdasd')
     axios.delete(`${url}/delete_customer?customer_id=${id}`)
       .then(res => {
         M.toast({ html: `${res.data.message}` })
