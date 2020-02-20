@@ -443,17 +443,20 @@ const Cases = () => {
                 columns={[
                   {
                     title: '',
-                    render: rowData => <div style={{width: 10, borderRadius: '50%'}}>{displayStarRating(rowData)}</div>
+                    render: rowData => <div style={{width: 10, borderRadius: '50%'}}>{displayStarRating(rowData)}</div>,
+                    cellstyle:{
+                      width:50
+                    }
                   }, 
                   { title: 'id', field: 'id' },
-                  { title: 'name', field: 'name' },
+                  { title: 'Customers Name', field: 'name' },
                   {
-                    title: 'Customers Name',
+                    title: 'Last Update',
                     field: 'status_date',
                     render: rowData => <div>{statusDate(rowData)}</div>
                   }, 
                 
-                  { title: 'Last Update', field: 'status', 
+                  { title: 'Case Status', field: 'status', 
                   lookup: {
                     'receive': 'receive',
                     'contact_customer': 'contact_customer',
@@ -471,7 +474,9 @@ const Cases = () => {
                     'cash_received':'cash_received',
                     'book_deposit_received':'book_deposit_received',
                     'submit_book_to_new_finance':'submit_book_to_new_finance',
-                   },},
+                   },
+                   defaultGroupOrder: 0
+                  },
                   { title: 'Case Soure', field: 'case_source'},
                   { title: 'JOB No', field: 'job_id'},
                   { title: 'car_license', field: 'car_license'},
@@ -490,7 +495,8 @@ const Cases = () => {
                   filtering: true,
                   pageSize: 10,
                   pageSizeOptions:[10,20,50],
-                  exportButton:true
+                  exportButton:true,
+                  grouping:true
                 }}
               />
 
