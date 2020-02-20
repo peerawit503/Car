@@ -442,7 +442,7 @@ const ModalAddCase = ({ customers }) => {
               />
             </div>
 
-            <div className="col s6 m4 l4 content">
+            {/* <div className="col s6 m4 l4 content">
               <label htmlFor="license_id">เลขที่ใบอนุญาติ</label>
               <input
                 type="text"
@@ -450,7 +450,7 @@ const ModalAddCase = ({ customers }) => {
                 value={customer.license_id}
                 onChange={handleChangeCustomer}
               />
-            </div>
+            </div> */}
 
             <div className="col s6 m4 l4 content">
               <label htmlFor="home_no">บ้านเลขที่</label>
