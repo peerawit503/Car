@@ -1,3 +1,12 @@
+#modalFastTrack{
+    top:20%!important;
+    height:50%!important;
+}
+
+#modalAddNote{
+    top:20%!important;
+    height:50%!important;
+}
 .modal-content-override{
     height: calc(100%) !important;
 }
