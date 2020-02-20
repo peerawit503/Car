@@ -8,7 +8,7 @@ import url from '../../Utility/url'
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalAddNote = ({ singleCase }) => {
+const ModalAddNote = ({ singleCase,translate }) => {
 
   const [newNote, setNewNote] = useState({})
 
@@ -43,7 +43,9 @@ const ModalAddNote = ({ singleCase }) => {
           <div className="row">
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
-                <h4>Add Note For : {singleCase.job_id}</h4>
+                <h4>Add Note For : {singleCase.job_id}</h4><br/>
+                <h4>Case status : {translate(singleCase.status)}</h4><br/>
+
               </div>
             </div>
           </div>
@@ -60,7 +62,8 @@ const ModalAddNote = ({ singleCase }) => {
                 name="note"
                 value={newNote.note || ""}
                 className="validate"
-                onChange={handleChange} />
+                onChange={handleChange}
+                placeholder="Note" />
 
             </div>
           </div>
