@@ -478,7 +478,14 @@ const Cases = () => {
                   //  defaultGroupOrder: 0,
                    sorting: false 
                   },
-                  { title: 'Case Soure', field: 'case_source'},
+                  { title: 'Case Soure', field: 'case_source',
+                  lookup: {
+                    'Kiatnakin': 'Kiatnakin',
+                    'Thanachart': 'Thanachart',
+                    'Cartrust':'Cartrust',
+                    'Dealer':'Dealer'
+                  },
+                },
                   { title: 'JOB No', field: 'job_id'},
                   { title: 'car_license', field: 'car_license'},
                   { title: 'New Finance', field: 'new_bank'},{
@@ -496,7 +503,6 @@ const Cases = () => {
                   filtering: true,
                   pageSize: 10,
                   pageSizeOptions:[10,20,50],
-                  exportButton:true,
                   grouping:true
                 }}
               />
