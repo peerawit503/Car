@@ -422,7 +422,7 @@ const Cases = () => {
     else if(state === 'book_received_back'){nextstate = 'cash_received'}
     else if(state === 'cash_received'){nextstate = 'book_deposit_received'}
     else if(state === 'book_deposit_received'){nextstate = 'submit_book_to_new_finance'}
-    else if(state === 'submit_book_to_new_finance'){nextstate = 'book_deposit_received'}
+    else if(state === 'submit_book_to_new_finance'){nextstate = 'submit_book_to_new_finance'}
     return nextstate;
   }
 
@@ -585,8 +585,8 @@ const Cases = () => {
             </div> */}
           </div>
 
-          <ModalAddNote singleCase={singleCase} translate={translate} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate} />
+          <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} />
+          <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
           <ModalAddCase customers={customers} saveNewCase={saveNewCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
