@@ -24,7 +24,7 @@ import './style.css';
 import alert from '../../img/alert.png';
 import alertYellow from '../../img/alert-yellow.png';
 
-import confirm from '../../img/confirm.png';
+import confirmIcon from '../../img/confirm.png';
 import sumary from '../../img/report.png';
 import plus from '../../img/plus-white.png';
 
@@ -86,6 +86,7 @@ const Cases = () => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
         setisLoading(false);
+        console.log ("in getAllCase")
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
@@ -196,6 +197,72 @@ const Cases = () => {
       })
       .catch(err => { console.log(err) })
 
+  }
+  const confirm = (singleCase) => {
+    var data = JSON.stringify({tracking: nextStep(singleCase.status) , user_id : 'mock' });
+    console.log('###### data ########');
+    console.log(data);
+    axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => {
+      console.log('#####  RES  ######');
+      console.log('Case', res.data.message);
+      getAllCase()
+    })
+      .catch(err => console.log(err))
+  }
+
+  function nextStep(state){
+    var prevDate = '';
+    if(state === 'receive'){ prevDate = 'contact_customer';}
+    else if(state === 'contact_customer'){prevDate = 'account_closing'}
+    else if(state === 'account_closing'){prevDate = 'transfer_doc_received'}
+    else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_submitted'}
+    else if(state === 'transfer_doc_submitted'){prevDate = 'book_received'}
+    else if(state === 'book_received'){prevDate = 'submit_book_transfer'}
+    else if(state === 'submit_book_transfer'){prevDate = 'car_check_up'}
+    else if(state === 'car_check_up'){prevDate = 'book_transfer'}
+    else if(state === 'book_transfer'){prevDate = 'book_copy_received'}
+    else if(state === 'book_copy_received'){prevDate = 'deposit_doc_to_new_bank'}
+    else if(state === 'deposit_doc_to_new_bank'){prevDate = 'submit_book_deposit_return'}
+    else if(state === 'submit_book_deposit_return'){prevDate = 'book_received_back'}
+    else if(state === 'book_received_back'){prevDate = 'cash_received'}
+    else if(state === 'cash_received'){
+      //for skip 14 to 16 if no deposit received
+      if (singleCase.f2_old_finance_transfer_fee === null || singleCase.f2_old_finance_transfer_fee  <= 0){
+        prevDate = 'submit_book_to_new_finance'
+      } else {
+        prevDate = 'book_deposit_received'
+      }
+    }
+    else if(state === 'book_deposit_received'){prevDate = 'submit_book_to_new_finance'}
+    else if(state === 'submit_book_to_new_finance'){prevDate = 'submit_book_to_new_finance'}
+    
+    return prevDate;
+  }
+
+  function translate(state){
+    var trans = '';
+    if(state === 'receive'){ trans = '1.วันที่รับเคส';}
+    else if(state === 'contact_customer'){trans = '2.วันที่ติดต่อลูกค้า'}
+    else if(state === 'account_closing'){trans = '3.วันที่ปิดเล่ม'}
+    else if(state === 'transfer_doc_received'){trans = '4.วันรับชุดโอน'}
+    else if(state === 'transfer_doc_submitted'){trans = '5.วันยื่นชุดโอน'}
+    else if(state === 'book_received'){trans = '6.วันที่ได้รับเล่ม'}
+    else if(state === 'submit_book_transfer'){trans = '7.วันที่ส่งงานโอนทะเบียน'}
+    else if(state === 'car_check_up'){trans = '8.วันตรวจสภาพรถ'}
+    else if(state === 'book_transfer'){trans = '9.โอนเล่มทะเบียน'}
+    else if(state === 'book_copy_received'){trans = '10.รับสำเนาเล่ม'}
+    else if(state === 'deposit_doc_to_new_bank'){trans = '11.ส่งเอกสารเบิกเงินธนาคารใหม่'}
+    else if(state === 'submit_book_deposit_return'){trans = '12.ทำเรื่องเบิกมัดจำคืน'}
+    else if(state === 'book_received_back'){trans = '13.รับเล่มคืน'}
+    else if(state === 'cash_received'){trans = '14.เงินเข้าบัญชีคาร์ทรัส'}
+    else if(state === 'book_deposit_received'){trans = '15.เงินมัดจำคืนเข้าบัญชี'}
+    else if(state === 'submit_book_to_new_finance'){trans = '16.ส่งเล่มให้ไฟแนนซ์ใหม่'}
+    
+    return trans;
   }
 
 
@@ -493,7 +560,7 @@ const Cases = () => {
                     render: rowData => 
                     <div> 
                       <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-                      <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(rowData)}><img src={confirm} className="png-icon" alt="confirm-icon" /></a>
+                      <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(rowData)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>
                     </div>
                   }, 
                 ]}
@@ -518,8 +585,8 @@ const Cases = () => {
             </div> */}
           </div>
 
-          <ModalAddNote singleCase={singleCase} />
-          <ModalFastTrack singleCase={singleCase} />
+          <ModalAddNote singleCase={singleCase} translate={translate} />
+          <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate} />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
           <ModalAddCase customers={customers} saveNewCase={saveNewCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
