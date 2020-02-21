@@ -43,9 +43,10 @@ const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
           <div className="row">
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
-                <h4>Add Note For : {singleCase.job_id}</h4><br/>
-                <h4>สถานะปัจจุบัน : {translate(singleCase.status)}</h4><br/>
-                <h4>สถานะถัดไป : {translate(caseStatusShift(singleCase.status))}</h4><br/>
+                <h5>Add Note For : {singleCase.job_id}</h5><br/>
+                <h5>Add Note For : {singleCase.case_id}</h5><br/>
+                <h5>สถานะปัจจุบัน : {translate(singleCase.status)}</h5><br/>
+                <h5>สถานะถัดไป : {translate(caseStatusShift(singleCase.status))}</h5><br/>
 
               </div>
             </div>
