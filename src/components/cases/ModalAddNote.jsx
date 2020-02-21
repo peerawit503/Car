@@ -15,7 +15,10 @@ const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
   const handleChange = (e) => {
     setNewNote({ ...newNote, [e.target.name]: e.target.value })
   }
-
+  function getnote(CaseStatus){
+    let status_note = CaseStatus + "_note";
+    return status_note;
+  }
   function save() {
     // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
     var data = JSON.stringify({note_status:newNote.note ,tracking: singleCase.status , user_id : 'mock' });
@@ -62,7 +65,7 @@ const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
               <input
                 type="text"
                 name="note"
-                value={newNote.note || ""}
+                value={newNote.note || singleCase[getnote(singleCase.status)] || ""}
                 className="validate"
                 onChange={handleChange}
                 placeholder="Note" />

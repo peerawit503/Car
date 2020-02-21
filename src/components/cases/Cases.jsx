@@ -384,7 +384,7 @@ const Cases = () => {
 
     // console.log(caseInRow[statusString])
     // console.log(caseInRow['receive_date']);
-    if (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed]) {
+    if (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
       if (caseInRow[noteDateString] == null) {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
       }else {
@@ -392,7 +392,7 @@ const Cases = () => {
       }
     }
 
-    else if (datetomow >= kpi[alertRed] ) {
+    else if (datetomow >= kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
       if(caseInRow[noteDateString] == null){
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
       }else{

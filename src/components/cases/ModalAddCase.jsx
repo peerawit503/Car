@@ -18,7 +18,7 @@ const ModalAddCase = ({ customers }) => {
   const [newCase, setNewCase] = useState({
     user_id: userId,
     customer_id: "",
-    document_id: "",
+    // document_id: "",
     old_bank: "",
     new_bank: "",
     status: "receive",
@@ -29,7 +29,7 @@ const ModalAddCase = ({ customers }) => {
     case_type: "  ",
     case_receiver: "",
     case_source: "",
-    job_id: "",
+    // job_id: "",
     down_amount: "",
     approve_amount: "",
     close_amount: "",
@@ -75,6 +75,7 @@ const ModalAddCase = ({ customers }) => {
     firstname: "",
     lastname: "",
     tel: "",
+    tel2:"",
     email: "",
     line: "",
 
@@ -226,7 +227,7 @@ const ModalAddCase = ({ customers }) => {
         var data = {
           ...newCase,
           customer_id: res.data.customer_id,
-          document_id: res.data.customer_id
+          // document_id: res.data.customer_id
           // hub: "mock",
           // cqc_team: "cqc",
           // cartrust_lead_refer: "cartrust_lead_refer"
@@ -336,17 +337,17 @@ const ModalAddCase = ({ customers }) => {
   function caseSource() {
     let result = [];
     if (newCase.case_source === 'Kiatnakin') {
-      result.push(
-        <div className="col s6 m4 l4 content">
-          <label>Doc No. / เลขที่ใบคำขอ </label>
-          <input
-            type="text"
-            value={newCase.document_id || ""}
-            name="document_id"
-            onChange={handleChange}
-          />
-        </div>
-      );
+      // result.push(
+        // <div className="col s6 m4 l4 content">
+        //   <label>Doc No. / เลขที่ใบคำขอ </label>
+        //   <input
+        //     type="text"
+        //     value={newCase.document_id || ""}
+        //     name="document_id"
+        //     onChange={handleChange}
+        //   />
+        // </div>
+      // );
       result.push(<div className="col s6 m4 l4 content">
         <label>CQC team</label>
         <input
@@ -357,15 +358,15 @@ const ModalAddCase = ({ customers }) => {
         />
       </div>);
     } else if (newCase.case_source === 'Thanachart') {
-      result.push(<div className="col s6 m4 l4 content">
-        <label>Doc No. / เลขที่ใบคำขอ</label>
-        <input
-          type="text"
-          value={newCase.document_id || ""}
-          name="document_id"
-          onChange={handleChange}
-        />
-      </div>);
+      // result.push(<div className="col s6 m4 l4 content">
+      //   <label>Doc No. / เลขที่ใบคำขอ</label>
+      //   <input
+      //     type="text"
+      //     value={newCase.document_id || ""}
+      //     name="document_id"
+      //     onChange={handleChange}
+      //   />
+      // </div>);
       result.push(<div className="col s6 m4 l4 content">
         <label>เจ้าหน้าที่ทำสัญญา
 /Contract officer</label>
@@ -459,13 +460,15 @@ const ModalAddCase = ({ customers }) => {
               />
             </div>
 
+            
+
             <div className="col s6 m4 l4 content">
               <label htmlFor="Phone">Phone2</label>
               <input
                 type="tel"
-                name="tel"
-              // value={customer.tel2}
-              // onChange={handleChangeCustomer}
+                name="tel2"
+                value={customer.tel2}
+                onChange={handleChangeCustomer}
               />
             </div>
 
@@ -574,7 +577,7 @@ const ModalAddCase = ({ customers }) => {
               <h5>Case Information</h5>
             </div>
 
-            <div className="col s6 m4 l4 content">
+            {/* <div className="col s6 m4 l4 content">
               <label>JOB No.</label>
               <input
                 type="text"
@@ -583,7 +586,7 @@ const ModalAddCase = ({ customers }) => {
                 onChange={handleChange}
                 className="validate"
               />
-            </div>
+            </div> */}
 
             <div className="col s6 m4 l4 content">
               <label>Receiver Date/ วันที่รับเคส</label>
@@ -1137,7 +1140,7 @@ const ModalAddCase = ({ customers }) => {
           <div className="row content">
             <div className="col s12 m12  head-section no-col-padding"></div>
 
-            <div className="col s6 m4 l4 content">
+            {/* <div className="col s6 m4 l4 content">
               <label>JOB No.</label>
               <input
                 type="text"
@@ -1146,7 +1149,7 @@ const ModalAddCase = ({ customers }) => {
                 onChange={handleChange}
                 className="validate"
               />
-            </div>
+            </div> */}
 
             <div className="col s6 m4 l4 content">
               <label>Receiver Date/ วันที่รับเคส</label>
