@@ -10,7 +10,9 @@ import { isNull } from 'pdfmake/build/pdfmake';
 import plus from '../../img/plus-white.png';
 import ModalAddF2 from './ModalAddF2';
 import ModalAddContractInfo from './ModalAddContractInfo';
+import Popup from 'reactjs-popup'
 
+import note from '../../img/analysis.png'
 const ModalSummary = ({ singleCase , kpi}) => {
   const [newCase, setNewCase] = useState({})
 
@@ -40,6 +42,14 @@ const ModalSummary = ({ singleCase , kpi}) => {
   function statusTodate(cStatus){
     return cStatus+'_date';
   }
+
+
+  // function getnote(CaseStatus){
+  //   console.log("inGETNOTE")
+  //   let status_note = CaseStatus + "_note";
+  //   return status_note;
+  // }
+
   function parseStringToDate(sringDate) {
     var mountCaracterString = sringDate.split(" ")[2];
     var dayString = sringDate.split(" ")[1];
@@ -149,6 +159,24 @@ const ModalSummary = ({ singleCase , kpi}) => {
     }
   }
 
+  function GenerateNote(props){
+    // console.log("inGenerateNote"+ singleCase)
+    if (props.notes){
+      return (
+        <Popup
+        trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+        position="bottom center"
+        closeOnDocumentClick
+        >
+          <div>
+            {props.notes}
+          </div>
+          </Popup> 
+
+      )
+    }
+    return <img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />
+  }
 
   return (
     <div>
@@ -168,7 +196,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="col m2 ">
               <div className="new-button-iner">
 
-              <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
+              <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>F2</a>
               </div>
             
             </div>
@@ -370,12 +398,13 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
                 <div className="col s3 m1">
                   <div className={singleCase.receive_date != null ? "summaryIcon-div green" : "summaryIcon-div gray"}>
-                    <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                    <GenerateNote singleCase={singleCase.receive_date} />
                   </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
                   1.รับเคส{' '}:{'    '}
                   {dateTimeFormatted(singleCase.receive_date) || ''}
+                  
                 </div>
 
               </div>
@@ -383,7 +412,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.receive_date, singleCase.contact_customer_date,"contact_customer")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                 <GenerateNote notes={singleCase.contact_customer_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -395,7 +424,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.contact_customer_date, singleCase.account_closing_date,"account_closing")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.account_closing_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -407,12 +436,13 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"transfer_doc_received")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.transfer_doc_received_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
                   4.รับชุดโอน{' '}:{'    '}
                   {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date) || ''}
+                  {singleCase.transfer_doc_received_note}
                 </div>
               </div>
 
@@ -420,7 +450,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date , "transfer_doc_submitted")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.transfer_doc_submitted_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -432,7 +462,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"book_received")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.book_received_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -444,7 +474,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"submit_book_transfer")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.submit_book_transfer_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -456,7 +486,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"car_check_up")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.car_check_up_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -468,7 +498,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"book_transfer")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.book_transfer_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -480,7 +510,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_copy_received")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.book_copy_received_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -492,7 +522,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"deposit_doc_to_new_bank")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.deposit_doc_to_new_bank_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -504,7 +534,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"submit_book_deposit_return")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.submit_book_deposit_return_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -516,7 +546,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"book_received_back")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.book_received_back_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -528,7 +558,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.cash_received_date,"cash_received")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.cash_received_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -540,7 +570,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"book_deposit_received")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.book_deposit_received_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -552,7 +582,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
               <div className="col s3 m1">
                 <div className={calculateColorFromDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"submit_book_to_new_finance")}>
-                  <img src={confirm} className="summaryIcon" alt="fireSpot" />
+                  <GenerateNote notes={singleCase.submit_book_to_new_finance_note} />
                 </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
