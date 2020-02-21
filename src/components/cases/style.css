@@ -5,11 +5,11 @@
 
 #modalAddNote{
     top:20%!important;
-    height:50%!important;
+    height: 50%!important;
 }
-.modal-content-override{
+/* .modal-content-override{
     height: calc(100%) !important;
-}
+} */
 
 .element {
     -moz-transition: all 0.5s ease-in;
