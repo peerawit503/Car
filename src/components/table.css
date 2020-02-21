@@ -132,6 +132,14 @@ td .png-icon{
     height:2rem !important;
 }
 
+.MuiInputAdornment-root .material-icons{
+    /* override meterial css */
+    visibility: hidden;
+}
+.MuiFormControl-root .MuiInput-formControl{
+     /* override meterial css */
+    height: 53px !important;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -152,6 +160,17 @@ input[type=number] {
     padding: 0 !important;
     width: 100%;
    margin-bottom: 0px !important;
+}
+.menu-icon{
+    width: 60px;
+}
+
+.customer-name-col{
+    width: 200px;
+    word-wrap: break-word;
+}
+.input-disable{
+    background-color: #e8e7e7 !important;
 }
 /* .Li:hover{
     background-color: #F07124 !important;

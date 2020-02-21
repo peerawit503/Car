@@ -25,6 +25,7 @@ import alert from '../../img/alert.png';
 import alertYellow from '../../img/alert-yellow.png';
 
 import confirmIcon from '../../img/confirm.png';
+import confirmIconDisable from '../../img/correctDisable.png';
 import sumary from '../../img/report.png';
 import plus from '../../img/plus-white.png';
 
@@ -374,16 +375,7 @@ const Cases = () => {
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-    // console.log("#######################")
-    // console.log(statusDate(caseInRow));
-    // console.log(caseInRow[statusDateString]);
-    // console.log(datetomow);
-    // console.log(kpi[alertOrange]);
-    // console.log(kpi[alertRed]);
-    
 
-    // console.log(caseInRow[statusString])
-    // console.log(caseInRow['receive_date']);
     if (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
       if (caseInRow[noteDateString] == null) {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
@@ -403,6 +395,29 @@ const Cases = () => {
     
     return result;
   }
+
+  function alertCheck(caseInRow) {
+   
+    
+    let statusDateString = caseInRow.status + '_date';
+    let datetomow = dateToNow(caseInRow[statusDateString]);
+    
+    let noteDateString = caseInRow.status + "_note";
+    let alertRed = caseInRow.status + "_red";
+    let alertOrange = caseInRow.status + "_orange";
+
+    if((caseInRow.status == 'submit_book_to_new_finance') || (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) || (datetomow >= kpi[alertRed]  && caseInRow[noteDateString] == null) ){
+      return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
+    }
+
+    else{
+      return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
+    }
+    
+   
+  }
+
+
 
 
   function caseStatusShift(state){
@@ -491,7 +506,9 @@ const Cases = () => {
                     }
                   }, 
                   { title: 'id', field: 'id' },
-                  { title: 'Customers Name', field: 'name' },
+                  { title: 'Customers Name',
+                   field: 'name' , 
+                   render: rowData => <div className="customer-name-col">{rowData.name}</div> },
                   {
                     title: 'Last Update',
                     field: 'status_date',
@@ -533,9 +550,9 @@ const Cases = () => {
                   { title: 'New Finance', field: 'new_bank'},{
                     title: '',
                     render: rowData => 
-                    <div> 
-                      <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-                      <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(rowData)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>
+                    <div className="menu-icon">
+                      <a  href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
+                      {alertCheck(rowData)}
                     </div>
                   }, 
                 ]}

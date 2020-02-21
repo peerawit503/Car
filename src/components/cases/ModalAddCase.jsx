@@ -282,7 +282,7 @@ const ModalAddCase = ({ customers }) => {
     if (difference.d1) {
       result.push(
         <div className="col s6 m4 l4 content">
-          <label>จ่ายเป็นเช็ค </label>
+          <label>จำนวนเงินโอน (บาท) </label>
           <input
             type="number"
             min="0"
@@ -295,7 +295,7 @@ const ModalAddCase = ({ customers }) => {
       );
       result.push(
         <div className="col s6 m4 l4 content">
-          <label>จ่ายมัดจำ </label>
+          <label>จ่ายมัดจำ (บาท) </label>
           <input
             type="number"
             min="0"
@@ -313,7 +313,7 @@ const ModalAddCase = ({ customers }) => {
             type="text"
             value={newCase.cheque_receiver || ""}
             name="cheque_receiver"
-            onChange={handleChange}
+            
           />
         </div>
       );
@@ -324,9 +324,11 @@ const ModalAddCase = ({ customers }) => {
             type="text"
             min="0"
             step="any"
+            className="input-disable"
+            readOnly
             value={newCase.deposit_receiver || ""}
             name="deposit_receiver"
-            onChange={handleChange}
+            
           />
         </div>
       );
@@ -847,8 +849,8 @@ const ModalAddCase = ({ customers }) => {
       form.push(
         <div className="cotent-field">
           <div className="row content">
-            <div className="row col s12 m12">
-              <div className="row col s6 m6 ">
+            
+              <div className="row col m4 content">
                 <h5>Bank Form</h5>
                 <span className=" col s12 m12">
                   <label>
@@ -874,7 +876,7 @@ const ModalAddCase = ({ customers }) => {
                 </span>
               </div>
 
-              <div className="row col s6 m6 ">
+              <div className="row col m4 content">
                 <h5>ส่วนต่าง</h5>
                 <span className=" col s12 m12">
                   <label>
@@ -899,13 +901,62 @@ const ModalAddCase = ({ customers }) => {
                   </label>
                 </span>
               </div>
-            </div>
+
+              <div className="row col s4 m4 content">
+                    <label>
+                      <span>เงื่อนไขการตรวจรถ</span>
+                      <input
+                        name="conditionCheckCar"
+                      />
+                    </label>
+                    <label>
+                      <span>เงื่อนไขการเก็บเอกสาร</span>
+                      <input
+                        name="conditionKeepDocument"
+                      />
+                    </label>
+                  
+                  
+                    <label>
+                      <span>จนท. Oper Cartrust</span>
+                      <input
+                        name="cartrustOfficer"
+                        
+                      />
+                    </label>
+                 
+                  
+                    <label>
+                      <span>จังหวัดที่อยู่อาศัย</span>
+                      <input
+                        name="province"
+                        
+                      />
+                    </label>
+                 
+                
+                    <label>
+                      <span>บัญชีรับเงินส่วนต่าง</span>
+                      <input
+                        name="differentMoneyAccount"
+                        
+                      />
+                    </label>
+                
+              
+                </div>
+            
+
+            
+                
+
+            
             <div className="col s12 m12  head-section no-col-padding">
               <h5>ค่าใช้จ่าย cartrust</h5>
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าปิดไฟแนนซ์เก่า</label>
+              <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -918,7 +969,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่่าโอนไฟแนนซ์เก่า</label>
+              <label>ค่่าโอนไฟแนนซ์เก่า (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -930,7 +981,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าบริการปิดเล่ม</label>
+              <label>ค่าบริการปิดเล่ม (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -942,7 +993,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ภาษีมูลค่าเพิ่ม 7%</label>
+              <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -954,7 +1005,32 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ส่วนลดพิเศษ</label>
+              <label>ค่าธรรมเนียมโอน (บาท)</label>
+              <input
+                type="number"
+                min="0"
+                step="any"
+                readOnly
+                value={newCase.transfer_fee || ""}
+                name="transfer_fee_note"
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label>ค่าอากร (บาท)</label>
+              <input
+                type="number"
+                min="0"
+                step="any"
+                readOnly
+                value={newCase.duty_fee || ""}
+                name="duty_fee_note"
+              />
+            </div>
+
+
+            <div className="col s6 m4 l4 content">
+              <label>ส่วนลดพิเศษ (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -966,23 +1042,26 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>รวมค่าใช้จ่ายคาร์ทรัส</label>
+              <label>รวมค่าใช้จ่ายคาร์ทรัส (บาท)</label>
               <input
                 type="number"
                 min="0"
                 step="any"
+                className="input-disable"
                 readOnly
                 value={totalCost || ""}
                 name="cartrust_total_cost"
               />
             </div>
 
+            
+
             <div className="col s12 m12  head-section no-col-padding">
               <h5>ค่าใช้จ่าย ไฟแนนซ์ใหม่</h5>
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>car shield</label>
+              <label>ค่าประกันคุ้มครองสินเชื่อ (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -994,7 +1073,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าประกันภัยรถยนต์</label>
+              <label>ค่าประกันภัยรถยนต์ (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1006,7 +1085,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าบริการจัดชุดโอน</label>
+              <label>ค่าบริการจัดชุดโอน (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1018,7 +1097,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าทำสัญญา</label>
+              <label>ค่าทำสัญญา (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1030,7 +1109,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าโอนนอก</label>
+              <label>ค่าโอนนอก (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1042,7 +1121,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าต่อภาษี</label>
+              <label>ค่าต่อภาษี (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1054,7 +1133,7 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ค่าต่่อพรบ</label>
+              <label>ค่าต่่อพรบ (บาท)</label>
               <input
                 type="number"
                 min="0"
@@ -1066,15 +1145,16 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ </label>
+              <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ (บาท)</label>
               <input
                 type="number"
                 min="0"
                 step="any"
-                disabled
+                className="input-disable"
+                readOnly
                 value={newCase.new_finance_total_cost || ""}
                 name="new_finance_total_cost"
-                onChange={handleChange}
+                
               />
             </div>
 
@@ -1083,43 +1163,47 @@ const ModalAddCase = ({ customers }) => {
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>ยอดเงินที่จะได้รับ </label>
+              <label>ยอดเงินที่จะได้รับ (บาท) </label>
               <input
                 type="number"
                 min="0"
                 step="any"
+                readOnly
+                className="input-disable"
                 value={newCase.amount_received || ""}
                 name="amount_received"
-                onChange={handleChange}
+
               />
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>จ่ายเป็นเงินสดให้ธนาคาร </label>
+              <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
               <input
                 type="number"
                 min="0"
                 step="any"
+                readOnly
+                className="input-disable"
                 value={newCase.old_finance_total_cost || ""}
                 name="old_finance_total_cost"
-                onChange={handleChange}
+                
               />
             </div>
 
             <div className="col s6 m4 l4 content">
               <label>โอนเงินเข้าธนาคาร </label>
               <input
-                type="number"
+                type="text"
                 min="0"
                 step="any"
-                value={newCase.bank_transfer || ""}
-                name="bank_transfer"
+                value={newCase.old_bank || ""}
+                name="old_bank"
                 onChange={handleChange}
               />
             </div>
 
             <div className="col s6 m4 l4 content">
-              <label>รวมค่าใช้จ่ายทั้งหมด </label>
+              <label>รวมค่าใช้จ่ายทั้งหมด (บาท) </label>
               <input
                 type="number"
                 min="0"

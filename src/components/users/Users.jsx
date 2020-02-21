@@ -80,7 +80,7 @@ const Users = () => {
       attribute: u.attribute
     }
 
-
+    console.log(JSON.stringify(body));
     axios.post(`${url}/register`, body)
       .then(res => {
 
