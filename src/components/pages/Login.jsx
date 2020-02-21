@@ -5,13 +5,15 @@ import axios from 'axios';
 import M from 'materialize-css/dist/js/materialize.min.js'
 import { Redirect } from 'react-router-dom'
 import url from "../../Utility/url"
+import { connect } from "react-redux";
+import ActionUser from "../../actions/actionUser";
 
 const Login = (props) => {
 
-  const [acc, setAcc] = useState({ username: "", password: "" })
+  const [acc, setAcc] = useState({ username: "peerawit555", password: "mYgOedMSrG" })
   const [redirect, setRedriect] = useState(false)
   const [err, setErr] = useState(false)
-
+  props.clearUser()
   const onSubmit = (e) => {
     e.preventDefault()
     // if (acc.password === "" || acc.password === "") { M.toast({ html: 'กรุณาตรวจสอบ Username หรือ Password ' }) }
@@ -23,14 +25,15 @@ const Login = (props) => {
     }
     else {
       axios.post(`${url}/login`, acc)
-        .then(res => {
+        .then(async res => {
           console.log(res.data)
           M.toast({ html: 'Login เรียบร้อย' })
           setRedriect(true)
           // set localstate
+          const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
+          await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
           localStorage.setItem("token", res.data.token)
           localStorage.setItem("user", res.data.user)
-
 
         })
         .catch(err => { console.log(err) })
@@ -102,4 +105,39 @@ const Login = (props) => {
   )
 }
 
-export default Login
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  storeUserInfo: (
+    id,
+    firstName,
+    lastName,
+    username,
+    position,
+    team,
+    picture,
+    token
+  ) => {
+    dispatch({
+      type: ActionUser.STORE_USER_INFO,
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      position: position,
+      team: team,
+      picture: picture,
+      token: token
+    });
+  },
+  clearUser: (
+  ) => {
+    dispatch({
+      type: ActionUser.CLEAR_USER
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

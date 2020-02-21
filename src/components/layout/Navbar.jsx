@@ -2,16 +2,21 @@ import React, { useEffect } from 'react'
 import cartrustLogo from '../../img/cartrustLogo.svg'
 import imageProfile from '../../img/imageProfile.jpg'
 import M from 'materialize-css/dist/js/materialize.min.js'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from "react-redux";
+import ActionUser from "../../actions/actionUser";
 import './style.css';
 const uu = localStorage.getItem('user')
 console.log(uu)
 
-const Navbar = () => {
+const Navbar = (props) => {
   useEffect(() => {
     M.Sidenav.init(document.querySelector('.sidenav'), {})
 
   }, [])
+
+  if (!props.user.isLogin)
+    return <Redirect to='/' />;
   return (
     <>
       <div className="navbar-fixed">
@@ -30,9 +35,9 @@ const Navbar = () => {
         <li className="white-text">
           <div className="sm-profile">
             <img src={ imageProfile } alt="profile" style={ { width: "200px", height: 'auto', margin: '40px' } } className="circle " />
-            <h6 className="center-align">Name : Mohexc</h6>
-            <p className="center-align">Team : IT</p >
-            <p className="center-align">Position : Frontend Developer</p >
+            <h6 className="center-align">Name : {props.user.firstName+' '+props.user.lastName}</h6>
+            <p className="center-align">Team : {props.user.team}</p >
+            <p className="center-align">Position : {props.user.position}</p >
           </div>
         </li>
         <li className="Li"><Link className="white-text" to="/dashboard"><i className="material-icons white-text">dashboard</i>Dashboard</Link></li>
@@ -47,4 +52,33 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  storeUserInfo: (
+    id,
+    firstName,
+    lastName,
+    username,
+    position,
+    team,
+    picture,
+    token
+  ) => {
+    dispatch({
+      type: ActionUser.STORE_USER_INFO,
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      position: position,
+      team: team,
+      picture: picture,
+      token: token
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
