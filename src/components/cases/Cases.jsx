@@ -478,32 +478,7 @@ const Cases = () => {
           </div>
 
           {/* TABALE */}
-          <div className="row">
-            {/* <table className="responsive-table">
-              <TheadCase />
-              <tbody className="no-padding">
-                {cases.map(c => (
-                  <tr key={uuid.v4()}>
-                    <td>{displayStarRating(c)}</td>
-                    <td className="tale-caseId" >{c.id}</td>
-                    <td >{c.name}</td>
-                    <td >{statusDate(c)} </td>
-                    <td>{c.status}</td>
-                    <td >{c.case_source}</td>
-                    <td>{c.job_id}</td>
-                    <td>{c.car_license}</td>
-                    <td >{c.new_bank}</td>
-
-                    <td >
-                      <a href="#modalTracking"  className="modal-trigger" onClick={ () => handleSingleCase(c) }> <img  src={sumary} className="png-icon" alt="sumary-icon"/></a>
-                      <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(c)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-
-                      <a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(c)}><img src={confirm} className="png-icon" alt="confirm-icon" /></a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody> 
-            </table>*/}
+          <div className="row" class="input-table">
             <br />
             <MaterialTable
                 title="Case"
