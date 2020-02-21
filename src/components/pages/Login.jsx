@@ -67,7 +67,7 @@ const Login = (props) => {
                   name="username"
                   value={ acc.username }
                   onChange={ onChange } />
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username" style={{zIndex:-1}}>Username</label>
               </div>
 
               <div className="input-field col s12">
@@ -78,7 +78,7 @@ const Login = (props) => {
                   name="password"
                   value={ acc.password }
                   onChange={ onChange } />
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" style={{zIndex:-1}}>Password</label>
               </div>
               {/* <p>
                 <label><input
