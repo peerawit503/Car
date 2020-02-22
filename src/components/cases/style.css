@@ -10,7 +10,16 @@
 /* .modal-content-override{
     height: calc(100%) !important;
 } */
-
+main{
+    padding-left: 270px!important;
+    padding-right: 0px!important;
+}
+.circle{
+    width:170px!important;
+}
+.sidenavbar{
+    width: 270px!important;
+}
 .input-table input:focus{
     border-bottom: none !important;
     box-shadow: none !important;
