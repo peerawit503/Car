@@ -43,6 +43,7 @@ const Cases = () => {
   const [customers, setCustomers] = useState([])
   const [cases, setCases] = useState([])
   const [kpi, setKpi] = useState([])
+  
   const [singleCase, setSingleCase] = useState([])
   const [stateSearch, setStateSearch] = useState({
     starDate: '',
@@ -76,10 +77,11 @@ const Cases = () => {
     getAllCase()
     getKpi()
     getAllCustomers()
+    
   }, [])
 
-
-
+  
+  
   const getAllCase = () => {
 
 
@@ -638,7 +640,7 @@ const Cases = () => {
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
-          <ModalAddCase customers={customers} saveNewCase={saveNewCase} />
+          <ModalAddCase customers={customers} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
 

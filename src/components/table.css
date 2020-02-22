@@ -132,6 +132,8 @@ td .png-icon{
     height:2rem !important;
 }
 
+
+
 .MuiInputAdornment-root .material-icons{
     /* override meterial css */
     visibility: hidden;
@@ -171,6 +173,10 @@ input[type=number] {
 }
 .input-disable{
     background-color: #e8e7e7 !important;
+}
+.no-margin{
+    padding-left: 0px !important;
+    margin-bottom: 0px !important;
 }
 /* .Li:hover{
     background-color: #F07124 !important;
