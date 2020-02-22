@@ -3,6 +3,7 @@ import Navbar from './../layout/Navbar';
 // import ModalView1 from './ModalView1';
 import 'rsuite/dist/styles/rsuite-default.css'
 
+import ModalExcel from './ModalExcel';
 import ModalAddCase from './ModalAddCase';
 import ModalAddNote from './ModalAddNote';
 import ModalAddSummary from './ModalSummary';
@@ -466,7 +467,7 @@ const Cases = () => {
 
             <div className="new-button col m1">
               <div className="new-button-iner">
-                  <a className="btn modal-trigger tde-g" href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} >Excel</a>
+                  <a className="btn modal-trigger tde-g" href="#modalExcel" >Excel</a>
              
               </div>
 
@@ -576,7 +577,7 @@ const Cases = () => {
               </ul>
             </div> */}
           </div>
-
+          <ModalExcel/>
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
