@@ -216,6 +216,23 @@ const Cases = () => {
       .catch(err => console.log(err))
   }
 
+  const saveNote = (newNote,singleCase) => {
+    // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
+    var data = JSON.stringify({note_status:newNote.note ,tracking: singleCase.status , user_id : 'mock' });
+    console.log('###### data ########');
+    console.log(data);
+    axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => {
+      console.log('#####  RES  ######');
+      console.log('Case', res.data.message);
+      getAllCase()
+    })
+      .catch(err => console.log(err))
+  }
+
   function nextStep(state){
     var prevDate = '';
     if(state === 'receive'){ prevDate = 'contact_customer';}
@@ -442,6 +459,10 @@ const Cases = () => {
     return nextstate;
   }
 
+
+  
+
+
   return (
     <>
       <Navbar />
@@ -614,7 +635,7 @@ const Cases = () => {
             </div> */}
           </div>
           <ModalExcel/>
-          <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} />
+          <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
           <ModalAddCase customers={customers} saveNewCase={saveNewCase} />

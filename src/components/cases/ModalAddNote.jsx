@@ -8,7 +8,7 @@ import url from '../../Utility/url'
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
+const ModalAddNote = ({ singleCase, translate , caseStatusShift , saveNote }) => {
 
   const [newNote, setNewNote] = useState({})
 
@@ -19,21 +19,24 @@ const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
     let status_note = CaseStatus + "_note";
     return status_note;
   }
-  function save() {
-    // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
-    var data = JSON.stringify({note_status:newNote.note ,tracking: singleCase.status , user_id : 'mock' });
-    console.log('###### data ########');
-    console.log(data);
-    axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
-      console.log('#####  RES  ######');
-      console.log('Case', res.data.message);
-    })
-      .catch(err => console.log(err))
-  }
+
+  // function save() {
+  //   // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
+  //   var data = JSON.stringify({note_status:newNote.note ,tracking: singleCase.status , user_id : 'mock' });
+  //   console.log('###### data ########');
+  //   console.log(data);
+  //   axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     }
+  //   }).then(res => {
+  //     console.log('#####  RES  ######');
+  //     console.log('Case', res.data.message);
+  //   })
+  //     .catch(err => console.log(err))
+  // }
+
+
   function close() {
     setNewNote({});
   }
@@ -76,8 +79,7 @@ const ModalAddNote = ({ singleCase, translate , caseStatusShift }) => {
 
 
         <div className="modal-footer">
-          <button className="waves-effect btn blue lighten left " onClick={() => save()}>Save</button>
-
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => saveNote(newNote,singleCase)}>Save</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>close</button>
         </div>
       </div>
