@@ -37,21 +37,21 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
   const [newF2, setNewF2] = useState({
-    approve_amount: "0",
-    old_finance_closing_fee: "0",
-    old_finance_transfer_fee: "0",
-    book_closing_fee: "0",
-    vat7_fee: "0",
-    transfer_fee: "0",
-    duty_fee: "0",
-    discount_fee: "0",
-    car_shield_fee: "0",
-    car_insurance_fee: "0",
-    transfer_service_fee: "0",
-    contract_fee: "0",
-    outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
+    approve_amount: "",
+    old_finance_closing_fee: "",
+    old_finance_transfer_fee: "",
+    book_closing_fee: "",
+    vat7_fee: "",
+    transfer_fee: "",
+    duty_fee: "",
+    discount_fee: "",
+    car_shield_fee: "",
+    car_insurance_fee: "",
+    transfer_service_fee: "",
+    contract_fee: "",
+    outside_transfer_fee: "",
+    tax_renewal_fee: "",
+    act_renewal_fee: "",
 
     approve_amount_note: "",
     old_finance_closing_fee_note: "",
@@ -72,8 +72,8 @@ const ModalAddF2 = ({ singleCase }) => {
 
     f2_status: "done",
     cheque: "0",
-    cheque_receiver: "0",
-    deposit_receiver: "0",
+    cheque_receiver: "",
+    deposit_receiver: "",
     deposit: "0"
   });
   const [formState, setformState] = useState(1);
@@ -132,7 +132,7 @@ const ModalAddF2 = ({ singleCase }) => {
 
   function operaterOption() {
     let result = []
-    // console.log('9999999999999' , operatorS)
+
     for (let oper of operatorS) {
       console.log(oper.fs_name)
       result.push(<option value={oper.fs_name}>
@@ -806,18 +806,19 @@ const ModalAddF2 = ({ singleCase }) => {
                     value={newCase.car_check_con || ""}
                     onChange={handleChange}
                     className="browser-default"
-                  ><option value="" disabled>
+                  >
+                    <option value="" disabled>
                       เงื่อนไขการตรวจรถ...
-</option>
+                  </option>
                     <option value="นัดตรวจรถ(บ.)" >
                       นัดตรวจรถ(บ.)
-  </option>
+                  </option>
                     <option value="นัดตรวจรถ" >
                       นัดตรวจรถ
-  </option>
+                  </option>
                     <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
                       ตรวจนอก/ขูดเลข/ถ่ายรูป
-  </option>
+                    </option>
 
                   </select>
 
@@ -865,23 +866,23 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
                   <label>
-                <span>จังหวัดที่อยู่อาศัย</span></label>
-              <select
-                name="province_f2"
-                value={newCase.province_f2 || ""}
-                onChange={handleChange}
-                className="browser-default"
-              >
+                    <span>จังหวัดที่อยู่อาศัย</span></label>
+                  <select
+                    name="province_f2"
+                    value={newCase.province_f2 || ""}
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
 
-                <option value="" disabled>
-                  จังหวัด{" "}
-                </option>
-                {provinceAll.map(pv => (
-                  <option key={uuid.v4()} value={pv}>
-                    {pv}
-                  </option>
-                ))}
-              </select>
+                    <option value="" disabled>
+                      จังหวัด{" "}
+                    </option>
+                    {provinceAll.map(pv => (
+                      <option key={uuid.v4()} value={pv}>
+                        {pv}
+                      </option>
+                    ))}
+                  </select>
 
 
                   <label>
@@ -916,9 +917,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   name="old_finance_closing_fee"
                   onFocus={deletezero}
                   value={
-                    newF2.old_finance_closing_fee ||
-
-                    ""
+                    newF2.old_finance_closing_fee || singleCase.F2_old_finance_closing_fee || "0"
                   }
                   onChange={handleChangeF2}
                   className="validate"

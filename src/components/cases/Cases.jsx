@@ -76,7 +76,7 @@ const Cases = () => {
   useEffect(() => {
     getAllCase()
     getKpi()
-    getAllCustomers()
+    
     
   }, [])
 

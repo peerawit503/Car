@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { financeInstitution, caseSourceAll, caseTypeAll, caseStatus, provinceAll } from '../../Utility/dataCase'
-import uuid from "uuid"
-import { Link } from 'react-router-dom';
+
 import confirm from '../../img/confirm.png';
-import url from '../../Utility/url';
-/* img */
-import cartrustLogo from '../../img/cartrustLogo.svg'
-import { isNull } from 'pdfmake/build/pdfmake';
+
 import plus from '../../img/plus-white.png';
 import ModalAddF2 from './ModalAddF2';
+import ModalImage from './ModalImage';
+import ModalCancel from './ModalCancel';
 import ModalAddContractInfo from './ModalAddContractInfo';
 import Popup from 'reactjs-popup'
 
-import note from '../../img/analysis.png'
 const ModalSummary = ({ singleCase , kpi}) => {
   const [newCase, setNewCase] = useState({})
 
@@ -600,11 +596,16 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
         <div className="modal-footer">
           {/* <button className="waves-effect btn blue lighten left ">Save</button> */}
+          
           <button className="modal-close waves-effect btn white black-text right">close</button>
+          <button href="#modalCancel" className="modal-trigger waves-effect btn white black-text left">Cancel Case</button>
+          <button href="#modalImage" className="modal-trigger waves-effect btn white black-text right">Open Image Modal</button>
         </div>
       </div>
       <ModalAddF2 singleCase={singleCase} />
+      <ModalCancel singleCase={singleCase} />
       <ModalAddContractInfo singleCase={singleCase} />
+      <ModalImage singleCase={singleCase}/>
     </div >
 
    

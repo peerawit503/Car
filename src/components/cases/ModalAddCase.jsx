@@ -14,14 +14,14 @@ import axios from "axios";
 import cartrustLogo from "../../img/cartrustLogo.svg";
 
 const ModalAddCase = ({ customers }) => {
-  var userId = "UserID";
+  
   const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
   const [hub, setHub] = useState([])
   const [cartrust_lead, setCartrust_lead] = useState([])
   const [newCase, setNewCase] = useState({
-    user_id: userId,
+    
     customer_id: "",
     // document_id: "",
     old_bank: "",
@@ -70,6 +70,7 @@ const ModalAddCase = ({ customers }) => {
     outside_transfer_fee: "0",
     tax_renewal_fee: "0",
     act_renewal_fee: "0",
+    difference:"",
 
     old_finance_closing_fee_note: "0",
     old_finance_transfer_fee_note: "0",
@@ -140,83 +141,7 @@ const ModalAddCase = ({ customers }) => {
     getCqc_team()
     getHub()
     getCartrust_lead()
-    setNewCase({
-      user_id: userId,
-      customer_id: "",
-      // document_id: "",
-      old_bank: "",
-      new_bank: "",
-      status: "receive",
-      note_status: "",
-      team: "",
-      contract_officer: "",
-      finance_staff: "",
-      case_type: "  ",
-      case_receiver: "",
-      case_source: "",
-      // job_id: "",
-      down_amount: "",
-      approve_amount: "",
-      close_amount: "",
-      case_status: "รับเคส",
-
-      car_name: "",
-      car_brand: "",
-      car_model: "",
-      car_sub_model: "",
-      car_year: "",
-      car_license: "",
-      car_province: "",
-      car_detail: "",
-      take_car_picture: "",
-      car_license_book_picture: "",
-      license_id_picture: "",
-      cartrust_lead_refer: "",
-      cqc_team: "",
-      cartrust_lead_refer: "",
-      hub: "",
-
-      old_finance_closing_fee: "0",
-      old_finance_transfer_fee: "0",
-      book_closing_fee: "0",
-      vat7_fee: "0",
-      transfer_fee: "0",
-      duty_fee: "0",
-      discount_fee: "0",
-      car_shield_fee: "0",
-      car_insurance_fee: "0",
-      transfer_service_fee: "0",
-      contract_fee: "0",
-      outside_transfer_fee: "0",
-      tax_renewal_fee: "0",
-      act_renewal_fee: "0",
-
-      old_finance_closing_fee_note: "0",
-      old_finance_transfer_fee_note: "0",
-      book_closing_fee_note: "0",
-      vat7_fee_note: "0",
-      transfer_fee_note: "0",
-      duty_fee_note: "0",
-      discount_fee_note: "0",
-      car_shield_fee_note: "0",
-      car_insurance_fee_note: "0",
-      transfer_service_fee_note: "0",
-      contract_fee_note: "0",
-      outside_transfer_fee_note: "0",
-      tax_renewal_fee_note: "0",
-      act_renewal_fee_note: "0",
-      car_check_con: "",
-      doc_storage_con: "",
-
-
-      margin_account: "",
-
-      f2_status: null,
-      cheque: "0",
-      deposit: "0",
-      cheque_receiver: "",
-      deposit_receiver: ""
-    })
+    
   }, []);
 
 
@@ -434,7 +359,25 @@ const ModalAddCase = ({ customers }) => {
 
   function saveNewCase() {
 
-    // console.log(JSON.stringify(customer));
+
+    // console.log('customer')
+    // console.log(customer)
+
+    // var data = {
+    //       ...newCase,
+    //       customer_id: 'asdas',
+    //       difference:difference.d1,
+    //       case_receiver:'mock up',
+    //       user_id:'mock'
+          // document_id: res.data.customer_id
+          // hub: "mock",
+          // cqc_team: "cqc",
+          // cartrust_lead_refer: "cartrust_lead_refer"
+        // };
+
+        // console.log('data')
+        // console.log(data)
+    console.log(JSON.stringify(customer));
     let customerData = ({ ...customer, ["license_id"]: customer.firstname })
 
     console.log("######## add customer #########");
@@ -449,6 +392,9 @@ const ModalAddCase = ({ customers }) => {
         var data = {
           ...newCase,
           customer_id: res.data.customer_id,
+          difference:difference.d1,
+          case_receiver:'mock up',
+          user_id:'mock'
           // document_id: res.data.customer_id
           // hub: "mock",
           // cqc_team: "cqc",
@@ -631,12 +577,18 @@ const ModalAddCase = ({ customers }) => {
     } else if (newCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m4 l4 content">
         <label>Cartust Lead Refer./รับเคสจาก</label>
-        <input
+        <select
           type="text"
           value={newCase.cartrust_lead_refer || ""}
           name="cartrust_lead_refer"
           onChange={handleChange}
-        />
+          className="browser-default"
+        >
+          <option value="">
+            รับเคสจาก
+          </option>
+          {cartrust_leadOption()}
+          </select>
       </div>);
     }
 
@@ -1781,7 +1733,7 @@ const ModalAddCase = ({ customers }) => {
               />
             </div>
 
-            <div className="col s6 m4 l4 content">
+            {/* <div className="col s6 m4 l4 content">
               <label>Case Receiver/ ผู้ลงข้อมูล</label>
               <input
                 name="case_receiver"
@@ -1790,7 +1742,7 @@ const ModalAddCase = ({ customers }) => {
                 type="text"
                 className="validate"
               />
-            </div>
+            </div> */}
 
             <div className="col s6 m4 l4 content">
               <label>Case Type / ประเภทเคส</label>
