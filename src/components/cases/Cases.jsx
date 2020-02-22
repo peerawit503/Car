@@ -14,12 +14,12 @@ import url from '../../Utility/url'
 import axios from 'axios';
 import uuid from "uuid"
 import M from 'materialize-css/dist/js/materialize.min.js'
+// import B from 'bootstrap/dist/css/bootstrap.min.css';
 
 import MaterialTable from 'material-table';
 /* modify*/
 import '../table.css';
 import './style.css';
-
 /* image */
 
 import alert from '../../img/alert.png';
@@ -455,7 +455,7 @@ const Cases = () => {
             <div className="col s12 m6">
               <h3>Cases : <span className="chip  orange">{totalCase}</span></h3>
             </div>
-            <div className="new-button col m5">
+            <div className="new-button col m4">
               <div className="new-button-iner">
                 <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
                  
@@ -465,14 +465,50 @@ const Cases = () => {
 
             
 
-            <div className="new-button col m1">
-              <div className="new-button-iner">
-                  <a className="btn modal-trigger tde-g" href="#modalExcel" >Excel</a>
-             
+            <div className="new-button col m2 row">
+              <div className="new-button-iner col m12">
+              <a class='dropdown-trigger btn tde-g' 
+                href='#' 
+                data-target='dropdown1'
+                style={{width:'100%'}}
+                >Excel
+
+              </a>
+
+                {/* <!-- Dropdown Structure --> */}
+                <ul id='dropdown1' class='dropdown-content'>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`} target="_blank">Team1</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team2&date=${Date()}`} target="_blank" >Team2</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team3&date=${Date()}`} target="_blank" >Team3</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team4&date=${Date()}`} target="_blank" >Team4</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=TeamA&date=${Date()}`} target="_blank" >ทีมใหญ่</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}` }  target="_blank">thanachart Bank</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`}  target="_blank">All</a></li>
+                </ul>
               </div>
 
             </div>
+            
 
+
+
+         
+            {/* <DropDownMenu>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Excel
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 1</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 2</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 3</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 4</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>ทีมใหญ่</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`}>thanachart Bank</Dropdown.Item>
+                <Dropdown.Item href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`}>All</Dropdown.Item>
+              </Dropdown.Menu>
+            </DropDownMenu> */}
+    
             {/* <div className="input-field col s12 m3">
               <div className="search">
                 <input placeholder="Search term" />
