@@ -1,8 +1,13 @@
 #modalFastTrack{
     top:20%!important;
-    height:50%!important;
+    height:30em!important;
+    width:45em!important;
 }
-
+#modalCancel{
+    top:20%!important;
+    height:30em!important;
+    width:45em!important;
+}   
 #modalAddNote{
     top:20%!important;
     height: 50%!important;

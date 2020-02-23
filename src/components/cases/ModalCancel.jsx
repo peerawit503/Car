@@ -44,8 +44,8 @@ const confirm =() =>{
 
 
         <div className="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm()}>Confirm</button>
-          <button className="modal-close waves-effect btn blue lighten left " >Cancel</button>
+          <button className="modal-close waves-effect btn red lighten left " onClick={() => confirm()}>Confirm</button>
+          <button className="modal-close waves-effect btn blue lighten right " >Cancel</button>
           
         </div>
       </div>
