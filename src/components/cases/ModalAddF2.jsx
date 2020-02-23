@@ -42,45 +42,45 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
   const [newF2, setNewF2] = useState({
-    approve_amount: "0",
-    old_finance_closing_fee: "0",
-    old_finance_transfer_fee: "0",
-    book_closing_fee: "0",
-    vat7_fee: "0",
-    transfer_fee: "0",
-    duty_fee: "0",
-    discount_fee: "0",
-    car_shield_fee: "0",
-    car_insurance_fee: "0",
-    transfer_service_fee: "0",
-    contract_fee: "0",
-    outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
-    car_check_con: "",
-    doc_storage_con: "",
-    margin_account: "",
-    margin_account_no: "",
-    approve_amount_note: "",
-    old_finance_closing_fee_note: "",
-    old_finance_transfer_fee_note: "",
-    book_closing_fee_note: "",
-    vat7_fee_note: "",
-    transfer_fee_note: "",
-    duty_fee_note: "",
-    discount_fee_note: "",
-    car_shield_fee_note: "",
-    car_insurance_fee_note: "",
-    transfer_service_fee_note: "",
-    contract_fee_note: "",
-    outside_transfer_fee_note: "",
-    tax_renewal_fee_note: "",
-    act_renewal_fee_note: "",
+    approve_amount: singleCase.approve_amount?singleCase.approve_amount:"",
+    old_finance_closing_fee:  singleCase.f2_old_finance_closing_fee?singleCase.f2_old_finance_closing_fee:"",
+    old_finance_transfer_fee: singleCase.f2_old_finance_transfer_fee,
+    book_closing_fee: singleCase.f2_book_closing_fee != 0?singleCase.f2_book_closing_fee:"",
+    vat7_fee: singleCase.f2_vat7_fee?singleCase.f2_vat7_fee:"",
+    transfer_fee: singleCase.f2_transfer_fee?singleCase.f2_transfer_fee:"",
+    duty_fee: singleCase.f2_duty_fee?singleCase.f2_duty_fee:"",
+    discount_fee: singleCase.f2_discount_fee?singleCase.f2_discount_fee:"",
+    car_shield_fee: singleCase.f2_car_shield_fee?singleCase.f2_car_shield_fee:"",
+    car_insurance_fee: singleCase.f2_car_insurance_fee?singleCase.f2_car_insurance_fee:"",
+    transfer_service_fee: singleCase.f2_transfer_service_fee?singleCase.f2_transfer_service_fee:"",
+    contract_fee: singleCase.f2_contract_fee?singleCase.f2_contract_fee:"",
+    outside_transfer_fee: singleCase.f2_outside_transfer_fee?singleCase.f2_outside_transfer_fee:"",
+    tax_renewal_fee: singleCase.f2_tax_renewal_fee?singleCase.f2_tax_renewal_fee:"",
+    act_renewal_fee: singleCase.f2_act_renewal_fee?singleCase.f2_act_renewal_fee:"",
+    car_check_con: singleCase.f2_car_check_con?singleCase.f2_car_check_con:"",
+    doc_storage_con: singleCase.f2_doc_storage_con?singleCase.f2_doc_storage_con:"",
+    margin_account: singleCase.f2_margin_account?singleCase.f2_margin_account:"",
+    margin_account_no: singleCase.f2_margin_account_no?singleCase.f2_margin_account_no:"",
+  
+    old_finance_closing_fee_note: singleCase.f2_old_finance_closing_fee_note?singleCase.f2_old_finance_closing_fee_note:"",
+    old_finance_transfer_fee_note: singleCase.f2_old_finance_transfer_fee_note?singleCase.f2_old_finance_transfer_fee_note:"",
+    book_closing_fee_note: singleCase.f2_book_closing_fee_note?singleCase.f2_book_closing_fee_note:"",
+    vat7_fee_note: singleCase.f2_vat7_fee_note?singleCase.f2_vat7_fee_note:"",
+    transfer_fee_note: singleCase.f2_transfer_fee_note?singleCase.f2_transfer_fee_note:"",
+    duty_fee_note: singleCase.f2_duty_fee_note?singleCase.f2_duty_fee_note:"",
+    discount_fee_note: singleCase.f2_discount_fee_note?singleCase.f2_discount_fee_note:"",
+    car_shield_fee_note: singleCase.f2_car_shield_fee_note?singleCase.f2_car_shield_fee_note:"",
+    car_insurance_fee_note: singleCase.f2_car_insurance_fee_note?singleCase.f2_car_insurance_fee_note:"",
+    transfer_service_fee_note: singleCase.f2_transfer_service_fee_note?singleCase.f2_transfer_service_fee_note:"",
+    contract_fee_note: singleCase.f2_contract_fee_note?singleCase.f2_contract_fee_note:"",
+    outside_transfer_fee_note: singleCase.f2_outside_transfer_fee_note?singleCase.f2_outside_transfer_fee_note:"",
+    tax_renewal_fee_note: singleCase.f2_tax_renewal_fee_note?singleCase.f2_tax_renewal_fee_note:"",
+    act_renewal_fee_note: singleCase.f2_act_renewal_fee_note?singleCase.f2_act_renewal_fee_note:"",
     f2_status: "done",
-    cheque: "0",
-    cheque_receiver: "",
-    deposit_receiver: "",
-    deposit: "0"
+    cheque: singleCase.f2_cheque?singleCase.f2_cheque:"",
+    cheque_receiver: singleCase.name?singleCase.name:"",
+    deposit_receiver: singleCase.name?singleCase.f2_name:"",
+    deposit: singleCase.f2_deposit?singleCase.f2_deposit:""
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -93,63 +93,19 @@ const ModalAddF2 = ({ singleCase }) => {
     province: "",
     differentMoneyAccount: ""
   });
-
+const ifDiff = () => {
+  if(singleCase.difference){
+    setDifference({ d1: true, d2: false })
+  }else{
+    setDifference({ d1: false, d2: true })
+  }
+}
   var summary = 0;
   useEffect(() => {
     getMargin_account()
     getOperatorS()
   }, []);
-  function setCartrustCost(
-    approve_amount,
-    old_finance_closing_fee,
-    old_finance_transfer_fee,
-    book_closing_fee,
-    vat7_fee,
-    transfer_fee,
-    duty_fee,
-    discount_fee,
-    car_shield_fee,
-    car_insurance_fee,
-    transfer_service_fee,
-    contract_fee,
-    outside_transfer_fee,
-    tax_renewal_fee,
-    act_renewal_fee,
-    car_check_con,
-    doc_storage_con,
-    margin_account,
-    margin_account_no,
-    approve_amount_note,
-    old_finance_closing_fee_note,
-    old_finance_transfer_fee_note,
-    book_closing_fee_note,
-    vat7_fee_note,
-    transfer_fee_note,
-    duty_fee_note,
-    discount_fee_note,
-    car_shield_fee_note,
-    car_insurance_fee_note,
-    transfer_service_fee_note,
-    contract_fee_note,
-    outside_transfer_fee_note,
-    tax_renewal_fee_note,
-    act_renewal_fee_note,
-    f2_status,
-    cheque,
-    cheque_receiver,
-    deposit_receiver,
-    deposit
-    
-  ) {
-    var summary =
-      parseInt(newF2.old_finance_closing_fee) +
-      parseInt(newF2.old_finance_transfer_fee) +
-      parseInt(newF2.book_closing_fee + newF2.vat7_fee) +
-      parseInt(newF2.transfer_fee) +
-      parseInt(newF2.duty_fee) +
-      parseInt(newF2.discount_fee);
-    console.log(summary);
-  }
+
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -209,22 +165,34 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
   const handleChangeF2T = e => {
-
-    setNewF2({
-      ...newF2,
-      [e.target.name]: e.target.value
-    });
+    if (e.target.value == ""){
+      setNewF2({
+        ...newF2,
+        [e.target.name]: " "
+      });
+    }else{
+      setNewF2({
+        ...newF2,
+        [e.target.name]: e.target.value
+      });
+    }
+    
 
   };
 
   const handleChangeF2 = e => {
-    console.log(e.target.name, ":", e.target.value);
+    if (e.target.value == ""){
+    setNewF2({
+      ...newF2,
+      [e.target.name]: parseInt(0)
+    });
+  }else{
     setNewF2({
       ...newF2,
       [e.target.name]: parseInt(e.target.value)
     });
-    // cartrust_total_cost
-    // setNewF2({ ...newF2, ["cartrust_total_cost"]: cartrust_total_cost })
+  }
+  
   };
 
   const handleChangeCartrustWork = e => {
@@ -244,33 +212,52 @@ const ModalAddF2 = ({ singleCase }) => {
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
 
   function saveF2() {
-    // newF2.approve_amount = parseInt(singleCase.approve_amount);
-    // newF2.old_finance_closing_fee = parseInt(
-    //   newF2.old_finance_closing_fee
-    // );
-    // newF2.old_finance_transfer_fee = parseInt(
-    //   newF2.old_finance_transfer_fee
-    // );
-    // newF2.book_closing_fee = parseInt(newF2.book_closing_fee);
-    // newF2.vat7_fee = parseInt(newF2.vat7_fee);
-    // newF2.transfer_fee = parseInt(newF2.transfer_fee);
-    // newF2.duty_fee = parseInt(newF2.duty_fee);
-    // newF2.discount_fee = parseInt(newF2.discount_fee);
-    // newF2.car_shield_fee = parseInt(newF2.car_shield_fee);
-    // newF2.car_insurance_fee = parseInt(newF2.car_insurance_fee);
-    // newF2.transfer_service_fee = parseInt(newF2.transfer_service_fee);
-    // newF2.contract_fee = parseInt(newF2.contract_fee);
-    // newF2.outside_transfer_fee = parseInt(newF2.outside_transfer_fee);
-    // newF2.tax_renewal_fee = parseInt(newF2.tax_renewal_fee);
-    // newF2.act_renewal_fee = parseInt(newF2.act_renewal_fee);
-    // newF2.cheque = parseInt(newF2.cheque);
-    // newF2.deposit = parseInt(newF2.deposit);
-    // newF2.cheque_receiver = newF2.cheque_receiver;
-    // newF2.act_renewal_fee = newF2.act_renewal_fee;
 
 
+    let newData = {
+      approve_amount: parseInt(singleCase.approve_amount),
+      old_finance_closing_fee: parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
+      old_finance_transfer_fee: parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
+      book_closing_fee: parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
+      vat7_fee: parseInt(newF2.vat7_fee ? newF2.vat7_fee : singleCase.f2_vat7_fee),
+      transfer_fee: parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
+      duty_fee: parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
+      discount_fee: parseInt(newF2.discount_fee ? newF2.discount_fee : singleCase.f2_discount_fee),
+      car_shield_fee: parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
+      car_insurance_fee: parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
+      transfer_service_fee: parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
+      contract_fee: parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
+      outside_transfer_fee: parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
+      tax_renewal_fee: parseInt(newF2.tax_renewal_fee ? newF2.tax_renewal_fee : singleCase.f2_tax_renewal_fee),
+      act_renewal_fee: parseInt(newF2.act_renewal_fee ? newF2.act_renewal_fee : singleCase.f2_act_renewal_fee),
 
-    var data = JSON.stringify(newF2);
+      approve_amount_note: newF2.approve_amount_note ? newF2.approve_amount_note : singleCase.f2_approve_amount_note,
+      car_check_con: newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
+      doc_storage_con: newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
+      margin_account: newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
+      margin_account_no: newF2.margin_account_no ? newF2.margin_account_no : singleCase.f2_margin_account_no,
+      old_finance_closing_fee_note: newF2.old_finance_closing_fee_note ? newF2.old_finance_closing_fee_note : singleCase.f2_old_finance_closing_fee_note,
+      old_finance_transfer_fee_note: newF2.old_finance_transfer_fee_note ? newF2.old_finance_transfer_fee_note : singleCase.f2_old_finance_transfer_fee_note,
+      book_closing_fee_note: newF2.book_closing_fee_note ? newF2.book_closing_fee_note : singleCase.f2_book_closing_fee_note,
+      vat7_fee_note: newF2.vat7_fee_note ? newF2.vat7_fee_note : singleCase.f2_vat7_fee_note,
+      transfer_fee_note: newF2.transfer_fee_note ? newF2.transfer_fee_note : singleCase.f2_transfer_fee_note,
+      duty_fee_note: newF2.duty_fee_note ? newF2.duty_fee_note : singleCase.f2_duty_fee_note,
+      discount_fee_note: newF2.discount_fee_note ? newF2.discount_fee_note : singleCase.f2_discount_fee_note,
+      car_shield_fee_note: newF2.car_shield_fee_note ? newF2.car_shield_fee_note : singleCase.f2_car_shield_fee_note,
+      car_insurance_fee_note: newF2.car_insurance_fee_note ? newF2.car_insurance_fee_note : singleCase.f2_car_insurance_fee_note,
+      transfer_service_fee_note: newF2.transfer_service_fee_note ? newF2.transfer_service_fee_note : singleCase.f2_transfer_service_fee_note,
+      contract_fee_note: newF2.contract_fee_note ? newF2.contract_fee_note : singleCase.f2_contract_fee_note,
+      outside_transfer_fee_note: newF2.outside_transfer_fee_note ? newF2.outside_transfer_fee_note : singleCase.f2_outside_transfer_fee_note,
+      tax_renewal_fee_note: newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
+      act_renewal_fee_note: newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
+      f2_status: "done",
+      cheque: singleCase.f2_cheque,
+      cheque_receiver: singleCase.name,
+      deposit_receiver: singleCase.name,
+      deposit: singleCase.f2_deposit
+    }
+
+    var data = JSON.stringify(newData);
     console.log('data', data)
     axios
       .post(`${url}/F2?case_id=${singleCase.case_id}`, data, {
@@ -281,45 +268,167 @@ const ModalAddF2 = ({ singleCase }) => {
       .then(res => {
         console.log("#####  RES  ######");
         console.log("Case", res.data.message);
-        printPDF();
+        printPDF(
+          parseInt(singleCase.approve_amount),
+          parseInt(newF2.old_finance_closing_fee? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
+          parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
+          parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
+          parseInt(newF2.vat7_fee ? newF2.vat7_fee : singleCase.f2_vat7_fee),
+          parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
+          parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
+          parseInt(newF2.discount_fee ? newF2.discount_fee : singleCase.f2_discount_fee),
+          parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
+          parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
+          parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
+          parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
+          parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
+          parseInt(newF2.tax_renewal_fee ? newF2.tax_renewal_fee : singleCase.f2_tax_renewal_fee),
+          parseInt(newF2.act_renewal_fee ? newF2.act_renewal_fee : singleCase.f2_act_renewal_fee),
+          newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
+          newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
+          newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
+          newF2.margin_account_no ? newF2.margin_account_no : singleCase.f2_margin_account_no,
+          newF2.old_finance_closing_fee_note ? newF2.old_finance_closing_fee_note : singleCase.f2_old_finance_closing_fee_note,
+          newF2.old_finance_transfer_fee_note ? newF2.old_finance_transfer_fee_note : singleCase.f2_old_finance_transfer_fee_note,
+          newF2.book_closing_fee_note ? newF2.book_closing_fee_note : singleCase.f2_book_closing_fee_note,
+          newF2.vat7_fee_note ? newF2.vat7_fee_note : singleCase.f2_vat7_fee_note,
+          newF2.transfer_fee_note ? newF2.transfer_fee_note : singleCase.f2_transfer_fee_note,
+          newF2.duty_fee_note ? newF2.duty_fee_note : singleCase.f2_duty_fee_note,
+          newF2.discount_fee_note ? newF2.discount_fee_note : singleCase.f2_discount_fee_note,
+          newF2.car_shield_fee_note ? newF2.car_shield_fee_note : singleCase.f2_car_shield_fee_note,
+          newF2.car_insurance_fee_note ? newF2.car_insurance_fee_note : singleCase.f2_car_insurance_fee_note,
+          newF2.transfer_service_fee_note ? newF2.transfer_service_fee_note : singleCase.f2_transfer_service_fee_note,
+          newF2.contract_fee_note ? newF2.contract_fee_note : singleCase.f2_contract_fee_note,
+          newF2.outside_transfer_fee_note ? newF2.outside_transfer_fee_note : singleCase.f2_outside_transfer_fee_note,
+          newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
+          newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
+
+          singleCase.f2_cheque,
+          singleCase.name,
+          singleCase.name,
+          singleCase.f2_deposit,
+          singleCase.name,
+          singleCase.cus_tel,
+          singleCase.case_type,
+          singleCase.case_id,
+          singleCase.job_id,
+          singleCase.new_bank,
+          singleCase.down_amount,
+          singleCase.car_brand,
+          singleCase.car_model,
+          singleCase.car_license,
+          singleCase.car_province,
+          singleCase.car_year,
+          singleCase.finance_staff,
+          singleCase.province,
+        );
       })
       .catch(err => console.log(err));
 
     console.log(newF2);
   }
 
-  const printPDF = () => {
-    const amount_received = (parseInt(newF2.old_finance_closing_fee) +
-      parseInt(newF2.old_finance_transfer_fee) +
-      parseInt(newF2.book_closing_fee) +
-      parseInt(newF2.vat7_fee) +
-      parseInt(newF2.transfer_fee) +
-      parseInt(newF2.duty_fee) +
-      parseInt(newF2.discount_fee) +
-      parseInt(newF2.car_shield_fee) +
-      parseInt(newF2.car_insurance_fee) +
-      parseInt(newF2.transfer_service_fee) +
-      parseInt(newF2.contract_fee) +
-      parseInt(newF2.outside_transfer_fee) +
-      parseInt(newF2.tax_renewal_fee) +
-      parseInt(newF2.act_renewal_fee)) - newF2.approve_amount;
+  const printPDF = (
+          approve_amount,
+          old_finance_closing_fee ,
+          old_finance_transfer_fee,
+          book_closing_fee ,
+          vat7_fee ,
+          transfer_fee ,
+          duty_fee ,
+          discount_fee ,
+          car_shield_fee ,
+          car_insurance_fee ,
+          transfer_service_fee ,
+          contract_fee  ,
+          outside_transfer_fee ,
+          tax_renewal_fee ,
+          act_renewal_fee ,
+          car_check_con ,
+          doc_storage_con ,
+          margin_account ,
+          margin_account_no ,
+          old_finance_closing_fee_note ,
+          old_finance_transfer_fee_note ,
+          book_closing_fee_note,
+          vat7_fee_note ,
+          transfer_fee_note ,
+          duty_fee_note ,
+          discount_fee_note,
+          car_shield_fee_note ,
+          car_insurance_fee_note ,
+          transfer_service_fee_note,
+          contract_fee_note ,
+          outside_transfer_fee_note ,
+          tax_renewal_fee_note ,
+          act_renewal_fee_note ,
+          cheque ,
+          cheque_receiver ,
+          deposit_receiver ,
+          deposit,
+          customer_name,
+          customer_tel,
+          case_type,
+          case_id,
+          job_id,
+          new_bank,
+          down_amount,
+          car_brand,
+          car_model,
+          car_license,
+          car_province,
+          car_year,
+          finance_staff,
+          province
+          
 
-    const old_finance_total_cost = parseInt(newF2.old_finance_closing_fee) + parseInt(newF2.old_finance_transfer_fee);
-    const total_cost = parseInt(
-      newF2.old_finance_closing_fee) +
-      parseInt(newF2.old_finance_transfer_fee) +
-      parseInt(newF2.book_closing_fee) +
-      parseInt(newF2.vat7_fee) +
-      parseInt(newF2.transfer_fee) +
-      parseInt(newF2.duty_fee) +
-      parseInt(newF2.discount_fee) +
-      parseInt(newF2.car_shield_fee) +
-      parseInt(newF2.car_insurance_fee) +
-      parseInt(newF2.transfer_service_fee) +
-      parseInt(newF2.contract_fee) +
-      parseInt(newF2.outside_transfer_fee) +
-      parseInt(newF2.tax_renewal_fee) +
-      parseInt(newF2.act_renewal_fee);
+  ) => {
+    const amount_received = ((parseInt(old_finance_closing_fee) +
+      parseInt(old_finance_transfer_fee) +
+      parseInt(book_closing_fee) +
+      parseInt(vat7_fee) +
+      parseInt(transfer_fee) +
+      parseInt(duty_fee) +
+      parseInt(discount_fee) +
+      parseInt(car_shield_fee) +
+      parseInt(car_insurance_fee) +
+      parseInt(transfer_service_fee) +
+      parseInt(contract_fee) +
+      parseInt(outside_transfer_fee) +
+      parseInt(tax_renewal_fee) +
+      parseInt(act_renewal_fee)) - approve_amount);
+    const cartrust_total_cost = (parseInt(old_finance_closing_fee) +
+      parseInt(old_finance_transfer_fee) +
+      parseInt(book_closing_fee) +
+      parseInt(vat7_fee) +
+      parseInt(transfer_fee) +
+      parseInt(duty_fee) +
+      parseInt(discount_fee))
+
+    const new_finance_total_cost = (parseInt(car_shield_fee) +
+    parseInt(car_insurance_fee) +
+    parseInt(transfer_service_fee) +
+    parseInt(contract_fee) +
+    parseInt(outside_transfer_fee) +
+    parseInt(tax_renewal_fee) +
+    parseInt(act_renewal_fee))
+
+    const old_finance_total_cost = (parseInt(old_finance_closing_fee) +
+    parseInt(old_finance_transfer_fee))
+    const total_cost = (parseInt(old_finance_closing_fee) +
+    parseInt(old_finance_transfer_fee) +
+    parseInt(book_closing_fee) +
+    parseInt(vat7_fee) +
+    parseInt(transfer_fee) +
+    parseInt(duty_fee) +
+    parseInt(discount_fee) +
+    parseInt(car_shield_fee) +
+    parseInt(car_insurance_fee) +
+    parseInt(transfer_service_fee) +
+    parseInt(contract_fee) +
+    parseInt(outside_transfer_fee) +
+    parseInt(tax_renewal_fee) +
+    parseInt(act_renewal_fee))
     const templeteOne = {
       content: [
         {
@@ -371,14 +480,14 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginBottom: 7,
                 },
                 {
-                  text: 'คุณ  ณัฏพล ชละเอม  Tel. +66859077647 ,',
+                  text: 'คุณ ' + customer_name + ' ,',
                   fontSize: 9,
                   marginLeft: 10,
                   itailic: true,
                   marginBottom: 7,
                 },
                 {
-                  text: 'Chevrolet Sonic  ปี 2014   ทะเบียน กม 6818 กรุงเทพมหานคร',
+                  text: car_brand + car_model + ' ปี ' + car_year + ' ทะเบียน ' + car_license + ' ' + car_province ,
                   fontSize: 10,
                   marginLeft: 10,
                   marginBottom: 7,
@@ -413,7 +522,7 @@ const ModalAddF2 = ({ singleCase }) => {
                     },
                     {
                       width: 'auto',
-                      text: 'Refinance',
+                      text: case_type,
                       marginLeft: 5,
                     },
                   ],
@@ -429,7 +538,7 @@ const ModalAddF2 = ({ singleCase }) => {
                     },
                     {
                       width: 'auto',
-                      text: '600',
+                      text: case_id,
                       marginLeft: 5,
                     },
                   ],
@@ -445,7 +554,7 @@ const ModalAddF2 = ({ singleCase }) => {
                     },
                     {
                       width: 'auto',
-                      text: '-',
+                      text: job_id,
                       marginLeft: 5,
                     },
                   ],
@@ -470,7 +579,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: 'SCB Leasing',
+                      text: new_bank,
                       bold: true,
                       width: 80,
                       marginBottom: 7,
@@ -486,7 +595,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: '333500 บาท',
+                      text: approve_amount,
                       bold: true,
                       width: 80,
                     },
@@ -500,7 +609,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       width: 60,
                     },
                     {
-                      text: '',
+                      text: down_amount,
                       bold: true,
                     },
                   ],
@@ -691,7 +800,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: 'ตรวนอก/ชุดเลข/ถ่ายรูป',
+                      text: car_check_con,
                     },
                   ],
                 },
@@ -703,7 +812,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: '...',
+                      text: finance_staff,
                     },
                   ],
                 },
@@ -715,7 +824,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: 'กทม.',
+                      text: province,
                     },
                   ],
                 },
@@ -727,7 +836,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: '',
+                      text: margin_account,
                     },
                   ],
                 },
@@ -765,7 +874,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 10,
                     },
                     {
-                      text: '320000.00 บาท',
+                      text: old_finance_closing_fee + ' บาท',
                     },
                   ],
                 },
@@ -778,7 +887,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 10,
                     },
                     {
-                      text: '',
+                      text: old_finance_transfer_fee + ' บาท',
                     },
                   ],
                 },
@@ -791,7 +900,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 10,
                     },
                     {
-                      text: '',
+                      text: book_closing_fee + ' บาท',
                     },
                   ],
                 },
@@ -799,12 +908,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '4. ค่าดำเนินการ',
+                      text: '4. ภาษีมูลค่าเพิ่ม 7 %',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '',
+                      text: vat7_fee + ' บาท',
                     },
                   ],
                 },
@@ -812,12 +921,25 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '5. ภาษีมูลค่าเพิ่ม 7 %',
+                      text: '5. ค่าดำเนินการ ',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '',
+                      text: transfer_fee + ' บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '6. ค่าอากร',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: duty_fee + ' บาท',
                     },
                   ],
                 },
@@ -831,7 +953,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 10,
                     },
                     {
-                      text: '',
+                      text: discount_fee + ' บาท',
                     },
                   ],
                 },
@@ -845,7 +967,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 12,
                     },
                     {
-                      text: '320000.00 บาท',
+                      text: cartrust_total_cost + ' บาท',
                     },
                   ],
                 },
@@ -859,12 +981,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '6. ค่าใช้จ่ายไฟแนนซ์ใหม่',
+                      text: '7. ค่าประกันคุ้มครองสินเชื่อ',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '230000.00 บาท',
+                      text: car_shield_fee + ' บาท',
                     },
                   ],
                 },
@@ -872,12 +994,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '7. ค่าประกันภัยรถยนต์',
+                      text: '8. ค่าประกันภัยรถยนต์',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '2000.00 บาท',
+                      text: car_insurance_fee + ' บาท',
                     },
                   ],
                 },
@@ -885,12 +1007,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '8. ค่าบริการจัดชุดโอน',
+                      text: '9. ค่าบริการจัดชุดโอน',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '1300.00 บาท',
+                      text: transfer_service_fee + ' บาท',
                     },
                   ],
                 },
@@ -898,12 +1020,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '9. ค่าทำสัญญา',
+                      text: '10. ค่าทำสัญญา',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '900.00 บาท',
+                      text: contract_fee + ' บาท',
                     },
                   ],
                 },
@@ -911,12 +1033,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '10. ค่าโอนนอก',
+                      text: '11. ค่าโอนนอก',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '4000.00 บาท',
+                      text: outside_transfer_fee + ' บาท',
                     },
                   ],
                 },
@@ -924,12 +1046,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '11. ค่าต่อภาษี',
+                      text: '12. ค่าต่อภาษี',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '800.00 บาท',
+                      text: tax_renewal_fee + ' บาท',
                     },
                   ],
                 },
@@ -937,12 +1059,12 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 23,
                   columns: [
                     {
-                      text: '12. ค่าต่อ พรบ.',
+                      text: '13. ค่าต่อ พรบ.',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '600.00 บาท',
+                      text: act_renewal_fee + ' บาท',
                     },
                   ],
                 },
@@ -951,12 +1073,26 @@ const ModalAddF2 = ({ singleCase }) => {
                   marginLeft: 35,
                   columns: [
                     {
-                      text: 'รวมค่าใช้จ่ายทั้งสิน',
+                      text: 'รวมค่าใช้จ่ายไฟแนนซ์ใหม',
                       width: 100,
                       marginBottom: 10,
                     },
                     {
-                      text: '566860.00 บาท',
+                      text: new_finance_total_cost + ' บาท',
+                    },
+                  ],
+                },
+                {
+                  bold: true,
+                  marginLeft: 35,
+                  columns: [
+                    {
+                      text: 'รวมค่าใช้จ่ายทั้งสิ้น',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: total_cost + ' บาท',
                     },
                   ],
                 },
@@ -970,7 +1106,7 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 10,
                     },
                     {
-                      text: '-23336.00 บาท',
+                      text: amount_received + ' บาท',
                     },
                   ],
                 },
@@ -983,9 +1119,82 @@ const ModalAddF2 = ({ singleCase }) => {
                   text: 'หมายเหตุ',
                   bold: true,
                   fontSize: 15,
+                 
                 },
+                {
+                  text: old_finance_closing_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: old_finance_transfer_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: book_closing_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: vat7_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: transfer_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: duty_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: discount_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: car_shield_fee_note,
+                  fontSize: 12,
+                  marginTop:47
+                },
+                {
+                  text: car_insurance_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: transfer_service_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: contract_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: outside_transfer_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: tax_renewal_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                {
+                  text: act_renewal_fee_note,
+                  fontSize: 12,
+                  marginTop:10
+                },
+                
               ],
             },
+            
           ],
           font: 'Halvethaica',
           fontSize: 8,
@@ -1014,29 +1223,29 @@ const ModalAddF2 = ({ singleCase }) => {
                       marginBottom: 7,
                     },
                     {
-                      text: '322500.00 บาท',
+                      text: old_finance_total_cost + ' บาท',
                     },
                   ],
                 },
                 {
                   columns: [
                     {
-                      text: 'ทำเช็คจ่ายในนาม ...',
+                      text: 'ทำเช็คจ่ายในนาม ' + cheque_receiver,
                       marginBottom: 7,
                     },
                     {
-                      text: '180000.00 บาท',
+                      text: cheque,
                     },
                   ],
                 },
                 {
                   columns: [
                     {
-                      text: 'มัดจำจ่ายให้ ...',
+                      text: 'มัดจำจ่ายให้ ' + deposit_receiver,
                       marginBottom: 7,
                     },
                     {
-                      text: '5000.00 บาท',
+                      text: deposit + ' บาท',
                     },
                   ],
                 },
@@ -1212,7 +1421,7 @@ const ModalAddF2 = ({ singleCase }) => {
             type="number"
             min="0"
             step="any"
-            value={newF2.cheque || ""}
+            value={newF2.cheque || singleCase.f2_cheque}
             name="cheque"
             onChange={handleChangeF2}
             onFocus={deletezero}
@@ -1245,7 +1454,7 @@ const ModalAddF2 = ({ singleCase }) => {
             type="number"
             min="0"
             step="any"
-            value={newF2.deposit || ""}
+            value={newF2.deposit || singleCase.f2_deposit}
             name="deposit"
             onChange={handleChangeF2}
             onFocus={deletezero}
@@ -1379,7 +1588,7 @@ const ModalAddF2 = ({ singleCase }) => {
 
                   <select
                     name="car_check_con"
-                    value={newCase.car_check_con || ""}
+                    value={newF2.car_check_con || singleCase.f2_car_check_con}
                     onChange={handleChange}
                     className="browser-default"
                   >
@@ -1403,7 +1612,7 @@ const ModalAddF2 = ({ singleCase }) => {
   </label>
                   <select
                     name="doc_storage_con"
-                    value={newCase.doc_storage_con || ""}
+                    value={newF2.doc_storage_con || singleCase.f2_doc_storage_con}
                     onChange={handleChange}
                     className="browser-default"
                   >
@@ -1425,7 +1634,7 @@ const ModalAddF2 = ({ singleCase }) => {
 
                   <select
                     name="finance_staff"
-                    value={newCase.finance_staff}
+                    value={newF2.finance_staff || singleCase.finance_staff}
                     onChange={handleChange}
                     className="browser-default"
                   >
@@ -1445,7 +1654,7 @@ const ModalAddF2 = ({ singleCase }) => {
                     <span>จังหวัดที่อยู่อาศัย</span></label>
                   <select
                     name="province_f2"
-                    value={newCase.province_f2 || ""}
+                    value={newF2.province_f2 || singleCase.cus_province }
                     onChange={handleChange}
                     className="browser-default"
                   >
@@ -1466,7 +1675,7 @@ const ModalAddF2 = ({ singleCase }) => {
 
                   <select
                     name="margin_account"
-                    value={newCase.margin_account || ""}
+                    value={newF2.margin_account || ""}
                     onChange={handleChange}
                     className="browser-default"
                   >
@@ -1484,7 +1693,7 @@ const ModalAddF2 = ({ singleCase }) => {
                     <span>เลขที่บัญชี</span></label>
                   <input
                     name="margin_account_no"
-                    value={newCase.margin_account_no || ""}
+                    value={newF2.margin_account_no || singleCase.f2_margin_account_no}
                     onChange={handleChange}
 
                   ></input>
@@ -1504,7 +1713,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   name="old_finance_closing_fee"
                   onFocus={deletezero}
                   value={
-                    newF2.old_finance_closing_fee || singleCase.F2_old_finance_closing_fee || "0"
+                    newF2.old_finance_closing_fee || singleCase.f2_old_finance_closing_fee || "0"
                   }
                   onChange={handleChangeF2}
                   className="validate"
@@ -1517,9 +1726,9 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="text"
                   name="old_finance_closing_fee_note"
                   value={
-                    newF2.old_finance_closing_fee_note ||
+                    newF2.old_finance_closing_fee_note || singleCase.f2_old_finance_closing_fee_note
 
-                    ""
+                    
                   }
                   onChange={handleChangeF2T}
                   className="validate"
@@ -1533,7 +1742,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.old_finance_transfer_fee || ""}
+                  value={newF2.old_finance_transfer_fee || singleCase.f2_old_finance_transfer_fee}
                   name="old_finance_transfer_fee"
                   onChange={handleChangeF2}
                 />
@@ -1544,7 +1753,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.old_finance_transfer_fee_note || ""}
+                  value={newF2.old_finance_transfer_fee_note || singleCase.f2_old_finance_transfer_fee_note }
                   name="old_finance_transfer_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1559,7 +1768,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.book_closing_fee || ""}
+                  value={newF2.book_closing_fee || singleCase.f2_book_closing_fee}
                   name="book_closing_fee"
                   onChange={handleChangeF2}
                 />
@@ -1570,11 +1779,13 @@ const ModalAddF2 = ({ singleCase }) => {
                 <input
                   type="text"
                   onFocus={deletezero}
-                  value={newF2.book_closing_fee_note || ""}
+                  value={newF2.book_closing_fee_note || singleCase.f2_book_closing_fee_note}
                   name="book_closing_fee_note"
                   onChange={handleChangeF2T}
                 />
               </div>
+
+              
 
 
 
@@ -1586,7 +1797,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.vat7_fee || ""}
+                  value={newF2.vat7_fee || singleCase.f2_vat7_fee}
                   name="vat7_fee"
                   onChange={handleChangeF2}
                 />
@@ -1596,13 +1807,59 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.vat7_fee_note || ""}
+                  value={newF2.vat7_fee_note || singleCase.f2_vat7_fee_note}
                   name="vat7_fee_note"
                   onChange={handleChangeF2T}
                 />
               </div>
 
+              <div className="col s6 m6 l6 content">
+                <label>ค่าธรรมเนียมโอน</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  onFocus={deletezero}
+                  value={newF2.transfer_fee || singleCase.f2_transfer_fee}
+                  name="transfer_fee"
+                  onChange={handleChangeF2}
+                />
+              </div>
 
+              <div className="col s6 m6 l6 content">
+                <label>หมายเหตุ</label>
+                <input
+                  type="text"
+                  onFocus={deletezero}
+                  value={newF2.transfer_fee_note || singleCase.f2_transfer_fee_note}
+                  name="transfer_fee_note"
+                  onChange={handleChangeF2T}
+                />
+              </div>
+
+              <div className="col s6 m6 l6 content">
+                <label>ค่าอากร</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  onFocus={deletezero}
+                  value={newF2.duty_fee || singleCase.f2_duty_fee}
+                  name="duty_fee"
+                  onChange={handleChangeF2}
+                />
+              </div>
+
+              <div className="col s6 m6 l6 content">
+                <label>หมายเหตุ</label>
+                <input
+                  type="text"
+                  onFocus={deletezero}
+                  value={newF2.duty_fee_note || singleCase.f2_duty_fee_note}
+                  name="duty_fee_note"
+                  onChange={handleChangeF2T}
+                />
+              </div>
 
               <div className="col s6 m6 l6 content">
                 <label>ส่วนลดพิเศษ</label>
@@ -1611,7 +1868,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   min="0"
                   step="any"
                   onFocus={deletezero}
-                  value={newF2.discount_fee || ""}
+                  value={newF2.discount_fee || singleCase.f2_discount_fee}
                   name="discount_fee"
                   onChange={handleChangeF2}
                 />
@@ -1621,7 +1878,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.discount_fee_note || ""}
+                  value={newF2.discount_fee_note || singleCase.f2_discount_fee_note}
                   name="discount_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1657,7 +1914,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.car_shield_fee || ""}
+                  value={newF2.car_shield_fee || singleCase.f2_car_shield_fee}
                   name="car_shield_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1669,7 +1926,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.car_shield_fee_note || ""}
+                  value={newF2.car_shield_fee_note || singleCase.f2_car_shield_fee_note}
                   name="car_shield_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1681,7 +1938,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.car_insurance_fee || ""}
+                  value={newF2.car_insurance_fee || singleCase.f2_car_insurance_fee}
                   name="car_insurance_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1693,7 +1950,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.car_insurance_fee_note || ""}
+                  value={newF2.car_insurance_fee_note || singleCase.f2_car_insurance_fee_note}
                   name="car_insurance_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1705,7 +1962,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.transfer_service_fee || ""}
+                  value={newF2.transfer_service_fee || singleCase.f2_transfer_service_fee}
                   name="transfer_service_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1718,7 +1975,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <input
                   type="text"
 
-                  value={newF2.transfer_service_fee_note || ""}
+                  value={newF2.transfer_service_fee_note || singleCase.f2_transfer_service_fee_note}
                   name="transfer_service_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1730,7 +1987,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.contract_fee || ""}
+                  value={newF2.contract_fee || singleCase.f2_contract_fee}
                   name="contract_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1742,7 +1999,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.contract_fee_note || ""}
+                  value={newF2.contract_fee_note || singleCase.f2_contract_fee_note}
                   name="contract_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1754,7 +2011,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.outside_transfer_fee || ""}
+                  value={newF2.outside_transfer_fee || singleCase.f2_outside_transfer_fee}
                   name="outside_transfer_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1766,7 +2023,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.outside_transfer_fee_note || ""}
+                  value={newF2.outside_transfer_fee_note || singleCase.f2_outside_transfer_fee_note}
                   name="outside_transfer_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1778,7 +2035,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.tax_renewal_fee || ""}
+                  value={newF2.tax_renewal_fee || singleCase.f2_tax_renewal_fee}
                   name="tax_renewal_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1790,7 +2047,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.tax_renewal_fee_note || ""}
+                  value={newF2.tax_renewal_fee_note || singleCase.f2_tax_renewal_fee_note}
                   name="tax_renewal_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1802,7 +2059,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="number"
                   min="0"
                   step="any"
-                  value={newF2.act_renewal_fee || ""}
+                  value={newF2.act_renewal_fee || singleCase.f2_act_renewal_fee}
                   name="act_renewal_fee"
                   onChange={handleChangeF2}
                   onFocus={deletezero}
@@ -1814,7 +2071,7 @@ const ModalAddF2 = ({ singleCase }) => {
                 <label>หมายเหตุ</label>
                 <input
                   type="text"
-                  value={newF2.act_renewal_fee_note || ""}
+                  value={newF2.act_renewal_fee_note || singleCase.f2_act_renewal_fee_note}
                   name="act_renewal_fee_note"
                   onChange={handleChangeF2T}
                 />
@@ -1909,7 +2166,7 @@ const ModalAddF2 = ({ singleCase }) => {
                   type="text"
                   min="0"
                   step="any"
-                  value={singleCase.old_bank || ""}
+                  value={singleCase.new_bank || ""}
                   name="old_bank"
                   disabled
                 />
