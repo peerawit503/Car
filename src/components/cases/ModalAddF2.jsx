@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { bold, itailic, light, normal } from './font/Sarabun';
+import { bold as bold2, normal as normal2, thin } from './font/helvethaica';
+import logo from './images/logo';
+import Pdfmake from 'pdfmake/build/pdfmake';
+
 import {
 
   provinceAll
@@ -37,22 +42,25 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
   const [newF2, setNewF2] = useState({
-    approve_amount: "",
-    old_finance_closing_fee: "",
-    old_finance_transfer_fee: "",
-    book_closing_fee: "",
-    vat7_fee: "",
-    transfer_fee: "",
-    duty_fee: "",
-    discount_fee: "",
-    car_shield_fee: "",
-    car_insurance_fee: "",
-    transfer_service_fee: "",
-    contract_fee: "",
-    outside_transfer_fee: "",
-    tax_renewal_fee: "",
-    act_renewal_fee: "",
-
+    approve_amount: "0",
+    old_finance_closing_fee: "0",
+    old_finance_transfer_fee: "0",
+    book_closing_fee: "0",
+    vat7_fee: "0",
+    transfer_fee: "0",
+    duty_fee: "0",
+    discount_fee: "0",
+    car_shield_fee: "0",
+    car_insurance_fee: "0",
+    transfer_service_fee: "0",
+    contract_fee: "0",
+    outside_transfer_fee: "0",
+    tax_renewal_fee: "0",
+    act_renewal_fee: "0",
+    car_check_con: "",
+    doc_storage_con: "",
+    margin_account: "",
+    margin_account_no: "",
     approve_amount_note: "",
     old_finance_closing_fee_note: "",
     old_finance_transfer_fee_note: "",
@@ -68,8 +76,6 @@ const ModalAddF2 = ({ singleCase }) => {
     outside_transfer_fee_note: "",
     tax_renewal_fee_note: "",
     act_renewal_fee_note: "",
-
-
     f2_status: "done",
     cheque: "0",
     cheque_receiver: "",
@@ -93,7 +99,48 @@ const ModalAddF2 = ({ singleCase }) => {
     getMargin_account()
     getOperatorS()
   }, []);
-  function setCartrustCost() {
+  function setCartrustCost(
+    approve_amount,
+    old_finance_closing_fee,
+    old_finance_transfer_fee,
+    book_closing_fee,
+    vat7_fee,
+    transfer_fee,
+    duty_fee,
+    discount_fee,
+    car_shield_fee,
+    car_insurance_fee,
+    transfer_service_fee,
+    contract_fee,
+    outside_transfer_fee,
+    tax_renewal_fee,
+    act_renewal_fee,
+    car_check_con,
+    doc_storage_con,
+    margin_account,
+    margin_account_no,
+    approve_amount_note,
+    old_finance_closing_fee_note,
+    old_finance_transfer_fee_note,
+    book_closing_fee_note,
+    vat7_fee_note,
+    transfer_fee_note,
+    duty_fee_note,
+    discount_fee_note,
+    car_shield_fee_note,
+    car_insurance_fee_note,
+    transfer_service_fee_note,
+    contract_fee_note,
+    outside_transfer_fee_note,
+    tax_renewal_fee_note,
+    act_renewal_fee_note,
+    f2_status,
+    cheque,
+    cheque_receiver,
+    deposit_receiver,
+    deposit
+    
+  ) {
     var summary =
       parseInt(newF2.old_finance_closing_fee) +
       parseInt(newF2.old_finance_transfer_fee) +
@@ -197,29 +244,32 @@ const ModalAddF2 = ({ singleCase }) => {
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
 
   function saveF2() {
-    newF2.approve_amount = numberWithCommas(newF2.approve_amount);
-    newF2.old_finance_closing_fee = numberWithCommas(
-      newF2.old_finance_closing_fee
-    );
-    newF2.old_finance_transfer_fee = numberWithCommas(
-      newF2.old_finance_transfer_fee
-    );
-    newF2.book_closing_fee = numberWithCommas(newF2.book_closing_fee);
-    newF2.vat7_fee = numberWithCommas(newF2.vat7_fee);
-    newF2.transfer_fee = numberWithCommas(newF2.transfer_fee);
-    newF2.duty_fee = numberWithCommas(newF2.duty_fee);
-    newF2.discount_fee = numberWithCommas(newF2.discount_fee);
-    newF2.car_shield_fee = numberWithCommas(newF2.car_shield_fee);
-    newF2.car_insurance_fee = numberWithCommas(newF2.car_insurance_fee);
-    newF2.transfer_service_fee = numberWithCommas(newF2.transfer_service_fee);
-    newF2.contract_fee = numberWithCommas(newF2.contract_fee);
-    newF2.outside_transfer_fee = numberWithCommas(newF2.outside_transfer_fee);
-    newF2.tax_renewal_fee = numberWithCommas(newF2.tax_renewal_fee);
-    newF2.act_renewal_fee = numberWithCommas(newF2.act_renewal_fee);
-    newF2.cheque = numberWithCommas(newF2.cheque);
-    newF2.deposit = numberWithCommas(newF2.deposit);
-    newF2.cheque_receiver = newF2.cheque_receiver;
-    newF2.act_renewal_fee = newF2.act_renewal_fee;
+    // newF2.approve_amount = parseInt(singleCase.approve_amount);
+    // newF2.old_finance_closing_fee = parseInt(
+    //   newF2.old_finance_closing_fee
+    // );
+    // newF2.old_finance_transfer_fee = parseInt(
+    //   newF2.old_finance_transfer_fee
+    // );
+    // newF2.book_closing_fee = parseInt(newF2.book_closing_fee);
+    // newF2.vat7_fee = parseInt(newF2.vat7_fee);
+    // newF2.transfer_fee = parseInt(newF2.transfer_fee);
+    // newF2.duty_fee = parseInt(newF2.duty_fee);
+    // newF2.discount_fee = parseInt(newF2.discount_fee);
+    // newF2.car_shield_fee = parseInt(newF2.car_shield_fee);
+    // newF2.car_insurance_fee = parseInt(newF2.car_insurance_fee);
+    // newF2.transfer_service_fee = parseInt(newF2.transfer_service_fee);
+    // newF2.contract_fee = parseInt(newF2.contract_fee);
+    // newF2.outside_transfer_fee = parseInt(newF2.outside_transfer_fee);
+    // newF2.tax_renewal_fee = parseInt(newF2.tax_renewal_fee);
+    // newF2.act_renewal_fee = parseInt(newF2.act_renewal_fee);
+    // newF2.cheque = parseInt(newF2.cheque);
+    // newF2.deposit = parseInt(newF2.deposit);
+    // newF2.cheque_receiver = newF2.cheque_receiver;
+    // newF2.act_renewal_fee = newF2.act_renewal_fee;
+
+
+
     var data = JSON.stringify(newF2);
     console.log('data', data)
     axios
@@ -239,380 +289,906 @@ const ModalAddF2 = ({ singleCase }) => {
   }
 
   const printPDF = () => {
-    var docDefinition = {
+    const amount_received = (parseInt(newF2.old_finance_closing_fee) +
+      parseInt(newF2.old_finance_transfer_fee) +
+      parseInt(newF2.book_closing_fee) +
+      parseInt(newF2.vat7_fee) +
+      parseInt(newF2.transfer_fee) +
+      parseInt(newF2.duty_fee) +
+      parseInt(newF2.discount_fee) +
+      parseInt(newF2.car_shield_fee) +
+      parseInt(newF2.car_insurance_fee) +
+      parseInt(newF2.transfer_service_fee) +
+      parseInt(newF2.contract_fee) +
+      parseInt(newF2.outside_transfer_fee) +
+      parseInt(newF2.tax_renewal_fee) +
+      parseInt(newF2.act_renewal_fee)) - newF2.approve_amount;
+
+    const old_finance_total_cost = parseInt(newF2.old_finance_closing_fee) + parseInt(newF2.old_finance_transfer_fee);
+    const total_cost = parseInt(
+      newF2.old_finance_closing_fee) +
+      parseInt(newF2.old_finance_transfer_fee) +
+      parseInt(newF2.book_closing_fee) +
+      parseInt(newF2.vat7_fee) +
+      parseInt(newF2.transfer_fee) +
+      parseInt(newF2.duty_fee) +
+      parseInt(newF2.discount_fee) +
+      parseInt(newF2.car_shield_fee) +
+      parseInt(newF2.car_insurance_fee) +
+      parseInt(newF2.transfer_service_fee) +
+      parseInt(newF2.contract_fee) +
+      parseInt(newF2.outside_transfer_fee) +
+      parseInt(newF2.tax_renewal_fee) +
+      parseInt(newF2.act_renewal_fee);
+    const templeteOne = {
       content: [
         {
           columns: [
-            { width: 150, height: 60, image: cartrustLogo },
-            { text: `ใบเสนอยอดจัดและดอกเบี้ยรถยนต์มือสอง`, style: `header` },
             {
-              fontSize: 12,
-              text: `F2
-            วันที่จัดทำ ${moment().format("l")}
-            รหัสลูกค้า: ${singleCase.customer_id}
-            JOB Number: ${singleCase.job_id}
-            รีไฟแนนซ์  ซื้อขายกันเอง  จำนำ  กล้อง`
-            }
-          ]
-        },
-        { text: `เรื่อง ขอเสนอการจัดไฟแนนซ์` },
-        {
-          columns: [
-            { width: 100, text: `ผู้เช่าซื้อ  ${singleCase.name}` },
-            { text: `โทร` },
-            { text: `ผู้ขาย` },
-            { text: `โทร` }
-          ]
-        },
-        {
-          columns: [
-            { text: `รุ่น  ${singleCase.car_brand}` },
-            { text: `ทะเบียน ${singleCase.car_license}` },
-            { text: `ปี  ` },
-            { text: `จังหวัด ${singleCase.province} ` },
-            { text: `เครื่อง   cc` }
-          ]
-        },
-        {
-          columns: [
-            [
-              {
-                columns: [
-                  `ราคาซื้อขาย`,
-                  "-",
-                  `บาท`,
-                  `สถาบันการเงิน`,
-                  bank.b1 ? "TB" : "KK"
-                ]
-              },
-              {
-                columns: [
-                  `ยอดจัดที่ได้ `,
-                  singleCase.approve_amount,
-                  `บาท`,
-                  ``,
-                  ``
-                ]
-              },
-              {
-                columns: [`มัดจำเล่ม(กรณีมัดจำเล่มจากไฟแนนซ์เดิมได้) `, `บาท`]
-              },
-              {
-                columns: [
-                  {
-                    width: 50,
-                    text: `ดาวน์ `
-                  },
-                  {
-                    width: 60,
-                    text: `\n ผ่่อนชำระ/เดือน \n อัตราดอกเบี้ย \n ยอดจัด`
-                  },
-                  {
-                    table: {
-                      heights: [10, 10, 10, 10],
-                      body: [
-                        ["24เดือน", "36เดือน", "48เดือน", "60เดือน", "72เดือน"],
-                        [``, ``, ``, ``, ``],
-                        [``, ``, ``, ``, ``],
-                        [``, ``, ``, ``, ``]
-                      ]
-                    }
-                  }
-                ]
-              }
-            ],
+              image: 'logo.jpg',
+              width: 210,
+              height: 100,
+            },
             {
-              width: 150,
-              columns: [
-                [
-                  `เงื่อนไขการตวจรถ`,
-                  `เงื่อนไขการเก็บเอกสาร`,
-                  `จนท. Oper Cartrust`,
-                  `จังหวัดที่อยู่อาศัย`,
-                  `บัญชีรับเงินส่วนต่าง`
+              stack: [
+                {
+                  text: 'ใบเสนอยอดจัดและดอกเบี้ยรถยนต์มือสอง',
+                  style: 'header',
+                },
+                {
+                  text: 'บริษัท คาร์ทรัส จำกัด',
+                  style: 'subheader',
+                },
+                {
+                  text: '88 ถนนประเสรฐมนูกิจแขวงนวมินทร์',
+                  fontSize: 10,
+                  style: 'address',
+                },
+                {
+                  text: 'เขตบึงกุ่ม กรุงเทพฯ 10210',
+                  fontSize: 10,
+                  style: 'address',
+                },
+                {
+                  text: 'Tel. 02-276-5765-6 Hotline: 097-146-0239',
+                  bold: true,
+                  fontSize: 7,
+                  style: 'telphone',
+                },
+              ],
+              alignment: 'right',
+            },
+          ],
+        },
+        {
+          columns: [
+            {
+              stack: [
+                {
+                  text: 'ข้อมูลลูกค้า',
+                  itailic: true,
+                  fontSize: 13,
+                  marginBottom: 7,
+                },
+                {
+                  text: 'คุณ  ณัฏพล ชละเอม  Tel. +66859077647 ,',
+                  fontSize: 9,
+                  marginLeft: 10,
+                  itailic: true,
+                  marginBottom: 7,
+                },
+                {
+                  text: 'Chevrolet Sonic  ปี 2014   ทะเบียน กม 6818 กรุงเทพมหานคร',
+                  fontSize: 10,
+                  marginLeft: 10,
+                  marginBottom: 7,
+                },
+              ],
+            },
+            {
+              stack: [
+                {
+                  columns: [
+                    {
+                      text: 'วันที่จัดทํา / Date :',
+                      bold: true,
+                      width: 200,
+                      marginBottom: 7,
+                    },
+                    {
+                      width: 'auto',
+                      text: new Date().toLocaleDateString(),
+                      marginLeft: 5,
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'Case Type: ',
+                      bold: true,
+                      width: 200,
+
+                      marginBottom: 7,
+                    },
+                    {
+                      width: 'auto',
+                      text: 'Refinance',
+                      marginLeft: 5,
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'Case ID :',
+                      bold: true,
+                      width: 200,
+
+                      marginBottom: 7,
+                    },
+                    {
+                      width: 'auto',
+                      text: '600',
+                      marginLeft: 5,
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      width: 200,
+
+                      text: 'Job Number :',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      width: 'auto',
+                      text: '-',
+                      marginLeft: 5,
+                    },
+                  ],
+                },
+              ],
+              alignment: 'right',
+              fontSize: 10,
+            },
+          ],
+          font: 'Halvethaica',
+        },
+        {
+          columns: [
+            {
+              stack: [
+                {
+                  columns: [
+                    {
+                      text: 'สถาบันการเงิน',
+                      bold: true,
+                      width: 60,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: 'SCB Leasing',
+                      bold: true,
+                      width: 80,
+                      marginBottom: 7,
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'ยอดจัด',
+                      bold: true,
+                      width: 60,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '333500 บาท',
+                      bold: true,
+                      width: 80,
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'ดาวน์',
+                      bold: true,
+                      width: 60,
+                    },
+                    {
+                      text: '',
+                      bold: true,
+                    },
+                  ],
+                },
+              ],
+              width: 60,
+              fontSize: 11,
+            },
+            {
+              table: {
+                body: [
+                  [
+                    {
+                      text: 'การผ่อนชำระ',
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 1, 1],
+                    },
+                    {
+                      text: '24 เดือน',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 1, 1],
+                    },
+                    {
+                      text: '36 เดือน',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 1, 1],
+                    },
+                    {
+                      text: '48 เดือน',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 1, 1],
+                    },
+                    {
+                      text: '60 เดือน',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 1, 1],
+                    },
+                    {
+                      text: '72 เดือน',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 0, 0, 1],
+                    },
+                  ],
+                  [
+                    {
+                      text: 'ผ่อนชำระ / ต่อเดือน',
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 1, 1, 1],
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                  ],
+                  [
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 1, 1, 1],
+                      text: 'อัตราดอกเบี้ย',
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                    {
+                      text: '',
+                      width: 100,
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 1],
+                    },
+                  ],
+                  [
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [0, 1, 1, 0],
+                      text: 'ยอดจัด',
+                    },
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 1, 0],
+                      text: '',
+                    },
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 1, 0],
+                      text: '',
+                    },
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 1, 0],
+                      text: '',
+                    },
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 1, 0],
+                      text: '',
+                    },
+                    {
+                      alignment: 'center',
+                      margin: 3,
+                      border: [1, 1, 0, 0],
+                      text: '',
+                    },
+                  ],
                 ],
+              },
+              fontSize: 9,
+              marginLeft: 65,
+              marginRight: 20,
+            },
+            {
+              stack: [
+                {
+                  columns: [
+                    {
+                      text: 'เงื่อนไขการตรวจรถ',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: 'ตรวนอก/ชุดเลข/ถ่ายรูป',
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'จนท. Oper Cartrust',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '...',
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'จังหวัดที่อยู่อาศัย',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: 'กทม.',
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'บัญชีรับเงินส่วนต่าง',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+              ],
+              width: 'auto',
+              fontSize: 9,
+            },
+          ],
+          font: 'Halvethaica',
+          fontSize: 7,
+          marginTop: 10,
+        },
+        {
+          canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1 }],
+          margin: 5,
+        },
+        {
+          columns: [
+            {
+              marginTop: 15,
+              fontSize: 12,
+              stack: [
+                {
+                  text: 'ค่าใช้จ่าย CarTrust',
+                  bold: true,
+                  fontSize: 15,
+                  marginBottom: 12,
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '1. ยอดปิดไฟแนนต์เก่า',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '320000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '2. ค่าดำเนินการโอนไฟแนนเก่า',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '3. ค่าบริการเงินสด',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '4. ค่าดำเนินการ',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '5. ภาษีมูลค่าเพิ่ม 7 %',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+                {
+                  bold: true,
+                  marginLeft: 35,
+                  columns: [
+                    {
+                      text: 'ส่วนลดพิเศษ',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '',
+                    },
+                  ],
+                },
+                {
+                  bold: true,
+                  marginLeft: 35,
+                  columns: [
+                    {
+                      text: 'รวมค่าใช้จ่าย',
+                      width: 100,
+                      marginBottom: 12,
+                    },
+                    {
+                      text: '320000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  text: 'ค่าใช้จ่ายไฟแนนซ์ใหม่',
+                  bold: true,
+                  fontSize: 15,
+                  marginBottom: 12,
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '6. ค่าใช้จ่ายไฟแนนซ์ใหม่',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '230000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '7. ค่าประกันภัยรถยนต์',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '2000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '8. ค่าบริการจัดชุดโอน',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '1300.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '9. ค่าทำสัญญา',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '900.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '10. ค่าโอนนอก',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '4000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '11. ค่าต่อภาษี',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '800.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  marginLeft: 23,
+                  columns: [
+                    {
+                      text: '12. ค่าต่อ พรบ.',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '600.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  bold: true,
+                  marginLeft: 35,
+                  columns: [
+                    {
+                      text: 'รวมค่าใช้จ่ายทั้งสิน',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '566860.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  bold: true,
+                  marginLeft: 35,
+                  columns: [
+                    {
+                      text: 'ยอดเงินที่ได้รับ',
+                      width: 100,
+                      marginBottom: 10,
+                    },
+                    {
+                      text: '-23336.00 บาท',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              marginTop: 15,
+              stack: [
+                {
+                  text: 'หมายเหตุ',
+                  bold: true,
+                  fontSize: 15,
+                },
+              ],
+            },
+          ],
+          font: 'Halvethaica',
+          fontSize: 8,
+          padding: 20,
+          marginTop: 5,
+        },
+        {
+          canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1 }],
+          margin: 5,
+        },
+        {
+          marginTop: 15,
+          marginLeft: 25,
+          columns: [
+            {
+              text: 'การจ่ายเงิน :',
+              width: 50,
+              bold: true,
+            },
+            {
+              stack: [
+                {
+                  columns: [
+                    {
+                      text: 'จ่ายเป็นเงินสด',
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '322500.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'ทำเช็คจ่ายในนาม ...',
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '180000.00 บาท',
+                    },
+                  ],
+                },
+                {
+                  columns: [
+                    {
+                      text: 'มัดจำจ่ายให้ ...',
+                      marginBottom: 7,
+                    },
+                    {
+                      text: '5000.00 บาท',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          font: 'Halvethaica',
+          fontSize: 12,
+          marginBottom: 7,
+        },
+        {
+          text: [
+            { text: 'หมายเหตุ', fontSize: 12, color: 'red', bold: true },
+            {
+              text:
+                '  เงื่อนไขการมัดจำเช็ค ลูกค้าต้องนำรถยนต์เข้าตรวจสภาพภายใน 3 วัน เมื่อเจ้าหน้าที่หรือบริษัทฯ ร้องขอ มิเช่นนั้น ทางบริษัทฯ ขอหักเงินมัดจำเป็นจำนวน 50% ของยอดเงินที่',
+              color: 'red',
+              marginBottom: 5,
+            },
+          ],
+          font: 'Halvethaica',
+          fontSize: 10,
+        },
+        {
+          text:
+            'มัดจำไว้ และหากลูกค้าไม่ดำเนินการให้ ตามที่บริษัทร้องขอภายใน 5 วัน บริษัทขอสงวนสิทธิ์ในการคืนเงินมัดจำทั้งหมด',
+          color: 'red',
+          font: 'Halvethaica',
+          marginLeft: 90,
+          marginTop: 7,
+          fontSize: 10,
+        },
+        {
+          marginTop: 15,
+          table: {
+            width: '100%',
+            body: [
+              [
+                {
+                  stack: [
+                    {
+                      text: 'ข้าพเจ้า  ..............................................',
+                      margin: [15, 15, 100, 15],
+                    },
+                    {
+                      text: 'ได้อ่านรายละเอียดเกี่ยวกับค่าใช้จ่ายต่างๆข้างต้นเรียบร้อยแล้ว',
+                      margin: 15,
+                    },
+                    {
+                      text: 'และยอมรับเงื่อนไขของค่าใช้จ่ายทั้งหมด',
+                      margin: 15,
+                    },
+                  ],
+                },
                 [
-                  cartrustWork.conditionCheckCar,
-                  cartrustWork.conditionKeepDocument,
-                  cartrustWork.cartrustOfficer,
-                  cartrustWork.province,
-                  cartrustWork.differentMoneyAccount
-                ]
-              ]
-            }
-          ]
-        },
-        `\n`,
-        { columns: [`ค่าใช้จ่ายcartrust`, `หมายเหตุ`] },
-        {
-          columns: [
-            { width: 100, text: `1.ค่าปิดไฟแนนซ์เก่า` },
-            { width: 100, text: `${newF2.old_finance_closing_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `2.ค่าโอนไฟแนนซ์เก่า` },
-            { width: 100, text: `${newF2.old_finance_transfer_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `3.ค่าบริการปิดเล่ม` },
-            { width: 100, text: `${newF2.book_closing_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `4.ภาษีมูลค่าเพิ่ม 7%` },
-            { width: 100, text: `${newF2.vat7_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `5.ค่าธรรมเนียมโอน` },
-            { width: 100, text: `${newF2.transfer_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `6.ค่าอากร` },
-            { width: 100, text: `${newF2.duty_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `ส่วนลดพิเศษ` },
-            { width: 100, text: `${newF2.discount_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `รวมค่าใช้จ่าย` },
-            {
-              width: 100,
-              text:
-                parseInt(newF2.old_finance_closing_fee) +
-                parseInt(newF2.old_finance_transfer_fee) +
-                parseInt(newF2.book_closing_fee) +
-                parseInt(newF2.vat7_fee) +
-                parseInt(newF2.transfer_fee) +
-                parseInt(newF2.duty_fee) +
-                parseInt(newF2.discount_fee)
-            },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        `\n`,
-        { columns: [`ค่าใช้จ่าย ไฟแนนซ์ใหม่`, `หมายเหตุ`] },
+                  {
+                    stack: [
+                      {
+                        margin: 15,
+                        text: '',
+                      },
+                      {
+                        margin: 15,
+                        text: '',
+                      },
+                      {
+                        margin: 15,
+                        columns: [
+                          { text: 'ลงชื่อ : ', marginRight: 100 },
+                          { text: 'วันที่ :' },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              ],
+            ],
+          },
+          font: 'Halvethaica',
+          marginBottom: 25,
 
-        {
-          columns: [
-            { width: 100, text: `1.Car Shield` },
-            { width: 100, text: `${newF2.car_shield_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
         },
         {
-          columns: [
-            { width: 100, text: `2.ค่าประกันภัยรถยนต์` },
-            { width: 100, text: `${newF2.car_insurance_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
+          text: 'เงื่อนไข: ยอดจัด,ดอกเบี้ยและค่าใช้จ่ายอาจมีการเปลี่ยนแปลง หากไม่ตรงตามเกณฑ์มาตราฐานการตามที่มาตราฐานแจ้งไว้ โดยที่ทางบริษัทฯ ไม่ต้องแจ้งให้ทราบล่วงหน้า',
+          font: 'Halvethaica',
+          fontSize: 10,
+          marginBottom: 15,
+          alignment: 'center'
+
         },
         {
-          columns: [
-            { width: 100, text: `3.ค่าริการจัดชุดโอน` },
-            { width: 100, text: `${newF2.transfer_service_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
+          text: 'สอบถามรายละอียดเพิ่มเติมได้ที่ โทร. 02-276-5765 ทุกวันจันทร์ - ศุกร์ เวลา 9:00 - 18:00 น.',
+          font: 'Halvethaica',
+          bold: true,
+          fontSize: 10,
+          alignment: 'center'
+
         },
-        {
-          columns: [
-            { width: 100, text: `4.ค่าทำสัญญา` },
-            { width: 100, text: `${newF2.contract_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `5.ค่าโอนนอก` },
-            { width: 100, text: `${newF2.outside_transfer_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `6.ค่าต่อภาษี` },
-            { width: 100, text: `${newF2.tax_renewal_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `7.ค่าต่อพรบ.` },
-            { width: 100, text: `${newF2.act_renewal_fee}` },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `รวมค่าใช้จ่าย` },
-            {
-              width: 100,
-              text:
-                parseInt(newF2.car_shield_fee) +
-                parseInt(newF2.car_insurance_fee) +
-                parseInt(newF2.transfer_service_fee) +
-                parseInt(newF2.contract_fee) +
-                parseInt(newF2.outside_transfer_fee) +
-                parseInt(newF2.tax_renewal_fee) +
-                parseInt(newF2.act_renewal_fee)
-            },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        { text: `\n` },
-        {
-          columns: [
-            { width: 100, text: `รวมค่าใช้จ่ายทั้งหมด` },
-            {
-              width: 100,
-              text:
-                parseInt(newF2.old_finance_closing_fee) +
-                parseInt(newF2.old_finance_transfer_fee) +
-                parseInt(newF2.book_closing_fee) +
-                parseInt(newF2.vat7_fee) +
-                parseInt(newF2.transfer_fee) +
-                parseInt(newF2.duty_fee) +
-                parseInt(newF2.discount_fee) +
-                parseInt(newF2.car_shield_fee) +
-                parseInt(newF2.car_insurance_fee) +
-                parseInt(newF2.transfer_service_fee) +
-                parseInt(newF2.contract_fee) +
-                parseInt(newF2.outside_transfer_fee) +
-                parseInt(newF2.tax_renewal_fee) +
-                parseInt(newF2.act_renewal_fee)
-            },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `ยอดเงินที่จะได้รับ` },
-            {
-              width: 100,
-              text:
-                parseInt(newF2.old_finance_closing_fee) +
-                parseInt(newF2.old_finance_transfer_fee) +
-                parseInt(newF2.book_closing_fee) +
-                parseInt(newF2.vat7_fee) +
-                parseInt(newF2.transfer_fee) +
-                parseInt(newF2.duty_fee) +
-                parseInt(newF2.discount_fee) +
-                parseInt(newF2.car_shield_fee) +
-                parseInt(newF2.car_insurance_fee) +
-                parseInt(newF2.transfer_service_fee) +
-                parseInt(newF2.contract_fee) +
-                parseInt(newF2.outside_transfer_fee) +
-                parseInt(newF2.tax_renewal_fee) +
-                parseInt(newF2.act_renewal_fee) -
-                parseInt(newF2.approve_amount)
-            },
-            { width: 25, text: `บาท` },
-            ``
-          ]
-        },
-        { text: bank.b1 ? "" : `\n` },
-        {
-          columns: [
-            { width: 100, text: `1]	จ่ายเป็นเงินสดให้` },
-            singleCase.old_bank,
-            "",
-            "=",
-            parseInt(newF2.old_finance_closing_fee) +
-            parseInt(newF2.old_finance_transfer_fee),
-            { alignment: "left", text: `บาท` }
-          ]
-        },
-        {
-          columns: [
-            { width: 100, text: `2]	ทำเช็คจ่ายให้` },
-            singleCase.name,
-            "",
-            "",
-            "",
-            ""
-          ]
-        },
-        {
-          columns: [{ width: 100, text: `3]	มัดจำจ่ายให้ ` }, "", "", "", "", ""]
-        },
-        { text: bank.b1 ? "" : `\n` },
-        {
-          text: bank.b1
-            ? "** หมายเหตุ\n1. เงินก้อนสุดท้ายที่จะได้รับเป็นแค่ยอดเงินประมาณการ และจะมีการเปลี่ยนแปลงตามค่าใช้จ่ายที่เกิดขึ้นจริง เช่น ค่าประกันภัยรถยนต์ ค่าอากรขนส่ง เป็นต้น ดังนั้นเงินก้อนสุดท้ายในข้อ 3] ไม่สามารถอ้างอิงยอดเงินที่ลูกค้าจะได้รับ ในวันที่ได้รับการโอนเงินก้อนสุดท้ายจากธนาคารได้\n2. ในกรณีนัดตรวจรถเพื่อโอนเข้าธนาคาร ลูกค้าต้องนำรถยนต์เข้าตรวจสภาพภายใน 3 วัน เมื่อเจ้าหน้าที่หรือบริษัทฯ ร้องขอ มิเช่นนั้น ทางบริษัทฯ \nขอหักเงินคงเหลือก้อนสุดท้าย 50% ของยอดคงเหลือ และหากลูกค้าไม่ดำเนินการให้ตามที่บริษัทร้องขอภายใน 5 วัน บริษัทฯ ขอสงวนสิทธิ์ในการคืนเงินก้อนสุดท้ายทั้งหมด"
-            : `หมายเหตุ : เงื่อนไขการมัดจำเช็ค ลูกค้าต้องนำรถยนต์เข้าตรวจสภาพภายใน 3 วัน เมื่อเจ้าหน้าที่หรือบริษัทฯ ร้องขอ มิเช่นนั้น ทางบริษัทฯ ขอหักเงินมัดจำเป็นจำนวน 50% ของยอดเงินที่มัดจำไว้ และหากลูกค้าไม่ดำเนินการให้ตามที่บริษัทร้องขอภายใน 5 วัน บริษัทฯ ขอสงวนสิทธิ์ในการคืนเงินมัดจำทั้งหมด`
-        },
-        { fontSize: 16, text: `ปั๊ม A/C PAYEE ONLY ด้วย` },
-        {
-          alignment: "center",
-          text: `เงื่อนไขยอดจัด,ดอกเบี้ยและค่าใช้จ่ายอาจมีการเปลี่ยนแปลง หากไม่ตรงตามตามเกณฑ์มาตรฐานที่แจ้งไว้ โดยทางบริษัทไม่ต้องแจ้งให้ท่านทราบล่วงหน้า`
-        },
-        {
-          alignment: "center",
-          text: `สอบถามรายละเอียดเพิ่มเติมได้ที่ 02-276-5765 ได้ทุกวันจันทร์-ศุกร์ เวลา 09.00-18.00 น.`
-        },
-        `\n`,
-        {
-          text: `ข้าพเจ้า.................................................... ได้อ่านรายละเอียดเกี่ยวกับค่าใช้จ่ายต่างๆข้างต้นเรียบร้อยแล้ว และยอมรับในเงื่อนไขของค่าใช้จ่ายทั้งหมด	`
-        },
-        `\n`,
-        {
-          alignment: "right",
-          text: `ลงชื่อ.................................................................................วันที่............................................`
-        }
-      ], // end content
+      ],
       styles: {
-        header: { fontSize: 18 },
-        acPayeeOnly: { fontSize: 30 },
-        rexText: {},
-        blueText: {},
-        boldText: {}
+        header: {
+          fontSize: 25,
+          bold: true,
+          color: '#335599',
+          marginBottom: 15,
+          font: 'Halvethaica',
+        },
+        subheader: {
+          fontSize: 20,
+          bold: true,
+          font: 'Halvethaica',
+          marginBottom: 10,
+        },
+        address: {
+          fontSize: 15,
+          font: 'Halvethaica',
+          marginBottom: 6,
+          itailic: true,
+        },
+        telphone: {
+          fontSize: 15,
+          font: 'Halvethaica',
+        },
+        defaultStyle: {
+          font: 'Halvethaica',
+          fontSize: 16,
+        },
       },
-      pageMargins: [40, 30, 40, 30],
-
-      defaultStyle: {
-        font: "THSarabunNew",
-        fontSize: 11,
-        columnGap: 20
-      }
+    }
+    Pdfmake.vfs['Sarabun.ttf'] = normal;
+    Pdfmake.vfs['Sarabun-bold.ttf'] = bold;
+    Pdfmake.vfs['Sarabun-itailic.ttf'] = itailic;
+    Pdfmake.vfs['Sarabun-light.ttf'] = light;
+    Pdfmake.vfs['halvethaica.ttf'] = normal2;
+    Pdfmake.vfs['halvethaica-bold.tff'] = bold2;
+    Pdfmake.vfs['halvethaica-thin.tff'] = thin;
+    Pdfmake.vfs['logo.jpg'] = logo;
+    Pdfmake.fonts = {
+      ...Pdfmake.fonts,
+      Sarabun: {
+        normal: 'Sarabun.ttf',
+        bold: 'Sarabun-bold.ttf',
+        italics: 'Sarabun-light.ttf',
+      },
+      Halvethaica: {
+        normal: 'halvethaica.ttf',
+        bold: 'halvethaica-bold.tff',
+        italics: 'halvethaica-thin.tff',
+      },
     };
-    pdfMake.createPdf(docDefinition).download(`f2`);
+
+    return Pdfmake.createPdf(templeteOne).download('f2');
   };
 
   function payment() {
@@ -903,6 +1479,17 @@ const ModalAddF2 = ({ singleCase }) => {
 
 
                   </select>
+
+                  <label>
+                    <span>เลขที่บัญชี</span></label>
+                  <input
+                    name="margin_account_no"
+                    value={newCase.margin_account_no || ""}
+                    onChange={handleChange}
+
+                  ></input>
+
+
                 </div>
               </div>
               <div className="col s12 m12  head-section no-col-padding">

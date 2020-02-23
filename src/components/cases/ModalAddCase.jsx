@@ -10,7 +10,7 @@ import uuid from "uuid";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import ActionUser from "../../actions/actionUser";
-
+import M from 'materialize-css/dist/js/materialize.min.js'
 import url from "../../Utility/url";
 import axios from "axios";
 /* img */
@@ -43,6 +43,7 @@ const ModalAddCase = (props) => {
     close_amount: "",
     case_status: "ติดต่อลูกค้าไม่ได้",
 
+    
     car_name: "",
     car_brand: "",
     car_model: "",
@@ -58,7 +59,7 @@ const ModalAddCase = (props) => {
     cqc_team: "",
     cartrust_lead_refer: "",
     hub: "",
-
+    margin_account_no:"",
     old_finance_closing_fee: "0",
     old_finance_transfer_fee: "0",
     book_closing_fee: "0",
@@ -110,7 +111,7 @@ const ModalAddCase = (props) => {
     tel2: "",
     email: "",
     line: "",
-
+    license_id:"",
     birthday: Date(),
     home_no: "",
     moo: "",
@@ -144,7 +145,9 @@ const ModalAddCase = (props) => {
     getCqc_team()
     getHub()
     getCartrust_lead()
-    
+    console.log('###############################')
+    console.log('User',props)
+    M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
 
 
@@ -208,9 +211,9 @@ const ModalAddCase = (props) => {
 
   function operaterOption() {
     let result = []
-    // console.log('9999999999999' , operatorS)
+    
     for (let oper of operatorS) {
-      console.log(oper.fs_name)
+     
       result.push(<option value={oper.fs_name}>
         {oper.fs_name}
       </option>)
@@ -272,19 +275,6 @@ const ModalAddCase = (props) => {
   const handleChangeD_1 = e => setDifference({ d1: true, d2: false });
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
 
-  // const handleCustomerChange = (e) => {
-
-  //   setNewCase({
-  //     ...newCase, [e.target.name]: e.target.value,
-  //     ["firstname"]: customers[e.target.value].firstname,
-  //     ["lastname"]: customers[e.target.value].lastname,
-  //     ["license_id"]: customers[e.target.value].license_id,
-  //     ["tel"]: customers[e.target.value].tel,
-  //     ["customer_id"]: customers[e.target.value].customer_id,
-
-  //   });
-
-  // }
 
   const nextpage = () => {
     console.log(newCase);
@@ -362,26 +352,7 @@ const ModalAddCase = (props) => {
 
   function saveNewCase() {
 
-
-    // console.log('customer')
-    // console.log(customer)
-
-    // var data = {
-    //       ...newCase,
-    //       customer_id: 'asdas',
-    //       difference:difference.d1,
-    //       case_receiver:'mock up',
-    //       user_id:'mock'
-          // document_id: res.data.customer_id
-          // hub: "mock",
-          // cqc_team: "cqc",
-          // cartrust_lead_refer: "cartrust_lead_refer"
-        // };
-
-        // console.log('data')
-        // console.log(data)
-    console.log(JSON.stringify(customer));
-    let customerData = ({ ...customer, ["license_id"]: customer.firstname })
+    let customerData = ({ ...customer })
 
     console.log("######## add customer #########");
     console.log(JSON.stringify(customerData))
@@ -391,32 +362,28 @@ const ModalAddCase = (props) => {
         // M.toast({ html: `${res.data.message}` })
         console.log("######## add customer result #########");
         console.log(res.data.customer_id);
-        // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
+        
         var data = {
           ...newCase,
           customer_id: res.data.customer_id,
           difference:difference.d1,
-          case_receiver:'mock up',
-          user_id:'mock'
-          // document_id: res.data.customer_id
-          // hub: "mock",
-          // cqc_team: "cqc",
-          // cartrust_lead_refer: "cartrust_lead_refer"
+          case_receiver:props.user.firstName+' '+props.user.lastName,
+          user_id:props.user.id,
         };
         console.log(JSON.stringify(data));
         axios
           .post(`${url}/add_case`, data)
           .then(res => {
-            // M.toast({ html: `${res.data.message}` })
             console.log("######## add case result #########");
             console.log(res);
+            M.toast({ html: `${res.data.message}` })
           })
           .catch(err => {
-            console.log(err);
+            M.toast({ html: 'fail to add case Case error' })
           });
       })
       .catch(err => {
-        console.log(err);
+        M.toast({ html: 'fail to add case Customer error' })
       });
   }
 
@@ -845,7 +812,19 @@ const ModalAddCase = (props) => {
             <div className="col s12 m12  head-section no-col-padding">
 
             </div>
-            <div className="row crop">
+            
+            <div className="col s6 m4 l4 content">
+                <label>เลขที่ใบขับขี่</label>
+                <input
+                  type="text"
+                  name="license_id"
+                  value={customer.license_id || ""}
+                  onChange={handleChangeCustomer}
+                  className="validate"
+                />
+              </div>
+
+
               <div className="col s6 m4 l4 content">
                 <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
                 <input
@@ -886,10 +865,10 @@ const ModalAddCase = (props) => {
                   className="validate"
                 />
               </div>
-            </div>
+           
 
 
-            <div className="row crop">
+            
               <div className="col s6 m4 l4 content">
                 <label>Model / รุ่นรถ</label>
                 <input
@@ -922,9 +901,9 @@ const ModalAddCase = (props) => {
                   className="validate"
                 />
               </div>
-            </div>
+           
 
-            <div className="row crop">
+            
               <div className="col s6 m4 l4 content">
                 <label>Car Name / ชื่อรถ</label>
                 <input
@@ -973,9 +952,9 @@ const ModalAddCase = (props) => {
                   ))}
                 </select>
               </div>
-            </div>
+        
 
-            <div className="row crop">
+            
               <div className="col s6 m4 l4 content">
                 <label>Approved Amount / ยอดจัด </label>
                 <input
@@ -1008,9 +987,9 @@ const ModalAddCase = (props) => {
                   className="validate"
                 />
               </div>
-            </div>
+           
 
-            <div className="row crop">
+           
               <div className="col s6 m4 l4 content">
                 <label htmlFor="Picture">รูปรถ</label>
                 <input
@@ -1037,7 +1016,7 @@ const ModalAddCase = (props) => {
                   onChange={handleChangeFile}
                 />
               </div>
-            </div>
+           
           </div>
         </div>
 
@@ -1204,6 +1183,16 @@ const ModalAddCase = (props) => {
 
 
               </select>
+
+              
+              <label>
+                <span>เลขที่บัญชี</span></label>
+              <input
+                name="margin_account_no"
+                value={newCase.margin_account_no || ""}
+                onChange={handleChange}
+               
+              ></input>
 
 
 
