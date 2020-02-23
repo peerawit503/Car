@@ -83,8 +83,7 @@ const Cases = () => {
   
   
   const getAllCase = () => {
-
-
+    setisLoading(true);
     axios.get(`${url}/case_limit?size=${50}&page=${1}`)
       .then(res => {
         setCases(res.data.message);
@@ -125,16 +124,17 @@ const Cases = () => {
       .catch(err => console.log(err))
   }
 
-  const getCaseLimit = () => {
-    axios.get(`${url}/case_limit?size=${limitPage}&page=${currPage}`)
+  // const getCaseLimit = () => {
+  //   axios.get(`${url}/case_limit?size=${limitPage}&page=${currPage}`)
 
-  }
+  // }
 
   const deleteCase = (caseId) => {
     axios.delete(`${url}/delete_case?case_id=${caseId}`)
       .then(res => {
         M.toast({ html: `${res.data.message}` })
-        getAllCase()
+      // setisLoading(true);
+      getAllCase()
       })
       .then(err => console.log(err))
   }
@@ -144,64 +144,64 @@ const Cases = () => {
     setSingleCase(caseInRow)
   }
 
-  const prevPage = () => {
-    setCurrPage(currPage - 1)
+  // const prevPage = () => {
+  //   setCurrPage(currPage - 1)
 
-  }
+  // }
 
-  const nextPage = () => {
-    setCurrPage(currPage + 1)
-  }
+  // const nextPage = () => {
+  //   setCurrPage(currPage + 1)
+  // }
 
-  const getAllCustomers = () => {
-    // setCustomers(fackeCustomer)
+  // const getAllCustomers = () => {
+  //   // setCustomers(fackeCustomer)
 
-    axios.get(`${url}/customer_limit?size=50&page=2`)
-      .then(res => {
-        setCustomers(res.data.message)
-      })
-      .catch(err => { console.log(err) })
-    // setCustomers(customerData.message);
-  }
+  //   axios.get(`${url}/customer_limit?size=50&page=2`)
+  //     .then(res => {
+  //       setCustomers(res.data.message)
+  //     })
+  //     .catch(err => { console.log(err) })
+  //   // setCustomers(customerData.message);
+  // }
 
-  const filter = (filter,value) =>{
-    axios.get(`${url}/search_case?parameter=${filter}&value=${value}`)
-      .then(res => {
-  console.log(res.data.message)
-  setCases(res.data.message)
-      })
-      .catch(err => console.log(err))
+  // const filter = (filter,value) =>{
+  //   axios.get(`${url}/search_case?parameter=${filter}&value=${value}`)
+  //     .then(res => {
+  // console.log(res.data.message)
+  // setCases(res.data.message)
+  //     })
+  //     .catch(err => console.log(err))
 
-  }
-  const saveNewCase = (newCase,customer) => {
-    // var data = setNewCase({...newCase,car_license:c})
-    // console.log(JSON.stringify(newCase));
-    console.log(JSON.stringify(customer));
+  // }
+  // const saveNewCase = (newCase,customer) => {
+  //   // var data = setNewCase({...newCase,car_license:c})
+  //   // console.log(JSON.stringify(newCase));
+  //   console.log(JSON.stringify(customer));
 
-    console.log('######## add customer #########');
-    axios.post(`${url}/add_customer`, customer)
-      .then(res => {
-        // M.toast({ html: `${res.data.message}` })
-        console.log('######## add customer result #########');
-        console.log(res.data.customer_id);
-        // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
-        var data = ({...newCase,customer_id:res.data.customer_id })
-        console.log(JSON.stringify(data))
-        axios.post(`${url}/add_case`, data)
-          .then(res => {
-            M.toast({ html: `${res.data.message}` })
-            console.log('######## add case result #########');
-            console.log(res);
-            getAllCase()
+  //   console.log('######## add customer #########');
+  //   axios.post(`${url}/add_customer`, customer)
+  //     .then(res => {
+  //       // M.toast({ html: `${res.data.message}` })
+  //       console.log('######## add customer result #########');
+  //       console.log(res.data.customer_id);
+  //       // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
+  //       var data = ({...newCase,customer_id:res.data.customer_id })
+  //       console.log(JSON.stringify(data))
+  //       axios.post(`${url}/add_case`, data)
+  //         .then(res => {
+  //           M.toast({ html: `${res.data.message}` })
+  //           console.log('######## add case result #########');
+  //           console.log(res);
+  //           getAllCase()
             
 
-          })
-          .catch(err => { console.log(err) })
+  //         })
+  //         .catch(err => { console.log(err) })
 
-      })
-      .catch(err => { console.log(err) })
+  //     })
+  //     .catch(err => { console.log(err) })
 
-  }
+  // }
   const confirm = (singleCase) => {
     var data = JSON.stringify({tracking: nextStep(singleCase.status) , user_id : 'mock' });
     console.log('###### data ########');
@@ -213,6 +213,7 @@ const Cases = () => {
     }).then(res => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
+      // setisLoading(true);
       getAllCase()
     })
       .catch(err => console.log(err))
@@ -230,6 +231,7 @@ const Cases = () => {
     }).then(res => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
+      // setisLoading(true);
       getAllCase()
     })
       .catch(err => console.log(err))
@@ -300,26 +302,26 @@ const Cases = () => {
     
   }
 
-  function previousDate(state){
-    var prevDate = '';
-    if(state === 'receive'){ prevDate = 'receive_date'}
-    else if(state === 'contact_customer'){prevDate = 'receive_date'}
-    else if(state === 'account_closing'){prevDate = 'contact_customer_date'}
-    else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_received_date'}
-    else if(state === 'transfer_doc_submitted'){prevDate = 'transfer_doc_submitted_date'}
-    else if(state === 'book_received'){prevDate = 'book_received_date'}
-    else if(state === 'submit_book_transfer'){prevDate = 'book_received_date'}
-    else if(state === 'car_check_up'){prevDate = 'submit_book_transfer_date'}
-    else if(state === 'book_transfer'){prevDate = 'car_check_up_date'}
-    else if(state === 'book_copy_received'){prevDate = 'book_transfer_date'}
-    else if(state === 'deposit_doc_to_new_bank'){prevDate = 'book_copy_received_date'}
-    else if(state === 'submit_book_deposit_return'){prevDate = 'deposit_doc_to_new_bank_date'}
-    else if(state === 'book_received_back'){prevDate = 'submit_book_deposit_return_date'}
-    else if(state === 'cash_received'){prevDate = 'book_received_back_date'}
-    else if(state === 'book_deposit_received'){prevDate = 'cash_received_date'}
-    else if(state === 'submit_book_to_new_finance'){prevDate = 'book_deposit_received_date'}
-    return prevDate;
-  }
+  // function previousDate(state){
+  //   var prevDate = '';
+  //   if(state === 'receive'){ prevDate = 'receive_date'}
+  //   else if(state === 'contact_customer'){prevDate = 'receive_date'}
+  //   else if(state === 'account_closing'){prevDate = 'contact_customer_date'}
+  //   else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_received_date'}
+  //   else if(state === 'transfer_doc_submitted'){prevDate = 'transfer_doc_submitted_date'}
+  //   else if(state === 'book_received'){prevDate = 'book_received_date'}
+  //   else if(state === 'submit_book_transfer'){prevDate = 'book_received_date'}
+  //   else if(state === 'car_check_up'){prevDate = 'submit_book_transfer_date'}
+  //   else if(state === 'book_transfer'){prevDate = 'car_check_up_date'}
+  //   else if(state === 'book_copy_received'){prevDate = 'book_transfer_date'}
+  //   else if(state === 'deposit_doc_to_new_bank'){prevDate = 'book_copy_received_date'}
+  //   else if(state === 'submit_book_deposit_return'){prevDate = 'deposit_doc_to_new_bank_date'}
+  //   else if(state === 'book_received_back'){prevDate = 'submit_book_deposit_return_date'}
+  //   else if(state === 'cash_received'){prevDate = 'book_received_back_date'}
+  //   else if(state === 'book_deposit_received'){prevDate = 'cash_received_date'}
+  //   else if(state === 'submit_book_to_new_finance'){prevDate = 'book_deposit_received_date'}
+  //   return prevDate;
+  // }
 
   function dateToNow(caseDate) {
     if(caseDate == null){
@@ -511,44 +513,6 @@ const Cases = () => {
               </div>
 
             </div>
-            
-
-
-
-         
-            {/* <DropDownMenu>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Excel
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 1</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 2</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 3</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>Team 4</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`}>ทีมใหญ่</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`}>thanachart Bank</Dropdown.Item>
-                <Dropdown.Item href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`}>All</Dropdown.Item>
-              </Dropdown.Menu>
-            </DropDownMenu> */}
-    
-            {/* <div className="input-field col s12 m3">
-              <div className="search">
-                <input placeholder="Search term" />
-                <span className="fa fa-search"></span>
-              </div>
-            </div> */}
-  
-            {/* <div className="new-button col m12">
-              <div className="new-button-iner">
-                <a className="btn tde" href="#" onClick={() => filter('status','contact_customer')} >Filter contact_customer</a>
-                 
-              </div>
-              <div className="new-button-iner">
-                <a className="btn tde" href="#" onClick={() => filter('status','submit_book_to_new_finance')} >Filter submit_book_to_new_finance</a>
-                 
-              </div>
-            </div> */}
 
           </div>
 
