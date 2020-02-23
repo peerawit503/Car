@@ -2023,8 +2023,6 @@ const ModalAddCase = (props) => {
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
                 <h4>Add New Case</h4>
-            <h6 className="center-align">Name : {props.user.firstName+' '+props.user.lastName}</h6>
-
               </div>
             </div>
           </div>
