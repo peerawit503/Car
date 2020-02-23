@@ -8,12 +8,15 @@ import {
 } from "../../Utility/dataCase";
 import uuid from "uuid";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import ActionUser from "../../actions/actionUser";
+
 import url from "../../Utility/url";
 import axios from "axios";
 /* img */
 import cartrustLogo from "../../img/cartrustLogo.svg";
 
-const ModalAddCase = ({ customers }) => {
+const ModalAddCase = (props) => {
   
   const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
@@ -2031,6 +2034,8 @@ const ModalAddCase = ({ customers }) => {
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
                 <h4>Add New Case</h4>
+            <h6 className="center-align">Name : {props.user.firstName+' '+props.user.lastName}</h6>
+
               </div>
             </div>
           </div>
@@ -2091,4 +2096,34 @@ const ModalAddCase = ({ customers }) => {
   );
 };
 
-export default ModalAddCase;
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  storeUserInfo: (
+    id,
+    firstName,
+    lastName,
+    username,
+    position,
+    team,
+    picture,
+    token
+  ) => {
+    dispatch({
+      type: ActionUser.STORE_USER_INFO,
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      position: position,
+      team: team,
+      picture: picture,
+      token: token
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalAddCase);
