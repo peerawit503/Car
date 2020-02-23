@@ -438,7 +438,6 @@ const ModalSummary = ({ singleCase , kpi}) => {
                 <div className="summaryIcon-div col s9 m9">
                   4.รับชุดโอน{' '}:{'    '}
                   {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date) || ''}
-                  {singleCase.transfer_doc_received_note}
                 </div>
               </div>
 
