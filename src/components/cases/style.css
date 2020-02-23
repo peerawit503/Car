@@ -12,6 +12,10 @@
     top:20%!important;
     height: 50%!important;
 }
+
+.tabslist{
+    font-size: large;
+}
 /* .modal-content-override{
     height: calc(100%) !important;
 } */

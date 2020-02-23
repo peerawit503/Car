@@ -237,6 +237,46 @@ const Cases = () => {
       .catch(err => console.log(err))
   }
 
+//  const saveNewCase = (newCase,customer,props,difference) => {
+
+//     let customerData = ({ ...customer })
+
+//     console.log("######## add customer #########");
+//     console.log(JSON.stringify(customerData))
+//     axios
+//       .post(`${url}/add_customer`, customerData)
+//       .then(res => {
+//         // M.toast({ html: `${res.data.message}` })
+//         console.log("######## add customer result #########");
+//         console.log(res.data.customer_id);
+        
+//         var data = {
+//           ...newCase,
+//           customer_id: res.data.customer_id,
+//           difference:difference.d1,
+//           case_receiver:props.user.firstName+' '+props.user.lastName,
+//           user_id:props.user.id,
+//         };
+//         console.log(data);
+        
+//         console.log(JSON.stringify(data));
+//         axios
+//           .post(`${url}/add_case`, data)
+//           .then(res => {
+//             console.log("######## add case result #########");
+//             console.log(res);
+//             M.toast({ html: `${res.data.message}` })
+//             getAllCase()
+//           })
+//           .catch(err => {
+//             M.toast({ html: 'fail to add case Case error' })
+//           });
+//       })
+//       .catch(err => {
+//         M.toast({ html: 'fail to add case Customer error' })
+//       });
+//   }
+
   function nextStep(state){
     var prevDate = '';
     if(state === 'receive'){ prevDate = 'contact_customer';}
@@ -604,7 +644,7 @@ const Cases = () => {
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
-          <ModalAddCase customers={customers} />
+          <ModalAddCase getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
 
