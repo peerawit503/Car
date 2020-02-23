@@ -220,7 +220,7 @@ const Cases = () => {
 
   const saveNote = (newNote,singleCase) => {
     // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
-    var data = JSON.stringify({note_status:newNote.note ,tracking: singleCase.status , user_id : 'mock' });
+    var data = JSON.stringify({note_status:newNote.note ,tracking: caseStatusShift(singleCase.status) , user_id : 'mock' });
     console.log('###### data ########');
     console.log(data);
     axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {

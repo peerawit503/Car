@@ -394,7 +394,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="row">
                 <div className="col s3 m1">
                   <div className={singleCase.receive_date != null ? "summaryIcon-div green" : "summaryIcon-div gray"}>
-                    <GenerateNote singleCase={singleCase.receive_date} />
+                    <GenerateNote singleCase={singleCase.receive_note} />
                   </div>
                 </div>
                 <div className="summaryIcon-div col s9 m9">
@@ -598,7 +598,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
           {/* <button className="waves-effect btn blue lighten left ">Save</button> */}
           
           <button className="modal-close waves-effect btn white black-text right">close</button>
-          <button href="#modalCancel" className="modal-trigger waves-effect btn white black-text left">Cancel Case</button>
+          <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
           <button href="#modalImage" className="modal-trigger waves-effect btn white black-text right">Open Image Modal</button>
         </div>
       </div>
