@@ -20,7 +20,7 @@ import 'react-tabs/style/react-tabs.css';
 /* img */
 import cartrustLogo from "../../img/cartrustLogo.svg";
 
-const ModalAddCase = (props, { getAllCase }) => {
+const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   
   const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
@@ -150,7 +150,7 @@ const ModalAddCase = (props, { getAllCase }) => {
     getHub()
     getCartrust_lead()
     console.log('###############################')
-    console.log('User',props)
+    // console.log('User',props)
     M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
 
@@ -328,55 +328,55 @@ const ModalAddCase = (props, { getAllCase }) => {
     setformState(3);
   }
 
-  function setData(){
+  // function setData(){
 
-    var data = {
-      ...newCase,
-      difference:difference.d1,
-      case_receiver:props.user.firstName+' '+props.user.lastName,
-      user_id:props.user.id,
-    };
-    return data;
-  }
-  function saveNewCase  ()  {
+  //   var data = {
+  //     ...newCase,
+  //     difference:difference.d1,
+  //     case_receiver:props.user.firstName+' '+props.user.lastName,
+  //     user_id:props.user.id,
+  //   };
+  //   return data;
+  // }
+  // function saveNewCase  ()  {
 
-    let customerData = ({ ...customer })
+  //   let customerData = ({ ...customer })
 
-    console.log("######## add customer #########");
-    console.log(JSON.stringify(customerData))
-    axios
-      .post(`${url}/add_customer`, customerData)
-      .then(res => {
-        // M.toast({ html: `${res.data.message}` })
-        console.log("######## add customer result #########");
-        console.log(res.data.customer_id);
+  //   console.log("######## add customer #########");
+  //   console.log(JSON.stringify(customerData))
+  //   axios
+  //     .post(`${url}/add_customer`, customerData)
+  //     .then(res => {
+  //       // M.toast({ html: `${res.data.message}` })
+  //       console.log("######## add customer result #########");
+  //       console.log(res.data.customer_id);
         
-        var data = {
-          ...newCase,
-          customer_id: res.data.customer_id,
-          difference:difference.d1,
-          case_receiver:props.user.firstName+' '+props.user.lastName,
-          user_id:props.user.id,
-        };
-        console.log(data);
+  //       var data = {
+  //         ...newCase,
+  //         customer_id: res.data.customer_id,
+  //         difference:difference.d1,
+  //         case_receiver:props.user.firstName+' '+props.user.lastName,
+  //         user_id:props.user.id,
+  //       };
+  //       console.log(data);
         
-        console.log(JSON.stringify(data));
-        axios
-          .post(`${url}/add_case`, data)
-          .then(res => {
-            console.log("######## add case result #########");
-            console.log(res);
-            M.toast({ html: `${res.data.message}` })
-            getAllCase()
-          })
-          .catch(err => {
-            M.toast({ html: 'fail to add case Case error' })
-          });
-      })
-      .catch(err => {
-        M.toast({ html: 'fail to add case Customer error' })
-      });
-  }
+  //       console.log(JSON.stringify(data));
+  //       axios
+  //         .post(`${url}/add_case`, data)
+  //         .then(res => {
+  //           console.log("######## add case result #########");
+  //           console.log(res);
+  //           M.toast({ html: `${res.data.message}` })
+  //           getAllCase()
+  //         })
+  //         .catch(err => {
+  //           M.toast({ html: 'fail to add case Case error' })
+  //         });
+  //     })
+  //     .catch(err => {
+  //       M.toast({ html: 'fail to add case Customer error' })
+  //     });
+  // }
   // function disableNext() {
   //   var result = [];
 
@@ -2083,7 +2083,7 @@ const ModalAddCase = (props, { getAllCase }) => {
 
           <button
             className="modal-close waves-effect btn blue lighten right "
-            onClick={() => saveNewCase(newCase,customer)}
+            onClick={() => saveNewCase(newCase,customer,difference)}
           >
             Save
         </button>
@@ -2104,33 +2104,33 @@ const ModalAddCase = (props, { getAllCase }) => {
 };
 
 
-const mapStateToProps = state => ({
-  user: state.user
-});
+// const mapStateToProps = state => ({
+//   user: state.user
+// });
 
-const mapDispatchToProps = dispatch => ({
-  storeUserInfo: (
-    id,
-    firstName,
-    lastName,
-    username,
-    position,
-    team,
-    picture,
-    token
-  ) => {
-    dispatch({
-      type: ActionUser.STORE_USER_INFO,
-      id: id,
-      firstName: firstName,
-      lastName: lastName,
-      username: username,
-      position: position,
-      team: team,
-      picture: picture,
-      token: token
-    });
-  }
-});
+// const mapDispatchToProps = dispatch => ({
+//   storeUserInfo: (
+//     id,
+//     firstName,
+//     lastName,
+//     username,
+//     position,
+//     team,
+//     picture,
+//     token
+//   ) => {
+//     dispatch({
+//       type: ActionUser.STORE_USER_INFO,
+//       id: id,
+//       firstName: firstName,
+//       lastName: lastName,
+//       username: username,
+//       position: position,
+//       team: team,
+//       picture: picture,
+//       token: token
+//     });
+//   }
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalAddCase);
+export default ModalAddCase;

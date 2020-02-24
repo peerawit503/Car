@@ -16,6 +16,9 @@ import uuid from "uuid"
 import M from 'materialize-css/dist/js/materialize.min.js'
 // import B from 'bootstrap/dist/css/bootstrap.min.css';
 
+import { connect } from "react-redux";
+import ActionUser from "../../actions/actionUser";
+
 import MaterialTable from 'material-table';
 /* modify*/
 import '../table.css';
@@ -38,7 +41,7 @@ const useId = 'mohexc'
 
 
 
-const Cases = () => {
+const Cases = (props) => {
 
   const [customers, setCustomers] = useState([])
   const [cases, setCases] = useState([])
@@ -237,45 +240,45 @@ const Cases = () => {
       .catch(err => console.log(err))
   }
 
-//  const saveNewCase = (newCase,customer,props,difference) => {
+ const saveNewCase = (newCase,customer,difference) => {
 
-//     let customerData = ({ ...customer })
+    let customerData = ({ ...customer })
 
-//     console.log("######## add customer #########");
-//     console.log(JSON.stringify(customerData))
-//     axios
-//       .post(`${url}/add_customer`, customerData)
-//       .then(res => {
-//         // M.toast({ html: `${res.data.message}` })
-//         console.log("######## add customer result #########");
-//         console.log(res.data.customer_id);
+    console.log("######## add customer #########");
+    console.log(JSON.stringify(customerData))
+    axios
+      .post(`${url}/add_customer`, customerData)
+      .then(res => {
+        // M.toast({ html: `${res.data.message}` })
+        console.log("######## add customer result #########");
+        console.log(res.data.customer_id);
         
-//         var data = {
-//           ...newCase,
-//           customer_id: res.data.customer_id,
-//           difference:difference.d1,
-//           case_receiver:props.user.firstName+' '+props.user.lastName,
-//           user_id:props.user.id,
-//         };
-//         console.log(data);
+        var data = {
+          ...newCase,
+          customer_id: res.data.customer_id,
+          difference:difference.d1,
+          case_receiver:props.user.firstName+' '+props.user.lastName,
+          user_id:props.user.id,
+        };
+        console.log(data);
         
-//         console.log(JSON.stringify(data));
-//         axios
-//           .post(`${url}/add_case`, data)
-//           .then(res => {
-//             console.log("######## add case result #########");
-//             console.log(res);
-//             M.toast({ html: `${res.data.message}` })
-//             getAllCase()
-//           })
-//           .catch(err => {
-//             M.toast({ html: 'fail to add case Case error' })
-//           });
-//       })
-//       .catch(err => {
-//         M.toast({ html: 'fail to add case Customer error' })
-//       });
-//   }
+        console.log(JSON.stringify(data));
+        axios
+          .post(`${url}/add_case`, data)
+          .then(res => {
+            console.log("######## add case result #########");
+            console.log(res);
+            M.toast({ html: `${res.data.message}` })
+            getAllCase()
+          })
+          .catch(err => {
+            M.toast({ html: 'fail to add case Case error' })
+          });
+      })
+      .catch(err => {
+        M.toast({ html: 'fail to add case Customer error' })
+      });
+  }
 
   function nextStep(state){
     var prevDate = '';
@@ -644,7 +647,7 @@ const Cases = () => {
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
-          <ModalAddCase getAllCase={getAllCase} />
+          <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
 
@@ -654,5 +657,33 @@ const Cases = () => {
     </>
   )
 }
+ const mapStateToProps = state => ({
+    user: state.user
+  });
+const mapDispatchToProps = dispatch => ({
+  storeUserInfo: (
+    id,
+    firstName,
+    lastName,
+    username,
+    position,
+    team,
+    picture,
+    token
+  ) => {
+    dispatch({
+      type: ActionUser.STORE_USER_INFO,
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      position: position,
+      team: team,
+      picture: picture,
+      token: token
+    });
+  }
+});
 
-export default Cases
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cases);
