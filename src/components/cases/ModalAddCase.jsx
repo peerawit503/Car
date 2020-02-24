@@ -7,9 +7,9 @@ import {
   provinceAll
 } from "../../Utility/dataCase";
 import uuid from "uuid";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import ActionUser from "../../actions/actionUser";
+// import { Link } from "react-router-dom";
+// import { connect } from "react-redux";
+// import ActionUser from "../../actions/actionUser";
 import M from 'materialize-css/dist/js/materialize.min.js'
 import url from "../../Utility/url";
 import axios from "axios";
@@ -18,7 +18,7 @@ import axios from "axios";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 /* img */
-import cartrustLogo from "../../img/cartrustLogo.svg";
+// import cartrustLogo from "../../img/cartrustLogo.svg";
 
 const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   
@@ -281,14 +281,14 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
 
  
-  const nextpage = () => {
-    console.log(newCase);
-    if (formState === 1) {
-      setformState(2);
-    } else if (formState === 2) {
-      setformState(3);
-    }
-  };
+  // const nextpage = () => {
+  //   console.log(newCase);
+  //   if (formState === 1) {
+  //     setformState(2);
+  //   } else if (formState === 2) {
+  //     setformState(3);
+  //   }
+  // };
 
   const close = () => {
     setformState(1);
