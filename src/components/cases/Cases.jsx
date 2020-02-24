@@ -46,13 +46,13 @@ const Cases = (props) => {
   const [customers, setCustomers] = useState([])
   const [cases, setCases] = useState([])
   const [kpi, setKpi] = useState([])
-  
+
   const [singleCase, setSingleCase] = useState([])
   const [stateSearch, setStateSearch] = useState({
     starDate: '',
     endDate: ""
   })
- 
+
   const [textSearch, setTextSearch] = useState('')
   const [isLoading, setisLoading] = useState(true)
 
@@ -72,19 +72,16 @@ const Cases = (props) => {
     M.Modal.init(document.querySelectorAll('.modal'), {})
     M.Modal.init(document.querySelectorAll('#ModalDeleteCase'), {})
     M.FormSelect.init(document.querySelectorAll('select'), {});
-    //   M.Datepicker.init(document.querySelectorAll('#startDate'), {});
-    //   M.Datepicker.init(document.querySelectorAll('#endDate'), {});
+
   }, [])
 
   useEffect(() => {
     getAllCase()
     getKpi()
-    
-    
   }, [])
 
-  
-  
+
+
   const getAllCase = () => {
     setisLoading(true);
     axios.get(`${url}/case_limit?size=${50}&page=${1}`)
@@ -92,7 +89,7 @@ const Cases = (props) => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
         setisLoading(false);
-        console.log ("in getAllCase")
+        console.log("in getAllCase")
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
@@ -101,7 +98,7 @@ const Cases = (props) => {
   }
 
   const setKpiForUse = (kpiData) => {
-    
+
     var result = new Object();
     var red;
     var orange;
@@ -114,7 +111,7 @@ const Cases = (props) => {
       result[orange] = x.orange;
 
     }
-   
+
     setKpi(result);
 
   }
@@ -136,8 +133,8 @@ const Cases = (props) => {
     axios.delete(`${url}/delete_case?case_id=${caseId}`)
       .then(res => {
         M.toast({ html: `${res.data.message}` })
-      // setisLoading(true);
-      getAllCase()
+        // setisLoading(true);
+        getAllCase()
       })
       .then(err => console.log(err))
   }
@@ -176,37 +173,9 @@ const Cases = (props) => {
   //     .catch(err => console.log(err))
 
   // }
-  // const saveNewCase = (newCase,customer) => {
-  //   // var data = setNewCase({...newCase,car_license:c})
-  //   // console.log(JSON.stringify(newCase));
-  //   console.log(JSON.stringify(customer));
 
-  //   console.log('######## add customer #########');
-  //   axios.post(`${url}/add_customer`, customer)
-  //     .then(res => {
-  //       // M.toast({ html: `${res.data.message}` })
-  //       console.log('######## add customer result #########');
-  //       console.log(res.data.customer_id);
-  //       // setNewCase({...newCase , ["customer_id"]:res.data.customer_id})
-  //       var data = ({...newCase,customer_id:res.data.customer_id })
-  //       console.log(JSON.stringify(data))
-  //       axios.post(`${url}/add_case`, data)
-  //         .then(res => {
-  //           M.toast({ html: `${res.data.message}` })
-  //           console.log('######## add case result #########');
-  //           console.log(res);
-  //           getAllCase()
-            
-
-  //         })
-  //         .catch(err => { console.log(err) })
-
-  //     })
-  //     .catch(err => { console.log(err) })
-
-  // }
   const confirm = (singleCase) => {
-    var data = JSON.stringify({tracking: nextStep(singleCase.status) , user_id : 'mock' });
+    var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: 'mock' });
     console.log('###### data ########');
     console.log(data);
     axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
@@ -222,9 +191,9 @@ const Cases = (props) => {
       .catch(err => console.log(err))
   }
 
-  const saveNote = (newNote,singleCase) => {
+  const saveNote = (newNote, singleCase) => {
     // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
-    var data = JSON.stringify({note_status:newNote.note ,tracking: caseStatusShift(singleCase.status) , user_id : 'mock' });
+    var data = JSON.stringify({ note_status: newNote.note, tracking: caseStatusShift(singleCase.status), user_id: 'mock' });
     console.log('###### data ########');
     console.log(data);
     axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {
@@ -240,109 +209,127 @@ const Cases = (props) => {
       .catch(err => console.log(err))
   }
 
- const saveNewCase = (newCase,customer,difference) => {
+  const saveNewCase = (newCase, customer, difference) => {
 
-    let customerData = ({ ...customer })
 
-    console.log("######## add customer #########");
-    console.log(JSON.stringify(customerData))
-    axios
-      .post(`${url}/add_customer`, customerData)
-      .then(res => {
-        // M.toast({ html: `${res.data.message}` })
-        console.log("######## add customer result #########");
-        console.log(res.data.customer_id);
-        
-        var data = {
-          ...newCase,
-          customer_id: res.data.customer_id,
-          difference:difference.d1,
-          case_receiver:props.user.firstName+' '+props.user.lastName,
-          user_id:props.user.id,
-        };
-        console.log(data);
-        
-        console.log(JSON.stringify(data));
-        axios
-          .post(`${url}/add_case`, data)
-          .then(res => {
-            console.log("######## add case result #########");
-            console.log(res);
-            M.toast({ html: `${res.data.message}` })
-            getAllCase()
-          })
-          .catch(err => {
-            M.toast({ html: 'fail to add case Case error' })
-          });
-      })
-      .catch(err => {
-        M.toast({ html: 'fail to add case Customer error' })
-      });
+    if (customer.customer_id != null || customer.customer_id != "") {
+      console.log('data not null')
+      var data = {
+        ...newCase,
+        customer_id:customer.customer_id,
+        difference: difference.d1,
+        case_receiver: props.user.firstName + ' ' + props.user.lastName,
+        user_id: props.user.id,
+      };
+
+      axios
+        .post(`${url}/add_case`, data)
+        .then(res => {
+
+          M.toast({ html: `${res.data.message}` })
+          getAllCase()
+        })
+        .catch(err => {
+          M.toast({ html: 'fail to add case Case error' })
+        });
+    } else {
+      console.log('data null')
+      let customerData = ({ ...customer })
+
+      axios
+        .post(`${url}/add_customer`, customerData)
+        .then(res => {
+
+          var data = {
+            ...newCase,
+            customer_id: res.data.customer_id,
+            difference: difference.d1,
+            case_receiver: props.user.firstName + ' ' + props.user.lastName,
+            user_id: props.user.id,
+          };
+
+          axios
+            .post(`${url}/add_case`, data)
+            .then(res => {
+              console.log("######## add case result #########");
+              console.log(res);
+              M.toast({ html: `${res.data.message}` })
+              getAllCase()
+            })
+            .catch(err => {
+              M.toast({ html: 'fail to add case Case error' })
+            });
+        })
+        .catch(err => {
+          M.toast({ html: 'fail to add case Customer error' })
+        });
+    }
+
   }
 
-  function nextStep(state){
+  function nextStep(state) {
     var prevDate = '';
-    if(state === 'receive'){ prevDate = 'contact_customer';}
-    else if(state === 'contact_customer'){prevDate = 'account_closing'}
-    else if(state === 'account_closing'){prevDate = 'transfer_doc_received'}
-    else if(state === 'transfer_doc_received'){prevDate = 'transfer_doc_submitted'}
-    else if(state === 'transfer_doc_submitted'){prevDate = 'book_received'}
-    else if(state === 'book_received'){prevDate = 'submit_book_transfer'}
-    else if(state === 'submit_book_transfer'){prevDate = 'car_check_up'}
-    else if(state === 'car_check_up'){prevDate = 'book_transfer'}
-    else if(state === 'book_transfer'){prevDate = 'book_copy_received'}
-    else if(state === 'book_copy_received'){prevDate = 'deposit_doc_to_new_bank'}
-    else if(state === 'deposit_doc_to_new_bank'){prevDate = 'submit_book_deposit_return'}
-    else if(state === 'submit_book_deposit_return'){prevDate = 'book_received_back'}
-    else if(state === 'book_received_back'){prevDate = 'cash_received'}
-    else if(state === 'cash_received'){
+    if (state === 'receive') { prevDate = 'contact_customer'; }
+    else if (state === 'contact_customer') { prevDate = 'account_closing' }
+    else if (state === 'account_closing') { prevDate = 'transfer_doc_received' }
+    else if (state === 'transfer_doc_received') { prevDate = 'transfer_doc_submitted' }
+    else if (state === 'transfer_doc_submitted') { prevDate = 'book_received' }
+    else if (state === 'book_received') { prevDate = 'submit_book_transfer' }
+    else if (state === 'submit_book_transfer') { prevDate = 'car_check_up' }
+    else if (state === 'car_check_up') { prevDate = 'book_transfer' }
+    else if (state === 'book_transfer') { prevDate = 'book_copy_received' }
+    else if (state === 'book_copy_received') { prevDate = 'deposit_doc_to_new_bank' }
+    else if (state === 'deposit_doc_to_new_bank') { prevDate = 'submit_book_deposit_return' }
+    else if (state === 'submit_book_deposit_return') { prevDate = 'book_received_back' }
+    else if (state === 'book_received_back') { prevDate = 'cash_received' }
+    else if (state === 'cash_received') {
       //for skip 14 to 16 if no deposit received
-      if (singleCase.f2_old_finance_transfer_fee === null || singleCase.f2_old_finance_transfer_fee  <= 0){
+      if (singleCase.f2_old_finance_transfer_fee === null || singleCase.f2_old_finance_transfer_fee <= 0) {
         prevDate = 'submit_book_to_new_finance'
       } else {
         prevDate = 'book_deposit_received'
       }
     }
-    else if(state === 'book_deposit_received'){prevDate = 'submit_book_to_new_finance'}
-    else if(state === 'submit_book_to_new_finance'){prevDate = 'submit_book_to_new_finance'}
-    
+    else if (state === 'book_deposit_received') { prevDate = 'submit_book_to_new_finance' }
+    else if (state === 'submit_book_to_new_finance') { prevDate = 'submit_book_to_new_finance' }
+
     return prevDate;
   }
 
-  function translate(state){
+  function translate(state) {
     var trans = '';
-    if(state === 'receive'){ trans = '1.วันที่รับเคส';}
-    else if(state === 'contact_customer'){trans = '2.วันที่ติดต่อลูกค้า'}
-    else if(state === 'account_closing'){trans = '3.วันที่ปิดเล่ม'}
-    else if(state === 'transfer_doc_received'){trans = '4.วันรับชุดโอน'}
-    else if(state === 'transfer_doc_submitted'){trans = '5.วันยื่นชุดโอน'}
-    else if(state === 'book_received'){trans = '6.วันที่ได้รับเล่ม'}
-    else if(state === 'submit_book_transfer'){trans = '7.วันที่ส่งงานโอนทะเบียน'}
-    else if(state === 'car_check_up'){trans = '8.วันตรวจสภาพรถ'}
-    else if(state === 'book_transfer'){trans = '9.โอนเล่มทะเบียน'}
-    else if(state === 'book_copy_received'){trans = '10.รับสำเนาเล่ม'}
-    else if(state === 'deposit_doc_to_new_bank'){trans = '11.ส่งเอกสารเบิกเงินธนาคารใหม่'}
-    else if(state === 'submit_book_deposit_return'){trans = '12.ทำเรื่องเบิกมัดจำคืน'}
-    else if(state === 'book_received_back'){trans = '13.รับเล่มคืน'}
-    else if(state === 'cash_received'){trans = '14.เงินเข้าบัญชีคาร์ทรัส'}
-    else if(state === 'book_deposit_received'){trans = '15.เงินมัดจำคืนเข้าบัญชี'}
-    else if(state === 'submit_book_to_new_finance'){trans = '16.ส่งเล่มให้ไฟแนนซ์ใหม่'}
-    
+    if (state === 'receive') { trans = '1.วันที่รับเคส'; }
+    else if (state === 'contact_customer') { trans = '2.วันที่ติดต่อลูกค้า' }
+    else if (state === 'account_closing') { trans = '3.วันที่ปิดเล่ม' }
+    else if (state === 'transfer_doc_received') { trans = '4.วันรับชุดโอน' }
+    else if (state === 'transfer_doc_submitted') { trans = '5.วันยื่นชุดโอน' }
+    else if (state === 'book_received') { trans = '6.วันที่ได้รับเล่ม' }
+    else if (state === 'submit_book_transfer') { trans = '7.วันที่ส่งงานโอนทะเบียน' }
+    else if (state === 'car_check_up') { trans = '8.วันตรวจสภาพรถ' }
+    else if (state === 'book_transfer') { trans = '9.โอนเล่มทะเบียน' }
+    else if (state === 'book_copy_received') { trans = '10.รับสำเนาเล่ม' }
+    else if (state === 'deposit_doc_to_new_bank') { trans = '11.ส่งเอกสารเบิกเงินธนาคารใหม่' }
+    else if (state === 'submit_book_deposit_return') { trans = '12.ทำเรื่องเบิกมัดจำคืน' }
+    else if (state === 'book_received_back') { trans = '13.รับเล่มคืน' }
+    else if (state === 'cash_received') { trans = '14.เงินเข้าบัญชีคาร์ทรัส' }
+    else if (state === 'book_deposit_received') { trans = '15.เงินมัดจำคืนเข้าบัญชี' }
+    else if (state === 'submit_book_to_new_finance') { trans = '16.ส่งเล่มให้ไฟแนนซ์ใหม่' }
+
     return trans;
   }
 
 
-  function statusDate(c){
+  function statusDate(c) {
     var DateString = c.status + '_date';
     // console.log("#########")
     // console.log(c.status);
     var pDate = c[DateString];
-    if(pDate == null){
+    if (pDate == null) {
       return " ";
-    }else{
-      return(pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[3])
+    } else {
+      return (pDate.split(" ")[1] + ' ' + pDate.split(" ")[2] + ' ' + pDate.split(" ")[3])
     }
-    
+
   }
 
   // function previousDate(state){
@@ -367,9 +354,9 @@ const Cases = (props) => {
   // }
 
   function dateToNow(caseDate) {
-    if(caseDate == null){
+    if (caseDate == null) {
       return 0;
-    }else{
+    } else {
       var mountCaracterString = caseDate.split(" ")[2];
       var dayString = caseDate.split(" ")[1];
       var yearString = caseDate.split(" ")[3];
@@ -413,10 +400,10 @@ const Cases = (props) => {
       // var month = parseInt(mountString) - 1;
       var day = parseInt(dayString);
       var year = parseInt(yearString);
-  
+
       var date2 = new Date(year, month, day);
-     
-      
+
+
       var date1 = new Date();
       // console.log("#########")
       // console.log(date2)
@@ -426,7 +413,7 @@ const Cases = (props) => {
       return (Math.floor((date1 - date2) / (24 * 3600 * 1000)));
       // console.log(Math.floor((date1-date2)/(24*3600*1000)));
     }
-    
+
 
   }
 
@@ -444,70 +431,70 @@ const Cases = (props) => {
     if (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
       if (caseInRow[noteDateString] == null) {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
-      }else {
+      } else {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon" alt="fireSpot" /></a>);
       }
     }
 
     else if (datetomow >= kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
-      if(caseInRow[noteDateString] == null){
+      if (caseInRow[noteDateString] == null) {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
-      }else{
+      } else {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon " alt="fireSpot" /></a>);
       }
     }
-    
-    
+
+
     return result;
   }
 
   function alertCheck(caseInRow) {
-   
-    
+
+
     let statusDateString = caseInRow.status + '_date';
     let datetomow = dateToNow(caseInRow[statusDateString]);
-    
+
     let noteDateString = caseInRow.status + "_note";
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-    if((caseInRow.status == 'submit_book_to_new_finance') || (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) || (datetomow >= kpi[alertRed]  && caseInRow[noteDateString] == null) ){
+    if ((caseInRow.status == 'submit_book_to_new_finance') || (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) || (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null)) {
       return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
     }
 
-    else{
+    else {
       return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
     }
-    
-   
+
+
   }
 
 
 
 
-  function caseStatusShift(state){
+  function caseStatusShift(state) {
     let nextstate = "";
-    if(state === 'receive'){ nextstate = 'contact_customer'}
-    else if(state === 'contact_customer'){nextstate = 'account_closing'}
-    else if(state === 'account_closing'){nextstate = 'transfer_doc_received'}
-    else if(state === 'transfer_doc_received'){nextstate = 'transfer_doc_submitted'}
-    else if(state === 'transfer_doc_submitted'){nextstate = 'book_received'}
-    else if(state === 'book_received'){nextstate = 'submit_book_transfer'}
-    else if(state === 'submit_book_transfer'){nextstate = 'car_check_up'}
-    else if(state === 'car_check_up'){nextstate = 'book_transfer'}
-    else if(state === 'book_transfer'){nextstate = 'book_copy_received'}
-    else if(state === 'book_copy_received'){nextstate = 'deposit_doc_to_new_bank'}
-    else if(state === 'deposit_doc_to_new_bank'){nextstate = 'submit_book_deposit_return'}
-    else if(state === 'submit_book_deposit_return'){nextstate = 'book_received_back'}
-    else if(state === 'book_received_back'){nextstate = 'cash_received'}
-    else if(state === 'cash_received'){nextstate = 'book_deposit_received'}
-    else if(state === 'book_deposit_received'){nextstate = 'submit_book_to_new_finance'}
-    else if(state === 'submit_book_to_new_finance'){nextstate = 'submit_book_to_new_finance'}
+    if (state === 'receive') { nextstate = 'contact_customer' }
+    else if (state === 'contact_customer') { nextstate = 'account_closing' }
+    else if (state === 'account_closing') { nextstate = 'transfer_doc_received' }
+    else if (state === 'transfer_doc_received') { nextstate = 'transfer_doc_submitted' }
+    else if (state === 'transfer_doc_submitted') { nextstate = 'book_received' }
+    else if (state === 'book_received') { nextstate = 'submit_book_transfer' }
+    else if (state === 'submit_book_transfer') { nextstate = 'car_check_up' }
+    else if (state === 'car_check_up') { nextstate = 'book_transfer' }
+    else if (state === 'book_transfer') { nextstate = 'book_copy_received' }
+    else if (state === 'book_copy_received') { nextstate = 'deposit_doc_to_new_bank' }
+    else if (state === 'deposit_doc_to_new_bank') { nextstate = 'submit_book_deposit_return' }
+    else if (state === 'submit_book_deposit_return') { nextstate = 'book_received_back' }
+    else if (state === 'book_received_back') { nextstate = 'cash_received' }
+    else if (state === 'cash_received') { nextstate = 'book_deposit_received' }
+    else if (state === 'book_deposit_received') { nextstate = 'submit_book_to_new_finance' }
+    else if (state === 'submit_book_to_new_finance') { nextstate = 'submit_book_to_new_finance' }
     return nextstate;
   }
 
 
-  
+
 
 
   return (
@@ -526,21 +513,21 @@ const Cases = (props) => {
             <div className="new-button col m4">
               <div className="new-button-iner">
                 <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
-                 
+
               </div>
 
             </div>
 
-            
+
 
             <div className="new-button col m2 row">
               <div className="new-button-iner col m12">
-              <a class='dropdown-trigger btn tde-g' 
-                href='#' 
-                data-target='dropdown1'
-                style={{width:'100%'}}
+                <a class='dropdown-trigger btn tde-g'
+                  href='#'
+                  data-target='dropdown1'
+                  style={{ width: '100%' }}
                 >Excel
-
+  
               </a>
 
                 {/* <!-- Dropdown Structure --> */}
@@ -550,8 +537,8 @@ const Cases = (props) => {
                   <li><a href={`${url}/case_excel_file?parameter=team&value=Team3&date=${Date()}`} target="_blank" >Team3</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=team&value=Team4&date=${Date()}`} target="_blank" >Team4</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=team&value=TeamA&date=${Date()}`} target="_blank" >ทีมใหญ่</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}` }  target="_blank">thanachart Bank</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`}  target="_blank">All</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`} target="_blank">thanachart Bank</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} target="_blank">All</a></li>
                 </ul>
               </div>
 
@@ -563,77 +550,81 @@ const Cases = (props) => {
           <div className="row" class="input-table">
             <br />
             <MaterialTable
-                title="Case"
-                columns={[
-                  {
-                    title: '',
-                    render: rowData => <div style={{width: 10, borderRadius: '50%'}}>{displayStarRating(rowData)}</div>,
-                    cellstyle:{
-                      width:50
-                    }
-                  }, 
-                  { title: 'id', field: 'id' },
-                  { title: 'Customers Name',
-                   field: 'name' , 
-                   render: rowData => <div className="customer-name-col">{rowData.name}</div> },
-                  {
-                    title: 'Last Update',
-                    field: 'status_date',
-                    render: rowData => <div>{statusDate(rowData)}</div>
-                  }, 
-                
-                  { title: 'Case Status', field: 'status', 
+              title="Case"
+              columns={[
+                {
+                  title: '',
+                  render: rowData => <div style={{ width: 10, borderRadius: '50%' }}>{displayStarRating(rowData)}</div>,
+                  cellstyle: {
+                    width: 50
+                  }
+                },
+                { title: 'id', field: 'id' },
+                {
+                  title: 'Customers Name',
+                  field: 'name',
+                  render: rowData => <div className="customer-name-col">{rowData.name}</div>
+                },
+                {
+                  title: 'Last Update',
+                  field: 'status_date',
+                  render: rowData => <div>{statusDate(rowData)}</div>
+                },
+
+                {
+                  title: 'Case Status', field: 'status',
                   lookup: {
                     'receive': '1.วันที่รับเคส',
                     'contact_customer': '2.วันที่ติดต่อลูกค้า',
-                    'account_closing':'3.วันที่ปิดเล่ม',
-                    'transfer_doc_received':'4.วันรับชุดโอน',
-                    'transfer_doc_submitted':'5.วันยื่นชุดโอน',
-                    'book_received':'6.วันที่ได้รับเล่ม',
-                    'submit_book_transfer':'7.วันที่ส่งงานโอนทะเบียน',
-                    'car_check_up':'8.วันตรวจสภาพรถ',
-                    'book_transfer':'9.โอนเล่มทะเบียน',
-                    'book_copy_received':'10.รับสำเนาเล่ม',
-                    'deposit_doc_to_new_bank':'11.ส่งเอกสารเบิกเงินธนาคารใหม่',
-                    'submit_book_deposit_return':'12.ทำเรื่องเบิกมัดจำคืน',
-                    'book_received_back':'13.รับเล่มคืน',
-                    'cash_received':'14.เงินเข้าบัญชีคาร์ทรัส',
-                    'book_deposit_received':'15.เงินมัดจำคืนเข้าบัญชี',
-                    'submit_book_to_new_finance':'16.ส่งเล่มให้ไฟแนนซ์ใหม่',
-                   },
-                  //  defaultGroupOrder: 0,
-                   sorting: false 
+                    'account_closing': '3.วันที่ปิดเล่ม',
+                    'transfer_doc_received': '4.วันรับชุดโอน',
+                    'transfer_doc_submitted': '5.วันยื่นชุดโอน',
+                    'book_received': '6.วันที่ได้รับเล่ม',
+                    'submit_book_transfer': '7.วันที่ส่งงานโอนทะเบียน',
+                    'car_check_up': '8.วันตรวจสภาพรถ',
+                    'book_transfer': '9.โอนเล่มทะเบียน',
+                    'book_copy_received': '10.รับสำเนาเล่ม',
+                    'deposit_doc_to_new_bank': '11.ส่งเอกสารเบิกเงินธนาคารใหม่',
+                    'submit_book_deposit_return': '12.ทำเรื่องเบิกมัดจำคืน',
+                    'book_received_back': '13.รับเล่มคืน',
+                    'cash_received': '14.เงินเข้าบัญชีคาร์ทรัส',
+                    'book_deposit_received': '15.เงินมัดจำคืนเข้าบัญชี',
+                    'submit_book_to_new_finance': '16.ส่งเล่มให้ไฟแนนซ์ใหม่',
                   },
-                  { title: 'Case Soure', field: 'case_source',
+                  //  defaultGroupOrder: 0,
+                  sorting: false
+                },
+                {
+                  title: 'Case Soure', field: 'case_source',
                   lookup: {
                     'Kiatnakin': 'Kiatnakin',
                     'Thanachart': 'Thanachart',
-                    'Cartrust':'Cartrust',
-                    'Dealer':'Dealer'
+                    'Cartrust': 'Cartrust',
+                    'Dealer': 'Dealer'
                   },
                 },
-                  { title: 'JOB No', field: 'job_id'},
-                  { title: 'car_license', field: 'car_license'},
-                  { title: 'New Finance', field: 'new_bank'},{
-                    title: '',
-                    render: rowData => 
+                { title: 'JOB No', field: 'job_id' },
+                { title: 'car_license', field: 'car_license' },
+                { title: 'New Finance', field: 'new_bank' }, {
+                  title: '',
+                  render: rowData =>
                     <div className="menu-icon">
-                      <a  href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
+                      <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
                       {alertCheck(rowData)}
                     </div>
-                  }, 
-                ]}
-                isLoading={isLoading}
-                data={cases}        
-                options={{
-                  filtering: true,
-                  pageSize: 10,
-                  pageSizeOptions:[10,20,50],
-                  grouping:true
-                }}
-              />
+                },
+              ]}
+              isLoading={isLoading}
+              data={cases}
+              options={{
+                filtering: true,
+                pageSize: 10,
+                pageSizeOptions: [10, 20, 50],
+                grouping: true
+              }}
+            />
 
-{/* 
+            {/* 
             <div>
               <ul className="pagination">
                 <li className={'disabled'}><a href="#!"><i className="material-icons" onClick={prevPage}>chevron_left</i></a></li>
@@ -643,9 +634,9 @@ const Cases = (props) => {
               </ul>
             </div> */}
           </div>
-          <ModalExcel/>
+          <ModalExcel />
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm}  translate={translate}  />
+          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
           <ModalAddSummary singleCase={singleCase} kpi={kpi} />
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
@@ -657,9 +648,9 @@ const Cases = (props) => {
     </>
   )
 }
- const mapStateToProps = state => ({
-    user: state.user
-  });
+const mapStateToProps = state => ({
+  user: state.user
+});
 const mapDispatchToProps = dispatch => ({
   storeUserInfo: (
     id,

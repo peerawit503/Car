@@ -7,9 +7,6 @@ import {
   provinceAll
 } from "../../Utility/dataCase";
 import uuid from "uuid";
-// import { Link } from "react-router-dom";
-// import { connect } from "react-redux";
-// import ActionUser from "../../actions/actionUser";
 import M from 'materialize-css/dist/js/materialize.min.js'
 import url from "../../Utility/url";
 import axios from "axios";
@@ -17,12 +14,12 @@ import axios from "axios";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-/* img */
-// import cartrustLogo from "../../img/cartrustLogo.svg";
+
 
 const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   
   const [operatorS, setOperatorS] = useState([])
+  const [validateLineTF , setValidateLineTF] = useState(true)
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
   const [hub, setHub] = useState([])
@@ -30,7 +27,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const [newCase, setNewCase] = useState({
     
     customer_id: "",
-    // document_id: "",
+
     old_bank: "",
     new_bank: "",
     status: "receive",
@@ -41,14 +38,14 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     case_type: "  ",
     case_receiver: "",
     case_source: "",
-    // job_id: "",
+
     down_amount: "",
     approve_amount: "",
     close_amount: "",
     case_status: "ติดต่อลูกค้าไม่ได้",
 
     
-    car_name: "",
+    car_name: " ",
     car_brand: "",
     car_model: "",
     car_sub_model: "",
@@ -80,20 +77,20 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     act_renewal_fee: "0",
     difference:"",
 
-    old_finance_closing_fee_note: "0",
-    old_finance_transfer_fee_note: "0",
-    book_closing_fee_note: "0",
-    vat7_fee_note: "0",
-    transfer_fee_note: "0",
-    duty_fee_note: "0",
-    discount_fee_note: "0",
-    car_shield_fee_note: "0",
-    car_insurance_fee_note: "0",
-    transfer_service_fee_note: "0",
-    contract_fee_note: "0",
-    outside_transfer_fee_note: "0",
-    tax_renewal_fee_note: "0",
-    act_renewal_fee_note: "0",
+    old_finance_closing_fee_note: "",
+    old_finance_transfer_fee_note: "",
+    book_closing_fee_note: "",
+    vat7_fee_note: "",
+    transfer_fee_note: "",
+    duty_fee_note: "",
+    discount_fee_note: "",
+    car_shield_fee_note: "",
+    car_insurance_fee_note: "",
+    transfer_service_fee_note: "",
+    contract_fee_note: "",
+    outside_transfer_fee_note: "",
+    tax_renewal_fee_note: "",
+    act_renewal_fee_note: "",
     car_check_con: "",
     doc_storage_con: "",
 
@@ -125,7 +122,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     district2: "",
     province: "",
     post_code: "",
-    hub: "",
+    customer_id : ""
 
   });
 
@@ -149,8 +146,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     getCqc_team()
     getHub()
     getCartrust_lead()
-    console.log('###############################')
-    // console.log('User',props)
+    
     M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
 
@@ -302,6 +298,40 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       setformState(2);
     }
   };
+  const validateLine = (e) =>{
+    let name = e.target.name;
+    let val = e.target.value
+    axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
+      .then(res => {
+        if(!res.data.message){
+          alert(name + ' : ' + val + ' is already in database' );
+          setCustomer({
+            ...customer,
+            firstname : res.data.data.firstname,
+            lastname : res.data.data.lastname,
+            tel : res.data.data.tel,
+            tel2: res.data.data.tel2,
+            email: res.data.data.email,
+            line: res.data.data.line,
+            license_id:res.data.data.license_id,
+            birthday: dateFormat(res.data.data.birthday),
+            home_no: res.data.data.home_no,
+            moo: res.data.data.moo,
+            soy: res.data.data.soy,
+            road: res.data.data.road,
+            district: res.data.data.district,
+            district2: res.data.data.district2,
+            province: res.data.data.province,
+            post_code: res.data.data.post_code,
+            customer_id : res.data.data.customer_id
+            
+
+          })
+          console.log(res.data.data.birthday)
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
   const deletezero = e => {
     if (e.target.value == 0) {
@@ -314,124 +344,56 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       e.target.value = "0";
     }
   };
+  function dateFormat(caseDate) {
+    if(caseDate == null){
+      return 0;
+    }else{
+      var mountCaracterString = caseDate.split(" ")[2];
+      var dayString = caseDate.split(" ")[1];
+      var yearString = caseDate.split(" ")[3];
+      var month;
+      if (mountCaracterString === 'Jan') {
+        month = "01";
+      }
+      else if (mountCaracterString === 'Feb') {
+        month = "02";
+      }
+      else if (mountCaracterString === 'Mar') {
+        month = "03";
+      }
+      else if (mountCaracterString === 'Apr') {
+        month = "04";
+      }
+      else if (mountCaracterString === 'May') {
+        month = "05";
+      }
+      else if (mountCaracterString === 'Jun') {
+        month = "06";
+      }
+      else if (mountCaracterString === 'Jul') {
+        month = "07";
+      }
+      else if (mountCaracterString === 'Aug') {
+        month = "08";
+      }
+      else if (mountCaracterString === 'Sep') {
+        month = "09";
+      }
+      else if (mountCaracterString === 'Oct') {
+        month = "10";
+      }
+      else if (mountCaracterString === 'Nov') {
+        month = "11";
+      }
+      else if (mountCaracterString === 'Dec') {
+        month = "12";
+      }
 
-  function caseInf() {
-    setformState(1);
-  }
+      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[1]);
+     
+      }
+    }
 
-  function F2() {
-    setformState(2);
-  }
-
-
-  function contract() {
-    setformState(3);
-  }
-
-  // function setData(){
-
-  //   var data = {
-  //     ...newCase,
-  //     difference:difference.d1,
-  //     case_receiver:props.user.firstName+' '+props.user.lastName,
-  //     user_id:props.user.id,
-  //   };
-  //   return data;
-  // }
-  // function saveNewCase  ()  {
-
-  //   let customerData = ({ ...customer })
-
-  //   console.log("######## add customer #########");
-  //   console.log(JSON.stringify(customerData))
-  //   axios
-  //     .post(`${url}/add_customer`, customerData)
-  //     .then(res => {
-  //       // M.toast({ html: `${res.data.message}` })
-  //       console.log("######## add customer result #########");
-  //       console.log(res.data.customer_id);
-        
-  //       var data = {
-  //         ...newCase,
-  //         customer_id: res.data.customer_id,
-  //         difference:difference.d1,
-  //         case_receiver:props.user.firstName+' '+props.user.lastName,
-  //         user_id:props.user.id,
-  //       };
-  //       console.log(data);
-        
-  //       console.log(JSON.stringify(data));
-  //       axios
-  //         .post(`${url}/add_case`, data)
-  //         .then(res => {
-  //           console.log("######## add case result #########");
-  //           console.log(res);
-  //           M.toast({ html: `${res.data.message}` })
-  //           getAllCase()
-  //         })
-  //         .catch(err => {
-  //           M.toast({ html: 'fail to add case Case error' })
-  //         });
-  //     })
-  //     .catch(err => {
-  //       M.toast({ html: 'fail to add case Customer error' })
-  //     });
-  // }
-  // function disableNext() {
-  //   var result = [];
-
-  //   if (formState === 3) {
-  //     result.push(
-  //       <button
-  //         className="waves-effect btn blue lighten right "
-  //         onClick={() => saveNewCase(newCase, customer)}
-  //       >
-  //         Save
-  //       </button>
-  //     );
-  //   } else {
-  //     result.push(
-  //       <button
-  //         className="waves-effect btn blue lighten right "
-  //         onClick={() => nextpage()}
-  //       >
-  //         {" "}
-  //         Next
-  //       </button>
-  //     );
-  //   }
-  //   return result ? result : null;
-  // }
-
- 
-
-  // function disableBack() {
-  //   var result = [];
-
-  //   if (formState === 1) {
-  //     result.push(
-  //       <button
-  //         className="waves-effect btn blue lighten right "
-  //         disabled
-  //         onClick={() => backpage()}
-  //       >
-  //         {" "}
-  //         Back
-  //       </button>
-  //     );
-  //   } else {
-  //     result.push(
-  //       <button
-  //         className="waves-effect btn blue lighten right "
-  //         onClick={() => backpage()}
-  //       >
-  //         {" "}
-  //         Back
-  //       </button>
-  //     );
-  //   }
-  //   return result ? result : null;
-  // }
 
   function payment() {
     var result = [];
@@ -441,7 +403,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           <label>โอนเงินให้ </label>
           <input
             type="text"
+            
             value={customer.firstname + " " + customer.lastname}
+            
             name="cheque_receiver"
             disabled
           />
@@ -670,6 +634,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       name="tel"
                       value={customer.tel}
                       onChange={handleChangeCustomer}
+                      
                     />
                   </div>
 
@@ -682,6 +647,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       name="tel2"
                       value={customer.tel2}
                       onChange={handleChangeCustomer}
+                      
                     />
                   </div>
 
@@ -692,6 +658,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       name="line"
                       value={customer.line}
                       onChange={handleChangeCustomer}
+                      onBlur={validateLine}
                     />
                   </div>
 
@@ -810,7 +777,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       className="validate"
                     />
                   </div> */}
-
+                  <div className="row crop">
                   <div className="col s6 m4 l4 content">
                     <label>Receiver Date/ วันที่รับเคส</label>
                     <input
@@ -860,6 +827,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       ))}
                     </select>
                   </div>
+                  </div>
 
 
 
@@ -868,7 +836,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   <div className="col s12 m12  head-section no-col-padding">
 
                   </div>
-                  
+                   <div className="row crop">
                   <div className="col s6 m4 l4 content">
                       <label>เลขที่ใบขับขี่</label>
                       <input
@@ -876,6 +844,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         name="license_id"
                         value={customer.license_id || ""}
                         onChange={handleChangeCustomer}
+                        onBlur={validateLine}
                         className="validate"
                       />
                     </div>
@@ -910,7 +879,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         ))}
                       </select>
                     </div>
-
+                    </div>
+                    <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label>Brand / ยี่ห้อ</label>
                       <input
@@ -946,26 +916,15 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         className="validate"
                       />
                     </div>
+                  </div>
 
+                  <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label>Car Year / ปีรถ</label>
                       <input
                         type="text"
                         name="car_year"
                         value={newCase.car_year || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-                
-
-                  
-                    <div className="col s6 m4 l4 content">
-                      <label>Car Name / ชื่อรถ</label>
-                      <input
-                        type="text"
-                        name="car_name"
-                        value={newCase.car_name || ""}
                         onChange={handleChange}
                         className="validate"
                       />
@@ -1008,9 +967,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         ))}
                       </select>
                     </div>
+                    </div>
               
 
-                  
+                    <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label>Approved Amount / ยอดจัด </label>
                       <input
@@ -1043,9 +1003,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         className="validate"
                       />
                     </div>
+                    </div>
                 
 
-                
+                    <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label htmlFor="Picture">รูปรถ</label>
                       <input
@@ -1071,6 +1032,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         name="license_id_picture"
                         onChange={handleChangeFile}
                       />
+                    </div>
                     </div>
                 
                 </div>
