@@ -639,7 +639,7 @@ const Cases = (props) => {
           <ModalExcel />
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
-          <ModalAddSummary singleCase={[singleCase]} kpi={kpi} />
+          <ModalAddSummary singleCase={singleCase} kpi={kpi} />
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
