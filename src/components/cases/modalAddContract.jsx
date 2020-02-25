@@ -19,6 +19,7 @@ const ModalAddContract = ({singleCase }) => {
         firstname:"",
         lastname:"",
         tel:"",
+        tel2:"",
         car_license:"",
         car_province:"",
         car_brand:"",
@@ -35,7 +36,50 @@ const ModalAddContract = ({singleCase }) => {
         amount_received:"",
     })
     const handleChange = (e) => {
-        
+        setNewContract({...newContract , [e.target.name] : e.target.value});
+    }
+
+    const saveContract = () =>{
+        let data = {
+        receive_date:newContract.receive_date?newContract.receive_date:singleCase.receive_date,
+        case_type:newContract.case_type?newContract.case_type:singleCase.case_type,
+        firstname:newContract.firstname?newContract.firstname:firstname(singleCase.firstname),
+        lastname:newContract.lastname?newContract.lastname:lastname(singleCase.lastname),
+        tel:newContract.tel?newContract.tel:singleCase.cus_tel,
+        tel2:newContract.tel2?newContract.tel2:singleCase.cus_tel2,
+        car_license:newContract.car_license?newContract.car_license:singleCase.car_license,
+        car_province:newContract.car_province?newContract.car_province:singleCase.car_province,
+        car_brand:newContract.car_brand?newContract.car_brand:singleCase.car_brand,
+        car_model:newContract.car_model?newContract.car_model:singleCase.car_model,
+        car_sub_model:newContract.car_sub_model?newContract.car_sub_model:singleCase.car_sub_model,
+        car_year:newContract.car_year?newContract.car_year:singleCase.car_year,
+        old_bank:newContract.old_bank?newContract.old_bank:singleCase.old_bank,
+        new_bank:newContract.new_bank?newContract.new_bank:singleCase.new_bank,
+        approve_amount:newContract.approve_amount?newContract.approve_amount:singleCase.approve_amount,
+        close_amount:newContract.close_amount?newContract.close_amount:singleCase.close_amount,
+        down_amount:newContract.down_amount?newContract.down_amount:singleCase.down_amount,
+        old_finance_total_cost:newContract.old_finance_total_cost?newContract.old_finance_total_cost:singleCase.old_finance_total_cost,
+        total_cost:newContract.total_cost?newContract.total_cost:singleCase.total_cost,
+        amount_received:newContract.amount_received?newContract.amount_received:singleCase.amount_received,
+        customer_id : singleCase.customer_id
+        }
+
+        let case_id = singleCase.case_id;
+
+        console.log(JSON.stringify(data))
+// แก้ api ที่นี่
+    //     axios.post(`${url}/note?case_id=${case_id}`, JSON.stringify(data), {
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         }
+    //       }).then(res => {
+    //         M.toast({ html: `${res.data.message}` })
+    //    console.log('add success')
+            
+    //       })
+    //         .catch(err => console.log(err))
+
+
     }
 
     const firstname = (name) => {
@@ -391,7 +435,7 @@ const ModalAddContract = ({singleCase }) => {
             </div>
         </div>
         <div className="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left " >Save</button>
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => saveContract()} > Save </button>
           <button className="modal-close waves-effect btn white black-text right" >close</button>
         </div>
     </div>
