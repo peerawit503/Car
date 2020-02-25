@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   financeInstitution,
   caseSourceAll,
@@ -58,7 +59,6 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     license_id_picture: "",
     cartrust_lead_refer: "",
     cqc_team: "",
-    cartrust_lead_refer: "",
     hub: "",
     margin_account_no:"",
     old_finance_closing_fee: "0",
@@ -75,7 +75,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     outside_transfer_fee: "0",
     tax_renewal_fee: "0",
     act_renewal_fee: "0",
-    difference:"",
+    difference:true,
 
     old_finance_closing_fee_note: "",
     old_finance_transfer_fee_note: "",
@@ -126,6 +126,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
   });
 
+  
+
   const [formState, setformState] = useState(1);
   const [totalCost, setTotalCost] = useState(0);
   const [bank, setBank] = useState({ b1: true, b2: false });
@@ -157,6 +159,64 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+  const validateOnclinck = () =>{
+    if(customer.firstname === ""){
+      alert('Firstname if empty')
+      return false;
+    }else if (customer.lastname  === ""){
+      alert('Lastname if empty')
+      return false;
+    }else if (customer.tel  === ""){
+      alert('Phone if empty')
+      return false;
+    }else if (customer.line  === ""){
+      alert('Line if empty')
+      return false;
+    }else if (customer.license_id  === ""){
+      alert('License Id if empty')
+      return false;
+    }else if (customer.birthday  === ""){
+      alert('Birthday is empty')
+      return false;
+    }else if (newCase.receive_date === ""){
+      alert('Receive Date is empty')
+      return false;
+    }else if (newCase.case_type === ""){
+      alert('Case Source is empty')
+      return false;
+    }else if (newCase.case_source === ""){
+      alert('Case Source is empty')
+      return false;
+    }else if (newCase.case_source === "Kiatnakin" && newCase.cqc_team === ""){
+      alert('Cqc team is empty')
+      return false;
+    }
+    else if (newCase.case_source === "Thanachart" && newCase.hub === ""){
+      alert('Thanachart hub is empty')
+      return false;
+    }
+    else if (newCase.case_source === "Thanachart" && newCase.contract_officer === ""){
+      alert('Thanachart contract officer is empty')
+      return false;
+    }
+    else if (newCase.case_source === "Cartrust" && newCase.cartrust_lead_refer === ""){
+      alert('Cartrust lead refer contract officer is empty')
+      return false;
+    }
+    else if (newCase.old_bank === "" ){
+      alert('Current Finance is empty')
+      return false;
+    }
+    else if (newCase.new_bank === "" ){
+      alert('Finance Institution is empty')
+      return false;
+    }
+ 
+    else{
+      return true;
+    }
+
+  }
   const getOperatorS = () => {
 
     axios.get(`${url}/dropdown?table=finance_staff`)
@@ -164,6 +224,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         setOperatorS(res.data.message);
       })
       .catch(err => console.log(err))
+  }
+  const doNotThing = () =>{
+    
   }
 
   const getMargin_account = () => {
@@ -275,20 +338,118 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const handleChangeD_1 = e => setDifference({ d1: true, d2: false });
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
 
+  const setblankCase = () => {
+    setNewCase({customer_id: "",
 
- 
-  // const nextpage = () => {
-  //   console.log(newCase);
-  //   if (formState === 1) {
-  //     setformState(2);
-  //   } else if (formState === 2) {
-  //     setformState(3);
-  //   }
-  // };
+    old_bank: "",
+    new_bank: "",
+    status: "receive",
+    note_status: "",
+    team: "",
+    contract_officer: "",
+    finance_staff: "",
+    case_type: "  ",
+    case_receiver: "",
+    case_source: "",
 
+    down_amount: "",
+    approve_amount: "",
+    close_amount: "",
+    case_status: "ติดต่อลูกค้าไม่ได้",
+
+    
+    car_name: " ",
+    car_brand: "",
+    car_model: "",
+    car_sub_model: "",
+    car_year: "",
+    car_license: "",
+    car_province: "",
+    car_detail: "",
+    take_car_picture: "",
+    car_license_book_picture: "",
+    license_id_picture: "",
+    cartrust_lead_refer: "",
+    cqc_team: "",
+    hub: "",
+    margin_account_no:"",
+    old_finance_closing_fee: "0",
+    old_finance_transfer_fee: "0",
+    book_closing_fee: "0",
+    vat7_fee: "0",
+    transfer_fee: "0",
+    duty_fee: "0",
+    discount_fee: "0",
+    car_shield_fee: "0",
+    car_insurance_fee: "0",
+    transfer_service_fee: "0",
+    contract_fee: "0",
+    outside_transfer_fee: "0",
+    tax_renewal_fee: "0",
+    act_renewal_fee: "0",
+    difference:true,
+
+    old_finance_closing_fee_note: "",
+    old_finance_transfer_fee_note: "",
+    book_closing_fee_note: "",
+    vat7_fee_note: "",
+    transfer_fee_note: "",
+    duty_fee_note: "",
+    discount_fee_note: "",
+    car_shield_fee_note: "",
+    car_insurance_fee_note: "",
+    transfer_service_fee_note: "",
+    contract_fee_note: "",
+    outside_transfer_fee_note: "",
+    tax_renewal_fee_note: "",
+    act_renewal_fee_note: "",
+    car_check_con: "",
+    doc_storage_con: "",
+
+
+    margin_account: "",
+
+    f2_status: null,
+    cheque: "0",
+    deposit: "0",
+    cheque_receiver: "",
+    deposit_receiver: "",});
+  }
+
+  const setblankCustomer = () => {
+    setCustomer({
+      firstname: "",
+      lastname: "",
+      tel: "",
+      tel2: "",
+      email: "",
+      line: "",
+      license_id:"",
+      birthday: Date(),
+      home_no: "",
+      moo: "",
+      soy: "",
+      road: "",
+      district: "",
+      district2: "",
+      province: "",
+      post_code: "",
+      customer_id : ""
+    })
+
+  }
+  
+  const saveCase = () => {
+   
+    if(saveCase(newCase,customer,difference)){
+      setblankCustomer();
+      setblankCase();
+    }
+  }
   const close = () => {
-    setformState(1);
-    setNewCase({});
+    setblankCase();
+    setblankCustomer();
+    
   };
   const backpage = () => {
     console.log(newCase);
@@ -304,29 +465,37 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
       .then(res => {
         if(!res.data.message){
-          alert(name + ' : ' + val + ' is already in database' );
-          setCustomer({
-            ...customer,
-            firstname : res.data.data.firstname,
-            lastname : res.data.data.lastname,
-            tel : res.data.data.tel,
-            tel2: res.data.data.tel2,
-            email: res.data.data.email,
-            line: res.data.data.line,
-            license_id:res.data.data.license_id,
-            birthday: dateFormat(res.data.data.birthday),
-            home_no: res.data.data.home_no,
-            moo: res.data.data.moo,
-            soy: res.data.data.soy,
-            road: res.data.data.road,
-            district: res.data.data.district,
-            district2: res.data.data.district2,
-            province: res.data.data.province,
-            post_code: res.data.data.post_code,
-            customer_id : res.data.data.customer_id
-            
+          // alert(name + ' : ' + val + ' is already in database' );
 
-          })
+          var r = window.confirm( 'มี ' + name + ' : ' + val + ' อยู่ในระบบแล้ว \n จะเอาข้อมูลที่มีอยู่มาใช้หรือไม่');
+          if (r == true) {
+            setCustomer({
+              ...customer,
+              firstname : res.data.data.firstname,
+              lastname : res.data.data.lastname,
+              tel : res.data.data.tel,
+              tel2: res.data.data.tel2,
+              email: res.data.data.email,
+              line: res.data.data.line,
+              license_id:res.data.data.license_id,
+              birthday: dateFormat(res.data.data.birthday),
+              home_no: res.data.data.home_no,
+              moo: res.data.data.moo,
+              soy: res.data.data.soy,
+              road: res.data.data.road,
+              district: res.data.data.district,
+              district2: res.data.data.district2,
+              province: res.data.data.province,
+              post_code: res.data.data.post_code,
+              customer_id : res.data.data.customer_id
+            })
+          } else {
+            setCustomer({
+              ...customer,
+              [name] : val
+            })
+          }
+         
           console.log(res.data.data.birthday)
         }
       })
@@ -344,6 +513,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       e.target.value = "0";
     }
   };
+  
   function dateFormat(caseDate) {
     if(caseDate == null){
       return 0;
@@ -483,11 +653,14 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         <label>CQC team</label>
         <select
           type="text"
-          value={newCase.cqc_team}
+          value={newCase.cqc_team }
           name="cqc_team"
           onChange={handleChange}
           className="browser-default"
         >
+          <option value="" disabled>
+            เลือกทีม...
+          </option>
           {cqc_teamOption()}
         </select>
       </div>);
@@ -2045,7 +2218,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
           <button
             className="modal-close waves-effect btn blue lighten right "
-            onClick={() => saveNewCase(newCase,customer,difference)}
+            onClick={() => {validateOnclinck()?saveNewCase(newCase,customer,difference):doNotThing()}}
+           
+            // onClick={() => saveCase()}
           >
             Save
         </button>
