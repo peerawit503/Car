@@ -79,7 +79,7 @@ const ModalImage = ({ singleCase }) => {
   const save = () => {
     let data = JSON.stringify(image)
     console.log(data)
-    axios.post(`${url}/picture?case_id=${singleCase.case_id}`, data)
+    axios.post(`${url}/picture?case_id=${singleCase.case_id}`, image)
       .then(res => {
         // M.toast({ html: `${res.data.message}` })
         console.log("######## add image result #########");

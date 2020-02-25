@@ -154,7 +154,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
 
   const handleChangeCustomer = e =>
-    setCustomer({ ...customer, [e.target.name]: e.target.value });
+    setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -265,12 +265,28 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       .catch(err => console.log(err))
   }
 
-  const handleChangeFile = e => {
+  const handleChangeFileLID = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setNewCase({ ...newCase, file: reader.result });
+    reader.onload = () => setNewCase({ ...newCase, license_id_picture : reader.result });
   };
+
+  const handleChangeFileTC = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setNewCase({ ...newCase, take_car_picture : reader.result });
+  };
+
+  const handleChangeFileCLB = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setNewCase({ ...newCase, car_license_book_picture : reader.result });
+  };
+
+  
 
   function operaterOption() {
     let result = []
@@ -416,6 +432,11 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     deposit_receiver: "",});
   }
 
+  const setAllblank = () =>{
+    setblankCustomer();
+    setblankCase();
+    
+  }
   const setblankCustomer = () => {
     setCustomer({
       firstname: "",
@@ -492,7 +513,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           } else {
             setCustomer({
               ...customer,
-              [name] : val
+              [name] : ""
             })
           }
          
@@ -513,7 +534,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       e.target.value = "0";
     }
   };
-  
+
   function dateFormat(caseDate) {
     if(caseDate == null){
       return 0;
@@ -1185,7 +1206,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       <input
                         type="file"
                         name="take_car_picture"
-                        onChange={handleChangeFile}
+                        onChange={handleChangeFileTC}
                       />
                     </div>
 
@@ -1194,7 +1215,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       <input
                         type="file"
                         name="car_license_book_picture"
-                        onChange={handleChangeFile}
+                        onChange={handleChangeFileCLB}
                       />
                     </div>
 
@@ -1203,7 +1224,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       <input
                         type="file"
                         name="license_id_picture"
-                        onChange={handleChangeFile}
+                        onChange={handleChangeFileLID}
                       />
                     </div>
                     </div>
@@ -2218,9 +2239,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
           <button
             className="modal-close waves-effect btn blue lighten right "
-            onClick={() => {validateOnclinck()?saveNewCase(newCase,customer,difference):doNotThing()}}
+            onClick={() => {validateOnclinck()?saveNewCase(newCase,customer,difference,setAllblank):doNotThing()}}
            
-            // onClick={() => saveCase()}
+           
           >
             Save
         </button>

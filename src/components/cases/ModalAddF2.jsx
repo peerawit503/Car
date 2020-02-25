@@ -44,7 +44,7 @@ const ModalAddF2 = ({ singleCase }) => {
   const [newF2, setNewF2] = useState({
     approve_amount: singleCase.approve_amount?singleCase.approve_amount:"",
     old_finance_closing_fee:  singleCase.f2_old_finance_closing_fee?singleCase.f2_old_finance_closing_fee:"",
-    old_finance_transfer_fee: singleCase.f2_old_finance_transfer_fee,
+    old_finance_transfer_fee: singleCase.f2_old_finance_transfer_fee?singleCase.f2_old_finance_transfer_fee:"",
     book_closing_fee: singleCase.f2_book_closing_fee != 0?singleCase.f2_book_closing_fee:"",
     vat7_fee: singleCase.f2_vat7_fee?singleCase.f2_vat7_fee:"",
     transfer_fee: singleCase.f2_transfer_fee?singleCase.f2_transfer_fee:"",
@@ -111,7 +111,7 @@ const ifDiff = () => {
   }
 
   const handleChange = e => {
-    setNewCase({ ...newCase, [e.target.name]: e.target.value });
+    setNewF2({ ...newF2, [e.target.name]: e.target.value });
   };
 
   const getOperatorS = () => {
@@ -184,7 +184,7 @@ const ifDiff = () => {
     if (e.target.value == ""){
     setNewF2({
       ...newF2,
-      [e.target.name]: parseInt(0)
+      [e.target.name]: "0"
     });
   }else{
     setNewF2({
@@ -268,7 +268,7 @@ const ifDiff = () => {
       .then(res => {
         console.log("#####  RES  ######");
         console.log("Case", res.data.message);
-        printPDF(
+        printPDF( 
           parseInt(singleCase.approve_amount),
           parseInt(newF2.old_finance_closing_fee? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
           parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
@@ -313,6 +313,7 @@ const ifDiff = () => {
           singleCase.case_id,
           singleCase.job_id,
           singleCase.new_bank,
+          singleCase.old_bank,
           singleCase.down_amount,
           singleCase.car_brand,
           singleCase.car_model,
@@ -372,6 +373,7 @@ const ifDiff = () => {
           case_id,
           job_id,
           new_bank,
+          old_bank,
           down_amount,
           car_brand,
           car_model,
@@ -1219,7 +1221,7 @@ const ifDiff = () => {
                 {
                   columns: [
                     {
-                      text: 'จ่ายเป็นเงินสด',
+                      text: 'จ่ายเป็นเงินสดให้ธนาคาร ' + old_bank,
                       marginBottom: 7,
                     },
                     {
@@ -1470,22 +1472,46 @@ const ifDiff = () => {
 
   const close = () => {
     setformState(1);
-    setNewCase({
-      approve_amount: "0",
-      old_finance_closing_fee: "0",
-      old_finafer_fnce_transee: "0",
-      book_closing_fee: "0",
-      vat7_fee: "0",
-      transfer_fee: "0",
-      duty_fee: "0",
-      discount_fee: "0",
-      car_shield_fee: "0",
-      car_insurance_fee: "0",
-      transfer_service_fee: "0",
-      contract_fee: "0",
-      outside_transfer_fee: "0",
-      tax_renewal_fee: "0",
-      act_renewal_fee: "0"
+    setNewF2({
+      approve_amount: "",
+    old_finance_closing_fee:  "",
+    old_finance_transfer_fee: "",
+    book_closing_fee: "",
+    vat7_fee: "",
+    transfer_fee: "",
+    duty_fee:"",
+    discount_fee: "",
+    car_shield_fee:"",
+    car_insurance_fee: "",
+    transfer_service_fee: "",
+    contract_fee: "",
+    outside_transfer_fee: "",
+    tax_renewal_fee: "",
+    act_renewal_fee: "",
+    car_check_con: "",
+    doc_storage_con: "",
+    margin_account: "",
+    margin_account_no: "",
+  
+    old_finance_closing_fee_note: "",
+    old_finance_transfer_fee_note: "",
+    book_closing_fee_note: "",
+    vat7_fee_note: "",
+    transfer_fee_note: "",
+    duty_fee_note: "",
+    discount_fee_note: "",
+    car_shield_fee_note: "",
+    car_insurance_fee_note: "",
+    transfer_service_fee_note: "",
+    contract_fee_note: "",
+    outside_transfer_fee_note: "",
+    tax_renewal_fee_note: "",
+    act_renewal_fee_note: "",
+    f2_status: "done",
+    cheque: singleCase.f2_cheque?singleCase.f2_cheque:"",
+    cheque_receiver: singleCase.name?singleCase.name:"",
+    deposit_receiver: singleCase.name?singleCase.f2_name:"",
+    deposit: singleCase.f2_deposit?singleCase.f2_deposit:""
     });
   };
 
@@ -1892,13 +1918,14 @@ const ifDiff = () => {
                   step="any"
                   disabled
                   value={
-                    parseInt(newF2.old_finance_closing_fee) +
-                    parseInt(newF2.old_finance_transfer_fee) +
-                    parseInt(newF2.book_closing_fee) +
-                    parseInt(newF2.vat7_fee) +
-                    parseInt(newF2.transfer_fee) +
-                    parseInt(newF2.duty_fee) +
-                    parseInt(newF2.discount_fee)
+                    (parseInt(newF2.old_finance_closing_fee?newF2.old_finance_closing_fee:singleCase.f2_old_finance_closing_fee) +
+                    parseInt(newF2.old_finance_transfer_fee?newF2.old_finance_transfer_fee:singleCase.f2_old_finance_transfer_fee) +
+                    parseInt(newF2.book_closing_fee?newF2.book_closing_fee:singleCase.f2_book_closing_fee) +
+                    parseInt(newF2.vat7_fee?newF2.vat7_fee:singleCase.f2_vat7_fee) +
+                    parseInt(newF2.transfer_fee?newF2.transfer_fee:singleCase.f2_vat7_fee) +
+                    parseInt(newF2.duty_fee?newF2.duty_fee:singleCase.f2_duty_fee) +
+                    parseInt(newF2.discount_fee?newF2.discount_fee:singleCase.f2_discount_fee))
+                   
                   }
                   name="cartrust_total_cost"
                 />
@@ -2087,13 +2114,13 @@ const ifDiff = () => {
                     className="input-disable"
                     disabled
                     value={
-                      parseInt(newF2.car_shield_fee) +
-                      parseInt(newF2.car_insurance_fee) +
-                      parseInt(newF2.transfer_service_fee) +
-                      parseInt(newF2.contract_fee) +
-                      parseInt(newF2.outside_transfer_fee) +
-                      parseInt(newF2.tax_renewal_fee) +
-                      parseInt(newF2.act_renewal_fee)}
+                      parseInt(newF2.car_shield_fee?newF2.car_shield_fee:singleCase.f2_car_shield_fee) +
+                      parseInt(newF2.car_insurance_fee?newF2.car_insurance_fee:singleCase.f2_car_insurance_fee) +
+                      parseInt(newF2.transfer_service_fee?newF2.transfer_service_fee:singleCase.f2_transfer_service_fee) +
+                      parseInt(newF2.contract_fee?newF2.contract_fee:singleCase.f2_contract_fee) +
+                      parseInt(newF2.outside_transfer_fee?newF2.outside_transfer_fee:singleCase.f2_outside_transfer_fee) +
+                      parseInt(newF2.tax_renewal_fee?newF2.tax_renewal_fee:singleCase.f2_tax_renewal_fee) +
+                      parseInt(newF2.act_renewal_fee?newF2.act_renewal_fee:singleCase.f2_act_renewal_fee)}
                     name="new_finance_total_cost"
 
                   />
@@ -2108,20 +2135,20 @@ const ifDiff = () => {
                     min="0"
                     step="any"
                     disabled
-                    value={parseInt(newF2.old_finance_closing_fee) +
-                      parseInt(newF2.old_finance_transfer_fee) +
-                      parseInt(newF2.book_closing_fee) +
-                      parseInt(newF2.vat7_fee) +
-                      parseInt(newF2.transfer_fee) +
-                      parseInt(newF2.duty_fee) +
-                      parseInt(newF2.discount_fee) +
-                      parseInt(newF2.car_shield_fee) +
-                      parseInt(newF2.car_insurance_fee) +
-                      parseInt(newF2.transfer_service_fee) +
-                      parseInt(newF2.contract_fee) +
-                      parseInt(newF2.outside_transfer_fee) +
-                      parseInt(newF2.tax_renewal_fee) +
-                      parseInt(newF2.act_renewal_fee)}
+                    value={parseInt(newF2.old_finance_closing_fee?newF2.old_finance_closing_fee:singleCase.f2_old_finance_closing_fee) +
+                      parseInt(newF2.old_finance_transfer_fee?newF2.old_finance_transfer_fee:singleCase.f2_old_finance_transfer_fee) +
+                      parseInt(newF2.book_closing_fee?newF2.book_closing_fee:singleCase.f2_book_closing_fee) +
+                      parseInt(newF2.vat7_fee?newF2.vat7_fee:singleCase.f2_vat7_fee) +
+                      parseInt(newF2.transfer_fee?newF2.transfer_fee:singleCase.f2_transfer_fee) +
+                      parseInt(newF2.duty_fee?newF2.duty_fee:singleCase.f2_duty_fee) +
+                      parseInt(newF2.discount_fee?newF2.discount_fee:singleCase.f2_discount_fee) +
+                      parseInt(newF2.car_shield_fee?newF2.act_car_shield_fee:singleCase.f2_car_shield_fee) +
+                      parseInt(newF2.car_insurance_fee?newF2.car_insurance_fee:singleCase.f2_car_insurance_fee) +
+                      parseInt(newF2.transfer_service_fee?newF2.transfer_service_fee:singleCase.f2_transfer_service_fee) +
+                      parseInt(newF2.contract_fee?newF2.contract_fee:singleCase.f2_contract_fee) +
+                      parseInt(newF2.outside_transfer_fee?newF2.outside_transfer_fee:singleCase.f2_outside_transfer_fee) +
+                      parseInt(newF2.tax_renewal_fee?newF2.tax_renewal_fee:singleCase.f2_tax_renewal_fee) +
+                      parseInt(newF2.act_renewal_fee?newF2.act_renewal_fee:singleCase.f2_act_renewal_fee)}
                     name="total_cost"
                   />
                 </div>
@@ -2136,20 +2163,20 @@ const ifDiff = () => {
                     step="any"
                     disabled
                     className="input-disable"
-                    value={(parseInt(newF2.old_finance_closing_fee) +
-                      parseInt(newF2.old_finance_transfer_fee) +
-                      parseInt(newF2.book_closing_fee) +
-                      parseInt(newF2.vat7_fee) +
-                      parseInt(newF2.transfer_fee) +
-                      parseInt(newF2.duty_fee) +
-                      parseInt(newF2.discount_fee) +
-                      parseInt(newF2.car_shield_fee) +
-                      parseInt(newF2.car_insurance_fee) +
-                      parseInt(newF2.transfer_service_fee) +
-                      parseInt(newF2.contract_fee) +
-                      parseInt(newF2.outside_transfer_fee) +
-                      parseInt(newF2.tax_renewal_fee) +
-                      parseInt(newF2.act_renewal_fee)) - newF2.approve_amount}
+                    value={(parseInt(newF2.old_finance_closing_fee?newF2.old_finance_closing_fee:singleCase.f2_old_finance_closing_fee) +
+                      parseInt(newF2.old_finance_transfer_fee?newF2.old_finance_transfer_fee:singleCase.f2_old_finance_transfer_fee) +
+                      parseInt(newF2.book_closing_fee?newF2.book_closing_fee:singleCase.f2_book_closing_fee) +
+                      parseInt(newF2.vat7_fee?newF2.vat7_fee:singleCase.f2_vat7_fee) +
+                      parseInt(newF2.transfer_fee?newF2.transfer_fee:singleCase.f2_transfer_fee) +
+                      parseInt(newF2.duty_fee?newF2.duty_fee:singleCase.f2_duty_fee) +
+                      parseInt(newF2.discount_fee?newF2.discount_fee:singleCase.f2_discount_fee) +
+                      parseInt(newF2.car_shield_fee?newF2.act_car_shield_fee:singleCase.f2_car_shield_fee) +
+                      parseInt(newF2.car_insurance_fee?newF2.car_insurance_fee:singleCase.f2_car_insurance_fee) +
+                      parseInt(newF2.transfer_service_fee?newF2.transfer_service_fee:singleCase.f2_transfer_service_fee) +
+                      parseInt(newF2.contract_fee?newF2.contract_fee:singleCase.f2_contract_fee) +
+                      parseInt(newF2.outside_transfer_fee?newF2.outside_transfer_fee:singleCase.f2_outside_transfer_fee) +
+                      parseInt(newF2.tax_renewal_fee?newF2.tax_renewal_fee:singleCase.f2_tax_renewal_fee) +
+                      parseInt(newF2.act_renewal_fee?newF2.act_renewal_fee:singleCase.f2_act_renewal_fee)) - (newF2.approve_amount?newF2.old_finance_closing_fee:singleCase.f2_old_approve_amount)}
                     name="amount_received"
 
                   />
@@ -2181,8 +2208,8 @@ const ifDiff = () => {
                   disabled
                   className="input-disable"
                   value={
-                    parseInt(newF2.old_finance_closing_fee) +
-                    parseInt(newF2.old_finance_transfer_fee)
+                    parseInt(newF2.old_finance_closing_fee?newF2.old_finance_closing_fee:singleCase.f2_old_finance_closing_fee) +
+                    parseInt(newF2.old_finance_transfer_fee?newF2.old_finance_transfer_fee:singleCase.f2_old_finance_transfer_fee)
                   }
                   name="old_finance_total_cost"
 
