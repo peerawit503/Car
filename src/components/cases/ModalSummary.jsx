@@ -4,9 +4,10 @@ import confirm from '../../img/confirm.png';
 
 import plus from '../../img/plus-white.png';
 import ModalAddF2 from './ModalAddF2';
+import ModalAddContract from './modalAddContract';
 import ModalImage from './ModalImage';
 import ModalCancel from './ModalCancel';
-import ModalAddContractInfo from './ModalAddContractInfo';
+
 import Popup from 'reactjs-popup'
 
 const ModalSummary = ({ singleCase , kpi}) => {
@@ -122,6 +123,68 @@ const ModalSummary = ({ singleCase , kpi}) => {
 
   }
 
+  function caseSource() {
+    let result = [];
+    if (singleCase.case_source === 'Kiatnakin') {
+     
+      result.push(<div className="col s6 m4 l4 content-radonly">
+        <label>CQC team</label>
+        <input
+          type="text"
+          value={singleCase.cqc_team || "DEFAULT"}
+          name="cqc_team"
+          readOnly
+          onChange={handleChange}
+          
+        >
+      
+        </input>
+      </div>);
+    } else if (singleCase.case_source === 'Thanachart') {
+  
+      result.push(<div className="col s6 m4 l4 content-radonly">
+        <label>เจ้าหน้าที่ทำสัญญา
+/Contract officer</label>
+        <input
+          type="text"
+          value={singleCase.contract_officer }
+          readOnly
+          name="contract_officer"
+          onChange={handleChange}
+        />
+      </div>);
+      result.push(<div className="col s6 m4 l4 content-radonly">
+        <label>สาขา (ธนชาติ) / Hub</label>
+        <input
+           type="text"
+          value={singleCase.hub}
+          name="hub"
+          readOnly
+          
+          
+        >
+      
+        </input>
+      </div>);
+    } else if (singleCase.case_source === 'Cartrust') {
+      result.push(<div className="col s6 m4 l4 content-radonly">
+        <label>Cartust Lead Refer./รับเคสจาก</label>
+        <input
+          type="text"
+          value={singleCase.cartrust_lead_refer}
+          name="cartrust_lead_refer"
+          readOnly
+          onChange={handleChange}
+          
+        >
+          
+          </input>
+      </div>);
+    }
+
+    return (result);
+  }
+
   function dateTimeFormatted(sringDate) {
     if (sringDate == null) {
       return null;
@@ -203,6 +266,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="new-button-iner">
 
               <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>F2</a>
+              <a className="btn modal-trigger tde" href="#modalAddContract" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>Contract</a>
               </div>
             
             </div>
@@ -238,7 +302,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
                   name="jobNum"
                   value={singleCase.job_id}
                   
-                  className="validate"
+                  
                   readOnly
 
                 />
@@ -257,17 +321,6 @@ const ModalSummary = ({ singleCase , kpi}) => {
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Case Source / รับเคสจาก</label>
-                <input
-                  name='receiver'
-                  value={singleCase.case_source || ''}
-                  
-                  type="text"
-                  className="validate"
-                  readOnly />
-              </div>
-
-              <div className="col s6 m6 l6 content-radonly">
                 <label >Case Type / ประเภทเคส</label>
                 <input
                   name='caseType'
@@ -278,6 +331,21 @@ const ModalSummary = ({ singleCase , kpi}) => {
                 
                 </input>
               </div>
+
+
+              <div className="col s6 m6 l6 content-radonly">
+                <label >Case Source / รับเคสจาก</label>
+                <input
+                  name='receiver'
+                  value={singleCase.case_source || ''}
+                  
+                  type="text"
+                  
+                  readOnly />
+              </div>
+
+              
+              {caseSource()}
 
               <div className="col s12 m12  head-section no-col-padding">
                 <h5>Case Information</h5>
@@ -613,7 +681,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
       </div>
       <ModalAddF2 singleCase={singleCase} />
       <ModalCancel singleCase={singleCase} />
-      <ModalAddContractInfo singleCase={singleCase} />
+      <ModalAddContract singleCase={singleCase} />
       <ModalImage singleCase={singleCase}/>
     </div >
 

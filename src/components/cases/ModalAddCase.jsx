@@ -2000,6 +2000,17 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       />
                     </div>
 
+                    <div className="col s6 m4 l4 content">
+                    <label htmlFor="Phone">Phone2</label>
+                    <input
+                      type="tel"
+                      name="tel2"
+                      value={customer.tel2}
+                      onChange={handleChangeCustomer}
+                      
+                    />
+                  </div>
+
                     <div className="col s12 m12  head-section no-col-padding">
                       <h5>Contract Information</h5>
                     </div>
