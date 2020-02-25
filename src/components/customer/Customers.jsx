@@ -86,6 +86,8 @@ const Customers = () => {
       })
   }
 
+  
+
   const editCustomer = (id, newCustomer) => {
    
     var data = JSON.stringify(newCustomer) ;
@@ -93,9 +95,12 @@ const Customers = () => {
     axios.put(`${url}/edit_customer?customer_id=${id}`, newCustomer )
       .then(res => { 
         console.log(res.data.message)
-      
+        M.toast({ html: `${res.data.message}` })
        })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        M.toast({ html: `fail to edit customer` }) 
+        console.log(err)
+       })
 
   }
 

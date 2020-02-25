@@ -6,6 +6,7 @@ const ModalEdit = ({ customer, editCustomer }) => {
     firstname: "",
     lastname: "",
     tel: "",
+    tel2: "",
     email: "",
     line: "",
     license_id: "",
@@ -20,17 +21,68 @@ const ModalEdit = ({ customer, editCustomer }) => {
     post_code: ""
   })
 
-  useEffect(() => {
+  function dateFormat(caseDate) {
+    if(caseDate == null){
+      return 0;
+    }else{
+      var mountCaracterString = caseDate.split(" ")[2];
+      var dayString = caseDate.split(" ")[1];
+      var yearString = caseDate.split(" ")[3];
+      var month;
+      if (mountCaracterString === 'Jan') {
+        month = "01";
+      }
+      else if (mountCaracterString === 'Feb') {
+        month = "02";
+      }
+      else if (mountCaracterString === 'Mar') {
+        month = "03";
+      }
+      else if (mountCaracterString === 'Apr') {
+        month = "04";
+      }
+      else if (mountCaracterString === 'May') {
+        month = "05";
+      }
+      else if (mountCaracterString === 'Jun') {
+        month = "06";
+      }
+      else if (mountCaracterString === 'Jul') {
+        month = "07";
+      }
+      else if (mountCaracterString === 'Aug') {
+        month = "08";
+      }
+      else if (mountCaracterString === 'Sep') {
+        month = "09";
+      }
+      else if (mountCaracterString === 'Oct') {
+        month = "10";
+      }
+      else if (mountCaracterString === 'Nov') {
+        month = "11";
+      }
+      else if (mountCaracterString === 'Dec') {
+        month = "12";
+      }
 
+      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[1]);
+     
+      }
+    }
+  
+  useEffect(() => {
+    console.log(customer)
     setCustomer2({
 
       firstname: customer.firstname ? customer.firstname : "",
       lastname: customer.lastname ? customer.lastname : "",
       tel: customer.tel ? customer.tel : "",
+      tel2: customer.tel2 ? customer.tel2 : "",
       line: customer.line ? customer.line : "",
       email: customer.email ? customer.email : "",
       license_id: customer.license_id ? customer.license_id : "",
-      birthday: customer.birthday ? customer.birthday : "",
+      birthday: customer.birthday ? dateFormat(customer.birthday) : "",
       home_no: customer.home_no ? customer.home_no : "",
       moo: customer.moo ? customer.moo : "",
       soy: customer.soy ? customer.soy : "",
@@ -115,6 +167,16 @@ const ModalEdit = ({ customer, editCustomer }) => {
                 type="tel"
                 name="tel"
                 value={customer2.tel}
+                onChange={handleChangeCustomer}
+              />
+            </div>
+
+            <div className="col s6 m4 l4 content">
+              <label htmlFor="Phone">Phone2</label>
+              <input
+                type="tel"
+                name="tel2"
+                value={customer2.tel2}
                 onChange={handleChangeCustomer}
               />
             </div>
