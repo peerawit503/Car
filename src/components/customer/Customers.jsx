@@ -45,7 +45,7 @@ const Customers = () => {
   const getAllCustomers = () => {
     // setCustomers(fackeCustomer)
     setisLoading(true);
-    axios.get(`${url}/customer_limit?size=50&page=1`)
+    axios.get(`${url}/customer_all`)
       .then(res => { 
         setCustomers(res.data.message)
         setisLoading(false);
