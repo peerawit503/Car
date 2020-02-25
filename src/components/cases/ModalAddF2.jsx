@@ -1493,7 +1493,7 @@ const ifDiff = () => {
     <div>
       <div id="modalAddF2" className="modal modal-fixed-footer">
         {console.log(newF2)}
-        <div className="navbar-fixed">
+        {/* <div className="navbar-fixed">
           <nav className="no-padding-left nav-noclor">
             <div className="nav-wrapper">
               <a href="#!" className="brand-logo left">
@@ -1513,7 +1513,7 @@ const ifDiff = () => {
               </a>
             </div>
           </nav>
-        </div>
+        </div> */}
         {console.log("------------------------------------------------")}
         {console.log("singleCase: ", singleCase)}
         <div className="modal-content modal-content-override">
