@@ -202,7 +202,7 @@ const Users = () => {
           </div>          
         <ModalDetail user={ user } />
 
-        <ModalEdit edituser={ edituser } />
+        <ModalEdit edituser={ edituser } getAllUsers={getAllUsers}/>
 
         <ModalDelete user={ user } deleteUser={ deleteUser } />
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 /* img */
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
-const ModalEdit = ({ edituser }) => {
+const ModalEdit = ({ edituser, getAllUsers}) => {
 
   const [user2, setUser2] = useState({
     firstname: "",
@@ -77,7 +77,8 @@ const ModalEdit = ({ edituser }) => {
      axios.put(`${url}/edit_user?user_id=${edituser.user_id}`, data2)
       .then(res => {
         console.log(res.data.message);
-       
+        M.toast({ html: `${res.data.message}` })
+        getAllUsers()
       })
       .catch(err => console.error(err))
   }
