@@ -9,6 +9,7 @@ import TableHead from './TableHead';
 import axios from "axios";
 import url from '../../Utility/url';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import MaterialTable from 'material-table'
 
 /* modify */
 import '../table.css';
@@ -29,6 +30,7 @@ const Users = () => {
   const [users, setUsers] = useState([])
   const [user, setUser] = useState({})
   const [edituser, setEdituserUser] = useState({})
+  const [isLoading, setisLoading] = useState(true)
 
   useEffect(() => {
     M.Modal.init(document.querySelectorAll('.modal'), {})
@@ -116,10 +118,12 @@ const Users = () => {
 
   const getAllUsers = () => {
     // setUsers(fackeAccount) user_limit?size=50&page=1
+    setisLoading(true);
     axios.get(`${url}/user_all`)
       .then(res => {
         setUsers(res.data.message)
         // console.log(res.data.message)
+        setisLoading(false);
 
       })
       .catch(err => { console.log(err) })
@@ -141,43 +145,52 @@ const Users = () => {
               </div>
             
             </div>
-            <div className="input-field col s12 m3">
+            {/* <div className="input-field col s12 m3">
               <div class="search">
                 <input placeholder="Search term"/>
                 <span class="fa fa-search"></span>
               </div>
-            </div>
+            </div> */}
            
           </div>
          <br/>
-          <div className="row">
-          <table className="centered responsive-table ">
-            <TableHead />
-            <tbody>
-              { users.map((item, index) => (
-                <tr key={ `${item.user_id ? item.user_id : index}` }>
-                  <td>{ item.id }</td>
-                  <td>
-                    { item.picture
-                    ? <img src={ item.picture } alt="img.profile" className="userImage"   />
-                    : <img src={ userImage } alt="img.profile" className="userImage"  /> }
-                  </td>
-                  <td>{ item.firstname }</td>
-                  <td>{ item.lastname }</td>
-                  <td>{ item.team_name }</td>
-                  <td>{ item.position }</td>
-                  <td>{ item.authority }</td>
-                  <td>{ item.tel }</td>
-                  <td>{ item.email }</td>
-                  <td>
-                    <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(item) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
-                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(item) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
-                    <a href="#modal3" className="modal-trigger" onClick={ () => readUser(item) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
-                  </td>
-                </tr>
-              )) }
-            </tbody>
-          </table>
+          <div className="row" class="input-table">
+       
+          <MaterialTable
+          columns={[
+            { title: 'id'},
+            { title: 'picture', 
+              render:rowdata => 
+              <div>
+              { rowdata.picture
+              ? <img src={ rowdata.picture } alt="img.profile" className="userImage"   />
+              : <img src={ userImage } alt="img.profile" className="userImage"  /> }
+            </div>
+            },
+            { title: 'firstname', field: 'firstname', },
+            { title: 'lastname', field: 'lastname' },
+            { title: 'position', field: 'position' },
+            { title: 'authority', field: 'authority' },
+            { title: 'tel', field: 'tel' },
+            { title: 'email', field: 'email' },
+            { title: '',
+              render:rowData =>
+              <div>
+                <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(rowData) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
+                <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(rowData) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
+                <a href="#modal3" className="modal-trigger" onClick={ () => readUser(rowData) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
+              </div>
+            },
+          ]}
+          isLoading={isLoading}
+          data={users}
+          title="Users"
+          options={{
+            filtering: true,
+            pageSize: 10,
+            pageSizeOptions: [10, 20, 50],
+          }}
+        />
         </div>
         <div>
           <ul className="pagination">

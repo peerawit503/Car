@@ -72,10 +72,6 @@ const Cases = (props) => {
     M.Modal.init(document.querySelectorAll('.modal'), {})
     M.Modal.init(document.querySelectorAll('#ModalDeleteCase'), {})
     M.FormSelect.init(document.querySelectorAll('select'), {});
-
-  }, [])
-
-  useEffect(() => {
     getAllCase()
     getKpi()
   }, [])
@@ -140,7 +136,6 @@ const Cases = (props) => {
   }
 
   const handleSingleCase = (caseInRow) => {
-
     setSingleCase(caseInRow)
   }
 
@@ -462,7 +457,10 @@ const Cases = (props) => {
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-    if ((caseInRow.status == 'submit_book_to_new_finance') || (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) || (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null)) {
+    if ((caseInRow.status == 'submit_book_to_new_finance') ||
+     (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||
+      (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||
+      caseInRow.process == 'cancel' ) {
       return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
     }
 
@@ -517,7 +515,6 @@ const Cases = (props) => {
             <div className="new-button col m4">
               <div className="new-button-iner">
                 <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
-
               </div>
 
             </div>
@@ -536,12 +533,12 @@ const Cases = (props) => {
 
                 {/* <!-- Dropdown Structure --> */}
                 <ul id='dropdown1' class='dropdown-content'>
-                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team1&date=${Date()}`} target="_blank">Team1</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team2&date=${Date()}`} target="_blank" >Team2</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team3&date=${Date()}`} target="_blank" >Team3</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team4&date=${Date()}`} target="_blank" >Team4</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=TeamA&date=${Date()}`} target="_blank" >ทีมใหญ่</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`} target="_blank">thanachart Bank</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=adc1&date=${Date()}`} target="_blank">Team ADC1</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=adc2&date=${Date()}`} target="_blank" >Team ADC2</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=adc3&date=${Date()}`} target="_blank" >Team ADC3</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=adc4&date=${Date()}`} target="_blank" >Team ADC4</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=team&value=ทีมใหญ่KK&date=${Date()}`} target="_blank" >ทีมใหญ่ KK</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`} target="_blank">Thanachart Bank</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} target="_blank">All</a></li>
                 </ul>
               </div>
@@ -563,17 +560,18 @@ const Cases = (props) => {
                     width: 50
                   }
                 },
-                { title: 'id', field: 'id' },
-                {
-                  title: 'Customers Name',
-                  field: 'name',
-                  render: rowData => <div className="customer-name-col">{rowData.name}</div>
-                },
+                { title: 'case_id', field: 'case_id' },
                 {
                   title: 'Last Update',
                   field: 'status_date',
                   render: rowData => <div>{statusDate(rowData)}</div>
                 },
+                {
+                  title: 'Customers Name',
+                  field: 'name',
+                  render: rowData => <div className="customer-name-col">{rowData.name}</div>
+                },
+               
 
                 {
                   title: 'Case Status', field: 'status',
