@@ -203,7 +203,7 @@ const Cases = (props) => {
     }).then(res => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
-      // setisLoading(true);
+ 
       getAllCase()
     })
       .catch(err => console.log(err))
@@ -212,8 +212,8 @@ const Cases = (props) => {
   const saveNewCase = (newCase, customer, difference) => {
 
 
-    if (customer.customer_id != null || customer.customer_id != "") {
-      console.log('data not null')
+    if (customer.customer_id != null && customer.customer_id != "") {
+      console.log('######### customer not null ########')
       var data = {
         ...newCase,
         customer_id:customer.customer_id,
@@ -225,21 +225,22 @@ const Cases = (props) => {
       axios
         .post(`${url}/add_case`, data)
         .then(res => {
-
           M.toast({ html: `${res.data.message}` })
           getAllCase()
+          return true;
         })
         .catch(err => {
           M.toast({ html: 'fail to add case Case error' })
+          return false;
         });
-    } else {
-      console.log('data null')
+    } else {  
+      console.log(' ######## customer null #########')
       let customerData = ({ ...customer })
-
+      console.log(JSON.stringify(customer))
       axios
         .post(`${url}/add_customer`, customerData)
         .then(res => {
-
+          console.log(res)
           var data = {
             ...newCase,
             customer_id: res.data.customer_id,
@@ -255,13 +256,16 @@ const Cases = (props) => {
               console.log(res);
               M.toast({ html: `${res.data.message}` })
               getAllCase()
+              return true;
             })
             .catch(err => {
               M.toast({ html: 'fail to add case Case error' })
+              return false;
             });
         })
         .catch(err => {
           M.toast({ html: 'fail to add case Customer error' })
+          return false;
         });
     }
 
@@ -532,11 +536,11 @@ const Cases = (props) => {
 
                 {/* <!-- Dropdown Structure --> */}
                 <ul id='dropdown1' class='dropdown-content'>
-                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team1&date=${Date()}`} target="_blank">Team1</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team2&date=${Date()}`} target="_blank" >Team2</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team3&date=${Date()}`} target="_blank" >Team3</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=team&value=Team4&date=${Date()}`} target="_blank" >Team4</a></li>
-                  <li><a href={`${url}/case_excel_file?parameter=team&value=TeamA&date=${Date()}`} target="_blank" >ทีมใหญ่</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team1&date=${Date()}`} target="_blank">Team1</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team2&date=${Date()}`} target="_blank" >Team2</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team3&date=${Date()}`} target="_blank" >Team3</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=Team4&date=${Date()}`} target="_blank" >Team4</a></li>
+                  <li><a href={`${url}/case_excel_file?parameter=cqc_team&value=TeamA&date=${Date()}`} target="_blank" >ทีมใหญ่</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`} target="_blank">thanachart Bank</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} target="_blank">All</a></li>
                 </ul>
