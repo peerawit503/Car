@@ -10,7 +10,7 @@ import ActionUser from "../../actions/actionUser";
 
 const Login = (props) => {
 
-  const [acc, setAcc] = useState({ username: "peerawit555", password: "mYgOedMSrG" })
+  const [acc, setAcc] = useState({ username: "", password: "" })
   const [redirect, setRedriect] = useState(false)
   const [err, setErr] = useState(false)
   props.clearUser()
@@ -26,15 +26,18 @@ const Login = (props) => {
     else {
       axios.post(`${url}/login`, acc)
         .then(async res => {
-          console.log(res.data)
-          M.toast({ html: 'Login เรียบร้อย' })
-          setRedriect(true)
-          // set localstate
-          const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
-          await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
-          localStorage.setItem("token", res.data.token)
-          localStorage.setItem("user", res.data.user)
-
+          if (res.data.status == 200){
+            M.toast({ html: 'Login เรียบร้อย' })
+            setRedriect(true)
+            // set localstate
+            const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
+            await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
+            localStorage.setItem("token", res.data.token)
+            localStorage.setItem("user", res.data.user)
+          }else{
+            M.toast({ html: res.data.message })
+          }
+          
         })
         .catch(err => { console.log(err) })
       setAcc({ username: "", password: "" })
