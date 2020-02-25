@@ -72,10 +72,6 @@ const Cases = (props) => {
     M.Modal.init(document.querySelectorAll('.modal'), {})
     M.Modal.init(document.querySelectorAll('#ModalDeleteCase'), {})
     M.FormSelect.init(document.querySelectorAll('select'), {});
-
-  }, [])
-
-  useEffect(() => {
     getAllCase()
     getKpi()
   }, [])
@@ -140,7 +136,6 @@ const Cases = (props) => {
   }
 
   const handleSingleCase = (caseInRow) => {
-
     setSingleCase(caseInRow)
   }
 
@@ -520,7 +515,6 @@ const Cases = (props) => {
             <div className="new-button col m4">
               <div className="new-button-iner">
                 <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
-
               </div>
 
             </div>
@@ -645,7 +639,7 @@ const Cases = (props) => {
           <ModalExcel />
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
-          <ModalAddSummary singleCase={singleCase} kpi={kpi} />
+          <ModalAddSummary singleCase={[singleCase]} kpi={kpi} />
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
 
