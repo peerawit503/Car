@@ -26,6 +26,7 @@ const Login = (props) => {
     else {
       axios.post(`${url}/login`, acc)
         .then(async res => {
+          console.log(res.data)
           if (res.data.status == 200){
             M.toast({ html: 'Login เรียบร้อย' })
             setRedriect(true)
