@@ -10,6 +10,7 @@ import ModalAddContractInfo from './ModalAddContractInfo';
 import Popup from 'reactjs-popup'
 
 const ModalSummary = ({ singleCase , kpi}) => {
+  
   const [newCase, setNewCase] = useState({})
 
   useEffect(() => {
@@ -51,40 +52,40 @@ const ModalSummary = ({ singleCase , kpi}) => {
     var dayString = sringDate.split(" ")[1];
     var yearString = sringDate.split(" ")[3];
     var month;
-    if (mountCaracterString == 'Jan') {
+    if (mountCaracterString === 'Jan') {
       month = 0;
     }
-    else if (mountCaracterString == 'Feb') {
+    else if (mountCaracterString === 'Feb') {
       month = 1;
     }
-    else if (mountCaracterString == 'Mar') {
+    else if (mountCaracterString === 'Mar') {
       month = 2;
     }
-    else if (mountCaracterString == 'Apr') {
+    else if (mountCaracterString === 'Apr') {
       month = 3;
     }
-    else if (mountCaracterString == 'May') {
+    else if (mountCaracterString === 'May') {
       month = 4;
     }
-    else if (mountCaracterString == 'Jun') {
+    else if (mountCaracterString === 'Jun') {
       month = 5;
     }
-    else if (mountCaracterString == 'Jul') {
+    else if (mountCaracterString === 'Jul') {
       month = 6;
     }
-    else if (mountCaracterString == 'Aug') {
+    else if (mountCaracterString === 'Aug') {
       month = 7;
     }
-    else if (mountCaracterString == 'Sep') {
+    else if (mountCaracterString === 'Sep') {
       month = 8;
     }
-    else if (mountCaracterString == 'Oct') {
+    else if (mountCaracterString === 'Oct') {
       month = 9;
     }
-    else if (mountCaracterString == 'Nov') {
+    else if (mountCaracterString === 'Nov') {
       month = 10;
     }
-    else if (mountCaracterString == 'Dec') {
+    else if (mountCaracterString === 'Dec') {
       month = 11;
     }
     // var month = parseInt(mountString) - 1;
@@ -174,6 +175,15 @@ const ModalSummary = ({ singleCase , kpi}) => {
     return <img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />
   }
 
+  function CheckCancel(){
+    if (singleCase.process === 'cancel'){
+      return (
+        <h4 style={{color:'red'}}>Canceled</h4>
+      )
+    }
+    return null
+  }
+
   return (
     <div>
       <div id="modalSummary" className="modal modal-fixed-footer modal90height">
@@ -184,7 +194,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
           <div className="row ">
             <div className="header-title">
               <div className="col s8 m8 no-col-padding">
-                <h4>Case : {singleCase.case_id}</h4>
+                <h4>Case : {singleCase.case_id} <CheckCancel/></h4> 
               </div>
               <div className="col m2 no-col-padding">
               <h6> {singleCase.F2_status == null?'F2 Complete':'F2 Incomplete'}</h6>
