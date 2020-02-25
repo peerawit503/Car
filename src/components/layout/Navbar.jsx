@@ -5,6 +5,8 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from "react-redux";
 import ActionUser from "../../actions/actionUser";
+import Box from '@material-ui/core/Box';
+
 import './style.css';
 const uu = localStorage.getItem('user')
 console.log(uu)
@@ -14,6 +16,16 @@ const Navbar = (props) => {
     M.Sidenav.init(document.querySelector('.sidenav'), {})
 
   }, [])
+
+  const defaultProps = {
+    bgcolor: 'background.paper',
+    borderColor: 'text.primary',
+    m: 1,
+    border: 1,
+    
+  };
+
+  
 
   if (!props.user.isLogin)
     return <Redirect to='/' />;
@@ -33,8 +45,10 @@ const Navbar = (props) => {
 
       <ul className="sidenav sidenavbar sidenav-fixed theme-color-bg sidenav-close no-scrollbar" id="mobile-demo">
         <li className="white-text">
-          <div className="sm-profile">
-            <img src={ imageProfile } alt="profile" style={ { width: "200px", height: 'auto', margin: '40px' } } className="circle " />
+          <div className="sm-profile" >
+            <Box borderRadius="50%" {...defaultProps}>
+            <img src={ props.user.picture ? props.user.picture : imageProfile } alt="profile" style={ { width: "200px", height: 'auto', margin: '40px', borderRadius:'50%' } } className="circle " />
+            </Box>
             <h6 className="center-align">Name : {props.user.firstName+' '+props.user.lastName}</h6>
             <p className="center-align">Team : {props.user.team}</p >
             <p className="center-align">Position : {props.user.position}</p >
