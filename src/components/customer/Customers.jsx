@@ -11,6 +11,7 @@ import axios from 'axios'
 import uuid from "uuid"
 import M from 'materialize-css/dist/js/materialize.min.js'
 import url from '../../Utility/url'
+import MaterialTable from 'material-table'
 // import fackeCustomer from '../../Utility/fackeCustomer'
 
 
@@ -30,6 +31,7 @@ const Customers = () => {
 
   const [customers, setCustomers] = useState([])
   const [customer, setCustomer] = useState({})
+  const [isLoading, setisLoading] = useState(true)
 
   useEffect(() => {
     getAllCustomers()
@@ -42,9 +44,12 @@ const Customers = () => {
 
   const getAllCustomers = () => {
     // setCustomers(fackeCustomer)
-
+    setisLoading(true);
     axios.get(`${url}/customer_limit?size=50&page=1`)
-      .then(res => { setCustomers(res.data.message) })
+      .then(res => { 
+        setCustomers(res.data.message)
+        setisLoading(false);
+       })
       .catch(err => { console.log(err) })
     // setCustomers(customerData.message);
   }
@@ -113,45 +118,51 @@ const Customers = () => {
             
             </div>
             <div className="input-field col s12 m3">
-              <div class="search">
+              {/* <div class="search">
                 <input placeholder="Search term"/>
                 <span class="fa fa-search"></span>
-              </div>
+              </div> */}
             </div>
            
           </div>
          <br/>
-        <div className="row">
-          <table className="centered responsive-table">
-            <TableHead />
-            <tbody>
-              { customers.map(cust => (
-                <tr key={ cust.customer_id ? cust.customer_id : uuid.v4() }>
-                  <td>{ cust.id }</td>
-                  <td>{ cust.firstname }</td>
-                  <td>{ cust.lastname }</td>
-                  <td>{ cust.tel }</td>
-                  <td>{ cust.line }</td>
-                  <td>{ cust.email }</td>
-                  
-                  
-                  <td>
-                    <a href="#modalRead" className="modal-trigger" onClick={ () => readCustermer(cust) } ><img  src={viewicon} className="png-icon" alt="print"/></a>
-                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readCustermer(cust) }  ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
-                    <a href="#modalDelete" className="modal-trigger" onClick={ () => readCustermer(cust) }  ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
-                  </td>
-                </tr>
-              )) }
-            </tbody>
-          </table>
+        <div className="row" class="input-table">
+       
+                <MaterialTable
+                columns={[
+                  { title: 'ID', field: 'id' },
+                  { title: 'firstname', field: 'firstname' },
+                  { title: 'lastname', field: 'lastname' },
+                  { title: 'tel', field: 'tel' },
+                  { title: 'line', field: 'line' },
+                  { title: 'email', field: 'email' },
+                  { title: ',' ,
+                  render: rowData => 
+                    <div>
+                    <a href="#modalRead" className="modal-trigger" onClick={ () => readCustermer(rowData) } ><img  src={viewicon} className="png-icon" alt="print"/></a>
+                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
+                    <a href="#modalDelete" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
+                    </div>
+               
+                }
+                ]}
+                isLoading={isLoading}
+                data={customers}
+                title="Customer"
+                options={{
+                  filtering: true,
+                  pageSize: 10,
+                  pageSizeOptions: [10, 20, 50],
+                }}
+              />
           <br/>
-          <div>
+          {/* <div>
           <ul className="pagination">
                 <li className={ 'disabled' }><a href="#!"><i className="material-icons">chevron_left</i></a></li>
                 <li className="active waves-effect"><a href="#!">1</a></li>
                 <li className={'disabled'}><a href="#!"><i className="material-icons">chevron_right</i></a></li>
               </ul>
-          </div>  
+          </div>   */}
           </div>      
           <ModalAddCaseCustomer customer={ customer } />
           <ModalCreate addCustomer={ addCustomer } />
