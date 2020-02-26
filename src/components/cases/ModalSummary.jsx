@@ -129,7 +129,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
         )
       result.push(
       <div className="col s6 m3">
-        ( {Math.floor((date2 - date1) / (24 * 3600 * 1000))} วัน)
+        ( {Math.floor((date2 - date1) / (24 * 3600 * 1000))} วัน )
       </div>
       )
       return result
