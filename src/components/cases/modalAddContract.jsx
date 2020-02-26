@@ -69,16 +69,16 @@ const ModalAddContract = ({singleCase }) => {
 
         console.log(JSON.stringify(data))
 // แก้ api ที่นี่
-    //     axios.post(`${url}/note?case_id=${case_id}`, JSON.stringify(data), {
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         }
-    //       }).then(res => {
-    //         M.toast({ html: `${res.data.message}` })
-    //    console.log('add success')
+        axios.post(`${url}/edit_contract?case_id=${case_id}`, JSON.stringify(data), {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then(res => {
+            M.toast({ html: `${res.data.message}` })
+       console.log('add success')
             
-    //       })
-    //         .catch(err => console.log(err))
+          })
+            .catch(err => console.log(err))
 
 
     }
