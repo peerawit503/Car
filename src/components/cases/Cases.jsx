@@ -272,7 +272,7 @@ const Cases = (props) => {
       .catch(err => console.log(err))
   }
 
-  const saveNewCase = (newCase, customer, difference) => {
+  const saveNewCase = (newCase, customer, difference , setAllblank) => {
 
 
     if (customer.customer_id != null && customer.customer_id != "") {
@@ -290,6 +290,7 @@ const Cases = (props) => {
         .then(res => {
           M.toast({ html: `${res.data.message}` })
           getAllCase()
+          setAllblank()
           return true;
         })
         .catch(err => {
@@ -320,6 +321,7 @@ const Cases = (props) => {
               console.log(res);
               M.toast({ html: `${res.data.message}` })
               getAllCase()
+              setAllblank()
               return true;
             })
             .catch(err => {

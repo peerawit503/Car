@@ -82,7 +82,7 @@ const ModalAddF2 = ({ singleCase , getAllCase }) => {
     deposit_receiver: singleCase.name?singleCase.f2_name:"",
     deposit: singleCase.f2_deposit?singleCase.f2_deposit:"",
     finance_staff:singleCase.finance_staff,
-    province_f2:singleCase.cus_province
+    province:singleCase.f2_province
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -258,7 +258,8 @@ const ifDiff = () => {
       deposit_receiver: singleCase.name,
       deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit,
       finance_staff:newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
-      difference:difference.d1
+      difference:difference.d1,
+      province:newF2.province?newF2.province:singleCase.f2_province
     }
 
     var data = JSON.stringify(newData);
@@ -325,7 +326,7 @@ const ifDiff = () => {
           singleCase.car_province,
           singleCase.car_year,
           newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
-          newF2.province_f2?newF2.province_f2:singleCase.cus_province,
+          newF2.province?newF2.province:singleCase.f2_province,
         );
       })
       .catch(err => console.log(err));
@@ -846,6 +847,18 @@ const ifDiff = () => {
                     },
                   ],
                 },
+                {
+                  columns: [
+                    {
+                      text: 'เลขที่บัญชี',
+                      bold: true,
+                      marginBottom: 7,
+                    },
+                    {
+                      text: margin_account_no,
+                    },
+                  ],
+                },
               ],
               width: 'auto',
               fontSize: 9,
@@ -1240,7 +1253,7 @@ const ifDiff = () => {
                       marginBottom: 7,
                     },
                     {
-                      text: cheque,
+                      text: cheque + ' บาท',
                     },
                   ],
                 },
@@ -1682,8 +1695,8 @@ const ifDiff = () => {
                   <label>
                     <span>จังหวัดที่อยู่อาศัย</span></label>
                   <select
-                    name="province_f2"
-                    value={newF2.province_f2 || singleCase.cus_province }
+                    name="province"
+                    value={newF2.province || singleCase.f2_province }
                     onChange={handleChange}
                     className="browser-default"
                   >

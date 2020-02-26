@@ -11,12 +11,13 @@ const ModalEdit = ({ customer, editCustomer }) => {
     line: "",
     license_id: "",
     birthday: "",
-    home_no: "",
-    moo: "",
-    soy: "",
-    road: "",
-    district: "",
-    district2: "",
+    // home_no: "",
+    // moo: "",
+    // soy: "",
+    // road: "",
+    // district: "",
+    // district2: "",
+    customer:"",
     province: "",
     post_code: ""
   })
@@ -83,12 +84,7 @@ const ModalEdit = ({ customer, editCustomer }) => {
       email: customer.email ? customer.email : "",
       license_id: customer.license_id ? customer.license_id : "",
       birthday: customer.birthday ? dateFormat(customer.birthday) : "",
-      home_no: customer.home_no ? customer.home_no : "",
-      moo: customer.moo ? customer.moo : "",
-      soy: customer.soy ? customer.soy : "",
-      road: customer.road ? customer.road : "",
-      district: customer.district ? customer.district : "",
-      district2: customer.district2 ? customer.district2 : "",
+      address:customer.address ? customer.address : "",
       province: customer.province ? customer.province : "",
       post_code: customer.post_code ? customer.post_code : ""
     })
@@ -201,6 +197,15 @@ const ModalEdit = ({ customer, editCustomer }) => {
               />
             </div>
 
+            <div className="col s6 m8 l8 content">
+              <label htmlFor="home_no">ที่อยู่</label>
+              <input
+                type="text"
+                name="address"
+                value={customer2.address}
+                onChange={handleChangeCustomer}
+              />
+            </div>
             <div className="col s6 m4 l4 content">
               <label htmlFor="license_id">หมายเลขใบอนุญาติ</label>
               <input
@@ -211,65 +216,9 @@ const ModalEdit = ({ customer, editCustomer }) => {
               />
             </div>
 
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="home_no">บ้านเลขที่</label>
-              <input
-                type="text"
-                name="home_no"
-                value={customer2.home_no}
-                onChange={handleChangeCustomer}
-              />
-            </div>
+           
 
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="moo">หมู่</label>
-              <input
-                type="text"
-                name="moo"
-                value={customer2.moo}
-                onChange={handleChangeCustomer}
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="soy">ซอย</label>
-              <input
-                type="text"
-                name="soy"
-                value={customer2.soy}
-                onChange={handleChangeCustomer}
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="road">ถนน</label>
-              <input
-                type="text"
-                name="road"
-                value={customer2.road}
-                onChange={handleChangeCustomer}
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="district">เขต</label>
-              <input
-                type="text"
-                name="district"
-                value={customer2.district}
-                onChange={handleChangeCustomer}
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content">
-              <label htmlFor="district2">แขวง</label>
-              <input
-                type="text"
-                name="district2"
-                value={customer2.district2}
-                onChange={handleChangeCustomer}
-              />
-            </div>
+            
 
             <div className="col s6 m4 l4 content">
               <label htmlFor="province">จังหวัด</label>

@@ -88,6 +88,16 @@ const ModalRead = ({ customer }) => {
               />
             </div>
 
+            <div className="col s8 m8 l8 content-radonly">
+              <label htmlFor="address">ที่อยู่</label>
+              <input
+                type="text"
+                name="address"
+                value={customer.address}
+                
+              />
+            </div>
+
             <div className="col s6 m4 l4 content-radonly">
               <label htmlFor="license_id">หมายเลขใบอนุญาติ</label>
               <input
@@ -98,65 +108,10 @@ const ModalRead = ({ customer }) => {
               />
             </div>
 
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="home_no">บ้านเลขที่</label>
-              <input
-                type="text"
-                name="home_no"
-                value={customer.home_no}
-                
-              />
-            </div>
+            
 
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="moo">หมู่</label>
-              <input
-                type="text"
-                name="moo"
-                value={customer.moo}
-                
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="soy">ซอย</label>
-              <input
-                type="text"
-                name="soy"
-                value={customer.soy}
-                
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="road">ถนน</label>
-              <input
-                type="text"
-                name="road"
-                value={customer.road}
-                
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="district">เขต</label>
-              <input
-                type="text"
-                name="district"
-                value={customer.district}
-                
-              />
-            </div>
-
-            <div className="col s6 m4 l4 content-radonly">
-              <label htmlFor="district2">แขวง</label>
-              <input
-                type="text"
-                name="district2"
-                value={customer.district2}
-                
-              />
-            </div>
+           
+           
 
             <div className="col s6 m4 l4 content-radonly">
               <label htmlFor="province">จังหวัด</label>
