@@ -265,8 +265,8 @@ const ModalSummary = ({ singleCase , kpi}) => {
               <div className="col m2 ">
               <div className="new-button-iner">
 
-              <a className="btn modal-trigger tde" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>F2</a>
-              <a className="btn modal-trigger tde" href="#modalAddContract" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>Contract</a>
+              <a className="btn modal-trigger tde" href="#modalAddF2" style={{margin:'1px'}}><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>F2</a>
+              <a className="btn modal-trigger tde" href="#modalAddContract" style={{margin:'1px', minWidth:'11em'}}><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="firespot"/>Contract</a>
               </div>
             
             </div>
