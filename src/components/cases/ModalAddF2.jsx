@@ -256,7 +256,9 @@ const ifDiff = () => {
       cheque: newF2.f2_cheque?newF2.cheque:singleCase.f2_cheque,
       cheque_receiver: singleCase.name,
       deposit_receiver: singleCase.name,
-      deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit
+      deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit,
+      finance_staff:newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
+      difference:difference.d1
     }
 
     var data = JSON.stringify(newData);
