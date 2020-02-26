@@ -144,11 +144,50 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
   const handleChange = e => {
     console.log(e.target.name, ":", e.target.value);
-   
-
-    
     setNewCase({ ...newCase, [e.target.name]: e.target.value });
   };
+
+  const handleChangeTel = e => {
+    const re = /^[0-9\b]/;
+    if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length<=10) {
+      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+    }else{
+
+    }
+  };
+
+  function CheckRedTel(tel){
+    if(tel !== ""){
+      if(tel.length<10){
+        return true
+        
+      }else{
+        return false
+      }
+    }
+    return false
+  }
+
+
+  const handleChangeEmail = e => {
+    const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    if ((e.target.value === '' || re.test(e.target.value)) ) {
+      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+    }else{
+        //set state to disable save button
+    }
+  };
+
+  function CheckRedEmail(email){
+    const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+      if ((email === '' || re.test(email)) ) {
+        return false
+      }else{
+        return true
+      }
+  
+  }
+
   const handleChangeCarBrand = e => {
     setNewCase({ ...newCase, [e.target.name]: e.target.value  });
     getCarModel(e.target.value)
@@ -508,7 +547,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     case_status: "ติดต่อลูกค้าไม่ได้",
 
     
-    car_name: " ",
+    car_name: "",
     car_brand: "",
     car_model: "",
     car_sub_model: "",
@@ -951,7 +990,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     />
                   </div>
 
-                  <div className="col s6 m4 l4 content">
+                  <div className={CheckRedEmail(customer.email)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
                     <label htmlFor="Email">Email</label>
                     <input
                       type="email"
@@ -961,26 +1000,25 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     />
                   </div>
 
-                  <div className="col s6 m4 l4 content">
+                  <div className={CheckRedTel(customer.tel)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
                     <label htmlFor="Phone">Phone1</label>
                     <input
                       type="tel"
                       name="tel"
                       value={customer.tel}
-                      onChange={handleChangeCustomer}
-                      
+                      onChange={handleChangeTel}
                     />
                   </div>
 
 
 
-                  <div className="col s6 m4 l4 content">
+                  <div className={CheckRedTel(customer.tel2)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
                     <label htmlFor="Phone">Phone2</label>
                     <input
                       type="tel"
                       name="tel2"
                       value={customer.tel2}
-                      onChange={handleChangeCustomer}
+                      onChange={handleChangeTel}
                       
                     />
                   </div>
@@ -1293,7 +1331,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     </div>
 
                     <div className="col s6 m4 l4 content">
-                      <label>Close Amount / ยอดเงินเข้าบริษัท </label>
+                      <label>Close Amount / ยอดปิด </label>
                       <input
                         type="number"
                         name="close_amount"
@@ -1353,7 +1391,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   <div className="cotent-field">
                 <div className="row content">
           
-                  <div className="row col m4 content">
+                  {/* <div className="row col m4 content">
                     <h5>Bank Form</h5>
                     <span className=" col s12 m12">
                       <label>
@@ -1377,9 +1415,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         <span>KK bank form</span>
                       </label>
                     </span>
-                  </div>
+                  </div> */}
 
-                  <div className="row col m4 content">
+                  <div className="col m12 content">
                     <h5>ส่วนต่าง</h5>
                     <span className=" col s12 m12">
                       <label>
@@ -1405,132 +1443,13 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     </span>
                   </div>
 
-                  <div className="col s4 m4 content top-F2">
-
-                    <label>เงื่อนไขการตรวจรถ</label>
-
-                    <select
-                      name="car_check_con"
-                      value={newCase.car_check_con || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    ><option value="" disabled>
-                        เงื่อนไขการตรวจรถ...
-                    </option>
-                      <option value="นัดตรวจรถ(บ.)" >
-                        นัดตรวจรถ(บ.)
-                      </option>
-                      <option value="นัดตรวจรถ" >
-                        นัดตรวจรถ
-                      </option>
-                      <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
-                        ตรวจนอก/ขูดเลข/ถ่ายรูป
-                      </option>
-
-                    </select>
-
-                    <label>
-                      เงื่อนไขการเก็บเอกสาร
-                      </label>
-                    <select
-                      name="doc_storage_con"
-                      value={newCase.doc_storage_con || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        เงื่อนไขการเก็บเอกสาร...
-                    </option>
-                      <option value="นัดตรวจรถ(บ.)" >
-                        นัดรับเอกสาร
-                      </option>
-                      <option value="นัดตรวจรถ" >
-                        ส่งเอกสาร
-                      </option>
-
-                    </select>
-
-
-
-                    <label>เจ้าหน้าที่ Operator Cartrust </label>
-
-                    <select
-                      name="finance_staff"
-                      value={newCase.finance_staff}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        เจ้าหน้าที่...
-                    </option>
-                      {
-                        operaterOption()
-                      }
-
-
-                    </select>
-
-
-
-                    <label>
-                      <span>จังหวัดที่อยู่อาศัย</span></label>
-                    <select
-                      name="province_f2"
-                      value={newCase.province_f2 || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-
-                      <option value="" disabled>
-                        จังหวัด{" "}
-                      </option>
-                      {provinceAll.map(pv => (
-                        <option key={uuid.v4()} value={pv}>
-                          {pv}
-                        </option>
-                      ))}
-                    </select>
-
-                    <label>
-                      บัญชีรับเงินส่วนต่าง</label>
-
-                    <select
-                      name="margin_account"
-                      value={newCase.margin_account || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        ธนาคาร...
-                    </option>
-                      {
-                        margin_accountOption()
-                      }
-
-
-                    </select>
-
-                    
-                    <label>
-                      <span>เลขที่บัญชี</span></label>
-                    <input
-                      name="margin_account_no"
-                      value={newCase.margin_account_no || ""}
-                      onChange={handleChange}
-                    
-                    ></input>
+                  
 
 
 
 
 
-                  </div>
-
-
-
-
-
-
+                  <div className="col s6 m6">
                   <div className="col s12 m12  head-section no-col-padding">
                     <h5>ค่าใช้จ่าย cartrust</h5>
                   </div>
@@ -2022,6 +1941,115 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
                   {payment()}
                 </div>
+
+
+
+                <div className="col s6 m6  head-section no-col-padding">
+                    <h5>เงื่อนไข cartrust</h5>
+                  </div>
+                <div className="col row s6 m6">
+                  <div className="col s12 m12 content">
+                    <label>เงื่อนไขการตรวจรถ</label>
+                    <select
+                      name="car_check_con"
+                      value={newCase.car_check_con || ""}
+                      onChange={handleChange}
+                      className="browser-default"
+                    ><option value="" disabled>
+                        เงื่อนไขการตรวจรถ...
+                    </option>
+                      <option value="นัดตรวจรถ(บ.)" >
+                        นัดตรวจรถ(บ.)
+                      </option>
+                      <option value="นัดตรวจรถ" >
+                        นัดตรวจรถ
+                      </option>
+                      <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
+                        ตรวจนอก/ขูดเลข/ถ่ายรูป
+                      </option>
+                    </select>
+
+                    <label>
+                      เงื่อนไขการเก็บเอกสาร
+                      </label>
+                    <select
+                      name="doc_storage_con"
+                      value={newCase.doc_storage_con || ""}
+                      onChange={handleChange}
+                      className="browser-default"
+                    >
+                      <option value="" disabled>
+                        เงื่อนไขการเก็บเอกสาร...
+                    </option>
+                      <option value="นัดตรวจรถ(บ.)" >
+                        นัดรับเอกสาร
+                      </option>
+                      <option value="นัดตรวจรถ" >
+                        ส่งเอกสาร
+                      </option>
+                    </select>
+
+                    <label>เจ้าหน้าที่ Operator Cartrust </label>
+                    <select
+                      name="finance_staff"
+                      value={newCase.finance_staff}
+                      onChange={handleChange}
+                      className="browser-default"
+                    >
+                      <option value="" disabled>
+                        เจ้าหน้าที่...
+                    </option>
+                      {
+                        operaterOption()
+                      }
+                    </select>
+
+                    <label>
+                      <span>จังหวัดที่อยู่อาศัย</span></label>
+                    <select
+                      name="province_f2"
+                      value={newCase.province_f2 || ""}
+                      onChange={handleChange}
+                      className="browser-default"
+                    >
+                      <option value="" disabled>
+                        จังหวัด{" "}
+                      </option>
+                      {provinceAll.map(pv => (
+                        <option key={uuid.v4()} value={pv}>
+                          {pv}
+                        </option>
+                      ))}
+                    </select>
+                    <label>
+                      บัญชีรับเงินส่วนต่าง</label>
+                    <select
+                      name="margin_account"
+                      value={newCase.margin_account || ""}
+                      onChange={handleChange}
+                      className="browser-default"
+                    >
+                      <option value="" disabled>
+                        ธนาคาร...
+                    </option>
+                      {
+                        margin_accountOption()
+                      }
+                    </select>
+                    <label>
+                      <span>เลขที่บัญชี</span></label>
+                    <input
+                      name="margin_account_no"
+                      value={newCase.margin_account_no || ""}
+                      onChange={handleChange}
+                    ></input>
+                  </div>
+                </div>
+
+
+
+
+                </div>
               </div>
               
             </TabPanel>
@@ -2040,7 +2068,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     </div> */}
 
                     <div className="col s6 m4 l4 content">
-                      <label>Receiver Date/ วันที่รับเคส</label>
+                      <label>Receive Date/ วันที่รับเคส</label>
                       <input
                         type="date"
                         name="receive_date"
@@ -2111,7 +2139,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         type="text"
                         name="tel"
                         value={customer.tel || ""}
-                        onChange={handleChange}
+                        onChange={handleChangeTel}
                         className="validate"
                       />
                     </div>
@@ -2122,7 +2150,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       type="tel"
                       name="tel2"
                       value={customer.tel2}
-                      onChange={handleChangeCustomer}
+                      onChange={handleChangeTel}
                       
                     />
                   </div>

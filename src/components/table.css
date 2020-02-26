@@ -132,6 +132,13 @@ td .png-icon{
     height:2rem !important;
 }
 
+.contentred input{
+    border: 1px solid #ff0000 !important;
+    background-color: #FFFFFF !important;
+    height:2rem !important;
+}
+
+
 
 
 .MuiInputAdornment-root .material-icons{
