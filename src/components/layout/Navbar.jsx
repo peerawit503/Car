@@ -46,9 +46,9 @@ const Navbar = (props) => {
       <ul className="sidenav sidenavbar sidenav-fixed theme-color-bg sidenav-close no-scrollbar" id="mobile-demo">
         <li className="white-text">
           <div className="sm-profile" >
-            <Box borderRadius="50%" {...defaultProps}>
-            <img src={ props.user.picture ? props.user.picture : imageProfile } alt="profile" style={ { width: "200px", height: 'auto', margin: '40px', borderRadius:'50%' } } className="circle " />
-            </Box>
+            {/* <Box borderRadius="50%" {...defaultProps}> */}
+            <img src={ props.user.picture ? props.user.picture : imageProfile } alt="profile" style={ { width: "200px", height: 'auto', margin: '40px', borderRadius:'50%', border:'solid 5px', background:'#ffffff' } } className="circle " />
+            {/* </Box> */}
             <h6 className="center-align">Name : {props.user.firstName+' '+props.user.lastName}</h6>
             <p className="center-align">Team : {props.user.team}</p >
             <p className="center-align">Position : {props.user.position}</p >
