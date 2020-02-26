@@ -251,10 +251,10 @@ const ifDiff = () => {
       tax_renewal_fee_note: newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
       act_renewal_fee_note: newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
       f2_status: "done",
-      cheque: singleCase.f2_cheque,
+      cheque: newF2.cheque?newF2.cheque:singleCase.f2_cheque,
       cheque_receiver: singleCase.name,
       deposit_receiver: singleCase.name,
-      deposit: singleCase.f2_deposit
+      deposit: newF2.deposit?newF2.deposit:singleCase.f2_deposit
     }
 
     var data = JSON.stringify(newData);
@@ -303,10 +303,10 @@ const ifDiff = () => {
           newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
           newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
 
-          singleCase.f2_cheque,
+          newF2.cheque?newF2.cheque:singleCase.f2_cheque,
           singleCase.name,
           singleCase.name,
-          singleCase.f2_deposit,
+          newF2.deposit?newF2.deposit:singleCase.f2_deposit,
           singleCase.name,
           singleCase.cus_tel,
           singleCase.case_type,
@@ -321,7 +321,8 @@ const ifDiff = () => {
           singleCase.car_province,
           singleCase.car_year,
           singleCase.finance_staff,
-          singleCase.province,
+          newF2.deposit?newF2.deposit:singleCase.f2_deposit,
+          newF2.province_f2?newF2.province_f2:singleCase.province,
         );
       })
       .catch(err => console.log(err));
@@ -337,7 +338,7 @@ const ifDiff = () => {
           vat7_fee ,
           transfer_fee ,
           duty_fee ,
-          discount_fee ,
+          discount_fee ,  
           car_shield_fee ,
           car_insurance_fee ,
           transfer_service_fee ,
