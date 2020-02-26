@@ -15,6 +15,7 @@ import axios from "axios";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { REHYDRATE } from "redux-persist";
 
 
 const ModalAddCase = ({ saveNewCase,getAllCase }) => {
@@ -49,7 +50,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     close_amount: "",
     case_status: "ติดต่อลูกค้าไม่ได้",
     receive_date:currentDateFormat(Date()),
-    
+    province:"",
     car_name: " ",
     car_brand: "",
     car_model: "",
@@ -138,19 +139,52 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const [bank, setBank] = useState({ b1: true, b2: false });
   const [difference, setDifference] = useState({ d1: true, d2: false });
   const handleChangeF = e => {
-    console.log(e.target.name, ":", e.target.value);
+    
     setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value) });
   };
 
+ 
+
+  useEffect(() => {
+    getOperatorS()
+    getMargin_account()
+    getCqc_team()
+    getHub()
+    getCartrust_lead()
+    getCar_brand()
+    
+    M.Modal.init(document.querySelectorAll('.modal'), {});
+  }, []);
+
+
   const handleChange = e => {
-    console.log(e.target.name, ":", e.target.value);
+    
     setNewCase({ ...newCase, [e.target.name]: e.target.value });
   };
+
+  const handleChangeCaseSource = e => {
+    
+    if(e.target.value === 'Kiatnakin' || e.target.value === 'Thanachart'){
+      setNewCase({ ...newCase, [e.target.name]: e.target.value , new_bank:e.target.value});
+    }else{
+      setNewCase({ ...newCase, [e.target.name]: e.target.value });
+    }
+      
+   
+    
+  };
+  
+
 
   const handleChangeTel = e => {
     const re = /^[0-9\b]/;
     if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length<=10) {
-      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+      if(customer.customer_id === ""){
+        setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+      }else{
+        setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" ,firstname:"" , lastname:"", license_id:"" , tel:"" , tel2:"" ,email:"" , line:"" , post_code:"", province:"",birthday:"" });
+      }
+      
     }else{
 
     }
@@ -201,26 +235,33 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     getCarSubModel(newCase.car_brand ,newCase.car_model, e.target.value)
   }
   
+  const disableSelect = (case_source) => {
+    if(case_source === 'Kiatnakin' || case_source ==='Thanachart'){
+      return true
+    }else{
+      return false
+    }
+  }
 
-  useEffect(() => {
-    getOperatorS()
-    getMargin_account()
-    getCqc_team()
-    getHub()
-    getCartrust_lead()
-    getCar_brand()
-    console.log( 'dasdasddddddddddd' , currentDateFormat( Date()))
-    M.Modal.init(document.querySelectorAll('.modal'), {});
-  }, []);
-
-
-  const handleChangeCustomer = e =>
-    setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+  const handleChangeCustomer = e =>{
+    if(customer.customer_id === ""){
+      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
+    }else{
+      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" ,firstname:"" , lastname:"", license_id:"" , tel:"" , tel2:"" ,email:"",line:"" , post_code:"", province:"",birthday:"" });
+    }
+  }
+   
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   const validateOnclinck = () =>{
+    const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    // let case_source = newCase.case_source;
+    
+    
+
+    console.log('*********************' , newCase)
     if(customer.firstname === ""){
       alert('Firstname if empty')
       return false;
@@ -271,6 +312,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     else if (newCase.new_bank === "" ){
       alert('Finance Institution is empty')
       return false;
+    }else if (customer.email === '' || !(re.test(customer.email)) ){
+      alert('Email is valid')
     }
  
     else{
@@ -339,7 +382,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   }
 
   const getCarModel = (car_brand_s) => {
-    console.log('********************************')
+   
     let data = {
       brand:car_brand_s
     }
@@ -969,7 +1012,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
             <TabPanel>
                   <div className="cotent-field">
                 <div className="row content">
-
+                  <div className="row crop">
                   <div className="col s6 m4 l4 content">
                     <label htmlFor="name">First name</label>
                     <input
@@ -999,7 +1042,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       onChange={handleChangeCustomer}
                     />
                   </div>
+                  </div>
 
+                  <div className="row crop">
                   <div className={CheckRedTel(customer.tel)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
                     <label htmlFor="Phone">Phone1</label>
                     <input
@@ -1032,6 +1077,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       onChange={handleChangeCustomer}
                       onBlur={validateLine}
                     />
+                  </div>
                   </div>
 
                   <div className="col s6 m4 l4 content">
@@ -1086,7 +1132,6 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       onChange={handleChangeCustomer}
                     />
                   </div>
-
                   <div className="col s12 m12  head-section no-col-padding">
                     <h5>Case Information</h5>
                   </div>
@@ -1137,7 +1182,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <select
                       name="case_source"
                       value={newCase.case_source || "DEFAULT"}
-                      onChange={handleChange}
+                      onChange={handleChangeCaseSource}
                       type="text"
                       className="browser-default"
                     >
@@ -1215,7 +1260,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       >
 
                         <option value="" disabled>
-                          โปรเลือก
+                          ตัวเลือก...
                         </option>
                           {carBrandOption()}
                         </select>
@@ -1235,7 +1280,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       >
 
                         <option value="" disabled>
-                          โปรเลือก
+                        ตัวเลือก...
                         </option>
                           {carModelOption()}
                         </select>
@@ -1253,7 +1298,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       >
 
                         <option value="" disabled>
-                          โปรเลือก
+                        ตัวเลือก...
                         </option>
                           {carYearOption()}
                         </select>
@@ -1272,7 +1317,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       >
 
                         <option value="" disabled>
-                          โปรเลือก
+                        ตัวเลือก...
                         </option>
                           {carSubModelOption()}
                         </select>
@@ -1285,6 +1330,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         value={newCase.old_bank || "DEFAULT"}
                         className="browser-default"
                         onChange={handleChange}
+                        
                       >
                         <option value="DEFAULT" disabled>
                           เลือกไฟแนนซ์เดิม{" "}
@@ -1301,9 +1347,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       <label>Finance Institution / สถาบันการเงิน</label>
                       <select
                         name="new_bank"
-                        value={newCase.new_bank || "DEFAULT"}
+                        value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin')?newCase.case_source:newCase.new_bank || "DEFAULT"}
                         className="browser-default"
                         onChange={handleChange}
+                        disabled={disableSelect(newCase.case_source)}
                       >
                         <option value="DEFAULT" disabled>
                           เลือกสถาบันการเงิน{" "}
@@ -1391,31 +1438,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   <div className="cotent-field">
                 <div className="row content">
           
-                  {/* <div className="row col m4 content">
-                    <h5>Bank Form</h5>
-                    <span className=" col s12 m12">
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="form1"
-                          checked={bank.b1}
-                          onChange={handleChangeB_1}
-                        />
-                        <span>Tanachart Bank form</span>
-                      </label>
-                    </span>
-                    <span className=" col s12 m12">
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="form2"
-                          checked={bank.b2}
-                          onChange={handleChangeB_2}
-                        />
-                        <span>KK bank form</span>
-                      </label>
-                    </span>
-                  </div> */}
+             
 
                   <div className="col m12 content">
                     <h5>ส่วนต่าง</h5>
@@ -2007,8 +2030,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <label>
                       <span>จังหวัดที่อยู่อาศัย</span></label>
                     <select
-                      name="province_f2"
-                      value={newCase.province_f2 || ""}
+                      name="province"
+                      value={newCase.province || ""}
                       onChange={handleChange}
                       className="browser-default"
                     >
@@ -2056,37 +2079,17 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
             <TabPanel>
               <div className="cotent-field">
                 <div className="row content">
-                    {/* <div className="col s6 m4 l4 content">
-                      <label>JOB No.</label>
-                      <input
-                        type="text"
-                        name="job_id"
-                        value={newCase.job_id || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div> */}
+            
 
                     <div className="col s6 m4 l4 content">
                       <label>Receive Date/ วันที่รับเคส</label>
                       <input
                         type="date"
                         name="receive_date"
-                        value={newCase.receive_date || ""}
+                        value={newCase.receive_date || currentDateFormat(Date())}
                         onChange={handleChange}
                       />
                     </div>
-
-                    {/* <div className="col s6 m4 l4 content">
-                      <label>Case Receiver/ ผู้ลงข้อมูล</label>
-                      <input
-                        name="case_receiver"
-                        value={newCase.case_receiver || ""}
-                        onChange={handleChange}
-                        type="text"
-                        className="validate"
-                      />
-                    </div> */}
 
                     <div className="col s6 m4 l4 content">
                       <label>Case Type / ประเภทเคส</label>
@@ -2110,7 +2113,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <div className="col s12 m12  head-section no-col-padding">
                       <h5>Case Information</h5>
                     </div>
-
+                      
                     <div className="col s6 m4 l4 content">
                       <label>First Name</label>
                       <input
@@ -2158,7 +2161,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <div className="col s12 m12  head-section no-col-padding">
                       <h5>Contract Information</h5>
                     </div>
-
+                    <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
                       <input
@@ -2197,41 +2200,57 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                         onChange={handleChange}
                         className="browser-default"
                       >
+                        <option value="">
+                          ตัวเลือก...
+                        </option>
                           {carBrandOption()}
                         </select>
+                    </div>
                     </div>
 
                     <div className="col s6 m4 l4 content">
                       <label>Model / รุ่นรถ</label>
-                      <input
-                        type="text"
+                      <select
                         name="car_model"
                         value={newCase.car_model || ""}
                         onChange={handleChange}
-                        className="validate"
-                      />
+                        className="browser-default"
+                      >
+                        <option value="">
+                          ตัวเลือก...
+                        </option>
+                          {carModelOption()}
+                        </select>
                     </div>
 
                     <div className="col s6 m4 l4 content">
-                      <label>Sub-model / รุ่นย่อย</label>
-                      <input
-                        type="text"
+                      <label>Car Year / ปีรถ </label>
+                      <select
+                        name="car_year"
+                        value={newCase.car_model || ""}
+                        onChange={handleChange}
+                        className="browser-default"
+                      >
+                        <option value="">
+                          ตัวเลือก...
+                        </option>
+                          {carYearOption()}
+                        </select>
+                    </div>
+
+                    <div className="col s6 m4 l4 content">
+                      <label>Car Sub Model / รุ่นย่อย</label>
+                      <select
                         name="car_sub_model"
                         value={newCase.car_sub_model || ""}
                         onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Car Year / ปีรถ</label>
-                      <input
-                        type="text"
-                        name="car_year"
-                        value={newCase.car_year || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
+                        className="browser-default"
+                      >
+                        <option value="">
+                          ตัวเลือก...
+                        </option>
+                          {carSubModelOption()}
+                        </select>
                     </div>
 
                     <div className="col s6 m4 l4 content">
@@ -2257,9 +2276,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       <label>Finance Institution / สถาบันการเงิน</label>
                       <select
                         name="new_bank"
-                        value={newCase.new_bank || "DEFAULT"}
+                        value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin')?newCase.case_source:newCase.new_bank || "DEFAULT"}
                         className="browser-default"
                         onChange={handleChange}
+                        disabled={disableSelect(newCase.case_source)}
                       >
                         <option value="DEFAULT" disabled>
                           เลือกสถาบันการเงิน{" "}

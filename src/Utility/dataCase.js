@@ -47,6 +47,7 @@ const financeInstitution = [
   'Asla Sermkkij Leasing PLC.',
   'Ayudhya Capital Auto lease',
   'CIMB',
+  'Thanachart',
   'City Leasing',
   'Honda Leasing',
   'ICBC',

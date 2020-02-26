@@ -62,7 +62,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
     const file = e.target.files[0]
     const reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.onload = () => setUser2({ ...user2, file: reader.result });
+    reader.onload = () => setUser2({ ...user2, picture: reader.result });
   }
 
   
