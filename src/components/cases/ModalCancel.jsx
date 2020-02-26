@@ -3,7 +3,7 @@ import photo from '../../img/photo.png';
 import url from "../../Utility/url";
 import axios from "axios";
 
-const ModalCancel = ({ singleCase }) => {
+const ModalCancel = ({ singleCase ,getAllCase}) => {
 
   
 const confirm =() =>{
@@ -12,6 +12,7 @@ const confirm =() =>{
     // M.toast({ html: `${res.data.message}` })
     console.log("######## cancel case result #########");
     console.log(res);
+    getAllCase()
   })
   .catch(err => {
     console.log(err);
