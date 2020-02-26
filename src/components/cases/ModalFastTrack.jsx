@@ -30,7 +30,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
     // in case 11 deposit_doc_to_new_bank
     if (props.singleCase.status === 'deposit_doc_to_new_bank'){
       console.log(props.singleCase.close_amount);
-
+      setisConfirm(true)
       return (
         <div>
          <h5>ยอดปิด: {singleCase.close_amount}</h5>
@@ -40,11 +40,15 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
     // in case 15 book_deposit_received
     if (props.singleCase.status === 'book_deposit_received' ){
       console.log(props.singleCase.f2_old_finance_transfer_fee);
+      setisConfirm(true)
       return (
         <div>
          <h5>เงินมัดจำ (ค่าโอนไฟแนนซ์เก่า): {singleCase.f2_old_finance_transfer_fee}</h5>
         </div>
       )
+    }
+    else{
+      setisConfirm(true)
     }
 
     //nomal case return Confirm button
