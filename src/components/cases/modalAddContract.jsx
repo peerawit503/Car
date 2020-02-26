@@ -61,7 +61,8 @@ const ModalAddContract = ({singleCase }) => {
         old_finance_total_cost:newContract.old_finance_total_cost?newContract.old_finance_total_cost:singleCase.old_finance_total_cost,
         total_cost:newContract.total_cost?newContract.total_cost:singleCase.total_cost,
         amount_received:newContract.amount_received?newContract.amount_received:singleCase.amount_received,
-        customer_id : singleCase.customer_id
+        customer_id : singleCase.customer_id,
+        car_id:singleCase.car_id
         }
 
         let case_id = singleCase.case_id;
