@@ -311,7 +311,8 @@ const Cases = (props) => {
             case_receiver: props.user.firstName + ' ' + props.user.lastName,
             user_id: props.user.id,
           };
-
+          if (res.data.message === 'success_addCustomer'){
+            console.log(JSON.stringify(data))
           axios
             .post(`${url}/add_case`, data)
             .then(res => {
@@ -325,6 +326,9 @@ const Cases = (props) => {
               M.toast({ html: 'fail to add case Case error' })
               return false;
             });
+          }else{
+            M.toast({ html: 'fail to add Customer ' + res.data.message })
+          }
         })
         .catch(err => {
           M.toast({ html: 'fail to add case Customer error' })
