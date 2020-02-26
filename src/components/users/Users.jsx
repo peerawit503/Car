@@ -130,6 +130,32 @@ const Users = () => {
     // setUsers(userData.message);
   }
 
+  let columnObject = useState([
+    { title: 'id'},
+    { title: 'picture', 
+      render:rowdata => 
+      <div>
+      { rowdata.picture
+      ? <img src={ rowdata.picture } alt="img.profile" className="userImage"   />
+      : <img src={ userImage } alt="img.profile" className="userImage"  /> }
+    </div>
+    },
+    { title: 'firstname', field: 'firstname', },
+    { title: 'lastname', field: 'lastname' },
+    { title: 'position', field: 'position' },
+    { title: 'authority', field: 'authority' },
+    { title: 'tel', field: 'tel' },
+    { title: 'email', field: 'email' },
+    { title: '',
+      render:rowData =>
+      <div>
+        <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(rowData) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
+        <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(rowData) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
+        <a href="#modal3" className="modal-trigger" onClick={ () => readUser(rowData) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
+      </div>
+    },
+  
+  ])
   return (
     <>
       <Navbar />
@@ -157,31 +183,7 @@ const Users = () => {
           <div className="row" class="input-table">
        
           <MaterialTable
-          columns={[
-            { title: 'id'},
-            { title: 'picture', 
-              render:rowdata => 
-              <div>
-              { rowdata.picture
-              ? <img src={ rowdata.picture } alt="img.profile" className="userImage"   />
-              : <img src={ userImage } alt="img.profile" className="userImage"  /> }
-            </div>
-            },
-            { title: 'firstname', field: 'firstname', },
-            { title: 'lastname', field: 'lastname' },
-            { title: 'position', field: 'position' },
-            { title: 'authority', field: 'authority' },
-            { title: 'tel', field: 'tel' },
-            { title: 'email', field: 'email' },
-            { title: '',
-              render:rowData =>
-              <div>
-                <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(rowData) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
-                <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(rowData) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
-                <a href="#modal3" className="modal-trigger" onClick={ () => readUser(rowData) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
-              </div>
-            },
-          ]}
+          columns={columnObject[0]}
           isLoading={isLoading}
           data={users}
           title="Users"
