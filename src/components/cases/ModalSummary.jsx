@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-
-import confirm from '../../img/confirm.png';
-
-import plus from '../../img/plus-white.png';
 import ModalAddF2 from './ModalAddF2';
 import ModalAddContract from './modalAddContract';
 import ModalImage from './ModalImage';
 import ModalCancel from './ModalCancel';
+
+import confirm from '../../img/confirm.png';
+import plus from '../../img/plus-white.png';
+import photo from '../../img/photo.png';
 
 import Popup from 'reactjs-popup'
 
@@ -256,8 +256,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
         <div className="modal-content modal-content-override">
           <div className="row ">
             <div className="header-title">
-              <div className="col s8 m8 no-col-padding">
+              <div className="col s6 m6 no-col-padding">
                 <h4>Case : {singleCase.case_id} <CheckCancel/></h4> 
+              </div>
+              <div className="col s2 m2 no-col-padding">
+              <a href="#modalImage" className="modal-trigger waves-effect white right"><img src={photo} alt="take_car_picture" className="userImage" style={{width:'50px'}}/></a>
               </div>
               <div className="col m2 no-col-padding">
               <h6> {singleCase.F2_status == null?'F2 Complete':'F2 Incomplete'}</h6>
@@ -676,7 +679,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
           
           <button className="modal-close waves-effect btn white black-text right">close</button>
           <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
-          <button href="#modalImage" className="modal-trigger waves-effect btn white black-text right">Open Image Modal</button>
+          
         </div>
       </div>
       <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} />
