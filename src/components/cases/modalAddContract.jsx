@@ -8,7 +8,8 @@ import {
   } from "../../Utility/dataCase";
   import uuid from "uuid";
   import M from 'materialize-css/dist/js/materialize.min.js'
-
+  import axios from 'axios';
+  import url from '../../Utility/url'
 
 const ModalAddContract = ({singleCase }) => {
 

@@ -35,7 +35,7 @@ pdfMake.fonts = {
   }
 };
 
-const ModalAddF2 = ({ singleCase }) => {
+const ModalAddF2 = ({ singleCase , getAllCase }) => {
   const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
 
@@ -80,7 +80,9 @@ const ModalAddF2 = ({ singleCase }) => {
     cheque: singleCase.f2_cheque?singleCase.f2_cheque:"",
     cheque_receiver: singleCase.name?singleCase.name:"",
     deposit_receiver: singleCase.name?singleCase.f2_name:"",
-    deposit: singleCase.f2_deposit?singleCase.f2_deposit:""
+    deposit: singleCase.f2_deposit?singleCase.f2_deposit:"",
+    finance_staff:singleCase.finance_staff,
+    province_f2:singleCase.cus_province
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -251,10 +253,10 @@ const ifDiff = () => {
       tax_renewal_fee_note: newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
       act_renewal_fee_note: newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
       f2_status: "done",
-      cheque: newF2.cheque?newF2.cheque:singleCase.f2_cheque,
+      cheque: newF2.f2_cheque?newF2.cheque:singleCase.f2_cheque,
       cheque_receiver: singleCase.name,
       deposit_receiver: singleCase.name,
-      deposit: newF2.deposit?newF2.deposit:singleCase.f2_deposit
+      deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit
     }
 
     var data = JSON.stringify(newData);
@@ -320,9 +322,8 @@ const ifDiff = () => {
           singleCase.car_license,
           singleCase.car_province,
           singleCase.car_year,
-          singleCase.finance_staff,
-          newF2.deposit?newF2.deposit:singleCase.f2_deposit,
-          newF2.province_f2?newF2.province_f2:singleCase.province,
+          newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
+          newF2.province_f2?newF2.province_f2:singleCase.cus_province,
         );
       })
       .catch(err => console.log(err));
@@ -1701,7 +1702,7 @@ const ifDiff = () => {
 
                   <select
                     name="margin_account"
-                    value={newF2.margin_account || ""}
+                    value={newF2.margin_account || singleCase.f2_margin_account}
                     onChange={handleChange}
                     className="browser-default"
                   >

@@ -10,7 +10,7 @@ import ModalCancel from './ModalCancel';
 
 import Popup from 'reactjs-popup'
 
-const ModalSummary = ({ singleCase , kpi}) => {
+const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
   
   const [newCase, setNewCase] = useState({})
 
@@ -679,7 +679,7 @@ const ModalSummary = ({ singleCase , kpi}) => {
           <button href="#modalImage" className="modal-trigger waves-effect btn white black-text right">Open Image Modal</button>
         </div>
       </div>
-      <ModalAddF2 singleCase={singleCase} />
+      <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} />
       <ModalCancel singleCase={singleCase} />
       <ModalAddContract singleCase={singleCase} />
       <ModalImage singleCase={singleCase}/>
