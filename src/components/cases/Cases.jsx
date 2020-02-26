@@ -6,7 +6,7 @@ import 'rsuite/dist/styles/rsuite-default.css'
 import ModalExcel from './ModalExcel';
 import ModalAddCase from './ModalAddCase';
 import ModalAddNote from './ModalAddNote';
-import ModalAddSummary from './ModalSummary';
+import ModalSummary from './ModalSummary';
 import ModalFastTrack from './ModalFastTrack';
 import ModalDeleteCase from './ModalDeleteCase';
 import TheadCase from './TheadCase';
@@ -644,9 +644,10 @@ const Cases = (props) => {
           <ModalExcel />
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
-          <ModalAddSummary singleCase={singleCase} kpi={kpi} />
+          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
-          <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
+          <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
+          
 
 
 
