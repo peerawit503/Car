@@ -25,8 +25,12 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const [cqc_team, setCqc_team] = useState([])
   const [hub, setHub] = useState([])
   const [cartrust_lead, setCartrust_lead] = useState([])
+  const [carBrand , setCarBrand] = useState({})
+  const [carModel , setCarModel] = useState({})
+  const [carYear , setCarYear] = useState({})
+  const [carSubModel , setSubModel] = useState({})
   const [newCase, setNewCase] = useState({
-    
+  
     customer_id: "",
 
     old_bank: "",
@@ -36,7 +40,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     team: "",
     contract_officer: "",
     finance_staff: "",
-    case_type: "  ",
+    case_type: "",
     case_receiver: "",
     case_source: "",
 
@@ -44,7 +48,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     approve_amount: "",
     close_amount: "",
     case_status: "ติดต่อลูกค้าไม่ได้",
-
+    receive_date:currentDateFormat(Date()),
     
     car_name: " ",
     car_brand: "",
@@ -113,13 +117,14 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     email: "",
     line: "",
     license_id:"",
-    birthday: Date(),
-    home_no: "",
-    moo: "",
-    soy: "",
-    road: "",
-    district: "",
-    district2: "",
+    birthday: "",
+    // home_no: "",
+    // moo: "",
+    // soy: "",
+    // road: "",
+    // district: "",
+    // district2: "",
+    address:"",
     province: "",
     post_code: "",
     customer_id : ""
@@ -139,8 +144,24 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
   const handleChange = e => {
     console.log(e.target.name, ":", e.target.value);
+   
+
+    
     setNewCase({ ...newCase, [e.target.name]: e.target.value });
   };
+  const handleChangeCarBrand = e => {
+    setNewCase({ ...newCase, [e.target.name]: e.target.value  });
+    getCarModel(e.target.value)
+  }
+  const handleChangeCarModel = e => {
+    setNewCase({ ...newCase, [e.target.name]: e.target.value   });
+    getCarYear( newCase.car_brand , e.target.value )
+  }
+  const handleChangeCarYear = e => {
+    setNewCase({ ...newCase, [e.target.name]: e.target.value  });
+    getCarSubModel(newCase.car_brand ,newCase.car_model, e.target.value)
+  }
+  
 
   useEffect(() => {
     getOperatorS()
@@ -148,7 +169,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     getCqc_team()
     getHub()
     getCartrust_lead()
-    
+    getCar_brand()
+    console.log( 'dasdasddddddddddd' , currentDateFormat( Date()))
     M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
 
@@ -265,6 +287,70 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       .catch(err => console.log(err))
   }
 
+  const getCar_brand = () => {
+    var config = {
+     
+  };
+    axios.get(`/get_brand`)
+    .then(res => {
+      console.log(res.data)
+      setCarBrand(res.data.results);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const getCarModel = (car_brand_s) => {
+    console.log('********************************')
+    let data = {
+      brand:car_brand_s
+    }
+    console.log(JSON.stringify(data))
+    axios.post(`/get_model` , JSON.stringify(data) ,{ headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }})
+    .then(res => {
+      console.log('success get car mdel' ,res.data)
+      setCarModel(res.data.results);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const getCarYear = (car_brand , car_model) => {
+    let data = {
+      brand:car_brand,
+      model:car_model
+    }
+    axios.post(`/get_year` , JSON.stringify(data) ,{ headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }})
+    .then(res => {
+     
+      setCarYear(res.data.results);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const getCarSubModel = (car_brand , car_model , car_year) => {
+    let data = {
+      brand:car_brand,
+      model:car_model,
+      year:car_year,
+
+    }
+    axios.post(`/get_sub_model` , JSON.stringify(data) ,{ 
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }})
+    .then(res => {
+     
+      setSubModel(res.data.results);
+    })
+    .catch(err => console.log(err))
+  }
+
   const handleChangeFileLID = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -343,6 +429,54 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
       result.push(<option value={cartrust_l.cl_name}>
         {cartrust_l.cl_name}
+      </option>)
+    }
+    return result;
+  }
+
+  function carBrandOption() {
+    let result = []
+
+    for (let i in carBrand) {
+
+      result.push(<option value={carBrand[i]}>
+        {carBrand[i]}
+      </option>)
+    }
+    return result;
+  }
+
+  function carModelOption() {
+    let result = []
+
+    for (let i in carModel) {
+
+      result.push(<option value={carModel[i]}>
+        {carModel[i]}
+      </option>)
+    }
+    return result;
+  }
+
+  function carYearOption() {
+    let result = []
+
+    for (let i in carYear) {
+
+      result.push(<option value={carYear[i]}>
+        {carYear[i]}
+      </option>)
+    }
+    return result;
+  }
+
+  function carSubModelOption() {
+    let result = []
+
+    for (let i in carSubModel) {
+
+      result.push(<option value={carSubModel[i]}>
+        {carSubModel[i]}
       </option>)
     }
     return result;
@@ -460,13 +594,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
   }
   
-  const saveCase = () => {
-   
-    if(saveCase(newCase,customer,difference)){
-      setblankCustomer();
-      setblankCase();
-    }
-  }
+
   const close = () => {
     setblankCase();
     setblankCustomer();
@@ -483,7 +611,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const validateLine = (e) =>{
     let name = e.target.name;
     let val = e.target.value
-    axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
+    if(val !="" && val != null){
+      axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
       .then(res => {
         if(!res.data.message){
           // alert(name + ' : ' + val + ' is already in database' );
@@ -521,6 +650,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         }
       })
       .catch(err => console.log(err))
+    }
+    
   }
 
   const deletezero = e => {
@@ -584,6 +715,54 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
      
       }
     }
+
+    function currentDateFormat(caseDate) {
+      if(caseDate == null){
+        return 0;
+      }else{
+        var mountCaracterString = caseDate.split(" ")[1];
+        var month;
+        if (mountCaracterString === 'Jan') {
+          month = "01";
+        }
+        else if (mountCaracterString === 'Feb') {
+          month = "02";
+        }
+        else if (mountCaracterString === 'Mar') {
+          month = "03";
+        }
+        else if (mountCaracterString === 'Apr') {
+          month = "04";
+        }
+        else if (mountCaracterString === 'May') {
+          month = "05";
+        }
+        else if (mountCaracterString === 'Jun') {
+          month = "06";
+        }
+        else if (mountCaracterString === 'Jul') {
+          month = "07";
+        }
+        else if (mountCaracterString === 'Aug') {
+          month = "08";
+        }
+        else if (mountCaracterString === 'Sep') {
+          month = "09";
+        }
+        else if (mountCaracterString === 'Oct') {
+          month = "10";
+        }
+        else if (mountCaracterString === 'Nov') {
+          month = "11";
+        }
+        else if (mountCaracterString === 'Dec') {
+          month = "12";
+        }
+  
+        return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[2]);
+       
+        }
+      }
 
 
   function payment() {
@@ -659,17 +838,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   function caseSource() {
     let result = [];
     if (newCase.case_source === 'Kiatnakin') {
-      // result.push(
-      // <div className="col s6 m4 l4 content">
-      //   <label>Doc No. / เลขที่ใบคำขอ </label>
-      //   <input
-      //     type="text"
-      //     value={newCase.document_id || ""}
-      //     name="document_id"
-      //     onChange={handleChange}
-      //   />
-      // </div>
-      // );
+
       result.push(<div className="col s6 m4 l4 content">
         <label>CQC team</label>
         <select
@@ -686,15 +855,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         </select>
       </div>);
     } else if (newCase.case_source === 'Thanachart') {
-      // result.push(<div className="col s6 m4 l4 content">
-      //   <label>Doc No. / เลขที่ใบคำขอ</label>
-      //   <input
-      //     type="text"
-      //     value={newCase.document_id || ""}
-      //     name="document_id"
-      //     onChange={handleChange}
-      //   />
-      // </div>);
+
       result.push(<div className="col s6 m4 l4 content">
         <label>เจ้าหน้าที่ทำสัญญา
 /Contract officer</label>
@@ -752,28 +913,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
               <div className="col s12 m12 no-col-padding">
                 <h4>Add New Case</h4>
               </div>
-              {/* <div className="col s6 m6 no-col-padding">
-              <button
-                    className="waves-effect btn blue lighten right "
-                    onClick={() => contract()}
-                  >
-                    Contract
-                </button>
-
-                  <button
-                    className="waves-effect btn blue lighten right "
-                    onClick={() => F2()}
-                  >
-                    F2
-                </button>
-
-                  <button
-                    className="waves-effect btn blue lighten right "
-                    onClick={() => caseInf()}
-                  >
-                    Case Information
-                </button>
-                </div> */}
+        
             </div>
 
 
@@ -867,65 +1007,17 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   </div>
 
 
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="home_no">บ้านเลขที่</label>
+                  <div className="col s6 m8 l8 content">
+                    <label htmlFor="home_no">ที่อยู่</label>
                     <input
                       type="text"
-                      name="home_no"
-                      value={customer.home_no}
+                      name="address"
+                      value={customer.address}
                       onChange={handleChangeCustomer}
                     />
                   </div>
 
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="moo">หมู่</label>
-                    <input
-                      type="text"
-                      name="moo"
-                      value={customer.moo}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="soy">ซอย</label>
-                    <input
-                      type="text"
-                      name="soy"
-                      value={customer.soy}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="road">ถนน</label>
-                    <input
-                      type="text"
-                      name="road"
-                      value={customer.road}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="district">เขต</label>
-                    <input
-                      type="text"
-                      name="district"
-                      value={customer.district}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="district2">แขวง</label>
-                    <input
-                      type="text"
-                      name="district2"
-                      value={customer.district2}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
+                 
 
                   <div className="col s6 m4 l4 content">
                     <label htmlFor="province">จังหวัด</label>
@@ -973,10 +1065,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   </div> */}
                   <div className="row crop">
                   <div className="col s6 m4 l4 content">
-                    <label>Receiver Date/ วันที่รับเคส</label>
+                    <label>Receive Date/ วันที่รับเคส</label>
                     <input
                       type="date"
-                      value={newCase.receive_date || Date()}
+                      value={newCase.receive_date || currentDateFormat(Date())}
                       name="receive_date"
                       onChange={handleChange}
                     />
@@ -1077,51 +1169,75 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <div className="row crop">
                     <div className="col s6 m4 l4 content">
                       <label>Brand / ยี่ห้อ</label>
-                      <input
-                        type="text"
+                      <select
                         name="car_brand"
                         value={newCase.car_brand || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
+                        onChange={handleChangeCarBrand}
+                        className="browser-default"
+                      >
+
+                        <option value="" disabled>
+                          โปรเลือก
+                        </option>
+                          {carBrandOption()}
+                        </select>
                     </div>
                 
-
+                    
 
                   
                     <div className="col s6 m4 l4 content">
                       <label>Model / รุ่นรถ</label>
-                      <input
-                        type="text"
+                      <select
+
                         name="car_model"
                         value={newCase.car_model || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
+                        onChange={handleChangeCarModel}
+                        className="browser-default"
+                      >
+
+                        <option value="" disabled>
+                          โปรเลือก
+                        </option>
+                          {carModelOption()}
+                        </select>
+
                     </div>
 
                     <div className="col s6 m4 l4 content">
-                      <label>Sub-model / รุ่นย่อย</label>
-                      <input
-                        type="text"
-                        name="car_sub_model"
-                        value={newCase.car_sub_model || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
+                      <label>Car Year / ปีรถ</label>
+                      <select
+
+                        name="car_year"
+                        value={newCase.car_year || ""}
+                        onChange={handleChangeCarYear}
+                        className="browser-default"
+                      >
+
+                        <option value="" disabled>
+                          โปรเลือก
+                        </option>
+                          {carYearOption()}
+                        </select>
                     </div>
                   </div>
 
                   <div className="row crop">
                     <div className="col s6 m4 l4 content">
-                      <label>Car Year / ปีรถ</label>
-                      <input
-                        type="text"
-                        name="car_year"
-                        value={newCase.car_year || ""}
+                      <label>Sub-model / รุ่นย่อย </label>
+                      <select
+
+                        name="car_sub_model"
+                        value={newCase.car_sub_model || ""}
                         onChange={handleChange}
-                        className="validate"
-                      />
+                        className="browser-default"
+                      >
+
+                        <option value="" disabled>
+                          โปรเลือก
+                        </option>
+                          {carSubModelOption()}
+                        </select>
                     </div>
 
                     <div className="col s6 m4 l4 content">
@@ -2047,13 +2163,14 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
                     <div className="col s6 m4 l4 content">
                       <label>Brand / ยี่ห้อ</label>
-                      <input
-                        type="text"
+                      <select
                         name="car_brand"
                         value={newCase.car_brand || ""}
                         onChange={handleChange}
-                        className="validate"
-                      />
+                        className="browser-default"
+                      >
+                          {carBrandOption()}
+                        </select>
                     </div>
 
                     <div className="col s6 m4 l4 content">

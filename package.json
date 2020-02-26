@@ -1,6 +1,7 @@
 {
   "name": "cartrust",
   "version": "0.1.0",
+  "proxy":"https://reg.cartrust.co.th/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.8.3",
