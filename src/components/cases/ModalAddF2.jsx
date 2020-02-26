@@ -251,10 +251,10 @@ const ifDiff = () => {
       tax_renewal_fee_note: newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
       act_renewal_fee_note: newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
       f2_status: "done",
-      cheque: singleCase.f2_cheque,
+      cheque: newF2.f2_cheque?newF2.cheque:singleCase.f2_cheque,
       cheque_receiver: singleCase.name,
       deposit_receiver: singleCase.name,
-      deposit: singleCase.f2_deposit
+      deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit
     }
 
     var data = JSON.stringify(newData);
