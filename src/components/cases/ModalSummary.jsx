@@ -108,20 +108,36 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
     
   }
   function calculateProcessDate(processBefore, processCurrent) {
-
+    let result = [];
     if (processCurrent == null) {
       
       return null;
     } else if (processCurrent != null && processBefore == null) {
-      return dateTimeFormatted(processCurrent);
+      return (
+        <div className="summaryIcon-div col s6 m3">
+          {dateTimeFormatted(processCurrent)}
+        </div>
+        )
     } else {
       var date1 = parseStringToDate(processBefore);
       var date2 = parseStringToDate(processCurrent);
 
-      return (dateTimeFormatted(processCurrent) + "(" + Math.floor((date2 - date1) / (24 * 3600 * 1000)) + " วัน )");
+      result.push(
+        <div className=" col s6 m3">
+          {dateTimeFormatted(processCurrent)}
+        </div>
+        )
+      result.push(
+      <div className="col s6 m3">
+        ( {Math.floor((date2 - date1) / (24 * 3600 * 1000))} วัน )
+      </div>
+      )
+      return result
     }
-
+  
   }
+
+
 
   function caseSource() {
     let result = [];
@@ -192,7 +208,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
       var month = sringDate.split(" ")[2];
       var day = sringDate.split(" ")[1];
       var year = sringDate.split(" ")[3];
-      return (day + month + year);
+      return (
+        <div className="summaryIcon-div col s6 m3">
+        {day + month + year}
+        </div>
+        );
     }
 
   }
@@ -473,198 +493,198 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
 
 
               <div className="row">
-                <div className="col s3 m1">
+                <div className="col s3 m2">
                   <div className={singleCase.receive_date != null ? "summaryIcon-div green" : "summaryIcon-div gray"}>
                     <GenerateNote singleCase={singleCase.receive_note} />
                   </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  1.รับเคส{' '}:{'    '}
-                  {dateTimeFormatted(singleCase.receive_date) || ''}
-                  
+                <div className="summaryIcon-div col s5 m4">
+                  1.รับเคส{' '}:
                 </div>
-
+                <div className="col s6 m3">
+                  {dateTimeFormatted(singleCase.receive_date) || ''}
+                </div>
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.receive_date, singleCase.contact_customer_date,"contact_customer")}>
                  <GenerateNote notes={singleCase.contact_customer_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  2.ติดต่อลูกค้า{' '}:{'    '}
-                  {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  2.ติดต่อลูกค้า{' '}:
                 </div>
+                {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.contact_customer_date, singleCase.account_closing_date,"account_closing")}>
                   <GenerateNote notes={singleCase.account_closing_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  3.ปิดเล่ม{' '}:{'    '}
-                  {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  3.ปิดเล่ม{' '}:
                 </div>
+                {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"transfer_doc_received")}>
                   <GenerateNote notes={singleCase.transfer_doc_received_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  4.รับชุดโอน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  4.รับชุดโอน{' '}:
                 </div>
+                {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date) || ''}
               </div>
 
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date , "transfer_doc_submitted")}>
                   <GenerateNote notes={singleCase.transfer_doc_submitted_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  5.ยื่นชุดโอน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  5.ยื่นชุดโอน{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"book_received")}>
                   <GenerateNote notes={singleCase.book_received_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  6.ได้รับเล่ม{' '}:{'    '}
-                  {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  6.ได้รับเล่ม{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"submit_book_transfer")}>
                   <GenerateNote notes={singleCase.submit_book_transfer_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  7.ส่งงานโอนทะเบียน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  7.ส่งงานโอนทะเบียน{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"car_check_up")}>
                   <GenerateNote notes={singleCase.car_check_up_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  8.ตรวจสภาพรถ{' '}:{'    '}
-                  {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  8.ตรวจสภาพรถ{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"book_transfer")}>
                   <GenerateNote notes={singleCase.book_transfer_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  9.โอนเล่มทะเบียน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  9.โอนเล่มทะเบียน{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_copy_received")}>
                   <GenerateNote notes={singleCase.book_copy_received_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  10.รับสำเนาเล่ม{' '}:{'    '}
-                  {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  10.รับสำเนาเล่ม{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"deposit_doc_to_new_bank")}>
                   <GenerateNote notes={singleCase.deposit_doc_to_new_bank_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  11.ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:{'    '}
-                  {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  11.ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"submit_book_deposit_return")}>
                   <GenerateNote notes={singleCase.submit_book_deposit_return_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  12.ทำเรื่องเบิกมัดจำคืน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  12.ทำเรื่องเบิกมัดจำคืน{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"book_received_back")}>
                   <GenerateNote notes={singleCase.book_received_back_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  13.รับเล่มคืน{' '}:{'    '}
-                  {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  13.รับเล่มคืน{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.cash_received_date,"cash_received")}>
                   <GenerateNote notes={singleCase.cash_received_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  14.เงินเข้าบัญชีคาร์ทรัส{' '}:{'    '}
-                  {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  14.เงินเข้าบัญชีคาร์ทรัส{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"book_deposit_received")}>
                   <GenerateNote notes={singleCase.book_deposit_received_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  15.เงินมัดจำคืนเข้าบัญชี{' '}:{'    '}
-                  {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  15.เงินมัดจำคืนเข้าบัญชี{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date) || ''}
               </div>
 
               <div className="row">
-              <div className="col s3 m1">
+              <div className="col s3 m2">
                 <div className={calculateColorFromDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"submit_book_to_new_finance")}>
                   <GenerateNote notes={singleCase.submit_book_to_new_finance_note} />
                 </div>
                 </div>
-                <div className="summaryIcon-div col s9 m9">
-                  16.ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:{'    '}
-                  {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date) || ''}
+                <div className="summaryIcon-div col s5 m4">
+                  16.ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:
                 </div>
+                  {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date) || ''}
               </div>
 
 
