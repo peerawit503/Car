@@ -104,6 +104,20 @@ const Customers = () => {
 
   }
 
+  let columnObject = useState([{ title: 'ID', field: 'id' },
+  { title: 'firstname', field: 'firstname' },
+  { title: 'lastname', field: 'lastname' },
+  { title: 'tel', field: 'tel' },
+  { title: 'line', field: 'line' },
+  { title: 'email', field: 'email' },
+  { title: ',' ,
+  render: rowData => 
+    <div>
+    <a href="#modalRead" className="modal-trigger" onClick={ () => readCustermer(rowData) } ><img  src={viewicon} className="png-icon" alt="print"/></a>
+    <a href="#modalEdit" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
+    <a href="#modalDelete" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
+    </div>
+}]);
 
 
   return (
@@ -134,23 +148,7 @@ const Customers = () => {
         <div className="row" class="input-table">
        
                 <MaterialTable
-                columns={[
-                  { title: 'ID', field: 'id' },
-                  { title: 'firstname', field: 'firstname' },
-                  { title: 'lastname', field: 'lastname' },
-                  { title: 'tel', field: 'tel' },
-                  { title: 'line', field: 'line' },
-                  { title: 'email', field: 'email' },
-                  { title: ',' ,
-                  render: rowData => 
-                    <div>
-                    <a href="#modalRead" className="modal-trigger" onClick={ () => readCustermer(rowData) } ><img  src={viewicon} className="png-icon" alt="print"/></a>
-                    <a href="#modalEdit" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={editicon} className="png-icon" alt="edit-icon"/></a>
-                    <a href="#modalDelete" className="modal-trigger" onClick={ () => readCustermer(rowData) }  ><img  src={deleteicon} className="png-icon" alt="sumary-icon"/></a>
-                    </div>
-               
-                }
-                ]}
+                columns={columnObject[0]}
                 isLoading={isLoading}
                 data={customers}
                 title="Customer"

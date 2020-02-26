@@ -6,7 +6,7 @@ import 'rsuite/dist/styles/rsuite-default.css'
 import ModalExcel from './ModalExcel';
 import ModalAddCase from './ModalAddCase';
 import ModalAddNote from './ModalAddNote';
-import ModalAddSummary from './ModalSummary';
+import ModalSummary from './ModalSummary';
 import ModalFastTrack from './ModalFastTrack';
 import ModalDeleteCase from './ModalDeleteCase';
 import TheadCase from './TheadCase';
@@ -61,9 +61,77 @@ const Cases = (props) => {
   const [limitPage, setLimitPage] = useState(20)
   const [totalCase, setTotalCase] = useState(0)
   const [totalPage, setTotalPage] = useState(Math.ceil(totalCase / limitPage))
+  
+
+
+
+  let columnObject = useState([
+    {
+      title: '',
+      render: rowData => <div style={{ width: 10, borderRadius: '50%' }}>{displayStarRating(rowData)}</div>,
+      cellstyle: {
+        width: 50
+      }
+    },
+    { title: 'case_id', field: 'case_id' },
+    {
+      title: 'Last Update',
+      field: 'status_date',
+      render: rowData => <div>{statusDate(rowData)}</div>
+    },
+    {
+      title: 'Customers Name',
+      field: 'name',
+      render: rowData => <div className="customer-name-col">{rowData.name}</div>
+    },
+    {
+      title: 'Case Status', field: 'status',
+      lookup: {
+        'receive': '1.วันที่รับเคส',
+        'contact_customer': '2.วันที่ติดต่อลูกค้า',
+        'account_closing': '3.วันที่ปิดเล่ม',
+        'transfer_doc_received': '4.วันรับชุดโอน',
+        'transfer_doc_submitted': '5.วันยื่นชุดโอน',
+        'book_received': '6.วันที่ได้รับเล่ม',
+        'submit_book_transfer': '7.วันที่ส่งงานโอนทะเบียน',
+        'car_check_up': '8.วันตรวจสภาพรถ',
+        'book_transfer': '9.โอนเล่มทะเบียน',
+        'book_copy_received': '10.รับสำเนาเล่ม',
+        'deposit_doc_to_new_bank': '11.ส่งเอกสารเบิกเงินธนาคารใหม่',
+        'submit_book_deposit_return': '12.ทำเรื่องเบิกมัดจำคืน',
+        'book_received_back': '13.รับเล่มคืน',
+        'cash_received': '14.เงินเข้าบัญชีคาร์ทรัส',
+        'book_deposit_received': '15.เงินมัดจำคืนเข้าบัญชี',
+        'submit_book_to_new_finance': '16.ส่งเล่มให้ไฟแนนซ์ใหม่',
+      },
+      //  defaultGroupOrder: 0,
+      sorting: false
+    },
+    {
+      title: 'Case Soure', field: 'case_source',
+      lookup: {
+        'Kiatnakin': 'Kiatnakin',
+        'Thanachart': 'Thanachart',
+        'Cartrust': 'Cartrust',
+        'Dealer': 'Dealer'
+      },
+    },
+    { title: 'JOB No', field: 'job_id' },
+    { title: 'car_license', field: 'car_license' },
+    { title: 'New Finance', field: 'new_bank' },
+    {
+      title: '',
+      render: rowData =>
+        <div className="menu-icon">
+          <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
+          {alertCheck(rowData)}
+        </div>
+    }
+  ]);
 
 
   useEffect(() => {
+    
     M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
       coverTrigger: false,
       autoTrigger: true,
@@ -138,7 +206,7 @@ const Cases = (props) => {
   const handleSingleCase = (caseInRow) => {
     setSingleCase(caseInRow)
   }
-
+  
   // const prevPage = () => {
   //   setCurrPage(currPage - 1)
 
@@ -331,7 +399,7 @@ const Cases = (props) => {
 
   }
 
-  // function previousDate(state){
+// function previousDate(state){
   //   var prevDate = '';
   //   if(state === 'receive'){ prevDate = 'receive_date'}
   //   else if(state === 'contact_customer'){prevDate = 'receive_date'}
@@ -496,7 +564,7 @@ const Cases = (props) => {
   }
 
 
-
+ 
 
 
   return (
@@ -552,70 +620,7 @@ const Cases = (props) => {
             <br />
             <MaterialTable
               title="Case"
-              columns={[
-                {
-                  title: '',
-                  render: rowData => <div style={{ width: 10, borderRadius: '50%' }}>{displayStarRating(rowData)}</div>,
-                  cellstyle: {
-                    width: 50
-                  }
-                },
-                { title: 'case_id', field: 'case_id' },
-                {
-                  title: 'Last Update',
-                  field: 'status_date',
-                  render: rowData => <div>{statusDate(rowData)}</div>
-                },
-                {
-                  title: 'Customers Name',
-                  field: 'name',
-                  render: rowData => <div className="customer-name-col">{rowData.name}</div>
-                },
-               
-
-                {
-                  title: 'Case Status', field: 'status',
-                  lookup: {
-                    'receive': '1.วันที่รับเคส',
-                    'contact_customer': '2.วันที่ติดต่อลูกค้า',
-                    'account_closing': '3.วันที่ปิดเล่ม',
-                    'transfer_doc_received': '4.วันรับชุดโอน',
-                    'transfer_doc_submitted': '5.วันยื่นชุดโอน',
-                    'book_received': '6.วันที่ได้รับเล่ม',
-                    'submit_book_transfer': '7.วันที่ส่งงานโอนทะเบียน',
-                    'car_check_up': '8.วันตรวจสภาพรถ',
-                    'book_transfer': '9.โอนเล่มทะเบียน',
-                    'book_copy_received': '10.รับสำเนาเล่ม',
-                    'deposit_doc_to_new_bank': '11.ส่งเอกสารเบิกเงินธนาคารใหม่',
-                    'submit_book_deposit_return': '12.ทำเรื่องเบิกมัดจำคืน',
-                    'book_received_back': '13.รับเล่มคืน',
-                    'cash_received': '14.เงินเข้าบัญชีคาร์ทรัส',
-                    'book_deposit_received': '15.เงินมัดจำคืนเข้าบัญชี',
-                    'submit_book_to_new_finance': '16.ส่งเล่มให้ไฟแนนซ์ใหม่',
-                  },
-                  //  defaultGroupOrder: 0,
-                  sorting: false
-                },
-                {
-                  title: 'Case Soure', field: 'case_source',
-                  lookup: {
-                    'Kiatnakin': 'Kiatnakin',
-                    'Thanachart': 'Thanachart',
-                    'Cartrust': 'Cartrust',
-                    'Dealer': 'Dealer'
-                  },
-                },
-                { title: 'JOB No', field: 'job_id' },
-                { title: 'car_license', field: 'car_license' },
-                { title: 'New Finance', field: 'new_bank' }, {
-                  title: '',
-                  render: rowData =>
-                    <div className="menu-icon">
-                      <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-                      {alertCheck(rowData)}
-                    </div>
-                },
-              ]}
+              columns={columnObject[0]}
               isLoading={isLoading}
               data={cases}
               options={{
@@ -639,9 +644,10 @@ const Cases = (props) => {
           <ModalExcel />
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
-          <ModalAddSummary singleCase={singleCase} kpi={kpi} />
+          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
-          <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} />
+          <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
+          
 
 
 
