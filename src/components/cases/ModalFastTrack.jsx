@@ -10,13 +10,14 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
 
+  const [isConfirm , setisConfirm] = useState(true)
 
   function ValidateCase(props) {
     // if in case 3 transfer_doc_received and F2_status ===null
-    if (props.singleCase.status === 'account_closing' && props.singleCase.F2_status === null) {
+    if (props.singleCase.status === 'account_closing' && (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null)) {
       console.log(props.singleCase.F2_status);
       console.log(props.singleCase.contact_customer_date);
-     
+      setisConfirm(false)
          //return +F2 button
         return ( 
         <div>
@@ -50,27 +51,41 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
     return null
   }
 
+  function Renderfooter(){
+    if(isConfirm){
+      return (
+        <div class="modal-footer">
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase)}>Confirm</button>
+          <button className="modal-close waves-effect btn white black-text right">Cancle</button>
+        </div>
+      );
+    }
+    return (
+      <div class="modal-footer">
+        <button className="modal-close waves-effect btn white black-text right">Cancle</button>
+      </div>
+    )
+  }
 
 
   return (
     <div>
       <div id="modalFastTrack" className="modal modal-fixed-footer">
           <div className="row">
-            <div className="header-title">
+            {/* <div className="header-title"> */}
               <div className="col s12 m12 no-col-padding">
                 <h4 style={{textAlign:"center"}}>Case Status : {translate(singleCase.status)}</h4><br/>
                 <h4 style={{textAlign:"center"}}>Job Id: {singleCase.case_id}</h4><br/>
               </div>
-            </div>
+            {/* </div> */}
           {/* process bar */}
 
           {/* body */}
             <div className="row content">
+            <h5 style={{textAlign:"center"}}>F2 Status : {singleCase.F2_status}</h5><br/>
+
             <ValidateCase singleCase={singleCase} />
-              <div class="modal-footer">
-                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase)}>Confirm</button>
-                <button className="modal-close waves-effect btn white black-text right">Cancle</button>
-            </div>
+            <Renderfooter />
           </div>
         </div>
       </div>

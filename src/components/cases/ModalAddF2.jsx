@@ -35,7 +35,7 @@ pdfMake.fonts = {
   }
 };
 
-const ModalAddF2 = ({ singleCase }) => {
+const ModalAddF2 = ({ singleCase , getAllCase }) => {
   const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
 
