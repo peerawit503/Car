@@ -576,7 +576,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
 
   const setblankCase = () => {
-    setNewCase({customer_id: "",
+    setNewCase({
+      customer_id: "",
 
     old_bank: "",
     new_bank: "",
@@ -650,7 +651,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     cheque: "0",
     deposit: "0",
     cheque_receiver: "",
-    deposit_receiver: "",});
+    deposit_receiver: "",
+  province:""});
   }
 
   const setAllblank = () =>{
