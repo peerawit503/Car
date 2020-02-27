@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import ModalExcel from'./ModalAddCarLead'
 import {
   financeInstitution,
   caseSourceAll,
@@ -98,7 +98,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     act_renewal_fee_note: "",
     car_check_con: "",
     doc_storage_con: "",
-
+    dealer_line:"",
+    contract_officer_line:"",
+    dealer_phone:"",
+    contract_officer_phone:"",
 
     margin_account: "",
 
@@ -367,6 +370,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         setCartrust_lead(res.data.message);
       })
       .catch(err => console.log(err))
+      
   }
 
   const getCar_brand = () => {
@@ -626,7 +630,10 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     tax_renewal_fee: "0",
     act_renewal_fee: "0",
     difference:true,
-
+    dealer_line:"",
+    contract_officer_line:"",
+    dealer_phone:"",
+    contract_officer_phone:"",  
     old_finance_closing_fee_note: "",
     old_finance_transfer_fee_note: "",
     book_closing_fee_note: "",
@@ -719,12 +726,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
               line: res.data.data.line,
               license_id:res.data.data.license_id,
               birthday: dateFormat(res.data.data.birthday),
-              home_no: res.data.data.home_no,
-              moo: res.data.data.moo,
-              soy: res.data.data.soy,
-              road: res.data.data.road,
-              district: res.data.data.district,
-              district2: res.data.data.district2,
+              address:res.data.data.address,
               province: res.data.data.province,
               post_code: res.data.data.post_code,
               customer_id : res.data.data.customer_id
@@ -957,6 +959,24 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         />
       </div>);
       result.push(<div className="col s6 m4 l4 content">
+      <label htmlFor="name">Phone</label>
+      <input
+        type="text"
+        name="contract_officer_phone"
+        value={newCase.contract_officer_phone}
+        onChange={handleChangeCustomer}
+      />
+    </div>);
+      result.push(<div className="col s6 m4 l4 content">
+      <label htmlFor="name">Line</label>
+      <input
+        type="text"
+        name="contract_officer_line"
+        value={newCase.contract_officer_line}
+        onChange={handleChangeCustomer}
+      />
+    </div>);
+      result.push(<div className="col s6 m4 l4 content">
         <label>สาขา (ธนชาติ) / Hub</label>
         <select
           type="text"
@@ -973,7 +993,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       </div>);
     } else if (newCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m4 l4 content">
-        <label>Cartust Lead Refer./รับเคสจาก</label>
+        <label >Cartust Lead Refer./รับเคสจาก</label>
         <select
           type="text"
           value={newCase.cartrust_lead_refer || ""}
@@ -981,12 +1001,36 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           onChange={handleChange}
           className="browser-default"
         >
-          <option value="">
+          <option>
+           
             รับเคสจาก
+            
+           
           </option>
           {cartrust_leadOption()}
-          </select>
+         
+          </select> 
+          <button  className="modal-trigger" href="#modalAddCarLead">Cartust Lead Refer</button>
       </div>);
+    }else if (newCase.case_source === 'Dealer'){
+      result.push(<div className="col s6 m4 l4 content">
+      <label htmlFor="name">Phone</label>
+      <input
+        type="text"
+        name="dealer_phone"
+        value={newCase.dealer_phone}
+        onChange={handleChangeCustomer}
+      />
+    </div>);
+      result.push(<div className="col s6 m4 l4 content">
+      <label htmlFor="name">Line</label>
+      <input
+        type="text"
+        name="dealer_line"
+        value={newCase.dealer_line}
+        onChange={handleChangeCustomer}
+      />
+    </div>);
     }
 
     return (result);
@@ -1372,41 +1416,8 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     </div>
                     </div>
               
-
-                    <div className="row crop">
-                    <div className="col s6 m4 l4 content">
-                      <label>Approved Amount / ยอดจัด </label>
-                      <input
-                        type="number"
-                        name="approve_amount"
-                        value={newCase.approve_amount || ""}
-                        onChange={handleChangeF}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Close Amount / ยอดปิด </label>
-                      <input
-                        type="number"
-                        name="close_amount"
-                        value={newCase.close_amount || ""}
-                        onChange={handleChangeF}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Down Payment / ยอดดาวน์</label>
-                      <input
-                        type="number"
-                        name="down_amount"
-                        value={newCase.down_amount || ""}
-                        onChange={handleChangeF}
-                        className="validate"
-                      />
-                    </div>
-                    </div>
+                    <br/>
+                   
                 
 
                     <div className="row crop">
@@ -1485,6 +1496,29 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                     <h5>ค่าใช้จ่าย cartrust</h5>
                   </div>
 
+
+                  <div className="col s6 m6 l6 content">
+                      <label>Approved Amount / ยอดจัด </label>
+                      <input
+                        type="number"
+                        name="approve_amount"
+                        value={newCase.approve_amount || ""}
+                        onChange={handleChangeF}
+                        className="validate"
+                      />
+                    </div>
+
+                    <div className="col s6 m6 l6 content">
+                      <label>Close Amount / ยอดปิด </label>
+                      <input
+                        type="number"
+                        name="close_amount"
+                        value={newCase.close_amount || ""}
+                        onChange={handleChangeF}
+                        className="validate"
+                      />
+                    </div>
+
                   <div className="col s6 m6 l6 content">
                     <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
                     <input
@@ -1561,32 +1595,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                   </div>
 
                   <div className="col s6 m6 l6 content">
-                    <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.vat7_fee || ""}
-                      name="vat7_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.vat7_fee_note || ""}
-                      name="vat7_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าธรรมเนียมโอน (บาท)</label>
+                    <label>ค่าโอน (บาท)</label>
                     <input
                       type="number"
                       min="0"
@@ -1608,6 +1617,34 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       onChange={handleChange}
                     />
                   </div>
+
+                  <div className="col s6 m6 l6 content">
+                    <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="any"
+                      value={(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07 || ""}
+                      name="vat7_fee"
+                      readOnly
+                      //onChange={handleChangeF}
+                      onFocus={deletezero}
+                      onBlur={addzero}
+                    />
+                  </div>
+
+                  <div className="col s6 m6 l6 content">
+                    <label>หมายเหตุ</label>
+                    <input
+                      type="text"
+                      value={newCase.vat7_fee_note || ""}
+                      name="vat7_fee_note"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+
+              
 
                   <div className="col s6 m6 l6 content">
                     <label>ค่าอากร (บาท)</label>
@@ -2436,7 +2473,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       
 
 
-
+      <ModalExcel />
     </div>
 
   

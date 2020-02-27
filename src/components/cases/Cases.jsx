@@ -3,7 +3,6 @@ import Navbar from './../layout/Navbar';
 // import ModalView1 from './ModalView1';
 import 'rsuite/dist/styles/rsuite-default.css'
 
-import ModalExcel from './ModalExcel';
 import ModalAddCase from './ModalAddCase';
 import ModalAddNote from './ModalAddNote';
 import ModalSummary from './ModalSummary';
@@ -647,7 +646,7 @@ const Cases = (props) => {
               </ul>
             </div> */}
           </div>
-          <ModalExcel />
+          
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase}/>

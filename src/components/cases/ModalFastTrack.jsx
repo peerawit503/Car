@@ -10,8 +10,67 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
 
-  const [isConfirm , setisConfirm] = useState(true)
 
+  function currentDateFormat(caseDate) {
+    if(caseDate == null){
+      return 0;
+    }else{
+      var mountCaracterString = caseDate.split(" ")[1];
+      var month;
+      if (mountCaracterString === 'Jan') {
+        month = "01";
+      }
+      else if (mountCaracterString === 'Feb') {
+        month = "02";
+      }
+      else if (mountCaracterString === 'Mar') {
+        month = "03";
+      }
+      else if (mountCaracterString === 'Apr') {
+        month = "04";
+      }
+      else if (mountCaracterString === 'May') {
+        month = "05";
+      }
+      else if (mountCaracterString === 'Jun') {
+        month = "06";
+      }
+      else if (mountCaracterString === 'Jul') {
+        month = "07";
+      }
+      else if (mountCaracterString === 'Aug') {
+        month = "08";
+      }
+      else if (mountCaracterString === 'Sep') {
+        month = "09";
+      }
+      else if (mountCaracterString === 'Oct') {
+        month = "10";
+      }
+      else if (mountCaracterString === 'Nov') {
+        month = "11";
+      }
+      else if (mountCaracterString === 'Dec') {
+        month = "12";
+      }
+
+      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[2]);
+     
+      }
+    }
+
+  const [isConfirm , setisConfirm] = useState(true)
+  const [date , SetDate] = useState(currentDateFormat(Date()))
+
+
+
+    const handleChange = e=>{
+        SetDate(e.target.value)
+    }
+
+    const close = () => {
+      SetDate(currentDateFormat(Date()))
+    }
   function ValidateCase(props) {
     // if in case 3 transfer_doc_received and F2_status ===null
     if (props.singleCase.status === 'account_closing' && (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null)) {
@@ -60,13 +119,13 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
       return (
         <div class="modal-footer">
           <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase)}>Confirm</button>
-          <button className="modal-close waves-effect btn white black-text right">Cancle</button>
+          <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancle</button>
         </div>
       );
     }
     return (
       <div class="modal-footer">
-        <button className="modal-close waves-effect btn white black-text right">Cancle</button>
+        <button className="modal-close waves-effect btn white black-text right" onClick={() => close()} >Cancle</button>
       </div>
     )
   }
@@ -87,7 +146,18 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
           {/* body */}
             <div className="row content">
             <h5 style={{textAlign:"center"}}>F2 Status : {singleCase.F2_status}</h5><br/>
+            <div className="col s4 m4 l4 content"></div>
 
+            <div className="col s4 m4 l4 content">
+                    <label>Receive Date/ วันที่รับเคส</label>
+                    <input
+                      type="date"
+                      value={date || currentDateFormat(Date())}
+                      name="receive_date"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col s4 m4 l4 content"></div>
             <ValidateCase singleCase={singleCase} />
             <Renderfooter />
           </div>
