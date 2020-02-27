@@ -19,6 +19,9 @@
 /* .modal-content-override{
     height: calc(100%) !important;
 } */
+.typetext16px{
+    font-size: 16px;
+}
 main{
     padding-left: 270px!important;
     padding-right: 0px!important;
