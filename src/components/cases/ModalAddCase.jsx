@@ -373,7 +373,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     var config = {
      
   };
-    axios.get(`/get_brand`)
+    axios.get(`/get_brand`,{headers: {
+      'Access-Control-Allow-Origin': '*',
+    }})
     .then(res => {
       console.log(res.data)
       setCarBrand(res.data.results);
@@ -390,6 +392,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     axios.post(`/get_model` , JSON.stringify(data) ,{ headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
     }})
     .then(res => {
       console.log('success get car mdel' ,res.data)
@@ -406,6 +409,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     axios.post(`/get_year` , JSON.stringify(data) ,{ headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
     }})
     .then(res => {
      
@@ -425,6 +429,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
     }})
     .then(res => {
      
