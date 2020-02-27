@@ -594,7 +594,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     approve_amount: "",
     close_amount: "",
     case_status: "ติดต่อลูกค้าไม่ได้",
-
+    receive_date:currentDateFormat(Date()),
     
     car_name: "",
     car_brand: "",
