@@ -23,12 +23,16 @@
 /* .modal-content-override{
     height: calc(100%) !important;
 } */
+.typetext16px{
+    font-size: 16px;
+}
 main{
     padding-left: 270px!important;
     padding-right: 0px!important;
 }
 .circle{
     width:170px!important;
+    height:170px!important;
 }
 .sidenavbar{
     width: 270px!important;

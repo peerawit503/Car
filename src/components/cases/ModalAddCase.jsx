@@ -194,8 +194,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   };
 
   function CheckRedTel(tel){
+    const re = /^[0-9\b]/;
     if(tel !== ""){
-      if(tel.length<10){
+      if(tel.length<10 || (re.test(tel))){
         return true
         
       }else{

@@ -1573,7 +1573,7 @@ const ifDiff = () => {
           <div className="cotent-field">
             <div className="row content">
               <div className="row col s12 m12">
-                <div className="row col s4 m4 ">
+                {/* <div className="row col s4 m4 ">
                   <h5>Bank Form</h5>
                   <span className=" col s12 m12">
                     <label>
@@ -1597,7 +1597,7 @@ const ifDiff = () => {
                       <span>KK bank form</span>
                     </label>
                   </span>
-                </div>
+                </div> */}
 
                 <div className="row col s4 m4 ">
                   <h5>ส่วนต่าง</h5>
@@ -1624,125 +1624,10 @@ const ifDiff = () => {
                     </label>
                   </span>
                 </div>
-
-                <div className="row col s4 m4 ">
-                  <label>เงื่อนไขการตรวจรถ</label>
-
-                  <select
-                    name="car_check_con"
-                    value={newF2.car_check_con || singleCase.f2_car_check_con}
-                    onChange={handleChange}
-                    className="browser-default"
-                  >
-                    <option value="" disabled>
-                      เงื่อนไขการตรวจรถ...
-                  </option>
-                    <option value="นัดตรวจรถ(บ.)" >
-                      นัดตรวจรถ(บ.)
-                  </option>
-                    <option value="นัดตรวจรถ" >
-                      นัดตรวจรถ
-                  </option>
-                    <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
-                      ตรวจนอก/ขูดเลข/ถ่ายรูป
-                    </option>
-
-                  </select>
-
-                  <label>
-                    เงื่อนไขการเก็บเอกสาร
-  </label>
-                  <select
-                    name="doc_storage_con"
-                    value={newF2.doc_storage_con || singleCase.f2_doc_storage_con}
-                    onChange={handleChange}
-                    className="browser-default"
-                  >
-                    <option value="" disabled>
-                      เงื่อนไขการเก็บเอกสาร...
-</option>
-                    <option value="นัดตรวจรถ(บ.)" >
-                      นัดรับเอกสาร
-  </option>
-                    <option value="นัดตรวจรถ" >
-                      ส่งเอกสาร
-  </option>
-
-                  </select>
-
-
-
-                  <label>เจ้าหน้าที่ Operator Cartrust </label>
-
-                  <select
-                    name="finance_staff"
-                    value={newF2.finance_staff || singleCase.finance_staff}
-                    onChange={handleChange}
-                    className="browser-default"
-                  >
-                    <option value="" disabled>
-                      เจ้าหน้าที่...
-</option>
-                    {
-                      operaterOption()
-                    }
-
-
-                  </select>
-
-
-
-                  <label>
-                    <span>จังหวัดที่อยู่อาศัย</span></label>
-                  <select
-                    name="province"
-                    value={newF2.province || singleCase.f2_province }
-                    onChange={handleChange}
-                    className="browser-default"
-                  >
-
-                    <option value="" disabled>
-                      จังหวัด{" "}
-                    </option>
-                    {provinceAll.map(pv => (
-                      <option key={uuid.v4()} value={pv}>
-                        {pv}
-                      </option>
-                    ))}
-                  </select>
-
-
-                  <label>
-                    บัญชีรับเงินส่วนต่าง</label>
-
-                  <select
-                    name="margin_account"
-                    value={newF2.margin_account || singleCase.f2_margin_account}
-                    onChange={handleChange}
-                    className="browser-default"
-                  >
-                    <option value="" disabled>
-                      ธนาคาร...
-                    </option>
-                    {
-                      margin_accountOption()
-                    }
-
-
-                  </select>
-
-                  <label>
-                    <span>เลขที่บัญชี</span></label>
-                  <input
-                    name="margin_account_no"
-                    value={newF2.margin_account_no || singleCase.f2_margin_account_no}
-                    onChange={handleChange}
-
-                  ></input>
-
-
-                </div>
-              </div>
+            </div>
+           
+          
+            <div className="col row s6 m6">
               <div className="col s12 m12  head-section no-col-padding">
                 <h5>ค่าใช้จ่าย cartrust</h5>
               </div>
@@ -2233,6 +2118,129 @@ const ifDiff = () => {
               </div>
 
               {payment()}
+            </div>
+            <div className="row col s6 m6 ">
+            <div className="col s12 m12  head-section no-col-padding">
+                <h5>เงื่อนไข cartrust</h5>
+              </div>
+                <div className="row col s12 m12 ">
+                  <label>เงื่อนไขการตรวจรถ</label>
+
+                  <select
+                    name="car_check_con"
+                    value={newF2.car_check_con || singleCase.f2_car_check_con}
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
+                    <option value="" disabled>
+                      เงื่อนไขการตรวจรถ...
+                  </option>
+                    <option value="นัดตรวจรถ(บ.)" >
+                      นัดตรวจรถ(บ.)
+                  </option>
+                    <option value="นัดตรวจรถ" >
+                      นัดตรวจรถ
+                  </option>
+                    <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
+                      ตรวจนอก/ขูดเลข/ถ่ายรูป
+                    </option>
+
+                  </select>
+
+                  <label>
+                    เงื่อนไขการเก็บเอกสาร
+  </label>
+                  <select
+                    name="doc_storage_con"
+                    value={newF2.doc_storage_con || singleCase.f2_doc_storage_con}
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
+                    <option value="" disabled>
+                      เงื่อนไขการเก็บเอกสาร...
+</option>
+                    <option value="นัดตรวจรถ(บ.)" >
+                      นัดรับเอกสาร
+  </option>
+                    <option value="นัดตรวจรถ" >
+                      ส่งเอกสาร
+  </option>
+
+                  </select>
+
+
+
+                  <label>เจ้าหน้าที่ Operator Cartrust </label>
+
+                  <select
+                    name="finance_staff"
+                    value={newF2.finance_staff || singleCase.finance_staff}
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
+                    <option value="" disabled>
+                      เจ้าหน้าที่...
+</option>
+                    {
+                      operaterOption()
+                    }
+
+
+                  </select>
+
+
+
+                  <label>
+                    <span>จังหวัดที่อยู่อาศัย</span></label>
+                  <select
+                    name="province"
+                    value={newF2.province || singleCase.f2_province }
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
+
+                    <option value="" disabled>
+                      จังหวัด{" "}
+                    </option>
+                    {provinceAll.map(pv => (
+                      <option key={uuid.v4()} value={pv}>
+                        {pv}
+                      </option>
+                    ))}
+                  </select>
+
+
+                  <label>
+                    บัญชีรับเงินส่วนต่าง</label>
+
+                  <select
+                    name="margin_account"
+                    value={newF2.margin_account || singleCase.f2_margin_account}
+                    onChange={handleChange}
+                    className="browser-default"
+                  >
+                    <option value="" disabled>
+                      ธนาคาร...
+                    </option>
+                    {
+                      margin_accountOption()
+                    }
+
+
+                  </select>
+
+                  <label>
+                    <span>เลขที่บัญชี</span></label>
+                  <input
+                    name="margin_account_no"
+                    value={newF2.margin_account_no || singleCase.f2_margin_account_no}
+                    onChange={handleChange}
+
+                  ></input>
+
+
+                </div>
+                </div>
             </div>
           </div>
           {/* endbody */}
