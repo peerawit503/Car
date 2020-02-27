@@ -110,7 +110,6 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
   function calculateProcessDate(processBefore, processCurrent) {
     let result = [];
     if (processCurrent == null) {
-      console.log("ggprocessCurrent");
       
       result.push ( <div className="col s2 m4"> </div>);
     } else if (processCurrent != null && processBefore == null) {
@@ -137,7 +136,6 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
 
   function dateTimeFormatted(sringDate) {
     let result = []
-    console.log("ggasddebugger",sringDate);
     
     if (sringDate == null || sringDate === '') {
       result.push (<div className="col s2 m2"> </div>);
@@ -522,7 +520,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                 {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date)}
                 <div className="col s2 m2">
-                    KPI : {kpi['contact_customer_orange']} / {kpi['contact_customer_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['contact_customer_orange']} </span>/ <span style={{color:'red'}}>{kpi['contact_customer_red']}</span>
                 </div>
               </div>
 
@@ -537,7 +535,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                 {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date)}
                 <div className="col s2 m2">
-                    KPI : {kpi['account_closing_orange']} / {kpi['account_closing_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['account_closing_orange']} </span>/ <span style={{color:'red'}}>{kpi['account_closing_red']}</span>
                 </div>
               </div>
 
@@ -552,7 +550,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                 {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date)}
                 <div className="col s2 m2">
-                    KPI : {kpi['transfer_doc_received_orange']} / {kpi['transfer_doc_received_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['transfer_doc_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['transfer_doc_received_red']}</span>
                 </div>
               </div>
 
@@ -568,7 +566,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['transfer_doc_submitted_orange']} / {kpi['transfer_doc_submitted_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['transfer_doc_submitted_orange']} </span>/ <span style={{color:'red'}}>{kpi['transfer_doc_submitted_red']}</span>
                 </div>
               </div>
 
@@ -583,7 +581,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['book_received_orange']} / {kpi['book_received_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['book_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_received_red']}</span>
                 </div>
               </div>
 
@@ -598,7 +596,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['submit_book_transfer_orange']} / {kpi['submit_book_transfer_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['submit_book_transfer_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_transfer_red']}</span>
                 </div>
               </div>
 
@@ -613,7 +611,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['car_check_up_orange']} / {kpi['car_check_up_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['car_check_up_orange']} </span>/ <span style={{color:'red'}}>{kpi['car_check_up_red']}</span>
                 </div>
               </div>
 
@@ -628,7 +626,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['book_transfer_orange']} / {kpi['book_transfer_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['book_transfer_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_transfer_red']}</span>
                 </div>
               </div>
 
@@ -643,7 +641,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['book_copy_received_orange']} / {kpi['book_copy_received_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['book_copy_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_copy_received_red']}</span>
                 </div>
               </div>
 
@@ -658,7 +656,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['deposit_doc_to_new_bank_orange']} / {kpi['deposit_doc_to_new_bank_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['deposit_doc_to_new_bank_orange']} </span>/ <span style={{color:'red'}}>{kpi['deposit_doc_to_new_bank_red']}</span>
                 </div>
               </div>
 
@@ -673,7 +671,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['submit_book_deposit_return_orange']} / {kpi['submit_book_deposit_return_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['submit_book_deposit_return_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_deposit_return_red']}</span>
                 </div>
               </div>
 
@@ -688,7 +686,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['book_received_back_orange']} / {kpi['book_received_back_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['book_received_back_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_received_back_red']}</span>
                 </div>
               </div>
 
@@ -703,7 +701,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['cash_received_orange']} / {kpi['cash_received_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['cash_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['cash_received_red']}</span>
                 </div>
               </div>
 
@@ -718,7 +716,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['book_deposit_received_orange']} / {kpi['book_deposit_received_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['book_deposit_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_deposit_received_red']}</span>
                 </div>
               </div>
 
@@ -733,7 +731,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 </div>
                   {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date)}
                   <div className="col s2 m2">
-                    KPI : {kpi['submit_book_to_new_finance_orange']} / {kpi['submit_book_to_new_finance_red']}
+                    KPI : <span style={{color:'orange'}}>{kpi['submit_book_to_new_finance_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_to_new_finance_red']}</span>
                 </div>
               </div>
 
