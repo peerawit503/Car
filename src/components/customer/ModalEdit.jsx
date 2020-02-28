@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import cartrustLogo from '../../img/cartrustLogo.svg'
-const ModalEdit = ({ customer, editCustomer }) => {
+const ModalEdit = ({ customer, editCustomer ,dateFormat }) => {
 
   const [customer2, setCustomer2] = useState({
     firstname: "",
@@ -22,55 +22,7 @@ const ModalEdit = ({ customer, editCustomer }) => {
     post_code: ""
   })
 
-  function dateFormat(caseDate) {
-    if(caseDate == null){
-      return 0;
-    }else{
-      var mountCaracterString = caseDate.split(" ")[2];
-      var dayString = caseDate.split(" ")[1];
-      var yearString = caseDate.split(" ")[3];
-      var month;
-      if (mountCaracterString === 'Jan') {
-        month = "01";
-      }
-      else if (mountCaracterString === 'Feb') {
-        month = "02";
-      }
-      else if (mountCaracterString === 'Mar') {
-        month = "03";
-      }
-      else if (mountCaracterString === 'Apr') {
-        month = "04";
-      }
-      else if (mountCaracterString === 'May') {
-        month = "05";
-      }
-      else if (mountCaracterString === 'Jun') {
-        month = "06";
-      }
-      else if (mountCaracterString === 'Jul') {
-        month = "07";
-      }
-      else if (mountCaracterString === 'Aug') {
-        month = "08";
-      }
-      else if (mountCaracterString === 'Sep') {
-        month = "09";
-      }
-      else if (mountCaracterString === 'Oct') {
-        month = "10";
-      }
-      else if (mountCaracterString === 'Nov') {
-        month = "11";
-      }
-      else if (mountCaracterString === 'Dec') {
-        month = "12";
-      }
-
-      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[1]);
-     
-      }
-    }
+  
   
   useEffect(() => {
     console.log(customer)
@@ -102,14 +54,7 @@ const ModalEdit = ({ customer, editCustomer }) => {
   return (
     
       <div id="modalEdit" className="modal modal-fixed-footer">
-       <div className="navbar-fixed">
-        <nav className="no-padding-left nav-noclor">
-          <div className="nav-wrapper">
-            <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
-            <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-          </div>
-        </nav>
-      </div>
+     
 
       <div className="modal-content modal-content-override">
         <div className="row">

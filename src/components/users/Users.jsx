@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Search from './Search'
 import Navbar from './../layout/Navbar';
 import ModalDetail from './ModalDetail';
-import ModalEdit from './ModalEdit';
+import ModalEditUser from './ModalEditUser';
 import ModalDelete from './ModalDelete';
 import ModalCreate from './ModalCreate';
 import TableHead from './TableHead';
@@ -150,7 +150,7 @@ const Users = () => {
       render:rowData =>
       <div>
         <a href="#modalDetail" className="modal-trigger" onClick={ () => readUser(rowData) } ><img  src={viewicon} className="png-icon" alt="print" /></a>
-        <a href="#modalEdit" className="modal-trigger" onClick={ () => readUser2(rowData) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
+        <a href="#modalEditUser" className="modal-trigger" onClick={ () => readUser2(rowData) } ><img  src={editicon} className="png-icon " alt="edit-icon"/></a>
         <a href="#modal3" className="modal-trigger" onClick={ () => readUser(rowData) }><img  src={deleteicon} className="png-icon " alt="sumary-icon"/></a>
       </div>
     },
@@ -165,18 +165,13 @@ const Users = () => {
             <div className="col s12 m6">
             <h3>Account : <span className="chip  orange">{ users.length }</span></h3>
             </div>
-            <div className="new-button col m3">
+            <div className="new-button col m6">
               <div className="new-button-iner">
               <a className="btn modal-trigger tde" href="#modalCreate" ><img  src={plusicon} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Add User</a>
               </div>
             
             </div>
-            {/* <div className="input-field col s12 m3">
-              <div class="search">
-                <input placeholder="Search term"/>
-                <span class="fa fa-search"></span>
-              </div>
-            </div> */}
+          
            
           </div>
          <br/>
@@ -194,17 +189,10 @@ const Users = () => {
           }}
         />
         </div>
-        <div>
-          <ul className="pagination">
-                <li className={ 'disabled' }><a href="#!"><i className="material-icons">chevron_left</i></a></li>
-                <li className="active waves-effect"><a href="#!">1</a></li>
-                <li className={'disabled'}><a href="#!"><i className="material-icons">chevron_right</i></a></li>
-              </ul>
-          </div> 
-          </div>          
+        </div>          
         <ModalDetail user={ user } />
 
-        <ModalEdit edituser={ edituser } getAllUsers={getAllUsers}/>
+        <ModalEditUser edituser={ edituser } getAllUsers={getAllUsers}/>
 
         <ModalDelete user={ user } deleteUser={ deleteUser } />
 

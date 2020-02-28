@@ -118,7 +118,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
     if(isConfirm){
       return (
         <div class="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase)}>Confirm</button>
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date)}>Confirm</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancle</button>
         </div>
       );

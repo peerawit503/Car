@@ -20,7 +20,7 @@ const ModalDetail = ({ user }) => {
   return(
   <div id="modalDetail" className="modal modal-fixed-footer">
 
-  <div className="navbar-fixed">
+  {/* <div className="navbar-fixed">
     <nav className="no-padding-left nav-noclor">
       <div className="nav-wrapper">
         <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
@@ -30,7 +30,7 @@ const ModalDetail = ({ user }) => {
         </ul>
       </div>
     </nav>
-  </div>
+  </div> */}
 
 
 
@@ -56,8 +56,8 @@ const ModalDetail = ({ user }) => {
           <div className="img-mid col m12" style={{marginBottom:"20px"}}>
 
           { user.picture
-                    ? <img src={ user.picture } alt="img.profile" className="" style={ { width: "40%" } } />
-                    : <img src={ userImage } alt="img.profile" className="" style={ { width: "40%" } } /> }
+                    ? <img src={ user.picture } alt="img.profile" className="" style={ { width: "20em" } } />
+                    : <img src={ userImage } alt="img.profile" className="" style={ { width: "20em" } } /> }
 
           </div>
        
@@ -96,7 +96,7 @@ const ModalDetail = ({ user }) => {
             <input
               type="tel"
               name="phone"
-              value={user.phone}
+              value={user.tel}
               readOnly
             />
           </div>

@@ -236,8 +236,8 @@ const Cases = (props) => {
 
   // }
 
-  const confirm = (singleCase) => {
-    var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: 'mock' });
+  const confirm = (singleCase,date) => {
+    var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
     console.log('###### data ########');
     console.log(data);
     axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {

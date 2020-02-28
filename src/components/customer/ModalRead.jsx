@@ -1,16 +1,9 @@
 import React from 'react'
 import cartrustLogo from '../../img/cartrustLogo.svg'
-const ModalRead = ({ customer }) => {
+const ModalRead = ({ customer ,dateFormat}) => {
   return (
     <div id="modalRead" className="modal modal-fixed-footer">
-    <div className="navbar-fixed">
-        <nav className="no-padding-left nav-noclor">
-          <div className="nav-wrapper">
-            <a href="#!" className="brand-logo left"><img src={cartrustLogo} alt="cartrust logo" style={{ width: "150px", height: 'auto', marginLeft: '50px' }} /></a>
-            <a href="#!" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-          </div>
-        </nav>
-      </div>
+    
 
       <div className="modal-content modal-content-override">
         <div className="row">
@@ -81,9 +74,9 @@ const ModalRead = ({ customer }) => {
             <div className="col s6 m4 l4 content-radonly">
               <label htmlFor="birthday">Birthday</label>
               <input
-                type="date"
+                type="text"
                 name="birthday"
-                value={customer.birthday}
+                value={dateFormat(customer.birthday)}
                 
               />
             </div>
