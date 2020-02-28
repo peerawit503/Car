@@ -267,6 +267,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
     }
     return null
   }
+  function ButtonCancel(){
+    if(singleCase.process === 'cancel'){
+      return null
+    }else{
+      return (
+        <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
+      )
+    }
+  }
 
   return (
     <div>
@@ -746,7 +755,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
           {/* <button className="waves-effect btn blue lighten left ">Save</button> */}
           
           <button className="modal-close waves-effect btn white black-text right">close</button>
-          <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
+          <ButtonCancel/>
           
         </div>
       </div>
