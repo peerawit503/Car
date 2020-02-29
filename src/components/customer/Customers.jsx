@@ -17,6 +17,7 @@ import MaterialTable from 'material-table'
 
 /* modify */
 import '../table.css';
+
 // import customerData from './data.json';
 /* image */ 
 
@@ -119,6 +120,55 @@ const Customers = () => {
     </div>
 }]);
 
+function dateFormat(caseDate) {
+  if(caseDate == null){
+    return 0;
+  }else{
+    var mountCaracterString = caseDate.split(" ")[2];
+    var dayString = caseDate.split(" ")[1];
+    var yearString = caseDate.split(" ")[3];
+    var month;
+    if (mountCaracterString === 'Jan') {
+      month = "01";
+    }
+    else if (mountCaracterString === 'Feb') {
+      month = "02";
+    }
+    else if (mountCaracterString === 'Mar') {
+      month = "03";
+    }
+    else if (mountCaracterString === 'Apr') {
+      month = "04";
+    }
+    else if (mountCaracterString === 'May') {
+      month = "05";
+    }
+    else if (mountCaracterString === 'Jun') {
+      month = "06";
+    }
+    else if (mountCaracterString === 'Jul') {
+      month = "07";
+    }
+    else if (mountCaracterString === 'Aug') {
+      month = "08";
+    }
+    else if (mountCaracterString === 'Sep') {
+      month = "09";
+    }
+    else if (mountCaracterString === 'Oct') {
+      month = "10";
+    }
+    else if (mountCaracterString === 'Nov') {
+      month = "11";
+    }
+    else if (mountCaracterString === 'Dec') {
+      month = "12";
+    }
+
+    return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[1]);
+   
+    }
+  }
 
   return (
     <>
@@ -169,8 +219,8 @@ const Customers = () => {
           </div>      
           <ModalAddCaseCustomer customer={ customer } />
           <ModalCreate addCustomer={ addCustomer } />
-          <ModalRead customer={ customer } />
-          <ModalEdit customer={ customer } editCustomer={ editCustomer } />
+          <ModalRead customer={ customer } dateFormat={dateFormat}/>
+          <ModalEdit customer={ customer } editCustomer={ editCustomer } dateFormat={dateFormat}/>
           <ModalDelete customer={ customer } deleteCustomer={ deleteCustomer } />
         </div>
       </main>

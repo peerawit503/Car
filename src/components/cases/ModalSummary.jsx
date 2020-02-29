@@ -267,6 +267,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
     }
     return null
   }
+  function ButtonCancel(){
+    if(singleCase.process === 'cancel' || singleCase.status ==='submit_book_to_new_finance'){
+      return null
+    }else{
+      return (
+        <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
+      )
+    }
+  }
 
   return (
     <div>
@@ -311,11 +320,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
               <div className="col s12 m12  head-section no-col-padding ">
               </div>
               <div className="col s6 m6 l6 content-radonly">
-                <label >{singleCase.case_status}Case Status / สถานะเคส</label>
+                <label >Case Status / สถานะเคส</label>
                 <input
                   name="caseStatus"
                    type="text"
-                  value={singleCase.case_status || "DEFAULT"}
+                  value={singleCase.case_status || ""}
                   readOnly
                 >
                   
@@ -746,7 +755,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
           {/* <button className="waves-effect btn blue lighten left ">Save</button> */}
           
           <button className="modal-close waves-effect btn white black-text right">close</button>
-          <button href="#modalCancel" className="modal-trigger waves-effect btn red left">Cancel Case</button>
+          <ButtonCancel/>
           
         </div>
       </div>

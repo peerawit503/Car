@@ -3,13 +3,7 @@ import React from 'react'
 const ModalDelete = ({ user, deleteUser }) => {
   return (
     <div>
-      <div class='navbar-fixed'>
-        <nav class="no-padding-left nav-noclor">
-          <div class="nav-wrapper">
-            aa
-          </div>
-        </nav>
-      </div>
+      
       <div id="modal3" className="modal modal-fixed-footer">
         <div className="modal-content">
           <h4>ลบบัญชีผู้ใช้</h4>

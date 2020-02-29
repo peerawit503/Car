@@ -25,25 +25,11 @@ const confirm =() =>{
   return (
     <div>
       <div id="modalCancel" className="modal modal-fixed-footer">
-
         <div className="modal-content modal-content-override">
           <div className="row content">
-
-
-            ยืนยันที่จะลบเคส {singleCase.case_id}
-            
+           <h3 style={{marginTop:"2em",textAlign:"center"}}> ยืนยันที่จะลบเคส {singleCase.case_id} ? </h3>
           </div>
         </div>
-        {/* process bar */}
-
-        {/* body */}
-
-
-
-
-
-
-
         <div className="modal-footer">
           <button className="modal-close waves-effect btn red lighten left " onClick={() => confirm()}>Confirm</button>
           <button className="modal-close waves-effect btn blue lighten right " >Cancel</button>
