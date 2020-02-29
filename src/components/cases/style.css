@@ -12,10 +12,22 @@
     top:20%!important;
     height: 50%!important;
 }
-#modalAddCarLead{
+#modalAddCarLead {
     top:20%!important;
-    height: 30%!important;
+    height: 50%!important;
 }
+
+#modalAddOfficer , #modalAddMargin{
+    top:20%!important;
+    height: 40%!important;
+}
+
+
+#modalAddFStaff{
+    top:20%!important;
+    height: 40%!important;
+}
+
 
 #modalDelete{
     top:20%!important;

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ModalExcel from'./ModalAddCarLead'
+import ModalAddCarLead from './ModalAddCarLead'
+import ModalAddOfficer from './ModalAddOfficer'
+import ModalAddDealer from './ModalAddDealer'
+import ModalAddFStaff from './ModalAddFStaff'
+import ModalAddMargin from './ModalAddMargin'
 import {
   financeInstitution,
   caseSourceAll,
@@ -18,20 +22,25 @@ import 'react-tabs/style/react-tabs.css';
 import { REHYDRATE } from "redux-persist";
 
 
-const ModalAddCase = ({ saveNewCase,getAllCase }) => {
-  
+const ModalAddCase = ({ saveNewCase, getAllCase }) => {
+
   const [operatorS, setOperatorS] = useState([])
-  const [validateLineTF , setValidateLineTF] = useState(true)
+  const [validateLineTF, setValidateLineTF] = useState(true)
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
   const [hub, setHub] = useState([])
   const [cartrust_lead, setCartrust_lead] = useState([])
-  const [carBrand , setCarBrand] = useState({})
-  const [carModel , setCarModel] = useState({})
-  const [carYear , setCarYear] = useState({})
-  const [carSubModel , setSubModel] = useState({})
+  const [carBrand, setCarBrand] = useState({})
+  const [carModel, setCarModel] = useState({})
+  const [carYear, setCarYear] = useState({})
+  const [carSubModel, setSubModel] = useState({})
+  const [officer, setOfficer] = useState({})
+  const [dealer, setDealer] = useState({})
+  const [formState, setformState] = useState(1);
+  const [difference, setDifference] = useState({ d1: true, d2: false });
+
   const [newCase, setNewCase] = useState({
-  
+
     customer_id: "",
 
     old_bank: "",
@@ -45,12 +54,12 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     case_receiver: "",
     case_source: "",
 
-    down_amount: "",
-    approve_amount: "",
-    close_amount: "",
+    // down_amount: "",
+    approve_amount: "0",
+    close_amount: "0",
     case_status: "ติดต่อลูกค้าไม่ได้",
-    receive_date:currentDateFormat(Date()),
-    province:"",
+    receive_date: currentDateFormat(Date()),
+    province: "",
     car_name: " ",
     car_brand: "",
     car_model: "",
@@ -63,24 +72,25 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     car_license_book_picture: "",
     license_id_picture: "",
     cartrust_lead_refer: "",
+    cartrust_lead_refer_line: "",
+    cartrust_lead_refer_tel: "",
     cqc_team: "",
     hub: "",
-    margin_account_no:"",
+    margin_account_no: "",
     old_finance_closing_fee: "0",
     old_finance_transfer_fee: "0",
     book_closing_fee: "0",
     vat7_fee: "0",
     transfer_fee: "0",
     duty_fee: "0",
-    discount_fee: "0",
+    cartrust_other_fee: "0",
     car_shield_fee: "0",
     car_insurance_fee: "0",
     transfer_service_fee: "0",
     contract_fee: "0",
     outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
-    difference:true,
+    newfinance_other_fee:"0",
+    difference: true,
 
     old_finance_closing_fee_note: "",
     old_finance_transfer_fee_note: "",
@@ -88,20 +98,20 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     vat7_fee_note: "",
     transfer_fee_note: "",
     duty_fee_note: "",
-    discount_fee_note: "",
+    cartrust_other_fee_note: "",
     car_shield_fee_note: "",
     car_insurance_fee_note: "",
     transfer_service_fee_note: "",
     contract_fee_note: "",
     outside_transfer_fee_note: "",
-    tax_renewal_fee_note: "",
-    act_renewal_fee_note: "",
+    newfinance_other_fee_note:"0",
     car_check_con: "",
     doc_storage_con: "",
-    dealer_line:"",
-    contract_officer_line:"",
-    dealer_phone:"",
-    contract_officer_phone:"",
+    dealer:"",
+    dealer_line: "",
+    contract_officer_line: "",
+    dealer_phone: "",
+    contract_officer_phone: "",
 
     margin_account: "",
 
@@ -120,86 +130,92 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     tel2: "",
     email: "",
     line: "",
-    license_id:"",
+    license_id: "",
     birthday: "",
-    // home_no: "",
-    // moo: "",
-    // soy: "",
-    // road: "",
-    // district: "",
-    // district2: "",
-    address:"",
+
+    address: "",
     province: "",
     post_code: "",
-    customer_id : ""
+    customer_id: ""
 
   });
 
-  
 
-  const [formState, setformState] = useState(1);
-  const [totalCost, setTotalCost] = useState(0);
-  const [bank, setBank] = useState({ b1: true, b2: false });
-  const [difference, setDifference] = useState({ d1: true, d2: false });
+
+
   const handleChangeF = e => {
-    
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value) });
+
+    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value?e.target.value:0) });
   };
 
- 
+
 
   useEffect(() => {
     getOperatorS()
     getMargin_account()
     getCqc_team()
     getHub()
+    getOfficer()
     getCartrust_lead()
     getCar_brand()
-    
+    getDealer()
+
     M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
 
 
   const handleChange = e => {
-    
+
     setNewCase({ ...newCase, [e.target.name]: e.target.value });
   };
 
-  const handleChangeCaseSource = e => {
-    
-    if(e.target.value === 'Kiatnakin' || e.target.value === 'Thanachart'){
-      setNewCase({ ...newCase, [e.target.name]: e.target.value , new_bank:e.target.value});
-    }else{
-      setNewCase({ ...newCase, [e.target.name]: e.target.value });
-    }
-      
-   
-    
+  const handleChangeDropDown = e => {
+    let name = e.target.name
+    let index = e.target.selectedIndex;
+    let optionElement = e.target.childNodes[index]
+    let line_text = name + '_line'
+    let tel_text = name + '_tel'
+    let line = optionElement.getAttribute(line_text);
+    let tel = optionElement.getAttribute(tel_text);
+    setNewCase({ ...newCase, cartrust_lead_refer: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+
   };
-  
+
+  const handleChangeCaseSource = e => {
+
+    if (e.target.value === 'Kiatnakin' || e.target.value === 'Thanachart') {
+      setNewCase({ ...newCase, [e.target.name]: e.target.value, new_bank: e.target.value });
+    } else {
+      setNewCase({ ...newCase, [e.target.name]: e.target.value , new_bank:"" });
+    }
+
+
+
+  };
+
 
 
   const handleChangeTel = e => {
-    const re = /^[0-9\b]/;
-    if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length<=10) {
-      if(customer.customer_id === ""){
-        setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
-      }else{
-        setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" ,firstname:"" , lastname:"", license_id:"" , tel:"" , tel2:"" ,email:"" , line:"" , post_code:"", province:"",birthday:"" });
+    const re = /^[0-9]+$/;
+    if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length <= 10) {
+      if (customer.customer_id === "") {
+        setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "" });
+      } else {
+        setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "", firstname: "", lastname: "", license_id: "", tel: "", tel2: "", email: "", line: "", post_code: "", province: "", birthday: "" });
       }
-      
-    }else{
+
+    } else {
 
     }
   };
 
-  function CheckRedTel(tel){
-    const re = /^[0-9\b]/;
-    if(tel !== ""){
-      if(tel.length<10 || (re.test(tel))){
+  function CheckRedTel(tel) {
+    const re = /^[0-9]+$/;
+    if (tel !== "") {
+      if (tel.length < 10 && (re.test(tel))) {
         return true
-        
-      }else{
+
+      } else {
         return false
       }
     }
@@ -209,118 +225,118 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
   const handleChangeEmail = e => {
     const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-    if ((e.target.value === '' || re.test(e.target.value)) ) {
-      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
-    }else{
-        //set state to disable save button
+    if ((e.target.value === '' || re.test(e.target.value))) {
+      setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "" });
+    } else {
+      //set state to disable save button
     }
   };
 
-  function CheckRedEmail(email){
+  function CheckRedEmail(email) {
     const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-      if ((email === '' || re.test(email)) ) {
-        return false
-      }else{
-        return true
-      }
-  
+    if ((email === '' || re.test(email))) {
+      return false
+    } else {
+      return true
+    }
+
   }
 
   const handleChangeCarBrand = e => {
-    setNewCase({ ...newCase, [e.target.name]: e.target.value  });
+    setNewCase({ ...newCase, [e.target.name]: e.target.value });
     getCarModel(e.target.value)
   }
   const handleChangeCarModel = e => {
-    setNewCase({ ...newCase, [e.target.name]: e.target.value   });
-    getCarYear( newCase.car_brand , e.target.value )
+    setNewCase({ ...newCase, [e.target.name]: e.target.value });
+    getCarYear(newCase.car_brand, e.target.value)
   }
   const handleChangeCarYear = e => {
-    setNewCase({ ...newCase, [e.target.name]: e.target.value  });
-    getCarSubModel(newCase.car_brand ,newCase.car_model, e.target.value)
+    setNewCase({ ...newCase, [e.target.name]: e.target.value });
+    getCarSubModel(newCase.car_brand, newCase.car_model, e.target.value)
   }
-  
+
   const disableSelect = (case_source) => {
-    if(case_source === 'Kiatnakin' || case_source ==='Thanachart'){
+    if (case_source === 'Kiatnakin' || case_source === 'Thanachart') {
       return true
-    }else{
+    } else {
       return false
     }
   }
 
-  const handleChangeCustomer = e =>{
-    if(customer.customer_id === ""){
-      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" });
-    }else{
-      setCustomer({ ...customer, [e.target.name]: e.target.value , customer_id :"" ,firstname:"" , lastname:"", license_id:"" , tel:"" , tel2:"" ,email:"",line:"" , post_code:"", province:"",birthday:"" });
+  const handleChangeCustomer = e => {
+    if (customer.customer_id === "") {
+      setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "" });
+    } else {
+      setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "", firstname: "", lastname: "", license_id: "", tel: "", tel2: "", email: "", line: "", post_code: "", province: "", birthday: "" });
     }
   }
-   
+
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  const validateOnclinck = () =>{
+  const validateOnclinck = () => {
     const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
     // let case_source = newCase.case_source;
-    
-    
 
-    console.log('*********************' , newCase)
-    if(customer.firstname === ""){
+
+
+    console.log('*********************', newCase)
+    if (customer.firstname === "") {
       alert('Firstname if empty')
       return false;
-    }else if (customer.lastname  === ""){
+    } else if (customer.lastname === "") {
       alert('Lastname if empty')
       return false;
-    }else if (customer.tel  === ""){
+    } else if (customer.tel === "") {
       alert('Phone if empty')
       return false;
-    }else if (customer.line  === ""){
+    } else if (customer.line === "") {
       alert('Line if empty')
       return false;
-    }else if (customer.license_id  === ""){
+    } else if (customer.license_id === "") {
       alert('License Id if empty')
       return false;
-    }else if (customer.birthday  === ""){
+    } else if (customer.birthday === "") {
       alert('Birthday is empty')
       return false;
-    }else if (newCase.receive_date === ""){
+    } else if (newCase.receive_date === "") {
       alert('Receive Date is empty')
       return false;
-    }else if (newCase.case_type === ""){
+    } else if (newCase.case_type === "") {
       alert('Case Source is empty')
       return false;
-    }else if (newCase.case_source === ""){
+    } else if (newCase.case_source === "") {
       alert('Case Source is empty')
       return false;
-    }else if (newCase.case_source === "Kiatnakin" && newCase.cqc_team === ""){
+    } else if (newCase.case_source === "Kiatnakin" && newCase.cqc_team === "") {
       alert('Cqc team is empty')
       return false;
     }
-    else if (newCase.case_source === "Thanachart" && newCase.hub === ""){
+    else if (newCase.case_source === "Thanachart" && newCase.hub === "") {
       alert('Thanachart hub is empty')
       return false;
     }
-    else if (newCase.case_source === "Thanachart" && newCase.contract_officer === ""){
+    else if (newCase.case_source === "Thanachart" && newCase.contract_officer === "") {
       alert('Thanachart contract officer is empty')
       return false;
     }
-    else if (newCase.case_source === "Cartrust" && newCase.cartrust_lead_refer === ""){
+    else if (newCase.case_source === "Cartrust" && newCase.cartrust_lead_refer === "") {
       alert('Cartrust lead refer contract officer is empty')
       return false;
     }
-    else if (newCase.old_bank === "" ){
+    else if (newCase.old_bank === "") {
       alert('Current Finance is empty')
       return false;
     }
-    else if (newCase.new_bank === "" ){
+    else if (newCase.new_bank === "") {
       alert('Finance Institution is empty')
       return false;
-    }else if (customer.email === '' || !(re.test(customer.email)) ){
+    } else if (customer.email === '' || !(re.test(customer.email))) {
       alert('Email is valid')
     }
- 
-    else{
+
+    else {
       return true;
     }
 
@@ -333,8 +349,27 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       })
       .catch(err => console.log(err))
   }
-  const doNotThing = () =>{
-    
+
+  const getOfficer = () => {
+
+    axios.get(`${url}/dropdown?table=contract_officer`)
+      .then(res => {
+        setOfficer(res.data.message);
+      })
+      .catch(err => console.log(err))
+  }
+
+  const getDealer = () => {
+
+    axios.get(`${url}/dropdown?table=dealer`)
+      .then(res => {
+        setDealer(res.data.message);
+      })
+      .catch(err => console.log(err))
+  }
+
+  const doNotThing = () => {
+
   }
 
   const getMargin_account = () => {
@@ -371,108 +406,139 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         setCartrust_lead(res.data.message);
       })
       .catch(err => console.log(err))
-      
+
   }
 
   const getCar_brand = () => {
     var config = {
-     
-  };
-    axios.get(`/get_brand`,{headers: {
-      'Access-Control-Allow-Origin': '*',
-    }})
-    .then(res => {
-      console.log(res.data)
-      setCarBrand(res.data.results);
+
+    };
+    axios.get(`/get_brand`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
     })
-    .catch(err => console.log(err))
+      .then(res => {
+        console.log(res.data)
+        setCarBrand(res.data.results);
+      })
+      .catch(err => console.log(err))
   }
 
   const getCarModel = (car_brand_s) => {
-   
+
     let data = {
-      brand:car_brand_s
+      brand: car_brand_s
     }
     console.log(JSON.stringify(data))
-    axios.post(`/get_model` , JSON.stringify(data) ,{ headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    }})
-    .then(res => {
-      console.log('success get car mdel' ,res.data)
-      setCarModel(res.data.results);
-    })
-    .catch(err => console.log(err))
-  }
-
-  const getCarYear = (car_brand , car_model) => {
-    let data = {
-      brand:car_brand,
-      model:car_model
-    }
-    axios.post(`/get_year` , JSON.stringify(data) ,{ headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    }})
-    .then(res => {
-     
-      setCarYear(res.data.results);
-    })
-    .catch(err => console.log(err))
-  }
-
-  const getCarSubModel = (car_brand , car_model , car_year) => {
-    let data = {
-      brand:car_brand,
-      model:car_model,
-      year:car_year,
-
-    }
-    axios.post(`/get_sub_model` , JSON.stringify(data) ,{ 
+    axios.post(`/get_model`, JSON.stringify(data), {
       headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    }})
-    .then(res => {
-     
-      setSubModel(res.data.results);
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
     })
-    .catch(err => console.log(err))
+      .then(res => {
+        console.log('success get car mdel', res.data)
+        setCarModel(res.data.results);
+      })
+      .catch(err => console.log(err))
+  }
+
+  const getCarYear = (car_brand, car_model) => {
+    let data = {
+      brand: car_brand,
+      model: car_model
+    }
+    axios.post(`/get_year`, JSON.stringify(data), {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
+      .then(res => {
+
+        setCarYear(res.data.results);
+      })
+      .catch(err => console.log(err))
+  }
+
+  const getCarSubModel = (car_brand, car_model, car_year) => {
+    let data = {
+      brand: car_brand,
+      model: car_model,
+      year: car_year,
+
+    }
+    axios.post(`/get_sub_model`, JSON.stringify(data), {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
+      .then(res => {
+
+        setSubModel(res.data.results);
+      })
+      .catch(err => console.log(err))
   }
 
   const handleChangeFileLID = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setNewCase({ ...newCase, license_id_picture : reader.result });
+    reader.onload = () => setNewCase({ ...newCase, license_id_picture: reader.result });
   };
 
   const handleChangeFileTC = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setNewCase({ ...newCase, take_car_picture : reader.result });
+    reader.onload = () => setNewCase({ ...newCase, take_car_picture: reader.result });
   };
 
   const handleChangeFileCLB = e => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => setNewCase({ ...newCase, car_license_book_picture : reader.result });
+    reader.onload = () => setNewCase({ ...newCase, car_license_book_picture: reader.result });
   };
 
-  
+
 
   function operaterOption() {
     let result = []
-    
+
     for (let oper of operatorS) {
-     
-      result.push(<option value={oper.fs_name}>
+
+      result.push(<option value={oper.fs_name}  >
         {oper.fs_name}
+      </option>)
+    }
+    return result;
+  }
+
+  function officerOption() {
+    let result = []
+
+    for (let off of officer) {
+
+      result.push(<option value={off.co_name} contract_officer_line={off.line} contract_officer_tel={off.tel}>
+        {off.co_name}
+      </option>)
+    }
+    return result;
+  }
+
+  function dealerOption() {
+    let result = []
+
+    for (let deal of dealer) {
+
+      result.push(<option value={deal.d_name} dealer_line={deal.line} dealer_tel={deal.tel}>
+        {deal.d_name}
       </option>)
     }
     return result;
@@ -519,7 +585,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
 
     for (let cartrust_l of cartrust_lead) {
 
-      result.push(<option value={cartrust_l.cl_name}>
+      result.push(<option value={cartrust_l.cl_name} cartrust_lead_refer_line={cartrust_l.line} cartrust_lead_refer_tel={cartrust_l.tel} >
         {cartrust_l.cl_name}
       </option>)
     }
@@ -574,8 +640,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     return result;
   }
 
-  const handleChangeB_1 = e => setBank({ b1: true, b2: false });
-  const handleChangeB_2 = e => setBank({ b1: false, b2: true });
+
 
   const handleChangeD_1 = e => setDifference({ d1: true, d2: false });
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
@@ -584,89 +649,91 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
     setNewCase({
       customer_id: "",
 
-    old_bank: "",
-    new_bank: "",
-    status: "receive",
-    note_status: "",
-    team: "",
-    contract_officer: "",
-    finance_staff: "",
-    case_type: "  ",
-    case_receiver: "",
-    case_source: "",
+      old_bank: "",
+      new_bank: "",
+      status: "receive",
+      note_status: "",
+      team: "",
+      contract_officer: "",
+      finance_staff: "",
+      case_type: "  ",
+      case_receiver: "",
+      case_source: "",
 
-    down_amount: "",
-    approve_amount: "",
-    close_amount: "",
-    case_status: "ติดต่อลูกค้าไม่ได้",
-    receive_date:currentDateFormat(Date()),
-    
-    car_name: "",
-    car_brand: "",
-    car_model: "",
-    car_sub_model: "",
-    car_year: "",
-    car_license: "",
-    car_province: "",
-    car_detail: "",
-    take_car_picture: "",
-    car_license_book_picture: "",
-    license_id_picture: "",
-    cartrust_lead_refer: "",
-    cqc_team: "",
-    hub: "",
-    margin_account_no:"",
-    old_finance_closing_fee: "0",
-    old_finance_transfer_fee: "0",
-    book_closing_fee: "0",
-    vat7_fee: "0",
-    transfer_fee: "0",
-    duty_fee: "0",
-    discount_fee: "0",
-    car_shield_fee: "0",
-    car_insurance_fee: "0",
-    transfer_service_fee: "0",
-    contract_fee: "0",
-    outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
-    difference:true,
-    dealer_line:"",
-    contract_officer_line:"",
-    dealer_phone:"",
-    contract_officer_phone:"",  
-    old_finance_closing_fee_note: "",
-    old_finance_transfer_fee_note: "",
-    book_closing_fee_note: "",
-    vat7_fee_note: "",
-    transfer_fee_note: "",
-    duty_fee_note: "",
-    discount_fee_note: "",
-    car_shield_fee_note: "",
-    car_insurance_fee_note: "",
-    transfer_service_fee_note: "",
-    contract_fee_note: "",
-    outside_transfer_fee_note: "",
-    tax_renewal_fee_note: "",
-    act_renewal_fee_note: "",
-    car_check_con: "",
-    doc_storage_con: "",
+      down_amount: "",
+      approve_amount: "",
+      close_amount: "",
+      case_status: "ติดต่อลูกค้าไม่ได้",
+      receive_date: currentDateFormat(Date()),
+
+      car_name: "",
+      car_brand: "",
+      car_model: "",
+      car_sub_model: "",
+      car_year: "",
+      car_license: "",
+      car_province: "",
+      car_detail: "",
+      take_car_picture: "",
+      car_license_book_picture: "",
+      license_id_picture: "",
+      cartrust_lead_refer: "",
+      cartrust_lead_refer_line: "",
+      cartrust_lead_refer_tel: "",
+      cqc_team: "",
+      hub: "",
+      margin_account_no: "",
+      old_finance_closing_fee: "0",
+      old_finance_transfer_fee: "0",
+      book_closing_fee: "0",
+      vat7_fee: "0",
+      transfer_fee: "0",
+      duty_fee: "0",
+      cartrust_other_fee: "0",
+      car_shield_fee: "0",
+      car_insurance_fee: "0",
+      transfer_service_fee: "0",
+      contract_fee: "0",
+      outside_transfer_fee: "0",
+     newfinance_other_fee:"0",
+      difference: true,
+      dealer:"",
+      dealer_line: "",
+      contract_officer_line: "",
+      dealer_phone: "",
+      contract_officer_phone: "",
+      old_finance_closing_fee_note: "",
+      old_finance_transfer_fee_note: "",
+      book_closing_fee_note: "",
+      vat7_fee_note: "",
+      transfer_fee_note: "",
+      duty_fee_note: "",
+      cartrust_other_fee_note: "",
+      car_shield_fee_note: "",
+      car_insurance_fee_note: "",
+      transfer_service_fee_note: "",
+      contract_fee_note: "",
+      outside_transfer_fee_note: "",
+      newfinance_other_fee_note:"0",
+      car_check_con: "",
+      doc_storage_con: "",
 
 
-    margin_account: "",
+      margin_account: "",
 
-    f2_status: null,
-    cheque: "0",
-    deposit: "0",
-    cheque_receiver: "",
-    deposit_receiver: "",
-  province:""});
+      f2_status: null,
+      cheque: "0",
+      deposit: "0",
+      cheque_receiver: "",
+      deposit_receiver: "",
+      province: ""
+    });
   }
 
-  const setAllblank = () =>{
+  const setAllblank = () => {
     setblankCustomer();
     setblankCase();
-    
+
   }
   const setblankCustomer = () => {
     setCustomer({
@@ -676,27 +743,22 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       tel2: "",
       email: "",
       line: "",
-      license_id:"",
-      birthday:"",
-      address:"",
-      // home_no: "",
-      // moo: "",
-      // soy: "",
-      // road: "",
-      // district: "",
-      // district2: "",
+      license_id: "",
+      birthday: "",
+      address: "",
+
       province: "",
       post_code: "",
-      customer_id : ""
+      customer_id: ""
     })
 
   }
-  
+
 
   const close = () => {
     setblankCase();
     setblankCustomer();
-    
+
   };
   const backpage = () => {
     console.log(newCase);
@@ -706,45 +768,45 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       setformState(2);
     }
   };
-  const validateLine = (e) =>{
+  const validateLine = (e) => {
     let name = e.target.name;
     let val = e.target.value
-    if(val !="" && val != null){
+    if (val != "" && val != null) {
       axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
-      .then(res => {
-        if(!res.data.message){
-          // alert(name + ' : ' + val + ' is already in database' );
+        .then(res => {
+          if (!res.data.message) {
+            // alert(name + ' : ' + val + ' is already in database' );
 
-          var r = window.confirm( 'มี ' + name + ' : ' + val + ' อยู่ในระบบแล้ว \n จะเอาข้อมูลที่มีอยู่มาใช้หรือไม่');
-          if (r == true) {
-            setCustomer({
-              ...customer,
-              firstname : res.data.data.firstname,
-              lastname : res.data.data.lastname,
-              tel : res.data.data.tel,
-              tel2: res.data.data.tel2,
-              email: res.data.data.email,
-              line: res.data.data.line,
-              license_id:res.data.data.license_id,
-              birthday: dateFormat(res.data.data.birthday),
-              address:res.data.data.address,
-              province: res.data.data.province,
-              post_code: res.data.data.post_code,
-              customer_id : res.data.data.customer_id
-            })
-          } else {
-            setCustomer({
-              ...customer,
-              [name] : ""
-            })
+            var r = window.confirm('มี ' + name + ' : ' + val + ' อยู่ในระบบแล้ว \n จะเอาข้อมูลที่มีอยู่มาใช้หรือไม่');
+            if (r == true) {
+              setCustomer({
+                ...customer,
+                firstname: res.data.data.firstname,
+                lastname: res.data.data.lastname,
+                tel: res.data.data.tel,
+                tel2: res.data.data.tel2,
+                email: res.data.data.email,
+                line: res.data.data.line,
+                license_id: res.data.data.license_id,
+                birthday: dateFormat(res.data.data.birthday),
+                address: res.data.data.address,
+                province: res.data.data.province,
+                post_code: res.data.data.post_code,
+                customer_id: res.data.data.customer_id
+              })
+            } else {
+              setCustomer({
+                ...customer,
+                [name]: ""
+              })
+            }
+
+            console.log(res.data.data.birthday)
           }
-         
-          console.log(res.data.data.birthday)
-        }
-      })
-      .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
     }
-    
+
   }
 
   const deletezero = e => {
@@ -760,9 +822,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   };
 
   function dateFormat(caseDate) {
-    if(caseDate == null){
+    if (caseDate == null) {
       return 0;
-    }else{
+    } else {
       var mountCaracterString = caseDate.split(" ")[2];
       var dayString = caseDate.split(" ")[1];
       var yearString = caseDate.split(" ")[3];
@@ -804,58 +866,58 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         month = "12";
       }
 
-      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[1]);
-     
-      }
-    }
+      return (caseDate.split(" ")[3] + '-' + month + '-' + caseDate.split(" ")[1]);
 
-    function currentDateFormat(caseDate) {
-      if(caseDate == null){
-        return 0;
-      }else{
-        var mountCaracterString = caseDate.split(" ")[1];
-        var month;
-        if (mountCaracterString === 'Jan') {
-          month = "01";
-        }
-        else if (mountCaracterString === 'Feb') {
-          month = "02";
-        }
-        else if (mountCaracterString === 'Mar') {
-          month = "03";
-        }
-        else if (mountCaracterString === 'Apr') {
-          month = "04";
-        }
-        else if (mountCaracterString === 'May') {
-          month = "05";
-        }
-        else if (mountCaracterString === 'Jun') {
-          month = "06";
-        }
-        else if (mountCaracterString === 'Jul') {
-          month = "07";
-        }
-        else if (mountCaracterString === 'Aug') {
-          month = "08";
-        }
-        else if (mountCaracterString === 'Sep') {
-          month = "09";
-        }
-        else if (mountCaracterString === 'Oct') {
-          month = "10";
-        }
-        else if (mountCaracterString === 'Nov') {
-          month = "11";
-        }
-        else if (mountCaracterString === 'Dec') {
-          month = "12";
-        }
-  
-        return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[2]);
-       
-        }
+    }
+  }
+
+  function currentDateFormat(caseDate) {
+    if (caseDate == null) {
+      return 0;
+    } else {
+      var mountCaracterString = caseDate.split(" ")[1];
+      var month;
+      if (mountCaracterString === 'Jan') {
+        month = "01";
       }
+      else if (mountCaracterString === 'Feb') {
+        month = "02";
+      }
+      else if (mountCaracterString === 'Mar') {
+        month = "03";
+      }
+      else if (mountCaracterString === 'Apr') {
+        month = "04";
+      }
+      else if (mountCaracterString === 'May') {
+        month = "05";
+      }
+      else if (mountCaracterString === 'Jun') {
+        month = "06";
+      }
+      else if (mountCaracterString === 'Jul') {
+        month = "07";
+      }
+      else if (mountCaracterString === 'Aug') {
+        month = "08";
+      }
+      else if (mountCaracterString === 'Sep') {
+        month = "09";
+      }
+      else if (mountCaracterString === 'Oct') {
+        month = "10";
+      }
+      else if (mountCaracterString === 'Nov') {
+        month = "11";
+      }
+      else if (mountCaracterString === 'Dec') {
+        month = "12";
+      }
+
+      return (caseDate.split(" ")[3] + '-' + month + '-' + caseDate.split(" ")[2]);
+
+    }
+  }
 
 
   function payment() {
@@ -866,9 +928,9 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           <label>โอนเงินให้ </label>
           <input
             type="text"
-            
+
             value={customer.firstname + " " + customer.lastname}
-            
+
             name="cheque_receiver"
             disabled
           />
@@ -936,7 +998,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
         <label>CQC team</label>
         <select
           type="text"
-          value={newCase.cqc_team }
+          value={newCase.cqc_team}
           name="cqc_team"
           onChange={handleChange}
           className="browser-default"
@@ -949,34 +1011,55 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       </div>);
     } else if (newCase.case_source === 'Thanachart') {
 
-      result.push(<div className="col s6 m4 l4 content">
-        <label>เจ้าหน้าที่ทำสัญญา
-/Contract officer</label>
-        <input
-          type="text"
-          value={newCase.contract_officer || ""}
-          name="contract_officer"
-          onChange={handleChange}
-        />
-      </div>);
-      result.push(<div className="col s6 m4 l4 content">
-      <label htmlFor="name">Phone</label>
-      <input
-        type="text"
-        name="contract_officer_phone"
-        value={newCase.contract_officer_phone}
-        onChange={handleChangeCustomer}
-      />
-    </div>);
-      result.push(<div className="col s6 m4 l4 content">
-      <label htmlFor="name">Line</label>
-      <input
-        type="text"
-        name="contract_officer_line"
-        value={newCase.contract_officer_line}
-        onChange={handleChangeCustomer}
-      />
-    </div>);
+      result.push(
+        <div className="row crop">
+          <div className="col s6 m4 l4 content">
+            <label>เจ้าหน้าที่ทำสัญญา / Contract officer</label>
+            <select
+              type="text"
+              value={newCase.contract_officer || ""}
+              name="contract_officer"
+              onChange={handleChangeDropDown}
+              className="browser-default"
+            >
+              <option value="" contract_officer_line="" contract_officer_tel="" disabled>
+
+                เจ้าหน้าที่
+    
+    
+          </option>
+              {officerOption()}
+
+            </select>
+            <button className="modal-trigger" href="#modalAddOfficer">Add</button>
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="name">Phone / เบอร์โทรศัพท์</label>
+            <input
+              type="text"
+              name="contract_officer_tel"
+              value={newCase.contract_officer_tel}
+              readOnly
+            />
+          </div>
+
+          <div className="col s6 m4 l4 content">
+            <label htmlFor="name">Line</label>
+            <input
+              type="text"
+              name="contract_officer_line"
+              value={newCase.contract_officer_line}
+              readOnly
+            />
+          </div>
+
+
+        </div>);
+
+
+
+
       result.push(<div className="col s6 m4 l4 content">
         <label>สาขา (ธนชาติ) / Hub</label>
         <select
@@ -991,6 +1074,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           </option>
           {hubOption()}
         </select>
+
       </div>);
     } else if (newCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m4 l4 content">
@@ -999,39 +1083,81 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           type="text"
           value={newCase.cartrust_lead_refer || ""}
           name="cartrust_lead_refer"
-          onChange={handleChange}
+          onChange={handleChangeDropDown}
           className="browser-default"
         >
-          <option>
-           
+          <option value="" cartrust_lead_refer_line="" cartrust_lead_refer_tel="" disabled>
+
             รับเคสจาก
-            
-           
+
+
           </option>
           {cartrust_leadOption()}
-         
-          </select> 
-          <button  className="modal-trigger" href="#modalAddCarLead">Cartust Lead Refer</button>
+
+        </select>
+        <button className="modal-trigger" href="#modalAddCarLead">Cartust Lead Refer</button>
       </div>);
-    }else if (newCase.case_source === 'Dealer'){
+
       result.push(<div className="col s6 m4 l4 content">
-      <label htmlFor="name">Phone</label>
-      <input
-        type="text"
-        name="dealer_phone"
-        value={newCase.dealer_phone}
-        onChange={handleChangeCustomer}
-      />
-    </div>);
+        <label htmlFor="name">Phone / เบอร์โทรศัพท์</label>
+        <input
+          type="text"
+          name="cartrust_lead_refer_tel"
+          value={newCase.cartrust_lead_refer_tel}
+          readOnly
+        />
+      </div>);
+
       result.push(<div className="col s6 m4 l4 content">
-      <label htmlFor="name">Line</label>
-      <input
+        <label htmlFor="name">Line</label>
+        <input
+          type="text"
+          name="cartrust_lead_refer_line"
+          value={newCase.cartrust_lead_refer_line}
+          readOnly
+        />
+      </div>);
+    } else if (newCase.case_source === 'Dealer') {
+
+      result.push(<div className="col s6 m4 l4 content">
+      <label >Dealer</label>
+      <select
         type="text"
-        name="dealer_line"
-        value={newCase.dealer_line}
-        onChange={handleChangeCustomer}
-      />
+        value={newCase.dealer || ""}
+        name="dealer"
+        onChange={handleChangeDropDown}
+        className="browser-default"
+      >
+        <option value="" dealer_line="" dealer_tel="" disabled>
+
+          รับเคสจาก
+
+
+        </option>
+        {dealerOption()}
+
+      </select>
+      <button className="modal-trigger" href="#modalAddDealer">Add</button>
     </div>);
+
+      result.push(<div className="col s6 m4 l4 content">
+        <label htmlFor="name">Phone / เบอร์โทรศัพท์</label>
+        <input
+          type="text"
+          name="dealer_phone"
+          value={newCase.dealer_tel}
+          onChange={handleChangeCustomer}
+        />
+      </div>);
+      result.push(<div className="col s6 m4 l4 content">
+        <label htmlFor="name">Line / ไลน์</label>
+        <input
+          type="text"
+          name="dealer_line"
+          value={newCase.dealer_line}
+          onChange={handleChangeCustomer}
+        />
+      </div>);
     }
 
     return (result);
@@ -1040,7 +1166,7 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
   return (
     <div>
       <div id="modalAddCase" className="modal modal-fixed-footer">
-    
+
 
         <div className="modal-content modal-content-override">
           <div className="row">
@@ -1048,148 +1174,148 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
               <div className="col s12 m12 no-col-padding">
                 <h4>Add New Case</h4>
               </div>
-        
+
             </div>
 
 
             <div>
-          <Tabs >
-            <TabList >
-            <div class="tabslist">
-              <Tab>Case Information</Tab>
-              <Tab>F2</Tab>
-              <Tab>Contract</Tab>
-            </div>
-            </TabList>
-            <div dir="ltr">
-            <TabPanel>
-                  <div className="cotent-field">
-                <div className="row content">
-                  <div className="row crop">
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="name">First name</label>
-                    <input
-                      type="text"
-                      name="firstname"
-                      value={customer.firstname}
-                      onChange={handleChangeCustomer}
-                    />
+              <Tabs >
+                <TabList >
+                  <div class="tabslist">
+                    <Tab>Case Information</Tab>
+                    <Tab>F2</Tab>
+                    <Tab>Contract</Tab>
                   </div>
+                </TabList>
+                <div dir="ltr">
+                  <TabPanel>
+                    <div className="cotent-field">
+                      <div className="row content">
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="name">First name</label>
+                            <input
+                              type="text"
+                              name="firstname"
+                              value={customer.firstname}
+                              onChange={handleChangeCustomer}
+                            />
+                          </div>
 
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="name">Last name</label>
-                    <input
-                      type="text"
-                      name="lastname"
-                      value={customer.lastname}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="name">Last name</label>
+                            <input
+                              type="text"
+                              name="lastname"
+                              value={customer.lastname}
+                              onChange={handleChangeCustomer}
+                            />
+                          </div>
 
-                  <div className={CheckRedEmail(customer.email)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
-                    <label htmlFor="Email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={customer.email}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-                  </div>
+                          <div className={CheckRedEmail(customer.email) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
+                            <label htmlFor="Email">Email</label>
+                            <input
+                              type="email"
+                              name="email"
+                              value={customer.email}
+                              onChange={handleChangeCustomer}
+                            />
+                          </div>
+                        </div>
 
-                  <div className="row crop">
-                  <div className={CheckRedTel(customer.tel)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
-                    <label htmlFor="Phone">Phone1</label>
-                    <input
-                      type="tel"
-                      name="tel"
-                      value={customer.tel}
-                      onChange={handleChangeTel}
-                    />
-                  </div>
-
-
-
-                  <div className={CheckRedTel(customer.tel2)?"col s6 m4 l4 contentred":"col s6 m4 l4 content"}>
-                    <label htmlFor="Phone">Phone2</label>
-                    <input
-                      type="tel"
-                      name="tel2"
-                      value={customer.tel2}
-                      onChange={handleChangeTel}
-                      
-                    />
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="line">Line</label>
-                    <input
-                      type="text"
-                      name="line"
-                      value={customer.line}
-                      onChange={handleChangeCustomer}
-                      onBlur={validateLine}
-                    />
-                  </div>
-                  </div>
-
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="birthday">Birthday</label>
-                    <input
-                      type="date"
-                      name="birthday"
-                      value={customer.birthday}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
+                        <div className="row crop">
+                          <div className={CheckRedTel(customer.tel) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
+                            <label htmlFor="Phone">Phone1</label>
+                            <input
+                              type="tel"
+                              name="tel"
+                              value={customer.tel}
+                              onChange={handleChangeTel}
+                            />
+                          </div>
 
 
-                  <div className="col s6 m8 l8 content">
-                    <label htmlFor="home_no">ที่อยู่</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={customer.address}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
 
-                 
+                          <div className={CheckRedTel(customer.tel2) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
+                            <label htmlFor="Phone">Phone2</label>
+                            <input
+                              type="tel"
+                              name="tel2"
+                              value={customer.tel2}
+                              onChange={handleChangeTel}
 
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="province">จังหวัด</label>
-                    <select
-                      type="text"
-                      name="province"
-                      value={customer.province || ""}
-                      onChange={handleChangeCustomer}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        จังหวัด...
+                            />
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="line">Line</label>
+                            <input
+                              type="text"
+                              name="line"
+                              value={customer.line}
+                              onChange={handleChangeCustomer}
+                              onBlur={validateLine}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label htmlFor="birthday">Birthday</label>
+                          <input
+                            type="date"
+                            name="birthday"
+                            value={customer.birthday}
+                            onChange={handleChangeCustomer}
+                          />
+                        </div>
+
+
+                        <div className="col s6 m8 l8 content">
+                          <label htmlFor="home_no">ที่อยู่</label>
+                          <input
+                            type="text"
+                            name="address"
+                            value={customer.address}
+                            onChange={handleChangeCustomer}
+                          />
+                        </div>
+
+
+
+                        <div className="col s6 m4 l4 content">
+                          <label htmlFor="province">จังหวัด</label>
+                          <select
+                            type="text"
+                            name="province"
+                            value={customer.province || ""}
+                            onChange={handleChangeCustomer}
+                            className="browser-default"
+                          >
+                            <option value="" disabled>
+                              จังหวัด...
                       </option>
-                      {provinceAll.map(pv => (
-                        <option key={uuid.v4()} value={pv}>
-                          {pv}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                            {provinceAll.map(pv => (
+                              <option key={uuid.v4()} value={pv}>
+                                {pv}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
 
-                  <div className="col s6 m4 l4 content">
-                    <label htmlFor="post_code">รหัสไปรษณีย์</label>
-                    <input
-                      type="text"
-                      name="post_code"
-                      value={customer.post_code}
-                      onChange={handleChangeCustomer}
-                    />
-                  </div>
-                  <div className="col s12 m12  head-section no-col-padding">
-                    <h5>Case Information</h5>
-                  </div>
+                        <div className="col s6 m4 l4 content">
+                          <label htmlFor="post_code">รหัสไปรษณีย์</label>
+                          <input
+                            type="text"
+                            name="post_code"
+                            value={customer.post_code}
+                            onChange={handleChangeCustomer}
+                          />
+                        </div>
+                        <div className="col s12 m12  head-section no-col-padding">
+                          <h5>Case Information</h5>
+                        </div>
 
-                  {/* <div className="col s6 m4 l4 content">
+                        {/* <div className="col s6 m4 l4 content">
                     <label>JOB No.</label>
                     <input
                       type="text"
@@ -1199,1242 +1325,1226 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
                       className="validate"
                     />
                   </div> */}
-                  <div className="row crop">
-                  <div className="col s6 m4 l4 content">
-                    <label>Receive Date/ วันที่รับเคส</label>
-                    <input
-                      type="date"
-                      value={newCase.receive_date || currentDateFormat(Date())}
-                      name="receive_date"
-                      onChange={handleChange}
-                    />
-                  </div>
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label>Receive Date/ วันที่รับเคส</label>
+                            <input
+                              type="date"
+                              value={newCase.receive_date || currentDateFormat(Date())}
+                              name="receive_date"
+                              onChange={handleChange}
+                            />
+                          </div>
 
-                  <div className="col s6 m4 l4 content">
-                    <label>Case Type / ประเภทเคส</label>
-                    <select
-                      name="case_type"
-                      value={newCase.case_type || "DEFAULT"}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="DEFAULT" disabled>
-                        เลือกประเภทเคส{" "}
+                          <div className="col s6 m4 l4 content">
+                            <label>Case Type / ประเภทเคส</label>
+                            <select
+                              name="case_type"
+                              value={newCase.case_type || "DEFAULT"}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกประเภทเคส{" "}
+                              </option>
+                              {caseTypeAll.map(ct => (
+                                <option key={uuid.v4()} value={ct}>
+                                  {ct}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Case Source / รับเคสจาก</label>
+                            <select
+                              name="case_source"
+                              value={newCase.case_source || "DEFAULT"}
+                              onChange={handleChangeCaseSource}
+                              type="text"
+                              className="browser-default"
+                            >
+                              <option value="DEFAULT" disabled>
+                                รับเคสจาก{" "}
+                              </option>
+                              {caseSourceAll.map(ct => (
+                                <option key={uuid.v4()} value={ct}>
+                                  {ct}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+
+
+                        {caseSource()}
+
+                        <div className="col s12 m12  head-section no-col-padding">
+
+                        </div>
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label>เลขที่ใบขับขี่</label>
+                            <input
+                              type="text"
+                              name="license_id"
+                              value={customer.license_id || ""}
+                              onChange={handleChangeCustomer}
+                              onBlur={validateLine}
+                              className="validate"
+                            />
+                          </div>
+
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
+                            <input
+                              type="text"
+                              name="car_license"
+                              value={newCase.car_license || ""}
+                              onChange={handleChange}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Province / ป้ายทะเบียนจังหวัด</label>
+                            <select
+                              name="car_province"
+                              value={newCase.car_province || "DEFAULT"}
+                              className="browser-default"
+                              onChange={handleChange}
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกป้ายทะเบียนจังหวัด{" "}
+                              </option>
+                              {provinceAll.map(pv => (
+                                <option key={uuid.v4()} value={pv}>
+                                  {pv}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label>Brand / ยี่ห้อ</label>
+                            <select
+                              name="car_brand"
+                              value={newCase.car_brand || ""}
+                              onChange={handleChangeCarBrand}
+                              className="browser-default"
+                            >
+
+                              <option value="" disabled>
+                                ตัวเลือก...
+                        </option>
+                              {carBrandOption()}
+                            </select>
+                          </div>
+
+
+
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Model / รุ่นรถ</label>
+                            <select
+
+                              name="car_model"
+                              value={newCase.car_model || ""}
+                              onChange={handleChangeCarModel}
+                              className="browser-default"
+                            >
+
+                              <option value="" disabled>
+                                ตัวเลือก...
+                        </option>
+                              {carModelOption()}
+                            </select>
+
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Car Year / ปีรถ</label>
+                            <select
+
+                              name="car_year"
+                              value={newCase.car_year || ""}
+                              onChange={handleChangeCarYear}
+                              className="browser-default"
+                            >
+
+                              <option value="" disabled>
+                                ตัวเลือก...
+                        </option>
+                              {carYearOption()}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label>Sub-model / รุ่นย่อย </label>
+                            <select
+
+                              name="car_sub_model"
+                              value={newCase.car_sub_model || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+
+                              <option value="" disabled>
+                                ตัวเลือก...
+                        </option>
+                              {carSubModelOption()}
+                            </select>
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Current Finance ไฟแนนซ์เดิม</label>
+                            <select
+                              name="old_bank"
+                              value={newCase.old_bank || "DEFAULT"}
+                              className="browser-default"
+                              onChange={handleChange}
+
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกไฟแนนซ์เดิม{" "}
+                              </option>
+                              {financeInstitution.map(ct => (
+                                <option key={uuid.v4()} value={ct}>
+                                  {ct}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Finance Institution / สถาบันการเงิน</label>
+                            <select
+                              name="new_bank"
+                              value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin') ? newCase.case_source : newCase.new_bank || "DEFAULT"}
+                              className="browser-default"
+                              onChange={handleChange}
+                              disabled={disableSelect(newCase.case_source)}
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกสถาบันการเงิน{" "}
+                              </option>
+                              {financeInstitution.map(ct => (
+                                <option key={uuid.v4()} value={ct}>
+                                  {ct}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        <br />
+
+
+
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="Picture">รูปรถ</label>
+                            <input
+                              type="file"
+                              name="take_car_picture"
+                              onChange={handleChangeFileTC}
+                            />
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="Picture">รูปเล่มทะเบียน</label>
+                            <input
+                              type="file"
+                              name="car_license_book_picture"
+                              onChange={handleChangeFileCLB}
+                            />
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="Picture">รูปใบขับขี่</label>
+                            <input
+                              type="file"
+                              name="license_id_picture"
+                              onChange={handleChangeFileLID}
+                            />
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </TabPanel>
+                  <TabPanel>
+                    <div className="cotent-field">
+                      <div className="row content">
+
+
+
+                        <div className="col m12 content">
+                          <h5>ส่วนต่าง</h5>
+                          <span className=" col s12 m12">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="difference_y"
+                                checked={difference.d1}
+                                onChange={handleChangeD_1}
+                              />
+                              <span>รับส่วนต่าง</span>
+                            </label>
+                          </span>
+                          <span className=" col s12 m12">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="difference_n"
+                                checked={difference.d2}
+                                onChange={handleChangeD_2}
+                              />
+                              <span>ไม่รับส่วนต่าง</span>
+                            </label>
+                          </span>
+                        </div>
+
+
+
+
+
+
+
+                        <div className="col s6 m6">
+                          <div className="col s12 m12  head-section no-col-padding">
+                            <h5>ค่าใช้จ่าย cartrust</h5>
+                          </div>
+
+
+                          <div className="col s6 m6 l6 content">
+                            <label>Approved Amount / ยอดจัด </label>
+                            <input
+                              type="number"
+                              name="approve_amount"
+                              value={newCase.approve_amount || ""}
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>Close Amount / ยอดปิด </label>
+                            <input
+                              type="number"
+                              name="close_amount"
+                              value={newCase.close_amount || ""}
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              name="old_finance_closing_fee"
+                              value={newCase.close_amount || ""}
+                              // onChange={handleChangeF}
+                              disabled
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.old_finance_closing_fee_note || ""}
+                              name="old_finance_closing_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าโอนไฟแนนซ์เก่า (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              name="old_finance_transfer_fee"
+                              value={newCase.old_finance_transfer_fee || ""}
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.old_finance_transfer_fee_note || ""}
+                              name="old_finance_transfer_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าบริการปิดเล่ม (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.book_closing_fee || ""}
+                              name="book_closing_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.book_closing_fee_note || ""}
+                              name="book_closing_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าโอน (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.transfer_fee || ""}
+                              name="transfer_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.transfer_fee_note || ""}
+                              name="transfer_fee_note_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
+                              name="vat7_fee"
+                              disabled
+                              //onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.vat7_fee_note || ""}
+                              name="vat7_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+
+
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าอากร (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+
+                              value={newCase.duty_fee || ""}
+                              name="duty_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.duty_fee_note || ""}
+                              name="duty_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าใช้จ่ายอื่น ๆ</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.cartrust_other_fee || ""}
+                              name="cartrust_other_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.cartrust_other_fee_note || ""}
+                              name="cartrust_other_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>รวมค่าใช้จ่ายคาร์ทรัส (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              className="input-disable"
+                              disabled
+                              value={
+                                parseInt(newCase.old_finance_transfer_fee) +
+                                parseInt(newCase.close_amount) +
+                                parseInt(newCase.book_closing_fee) +
+                                ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                                parseInt(newCase.transfer_fee) +
+                                parseInt(newCase.duty_fee) +
+                                parseInt(newCase.cartrust_other_fee)}
+                              name="cartrust_total_cost"
+                            />
+                          </div>
+
+
+
+                          <div className="col s12 m12  head-section no-col-padding">
+                            <h5>ค่าใช้จ่าย ไฟแนนซ์ใหม่</h5>
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าประกันสินเชื่อ (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.car_shield_fee || ""}
+                              name="car_shield_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.car_shield_fee_note || ""}
+                              name="car_shield_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าประกันภัยรถยนต์ (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.car_insurance_fee || ""}
+                              name="car_insurance_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.car_insurance_fee_note || ""}
+                              name="car_insurance_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าบริการชุดโอน (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.transfer_service_fee || ""}
+                              name="transfer_service_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+
+                              value={newCase.transfer_service_fee_note || ""}
+                              name="transfer_service_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าทำสัญญา (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.contract_fee || ""}
+                              name="contract_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.contract_fee_note || ""}
+                              name="contract_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าโอน (บาท)</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.outside_transfer_fee || ""}
+                              name="outside_transfer_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.outside_transfer_fee_note || ""}
+                              name="outside_transfer_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>ค่าใช้จ่ายอื่นๆ</label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              value={newCase.cartrust_other_fee || ""}
+                              name="cartrust_other_fee"
+                              onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>หมายเหตุ</label>
+                            <input
+                              type="text"
+                              value={newCase.cartrust_other_fee_note || ""}
+                              name="cartrust_other_fee_note"
+                              onChange={handleChange}
+                            />
+                          </div>
+
+
+                          <div className="col s12 m12 l12 content">
+                            <div className="col s6 m6 l6 no-margin ">
+                              <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ (บาท)</label>
+                              <input
+                                type="number"
+                                min="0"
+                                step="any"
+                                className="input-disable"
+                                disabled
+                                value={(
+                                  parseInt(newCase.car_shield_fee) +
+                                  parseInt(newCase.car_insurance_fee) +
+                                  parseInt(newCase.transfer_service_fee) +
+                                  parseInt(newCase.contract_fee) +
+                                  parseInt(newCase.outside_transfer_fee)
+                                 )}
+                                name="new_finance_total_cost"
+
+                              />
+                            </div>
+                          </div>
+
+                          <div className="col s6 m12 l12 content">
+                            <div className="col s6 m6 l6 no-margin ">
+                              <label>รวมค่าใช้จ่ายทั้งหมด (บาท) </label>
+                              <input
+                                type="number"
+                                min="0"
+                                step="any"
+                                disabled
+                                value={parseInt(newCase.old_finance_transfer_fee) +
+                                  parseInt(newCase.close_amount) +
+                                  parseInt(newCase.book_closing_fee) +
+                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                                  parseInt(newCase.transfer_fee) +
+                                  parseInt(newCase.duty_fee) +
+                                  parseInt(newCase.cartrust_other_fee) +
+                                  parseInt(newCase.car_shield_fee) +
+                                  parseInt(newCase.car_insurance_fee) +
+                                  parseInt(newCase.transfer_service_fee) +
+                                  parseInt(newCase.contract_fee) +
+                                  parseInt(newCase.outside_transfer_fee) +
+                                  parseInt(newCase.newfinance_other_fee) +
+                                  parseInt(newCase.cartrust_other_fee)}
+                                name="total_cost"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="col s6 m12 l12 content">
+                            <div className="col s6 m6 l6 no-margin ">
+                              <label>ยอดเงินที่จะได้รับ (บาท) </label>
+                              <input
+                                type="number"
+                                min="0"
+                                step="any"
+                                disabled
+                                className="input-disable"
+                                value={(parseInt(newCase.old_finance_transfer_fee) +
+                                  parseInt(newCase.close_amount) +
+                                  parseInt(newCase.book_closing_fee) +
+                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                                  parseInt(newCase.transfer_fee) +
+                                  parseInt(newCase.duty_fee) +
+                                  parseInt(newCase.cartrust_other_fee) +
+                                  parseInt(newCase.car_shield_fee) +
+                                  parseInt(newCase.car_insurance_fee) +
+                                  parseInt(newCase.transfer_service_fee) +
+                                  parseInt(newCase.contract_fee) +
+                                  parseInt(newCase.outside_transfer_fee) +
+                                  parseInt(newCase.newfinance_other_fee) +
+                                  parseInt(newCase.cartrust_other_fee)) - newCase.approve_amount}
+                                name="amount_received"
+
+                              />
+                            </div>
+                          </div>
+
+                          <div className="col s12 m12  head-section no-col-padding">
+                            <h5>Customer payment summary</h5>
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>โอนเงินเข้าธนาคาร </label>
+                            <input
+                              type="text"
+                              min="0"
+                              step="any"
+                              value={newCase.old_bank || ""}
+                              name="old_bank"
+                              disabled
+                            />
+                          </div>
+
+                          <div className="col s6 m6 l6 content">
+                            <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
+                            <input
+                              type="number"
+                              min="0"
+                              step="any"
+                              disabled
+                              className="input-disable"
+                              value={
+                                parseInt(newCase.close_amount) +
+                                parseInt(newCase.old_finance_transfer_fee)
+                              }
+                              name="old_finance_total_cost"
+
+                            />
+                          </div>
+
+
+
+
+
+                          {payment()}
+                        </div>
+
+
+
+                        <div className="col s6 m6  head-section no-col-padding">
+                          <h5>เงื่อนไข cartrust</h5>
+                        </div>
+                        <div className="col row s6 m6">
+                          <div className="col s12 m12 content">
+                            <label>เงื่อนไขการตรวจรถ</label>
+                            <select
+                              name="car_check_con"
+                              value={newCase.car_check_con || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            ><option value="" disabled>
+                                เงื่อนไขการตรวจรถ...
+                    </option>
+                              <option value="นัดตรวจรถ(บ.)" >
+                                นัดตรวจรถ(บ.)
                       </option>
-                      {caseTypeAll.map(ct => (
-                        <option key={uuid.v4()} value={ct}>
-                          {ct}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-
-                  <div className="col s6 m4 l4 content">
-                    <label>Case Source / รับเคสจาก</label>
-                    <select
-                      name="case_source"
-                      value={newCase.case_source || "DEFAULT"}
-                      onChange={handleChangeCaseSource}
-                      type="text"
-                      className="browser-default"
-                    >
-                      <option value="DEFAULT" disabled>
-                        รับเคสจาก{" "}
+                              <option value="นัดตรวจรถ" >
+                                นัดตรวจรถ
                       </option>
-                      {caseSourceAll.map(ct => (
-                        <option key={uuid.v4()} value={ct}>
-                          {ct}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  </div>
+                              <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
+                                ตรวจนอก/ขูดเลข/ถ่ายรูป
+                      </option>
+                            </select>
 
-
-
-                  {caseSource()}
-
-                  <div className="col s12 m12  head-section no-col-padding">
-
-                  </div>
-                   <div className="row crop">
-                  <div className="col s6 m4 l4 content">
-                      <label>เลขที่ใบขับขี่</label>
-                      <input
-                        type="text"
-                        name="license_id"
-                        value={customer.license_id || ""}
-                        onChange={handleChangeCustomer}
-                        onBlur={validateLine}
-                        className="validate"
-                      />
-                    </div>
-
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
-                      <input
-                        type="text"
-                        name="car_license"
-                        value={newCase.car_license || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Province / ป้ายทะเบียนจังหวัด</label>
-                      <select
-                        name="car_province"
-                        value={newCase.car_province || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกป้ายทะเบียนจังหวัด{" "}
-                        </option>
-                        {provinceAll.map(pv => (
-                          <option key={uuid.v4()} value={pv}>
-                            {pv}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    </div>
-                    <div className="row crop">
-                    <div className="col s6 m4 l4 content">
-                      <label>Brand / ยี่ห้อ</label>
-                      <select
-                        name="car_brand"
-                        value={newCase.car_brand || ""}
-                        onChange={handleChangeCarBrand}
-                        className="browser-default"
-                      >
-
-                        <option value="" disabled>
-                          ตัวเลือก...
-                        </option>
-                          {carBrandOption()}
-                        </select>
-                    </div>
-                
-                    
-
-                  
-                    <div className="col s6 m4 l4 content">
-                      <label>Model / รุ่นรถ</label>
-                      <select
-
-                        name="car_model"
-                        value={newCase.car_model || ""}
-                        onChange={handleChangeCarModel}
-                        className="browser-default"
-                      >
-
-                        <option value="" disabled>
-                        ตัวเลือก...
-                        </option>
-                          {carModelOption()}
-                        </select>
-
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Car Year / ปีรถ</label>
-                      <select
-
-                        name="car_year"
-                        value={newCase.car_year || ""}
-                        onChange={handleChangeCarYear}
-                        className="browser-default"
-                      >
-
-                        <option value="" disabled>
-                        ตัวเลือก...
-                        </option>
-                          {carYearOption()}
-                        </select>
-                    </div>
-                  </div>
-
-                  <div className="row crop">
-                    <div className="col s6 m4 l4 content">
-                      <label>Sub-model / รุ่นย่อย </label>
-                      <select
-
-                        name="car_sub_model"
-                        value={newCase.car_sub_model || ""}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-
-                        <option value="" disabled>
-                        ตัวเลือก...
-                        </option>
-                          {carSubModelOption()}
-                        </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Current Finance ไฟแนนซ์เดิม</label>
-                      <select
-                        name="old_bank"
-                        value={newCase.old_bank || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                        
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกไฟแนนซ์เดิม{" "}
-                        </option>
-                        {financeInstitution.map(ct => (
-                          <option key={uuid.v4()} value={ct}>
-                            {ct}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Finance Institution / สถาบันการเงิน</label>
-                      <select
-                        name="new_bank"
-                        value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin')?newCase.case_source:newCase.new_bank || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                        disabled={disableSelect(newCase.case_source)}
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกสถาบันการเงิน{" "}
-                        </option>
-                        {financeInstitution.map(ct => (
-                          <option key={uuid.v4()} value={ct}>
-                            {ct}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    </div>
-              
-                    <br/>
-                   
-                
-
-                    <div className="row crop">
-                    <div className="col s6 m4 l4 content">
-                      <label htmlFor="Picture">รูปรถ</label>
-                      <input
-                        type="file"
-                        name="take_car_picture"
-                        onChange={handleChangeFileTC}
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label htmlFor="Picture">รูปเล่มทะเบียน</label>
-                      <input
-                        type="file"
-                        name="car_license_book_picture"
-                        onChange={handleChangeFileCLB}
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label htmlFor="Picture">รูปใบขับขี่</label>
-                      <input
-                        type="file"
-                        name="license_id_picture"
-                        onChange={handleChangeFileLID}
-                      />
-                    </div>
-                    </div>
-                
-                </div>
-              </div>
-                
-            </TabPanel>
-            <TabPanel>
-                  <div className="cotent-field">
-                <div className="row content">
-          
-             
-
-                  <div className="col m12 content">
-                    <h5>ส่วนต่าง</h5>
-                    <span className=" col s12 m12">
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="difference_y"
-                          checked={difference.d1}
-                          onChange={handleChangeD_1}
-                        />
-                        <span>รับส่วนต่าง</span>
+                            <label>
+                              เงื่อนไขการเก็บเอกสาร
                       </label>
-                    </span>
-                    <span className=" col s12 m12">
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="difference_n"
-                          checked={difference.d2}
-                          onChange={handleChangeD_2}
-                        />
-                        <span>ไม่รับส่วนต่าง</span>
-                      </label>
-                    </span>
-                  </div>
-
-                  
-
-
-
-
-
-                  <div className="col s6 m6">
-                  <div className="col s12 m12  head-section no-col-padding">
-                    <h5>ค่าใช้จ่าย cartrust</h5>
-                  </div>
-
-
-                  <div className="col s6 m6 l6 content">
-                      <label>Approved Amount / ยอดจัด </label>
-                      <input
-                        type="number"
-                        name="approve_amount"
-                        value={newCase.approve_amount || ""}
-                        onChange={handleChangeF}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m6 l6 content">
-                      <label>Close Amount / ยอดปิด </label>
-                      <input
-                        type="number"
-                        name="close_amount"
-                        value={newCase.close_amount || ""}
-                        onChange={handleChangeF}
-                        className="validate"
-                      />
-                    </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      name="old_finance_closing_fee"
-                      value={newCase.old_finance_closing_fee || ""}
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                      className="validate"
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.old_finance_closing_fee_note || ""}
-                      name="old_finance_closing_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าโอนไฟแนนซ์เก่า (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      name="old_finance_transfer_fee"
-                      value={newCase.old_finance_transfer_fee || ""}
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                      className="validate"
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.old_finance_transfer_fee_note || ""}
-                      name="old_finance_transfer_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าบริการปิดเล่ม (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.book_closing_fee || ""}
-                      name="book_closing_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.book_closing_fee_note || ""}
-                      name="book_closing_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าโอน (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.transfer_fee || ""}
-                      name="transfer_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.transfer_fee_note || ""}
-                      name="transfer_fee_note_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07 || ""}
-                      name="vat7_fee"
-                      readOnly
-                      //onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.vat7_fee_note || ""}
-                      name="vat7_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-
-              
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าอากร (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-
-                      value={newCase.duty_fee || ""}
-                      name="duty_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.duty_fee_note || ""}
-                      name="duty_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ส่วนลดพิเศษ (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.discount_fee || ""}
-                      name="discount_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.discount_fee_note || ""}
-                      name="discount_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>รวมค่าใช้จ่ายคาร์ทรัส (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      className="input-disable"
-                      disabled
-                      value={
-                        parseInt(newCase.old_finance_closing_fee) +
-                        parseInt(newCase.old_finance_transfer_fee) +
-                        parseInt(newCase.book_closing_fee) +
-                        parseInt(newCase.vat7_fee) +
-                        parseInt(newCase.transfer_fee) +
-                        parseInt(newCase.duty_fee) +
-                        parseInt(newCase.discount_fee)}
-                      name="cartrust_total_cost"
-                    />
-                  </div>
-
-
-
-                  <div className="col s12 m12  head-section no-col-padding">
-                    <h5>ค่าใช้จ่าย ไฟแนนซ์ใหม่</h5>
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าประกันคุ้มครองสินเชื่อ (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.car_shield_fee || ""}
-                      name="car_shield_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.car_shield_fee_note || ""}
-                      name="car_shield_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าประกันภัยรถยนต์ (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.car_insurance_fee || ""}
-                      name="car_insurance_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.car_insurance_fee_note || ""}
-                      name="car_insurance_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าบริการจัดชุดโอน (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.transfer_service_fee || ""}
-                      name="transfer_service_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-
-                      value={newCase.transfer_service_fee_note || ""}
-                      name="transfer_service_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าทำสัญญา (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.contract_fee || ""}
-                      name="contract_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.contract_fee_note || ""}
-                      name="contract_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าโอนนอก (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.outside_transfer_fee || ""}
-                      name="outside_transfer_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.outside_transfer_fee_note || ""}
-                      name="outside_transfer_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าต่อภาษี (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.tax_renewal_fee || ""}
-                      name="tax_renewal_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.tax_renewal_fee_note || ""}
-                      name="tax_renewal_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>ค่าต่่อพรบ (บาท)</label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      value={newCase.act_renewal_fee || ""}
-                      name="act_renewal_fee"
-                      onChange={handleChangeF}
-                      onFocus={deletezero}
-                      onBlur={addzero}
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>หมายเหตุ</label>
-                    <input
-                      type="text"
-                      value={newCase.act_renewal_fee_note || ""}
-                      name="act_renewal_fee_note"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col s12 m12 l12 content">
-                    <div className="col s6 m6 l6 no-margin ">
-                      <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ (บาท)</label>
-                      <input
-                        type="number"
-                        min="0"
-                        step="any"
-                        className="input-disable"
-                        disabled
-                        value={
-                          parseInt(newCase.car_shield_fee) +
-                          parseInt(newCase.car_insurance_fee) +
-                          parseInt(newCase.transfer_service_fee) +
-                          parseInt(newCase.contract_fee) +
-                          parseInt(newCase.outside_transfer_fee) +
-                          parseInt(newCase.tax_renewal_fee) +
-                          parseInt(newCase.act_renewal_fee)}
-                        name="new_finance_total_cost"
-
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col s6 m12 l12 content">
-                    <div className="col s6 m6 l6 no-margin ">
-                      <label>รวมค่าใช้จ่ายทั้งหมด (บาท) </label>
-                      <input
-                        type="number"
-                        min="0"
-                        step="any"
-                        disabled
-                        value={parseInt(newCase.old_finance_closing_fee) +
-                          parseInt(newCase.old_finance_transfer_fee) +
-                          parseInt(newCase.book_closing_fee) +
-                          parseInt(newCase.vat7_fee) +
-                          parseInt(newCase.transfer_fee) +
-                          parseInt(newCase.duty_fee) +
-                          parseInt(newCase.discount_fee) +
-                          parseInt(newCase.car_shield_fee) +
-                          parseInt(newCase.car_insurance_fee) +
-                          parseInt(newCase.transfer_service_fee) +
-                          parseInt(newCase.contract_fee) +
-                          parseInt(newCase.outside_transfer_fee) +
-                          parseInt(newCase.tax_renewal_fee) +
-                          parseInt(newCase.act_renewal_fee)}
-                        name="total_cost"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col s6 m12 l12 content">
-                    <div className="col s6 m6 l6 no-margin ">
-                      <label>ยอดเงินที่จะได้รับ (บาท) </label>
-                      <input
-                        type="number"
-                        min="0"
-                        step="any"
-                        disabled
-                        className="input-disable"
-                        value={(parseInt(newCase.old_finance_closing_fee) +
-                          parseInt(newCase.old_finance_transfer_fee) +
-                          parseInt(newCase.book_closing_fee) +
-                          parseInt(newCase.vat7_fee) +
-                          parseInt(newCase.transfer_fee) +
-                          parseInt(newCase.duty_fee) +
-                          parseInt(newCase.discount_fee) +
-                          parseInt(newCase.car_shield_fee) +
-                          parseInt(newCase.car_insurance_fee) +
-                          parseInt(newCase.transfer_service_fee) +
-                          parseInt(newCase.contract_fee) +
-                          parseInt(newCase.outside_transfer_fee) +
-                          parseInt(newCase.tax_renewal_fee) +
-                          parseInt(newCase.act_renewal_fee)) - newCase.approve_amount}
-                        name="amount_received"
-
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col s12 m12  head-section no-col-padding">
-                    <h5>Customer payment summary</h5>
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>โอนเงินเข้าธนาคาร </label>
-                    <input
-                      type="text"
-                      min="0"
-                      step="any"
-                      value={newCase.old_bank || ""}
-                      name="old_bank"
-                      disabled
-                    />
-                  </div>
-
-                  <div className="col s6 m6 l6 content">
-                    <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
-                    <input
-                      type="number"
-                      min="0"
-                      step="any"
-                      disabled
-                      className="input-disable"
-                      value={
-                        parseInt(newCase.old_finance_closing_fee) +
-                        parseInt(newCase.old_finance_transfer_fee)
-                      }
-                      name="old_finance_total_cost"
-
-                    />
-                  </div>
-
-
-
-
-
-                  {payment()}
-                </div>
-
-
-
-                <div className="col s6 m6  head-section no-col-padding">
-                    <h5>เงื่อนไข cartrust</h5>
-                  </div>
-                <div className="col row s6 m6">
-                  <div className="col s12 m12 content">
-                    <label>เงื่อนไขการตรวจรถ</label>
-                    <select
-                      name="car_check_con"
-                      value={newCase.car_check_con || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    ><option value="" disabled>
-                        เงื่อนไขการตรวจรถ...
+                            <select
+                              name="doc_storage_con"
+                              value={newCase.doc_storage_con || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="" disabled>
+                                เงื่อนไขการเก็บเอกสาร...
                     </option>
-                      <option value="นัดตรวจรถ(บ.)" >
-                        นัดตรวจรถ(บ.)
+                              <option value="นัดตรวจรถ(บ.)" >
+                                นัดรับเอกสาร
                       </option>
-                      <option value="นัดตรวจรถ" >
-                        นัดตรวจรถ
+                              <option value="นัดตรวจรถ" >
+                                ส่งเอกสาร
                       </option>
-                      <option value="ตรวจนอก/ขูดเลข/ถ่ายรูป" >
-                        ตรวจนอก/ขูดเลข/ถ่ายรูป
-                      </option>
-                    </select>
+                            </select>
 
-                    <label>
-                      เงื่อนไขการเก็บเอกสาร
-                      </label>
-                    <select
-                      name="doc_storage_con"
-                      value={newCase.doc_storage_con || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        เงื่อนไขการเก็บเอกสาร...
+                            <label>เจ้าหน้าที่ Operator Cartrust </label>
+                            <select
+                              name="finance_staff"
+                              value={newCase.finance_staff}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="" disabled>
+                                เจ้าหน้าที่...
                     </option>
-                      <option value="นัดตรวจรถ(บ.)" >
-                        นัดรับเอกสาร
-                      </option>
-                      <option value="นัดตรวจรถ" >
-                        ส่งเอกสาร
-                      </option>
-                    </select>
+                              {
+                                operaterOption()
+                              }
+                            </select>
+                            <button className="modal-trigger" href="#modalAddFStaff">Add</button>
+                            <br />
+                            <label>
+                              <span>จังหวัดที่อยู่อาศัย</span></label>
+                            <select
+                              name="province"
+                              value={newCase.province || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="" disabled>
+                                จังหวัด{" "}
+                              </option>
+                              {provinceAll.map(pv => (
+                                <option key={uuid.v4()} value={pv}>
+                                  {pv}
+                                </option>
+                              ))}
+                            </select>
+                            <label>
+                              บัญชีรับเงินส่วนต่าง</label>
+                            <select
+                              name="margin_account"
+                              value={newCase.margin_account || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="" disabled>
+                                ธนาคาร...
+                              </option>
+                              {
+                                margin_accountOption()
+                              }
+                            </select>
+                            <button className="modal-trigger" href="#modalAddMargin">Add</button>
+                            <br />
+                            <label>
+                              <span>เลขที่บัญชี</span></label>
+                            <input
+                              name="margin_account_no"
+                              value={newCase.margin_account_no || ""}
+                              onChange={handleChange}
+                            ></input>
+                          </div>
+                        </div>
 
-                    <label>เจ้าหน้าที่ Operator Cartrust </label>
-                    <select
-                      name="finance_staff"
-                      value={newCase.finance_staff}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        เจ้าหน้าที่...
-                    </option>
-                      {
-                        operaterOption()
-                      }
-                    </select>
 
-                    <label>
-                      <span>จังหวัดที่อยู่อาศัย</span></label>
-                    <select
-                      name="province"
-                      value={newCase.province || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        จังหวัด{" "}
-                      </option>
-                      {provinceAll.map(pv => (
-                        <option key={uuid.v4()} value={pv}>
-                          {pv}
+
+
+                      </div>
+                    </div>
+
+                  </TabPanel>
+                  <TabPanel>
+                    <div className="cotent-field">
+                      <div className="row content">
+
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Receive Date/ วันที่รับเคส</label>
+                          <input
+                            type="date"
+                            name="receive_date"
+                            value={newCase.receive_date || currentDateFormat(Date())}
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Case Type / ประเภทเคส</label>
+                          <select
+                            name="case_type"
+                            value={newCase.case_type || "DEFAULT"}
+                            onChange={handleChange}
+                            className="browser-default"
+                          >
+                            <option value="DEFAULT" disabled>
+                              เลือกประเภทเคส{" "}
+                            </option>
+                            {caseTypeAll.map(ct => (
+                              <option key={uuid.v4()} value={ct}>
+                                {ct}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="col s12 m12  head-section no-col-padding">
+                          <h5>Case Information</h5>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>First Name</label>
+                          <input
+                            type="text"
+                            name="firstname"
+                            value={customer.firstname || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Last Name</label>
+                          <input
+                            type="text"
+                            name="lastname"
+                            value={customer.lastname || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Phone Number</label>
+                          <input
+                            type="text"
+                            name="tel"
+                            value={customer.tel || ""}
+                            onChange={handleChangeTel}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label htmlFor="Phone">Phone2</label>
+                          <input
+                            type="tel"
+                            name="tel2"
+                            value={customer.tel2}
+                            onChange={handleChangeTel}
+
+                          />
+                        </div>
+
+                        <div className="col s12 m12  head-section no-col-padding">
+                          <h5>Contract Information</h5>
+                        </div>
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content">
+                            <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
+                            <input
+                              type="text"
+                              name="car_license"
+                              value={newCase.car_license || ""}
+                              onChange={handleChange}
+                              className="validate"
+                            />
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Province / ป้ายทะเบียนจังหวัด</label>
+                            <select
+                              name="car_province"
+                              value={newCase.car_province || "DEFAULT"}
+                              className="browser-default"
+                              onChange={handleChange}
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกป้ายทะเบียนจังหวัด{" "}
+                              </option>
+                              {provinceAll.map(pv => (
+                                <option key={uuid.v4()} value={pv}>
+                                  {pv}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col s6 m4 l4 content">
+                            <label>Brand / ยี่ห้อ</label>
+                            <select
+                              name="car_brand"
+                              value={newCase.car_brand || ""}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="">
+                                ตัวเลือก...
                         </option>
-                      ))}
-                    </select>
-                    <label>
-                      บัญชีรับเงินส่วนต่าง</label>
-                    <select
-                      name="margin_account"
-                      value={newCase.margin_account || ""}
-                      onChange={handleChange}
-                      className="browser-default"
-                    >
-                      <option value="" disabled>
-                        ธนาคาร...
-                    </option>
-                      {
-                        margin_accountOption()
-                      }
-                    </select>
-                    <label>
-                      <span>เลขที่บัญชี</span></label>
-                    <input
-                      name="margin_account_no"
-                      value={newCase.margin_account_no || ""}
-                      onChange={handleChange}
-                    ></input>
-                  </div>
+                              {carBrandOption()}
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Model / รุ่นรถ</label>
+                          <select
+                            name="car_model"
+                            value={newCase.car_model || ""}
+                            onChange={handleChange}
+                            className="browser-default"
+                          >
+                            <option value="">
+                              ตัวเลือก...
+                        </option>
+                            {carModelOption()}
+                          </select>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Car Year / ปีรถ </label>
+                          <select
+                            name="car_year"
+                            value={newCase.car_model || ""}
+                            onChange={handleChange}
+                            className="browser-default"
+                          >
+                            <option value="">
+                              ตัวเลือก...
+                        </option>
+                            {carYearOption()}
+                          </select>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Car Sub Model / รุ่นย่อย</label>
+                          <select
+                            name="car_sub_model"
+                            value={newCase.car_sub_model || ""}
+                            onChange={handleChange}
+                            className="browser-default"
+                          >
+                            <option value="">
+                              ตัวเลือก...
+                        </option>
+                            {carSubModelOption()}
+                          </select>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Current Finance ไฟแนนซ์เดิม</label>
+                          <select
+                            name="old_bank"
+                            value={newCase.old_bank || "DEFAULT"}
+                            className="browser-default"
+                            onChange={handleChange}
+                          >
+                            <option value="DEFAULT" disabled>
+                              เลือกไฟแนนซ์เดิม{" "}
+                            </option>
+                            {financeInstitution.map(ct => (
+                              <option key={uuid.v4()} value={ct}>
+                                {ct}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Finance Institution / สถาบันการเงิน</label>
+                          <select
+                            name="new_bank"
+                            value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin') ? newCase.case_source : newCase.new_bank || "DEFAULT"}
+                            className="browser-default"
+                            onChange={handleChange}
+                            disabled={disableSelect(newCase.case_source)}
+                          >
+                            <option value="DEFAULT" disabled>
+                              เลือกสถาบันการเงิน{" "}
+                            </option>
+                            {financeInstitution.map(ct => (
+                              <option key={uuid.v4()} value={ct}>
+                                {ct}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Approved Amount / ยอดจัด </label>
+                          <input
+                            type="number"
+                            min="0"
+                            name="approve_amount"
+                            value={newCase.approve_amount || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Close Amount / ยอดปิด </label>
+                          <input
+                            type="number"
+                            min="0"
+                            name="close_amount"
+                            value={newCase.close_amount || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Down Payment / ยอดดาวน์</label>
+                          <input
+                            type="number"
+                            min="0"
+                            name="down_amount"
+                            value={newCase.down_amount || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Old Bank </label>
+                          <input
+                            type="text"
+                            name="old_bank"
+                            value={newCase.old_bank || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>new bank</label>
+                          <input
+                            type="text"
+                            name="new_bank"
+                            value={newCase.new_bank || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>ภาระหนี้</label>
+                          <input
+                            type="text"
+                            name="debt"
+                            value={newCase.old_finance_total_cost || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>กู้ยืม</label>
+                          <input
+                            type="text"
+                            name="total_cost"
+                            disabled
+                            value={newCase.total_cost || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>ชำระให้ผู้กู้ยืม</label>
+                          <input
+                            type="text"
+                            name="amount_received"
+                            value={newCase.amount_received || ""}
+                            onChange={handleChange}
+                            className="validate"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </TabPanel>
                 </div>
-
-
-
-
-                </div>
-              </div>
-              
-            </TabPanel>
-            <TabPanel>
-              <div className="cotent-field">
-                <div className="row content">
-            
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Receive Date/ วันที่รับเคส</label>
-                      <input
-                        type="date"
-                        name="receive_date"
-                        value={newCase.receive_date || currentDateFormat(Date())}
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Case Type / ประเภทเคส</label>
-                      <select
-                        name="case_type"
-                        value={newCase.case_type || "DEFAULT"}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกประเภทเคส{" "}
-                        </option>
-                        {caseTypeAll.map(ct => (
-                          <option key={uuid.v4()} value={ct}>
-                            {ct}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col s12 m12  head-section no-col-padding">
-                      <h5>Case Information</h5>
-                    </div>
-                      
-                    <div className="col s6 m4 l4 content">
-                      <label>First Name</label>
-                      <input
-                        type="text"
-                        name="firstname"
-                        value={customer.firstname || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Last Name</label>
-                      <input
-                        type="text"
-                        name="lastname"
-                        value={customer.lastname || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Phone Number</label>
-                      <input
-                        type="text"
-                        name="tel"
-                        value={customer.tel || ""}
-                        onChange={handleChangeTel}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                    <label htmlFor="Phone">Phone2</label>
-                    <input
-                      type="tel"
-                      name="tel2"
-                      value={customer.tel2}
-                      onChange={handleChangeTel}
-                      
-                    />
-                  </div>
-
-                    <div className="col s12 m12  head-section no-col-padding">
-                      <h5>Contract Information</h5>
-                    </div>
-                    <div className="row crop">
-                    <div className="col s6 m4 l4 content">
-                      <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
-                      <input
-                        type="text"
-                        name="car_license"
-                        value={newCase.car_license || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Province / ป้ายทะเบียนจังหวัด</label>
-                      <select
-                        name="car_province"
-                        value={newCase.car_province || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกป้ายทะเบียนจังหวัด{" "}
-                        </option>
-                        {provinceAll.map(pv => (
-                          <option key={uuid.v4()} value={pv}>
-                            {pv}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Brand / ยี่ห้อ</label>
-                      <select
-                        name="car_brand"
-                        value={newCase.car_brand || ""}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-                        <option value="">
-                          ตัวเลือก...
-                        </option>
-                          {carBrandOption()}
-                        </select>
-                    </div>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Model / รุ่นรถ</label>
-                      <select
-                        name="car_model"
-                        value={newCase.car_model || ""}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-                        <option value="">
-                          ตัวเลือก...
-                        </option>
-                          {carModelOption()}
-                        </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Car Year / ปีรถ </label>
-                      <select
-                        name="car_year"
-                        value={newCase.car_model || ""}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-                        <option value="">
-                          ตัวเลือก...
-                        </option>
-                          {carYearOption()}
-                        </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Car Sub Model / รุ่นย่อย</label>
-                      <select
-                        name="car_sub_model"
-                        value={newCase.car_sub_model || ""}
-                        onChange={handleChange}
-                        className="browser-default"
-                      >
-                        <option value="">
-                          ตัวเลือก...
-                        </option>
-                          {carSubModelOption()}
-                        </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Current Finance ไฟแนนซ์เดิม</label>
-                      <select
-                        name="old_bank"
-                        value={newCase.old_bank || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกไฟแนนซ์เดิม{" "}
-                        </option>
-                        {financeInstitution.map(ct => (
-                          <option key={uuid.v4()} value={ct}>
-                            {ct}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Finance Institution / สถาบันการเงิน</label>
-                      <select
-                        name="new_bank"
-                        value={(newCase.case_source === 'Thanachart' || newCase.case_source === 'Kiatnakin')?newCase.case_source:newCase.new_bank || "DEFAULT"}
-                        className="browser-default"
-                        onChange={handleChange}
-                        disabled={disableSelect(newCase.case_source)}
-                      >
-                        <option value="DEFAULT" disabled>
-                          เลือกสถาบันการเงิน{" "}
-                        </option>
-                        {financeInstitution.map(ct => (
-                          <option key={uuid.v4()} value={ct}>
-                            {ct}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Approved Amount / ยอดจัด </label>
-                      <input
-                        type="number"
-                        min="0"
-                        name="approve_amount"
-                        value={newCase.approve_amount || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Close Amount / ยอดปิด </label>
-                      <input
-                        type="number"
-                        min="0"
-                        name="close_amount"
-                        value={newCase.close_amount || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Down Payment / ยอดดาวน์</label>
-                      <input
-                        type="number"
-                        min="0"
-                        name="down_amount"
-                        value={newCase.down_amount || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>Old Bank </label>
-                      <input
-                        type="text"
-                        name="old_bank"
-                        value={newCase.old_bank || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>new bank</label>
-                      <input
-                        type="text"
-                        name="new_bank"
-                        value={newCase.new_bank || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>ภาระหนี้</label>
-                      <input
-                        type="text"
-                        name="debt"
-                        value={newCase.old_finance_total_cost || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>กู้ยืม</label>
-                      <input
-                        type="text"
-                        name="total_cost"
-                        disabled
-                        value={newCase.total_cost || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                      <label>ชำระให้ผู้กู้ยืม</label>
-                      <input
-                        type="text"
-                        name="amount_received"
-                        value={newCase.amount_received || ""}
-                        onChange={handleChange}
-                        className="validate"
-                      />
-                    </div>
-                  </div>
-                </div>
-            </TabPanel>
+              </Tabs>
             </div>
-          </Tabs>
-        </div>
 
 
 
@@ -2457,13 +2567,13 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
           {/* <button className="waves-effect btn orange black-text right " onClick={ resetForm } style={ { marginRight: '10px' ,marginLeft: '10px' } }>reset</button> */}
 
 
-    
+
 
           <button
             className="modal-close waves-effect btn blue lighten right "
-            onClick={() => {validateOnclinck()?saveNewCase(newCase,customer,difference,setAllblank):doNotThing()}}
-           
-           
+            onClick={() => { validateOnclinck() ? saveNewCase(newCase, customer, difference, setAllblank) : doNotThing() }}
+
+
           >
             Save
         </button>
@@ -2471,17 +2581,22 @@ const ModalAddCase = ({ saveNewCase,getAllCase }) => {
       </div>
 
 
-      
 
 
-      <ModalExcel />
+
+      <ModalAddCarLead getCartrust_lead={getCartrust_lead} />
+      <ModalAddOfficer getOfficer={getOfficer} />
+      <ModalAddDealer getDealer={getDealer} />
+      <ModalAddFStaff getOperatorS={getOperatorS} />
+      <ModalAddMargin getMargin_account={getMargin_account} />
     </div>
 
-  
 
-    
+
+
   );
 };
+
 
 
 // const mapStateToProps = state => ({

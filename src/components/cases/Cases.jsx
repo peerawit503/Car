@@ -8,7 +8,7 @@ import ModalAddNote from './ModalAddNote';
 import ModalSummary from './ModalSummary';
 import ModalFastTrack from './ModalFastTrack';
 import ModalDeleteCase from './ModalDeleteCase';
-import TheadCase from './TheadCase';
+
 import url from '../../Utility/url'
 import axios from 'axios';
 import uuid from "uuid"
@@ -282,7 +282,8 @@ const Cases = (props) => {
         difference: difference.d1,
         case_receiver: props.user.firstName + ' ' + props.user.lastName,
         user_id: props.user.id,
-        vat7_fee:(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07 
+        vat7_fee:(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07,
+        old_finance_closing_fee:newCase.close_amount
       };
 
       axios
@@ -311,6 +312,8 @@ const Cases = (props) => {
             difference: difference.d1,
             case_receiver: props.user.firstName + ' ' + props.user.lastName,
             user_id: props.user.id,
+            vat7_fee:(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07,
+            old_finance_closing_fee:newCase.close_amount
           };
           if (res.data.message === 'success_addCustomer'){
             console.log(JSON.stringify(data))
