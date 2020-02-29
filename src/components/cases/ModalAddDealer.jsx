@@ -4,7 +4,7 @@ import uuid from "uuid"
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import url from '../../Utility/url'
-
+import M from 'materialize-css/dist/js/materialize.min.js'
 
 
 const ModalAddDealer = ({getDealer }) => {
@@ -23,14 +23,14 @@ const ModalAddDealer = ({getDealer }) => {
   }
 
   const handleChange = e =>{
-    setDealer({ ...officer , [e.target.name] : e.targer.value});
+    setDealer({ ...dealer , [e.target.name] : e.targer.value});
   }
 
 
 
   const saveLead = () =>{
 
-    axios.post(`${url}/dealer` , carLead) 
+    axios.post(`${url}/dealer` , dealer) 
     .then(res => {
       console.log(res)
       M.toast({ html: `${res.data.message}` })
