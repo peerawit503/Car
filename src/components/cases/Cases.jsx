@@ -147,7 +147,7 @@ const Cases = (props) => {
 
   const getAllCase = () => {
     setisLoading(true);
-    axios.get(`${url}/case_all`)
+    axios.get(`${url}/case_limit?size=5&page=1`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -282,8 +282,7 @@ const Cases = (props) => {
         difference: difference.d1,
         case_receiver: props.user.firstName + ' ' + props.user.lastName,
         user_id: props.user.id,
-        vat7_fee:(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07,
-        old_finance_closing_fee:newCase.close_amount
+        
       };
 
       axios
@@ -312,8 +311,7 @@ const Cases = (props) => {
             difference: difference.d1,
             case_receiver: props.user.firstName + ' ' + props.user.lastName,
             user_id: props.user.id,
-            vat7_fee:(parseInt(newCase.book_closing_fee)+parseInt(newCase.transfer_fee))*0.07,
-            old_finance_closing_fee:newCase.close_amount
+            
           };
           if (res.data.message === 'success_addCustomer'){
             console.log(JSON.stringify(data))
