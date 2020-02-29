@@ -586,16 +586,15 @@ const Cases = (props) => {
             <div className="col s12 m6">
               <h3>Cases : <span className="chip  orange">{totalCase}</span></h3>
             </div>
+            <div className="col m6 ">
+            <div className="col m4"></div>
             <div className="new-button col m4">
               <div className="new-button-iner">
-                <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add</a>
+                <a className="btn modal-trigger tde" href="#modalAddCase" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Add Case</a>
               </div>
 
             </div>
-
-
-
-            <div className="new-button col m2 row">
+            <div className="new-button col m4 right">
               <div className="new-button-iner col m12">
                 <a class='dropdown-trigger btn tde-g'
                   href='#'
@@ -618,6 +617,10 @@ const Cases = (props) => {
               </div>
 
             </div>
+            </div>
+
+
+          
 
           </div>
 
