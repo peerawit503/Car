@@ -2063,8 +2063,8 @@ function formatCurrency(input, blur) {
                               type="number"
                               min="0"
                               step="any"
-                              value={newCase.cartrust_other_fee || ""}
-                              name="cartrust_other_fee"
+                              value={newCase.newfinance_other_fee || ""}
+                              name="newfinance_other_fee"
                               onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
@@ -2075,8 +2075,8 @@ function formatCurrency(input, blur) {
                             <label>หมายเหตุ</label>
                             <input
                               type="text"
-                              value={newCase.cartrust_other_fee_note || ""}
-                              name="cartrust_other_fee_note"
+                              value={newCase.newfinance_other_fee_note || ""}
+                              name="newfinance_other_fee_note "
                               onChange={handleChange}
                             />
                           </div>
