@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ModalAddCarLead from './ModalAddCarLead'
 import ModalAddOfficer from './ModalAddOfficer'
 import ModalAddDealer from './ModalAddDealer'
+import ModalAddFStaff from './ModalAddFStaff'
+import ModalAddMargin from './ModalAddMargin'
 import {
   financeInstitution,
   caseSourceAll,
@@ -52,9 +54,9 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     case_receiver: "",
     case_source: "",
 
-    down_amount: "",
-    approve_amount: "",
-    close_amount: "",
+    // down_amount: "",
+    approve_amount: "0",
+    close_amount: "0",
     case_status: "ติดต่อลูกค้าไม่ได้",
     receive_date: currentDateFormat(Date()),
     province: "",
@@ -81,14 +83,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     vat7_fee: "0",
     transfer_fee: "0",
     duty_fee: "0",
-    discount_fee: "0",
+    cartrust_other_fee: "0",
     car_shield_fee: "0",
     car_insurance_fee: "0",
     transfer_service_fee: "0",
     contract_fee: "0",
     outside_transfer_fee: "0",
-    tax_renewal_fee: "0",
-    act_renewal_fee: "0",
+    newfinance_other_fee:"0",
     difference: true,
 
     old_finance_closing_fee_note: "",
@@ -97,14 +98,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     vat7_fee_note: "",
     transfer_fee_note: "",
     duty_fee_note: "",
-    discount_fee_note: "",
+    cartrust_other_fee_note: "",
     car_shield_fee_note: "",
     car_insurance_fee_note: "",
     transfer_service_fee_note: "",
     contract_fee_note: "",
     outside_transfer_fee_note: "",
-    tax_renewal_fee_note: "",
-    act_renewal_fee_note: "",
+    newfinance_other_fee_note:"0",
     car_check_con: "",
     doc_storage_con: "",
     dealer:"",
@@ -145,7 +145,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
   const handleChangeF = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value) });
+    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value?e.target.value:0) });
   };
 
 
@@ -186,7 +186,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     if (e.target.value === 'Kiatnakin' || e.target.value === 'Thanachart') {
       setNewCase({ ...newCase, [e.target.name]: e.target.value, new_bank: e.target.value });
     } else {
-      setNewCase({ ...newCase, [e.target.name]: e.target.value });
+      setNewCase({ ...newCase, [e.target.name]: e.target.value , new_bank:"" });
     }
 
 
@@ -196,7 +196,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
 
   const handleChangeTel = e => {
-    const re = /^[0-9\b]/;
+    const re = /^[0-9]+$/;
     if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length <= 10) {
       if (customer.customer_id === "") {
         setCustomer({ ...customer, [e.target.name]: e.target.value, customer_id: "" });
@@ -210,9 +210,9 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
   };
 
   function CheckRedTel(tel) {
-    const re = /^[0-9\b]/;
+    const re = /^[0-9]+$/;
     if (tel !== "") {
-      if (tel.length < 10 || (re.test(tel))) {
+      if (tel.length < 10 && (re.test(tel))) {
         return true
 
       } else {
@@ -537,8 +537,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
     for (let deal of dealer) {
 
-      result.push(<option value={deal.co_name} dealer_line={deal.line} dealer_line_tel={deal.tel}>
-        {deal.co_name}
+      result.push(<option value={deal.d_name} dealer_line={deal.line} dealer_tel={deal.tel}>
+        {deal.d_name}
       </option>)
     }
     return result;
@@ -689,14 +689,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
       vat7_fee: "0",
       transfer_fee: "0",
       duty_fee: "0",
-      discount_fee: "0",
+      cartrust_other_fee: "0",
       car_shield_fee: "0",
       car_insurance_fee: "0",
       transfer_service_fee: "0",
       contract_fee: "0",
       outside_transfer_fee: "0",
-      tax_renewal_fee: "0",
-      act_renewal_fee: "0",
+     newfinance_other_fee:"0",
       difference: true,
       dealer:"",
       dealer_line: "",
@@ -709,14 +708,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
       vat7_fee_note: "",
       transfer_fee_note: "",
       duty_fee_note: "",
-      discount_fee_note: "",
+      cartrust_other_fee_note: "",
       car_shield_fee_note: "",
       car_insurance_fee_note: "",
       transfer_service_fee_note: "",
       contract_fee_note: "",
       outside_transfer_fee_note: "",
-      tax_renewal_fee_note: "",
-      act_renewal_fee_note: "",
+      newfinance_other_fee_note:"0",
       car_check_con: "",
       doc_storage_con: "",
 
@@ -1136,7 +1134,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
 
         </option>
-        {cartrust_leadOption()}
+        {dealerOption()}
 
       </select>
       <button className="modal-trigger" href="#modalAddDealer">Add</button>
@@ -1633,6 +1631,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
                               onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
                               className="validate"
                             />
                           </div>
@@ -1644,6 +1644,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               name="close_amount"
                               value={newCase.close_amount || ""}
                               onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
                               className="validate"
                             />
                           </div>
@@ -1655,8 +1657,9 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               min="0"
                               step="any"
                               name="old_finance_closing_fee"
-                              value={newCase.old_finance_closing_fee || ""}
-                              onChange={handleChangeF}
+                              value={newCase.close_amount || ""}
+                              // onChange={handleChangeF}
+                              disabled
                               onFocus={deletezero}
                               onBlur={addzero}
                               className="validate"
@@ -1753,9 +1756,9 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               type="number"
                               min="0"
                               step="any"
-                              value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || ""}
+                              value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
                               name="vat7_fee"
-                              readOnly
+                              disabled
                               //onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
@@ -1802,13 +1805,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
 
                           <div className="col s6 m6 l6 content">
-                            <label>ส่วนลดพิเศษ (บาท)</label>
+                            <label>ค่าใช้จ่ายอื่น ๆ</label>
                             <input
                               type="number"
                               min="0"
                               step="any"
-                              value={newCase.discount_fee || ""}
-                              name="discount_fee"
+                              value={newCase.cartrust_other_fee || ""}
+                              name="cartrust_other_fee"
                               onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
@@ -1819,8 +1822,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             <label>หมายเหตุ</label>
                             <input
                               type="text"
-                              value={newCase.discount_fee_note || ""}
-                              name="discount_fee_note"
+                              value={newCase.cartrust_other_fee_note || ""}
+                              name="cartrust_other_fee_note"
                               onChange={handleChange}
                             />
                           </div>
@@ -1834,13 +1837,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               className="input-disable"
                               disabled
                               value={
-                                parseInt(newCase.old_finance_closing_fee) +
                                 parseInt(newCase.old_finance_transfer_fee) +
+                                parseInt(newCase.close_amount) +
                                 parseInt(newCase.book_closing_fee) +
-                                parseInt(newCase.vat7_fee) +
+                                ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
                                 parseInt(newCase.transfer_fee) +
                                 parseInt(newCase.duty_fee) +
-                                parseInt(newCase.discount_fee)}
+                                parseInt(newCase.cartrust_other_fee)}
                               name="cartrust_total_cost"
                             />
                           </div>
@@ -1852,7 +1855,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           </div>
 
                           <div className="col s6 m6 l6 content">
-                            <label>ค่าประกันคุ้มครองสินเชื่อ (บาท)</label>
+                            <label>ค่าประกันสินเชื่อ (บาท)</label>
                             <input
                               type="number"
                               min="0"
@@ -1900,7 +1903,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           </div>
 
                           <div className="col s6 m6 l6 content">
-                            <label>ค่าบริการจัดชุดโอน (บาท)</label>
+                            <label>ค่าบริการชุดโอน (บาท)</label>
                             <input
                               type="number"
                               min="0"
@@ -1949,7 +1952,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           </div>
 
                           <div className="col s6 m6 l6 content">
-                            <label>ค่าโอนนอก (บาท)</label>
+                            <label>ค่าโอน (บาท)</label>
                             <input
                               type="number"
                               min="0"
@@ -1973,13 +1976,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           </div>
 
                           <div className="col s6 m6 l6 content">
-                            <label>ค่าต่อภาษี (บาท)</label>
+                            <label>ค่าใช้จ่ายอื่นๆ</label>
                             <input
                               type="number"
                               min="0"
                               step="any"
-                              value={newCase.tax_renewal_fee || ""}
-                              name="tax_renewal_fee"
+                              value={newCase.cartrust_other_fee || ""}
+                              name="cartrust_other_fee"
                               onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
@@ -1990,35 +1993,12 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             <label>หมายเหตุ</label>
                             <input
                               type="text"
-                              value={newCase.tax_renewal_fee_note || ""}
-                              name="tax_renewal_fee_note"
+                              value={newCase.cartrust_other_fee_note || ""}
+                              name="cartrust_other_fee_note"
                               onChange={handleChange}
                             />
                           </div>
 
-                          <div className="col s6 m6 l6 content">
-                            <label>ค่าต่่อพรบ (บาท)</label>
-                            <input
-                              type="number"
-                              min="0"
-                              step="any"
-                              value={newCase.act_renewal_fee || ""}
-                              name="act_renewal_fee"
-                              onChange={handleChangeF}
-                              onFocus={deletezero}
-                              onBlur={addzero}
-                            />
-                          </div>
-
-                          <div className="col s6 m6 l6 content">
-                            <label>หมายเหตุ</label>
-                            <input
-                              type="text"
-                              value={newCase.act_renewal_fee_note || ""}
-                              name="act_renewal_fee_note"
-                              onChange={handleChange}
-                            />
-                          </div>
 
                           <div className="col s12 m12 l12 content">
                             <div className="col s6 m6 l6 no-margin ">
@@ -2029,14 +2009,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 step="any"
                                 className="input-disable"
                                 disabled
-                                value={
+                                value={(
                                   parseInt(newCase.car_shield_fee) +
                                   parseInt(newCase.car_insurance_fee) +
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
-                                  parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.tax_renewal_fee) +
-                                  parseInt(newCase.act_renewal_fee)}
+                                  parseInt(newCase.outside_transfer_fee)
+                                 )}
                                 name="new_finance_total_cost"
 
                               />
@@ -2051,20 +2030,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 min="0"
                                 step="any"
                                 disabled
-                                value={parseInt(newCase.old_finance_closing_fee) +
-                                  parseInt(newCase.old_finance_transfer_fee) +
+                                value={parseInt(newCase.old_finance_transfer_fee) +
+                                  parseInt(newCase.close_amount) +
                                   parseInt(newCase.book_closing_fee) +
-                                  parseInt(newCase.vat7_fee) +
+                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
                                   parseInt(newCase.transfer_fee) +
                                   parseInt(newCase.duty_fee) +
-                                  parseInt(newCase.discount_fee) +
+                                  parseInt(newCase.cartrust_other_fee) +
                                   parseInt(newCase.car_shield_fee) +
                                   parseInt(newCase.car_insurance_fee) +
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.tax_renewal_fee) +
-                                  parseInt(newCase.act_renewal_fee)}
+                                  parseInt(newCase.newfinance_other_fee) +
+                                  parseInt(newCase.cartrust_other_fee)}
                                 name="total_cost"
                               />
                             </div>
@@ -2079,20 +2058,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 step="any"
                                 disabled
                                 className="input-disable"
-                                value={(parseInt(newCase.old_finance_closing_fee) +
-                                  parseInt(newCase.old_finance_transfer_fee) +
+                                value={(parseInt(newCase.old_finance_transfer_fee) +
+                                  parseInt(newCase.close_amount) +
                                   parseInt(newCase.book_closing_fee) +
-                                  parseInt(newCase.vat7_fee) +
+                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
                                   parseInt(newCase.transfer_fee) +
                                   parseInt(newCase.duty_fee) +
-                                  parseInt(newCase.discount_fee) +
+                                  parseInt(newCase.cartrust_other_fee) +
                                   parseInt(newCase.car_shield_fee) +
                                   parseInt(newCase.car_insurance_fee) +
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.tax_renewal_fee) +
-                                  parseInt(newCase.act_renewal_fee)) - newCase.approve_amount}
+                                  parseInt(newCase.newfinance_other_fee) +
+                                  parseInt(newCase.cartrust_other_fee)) - newCase.approve_amount}
                                 name="amount_received"
 
                               />
@@ -2124,7 +2103,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               disabled
                               className="input-disable"
                               value={
-                                parseInt(newCase.old_finance_closing_fee) +
+                                parseInt(newCase.close_amount) +
                                 parseInt(newCase.old_finance_transfer_fee)
                               }
                               name="old_finance_total_cost"
@@ -2200,7 +2179,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 operaterOption()
                               }
                             </select>
-
+                            <button className="modal-trigger" href="#modalAddFStaff">Add</button>
+                            <br />
                             <label>
                               <span>จังหวัดที่อยู่อาศัย</span></label>
                             <select
@@ -2228,11 +2208,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             >
                               <option value="" disabled>
                                 ธนาคาร...
-                    </option>
+                              </option>
                               {
                                 margin_accountOption()
                               }
                             </select>
+                            <button className="modal-trigger" href="#modalAddMargin">Add</button>
+                            <br />
                             <label>
                               <span>เลขที่บัญชี</span></label>
                             <input
@@ -2605,6 +2587,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
       <ModalAddCarLead getCartrust_lead={getCartrust_lead} />
       <ModalAddOfficer getOfficer={getOfficer} />
       <ModalAddDealer getDealer={getDealer} />
+      <ModalAddFStaff getOperatorS={getOperatorS} />
+      <ModalAddMargin getMargin_account={getMargin_account} />
     </div>
 
 
@@ -2612,6 +2596,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
   );
 };
+
 
 
 // const mapStateToProps = state => ({

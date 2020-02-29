@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import url from '../../Utility/url'
 import M from 'materialize-css/dist/js/materialize.min.js'
+/* img */
+import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalAddDealer = ({getDealer }) => {
-  const [dealer , setDealer] = useState({
+const ModalAddFStaff = ({getOperatorS}) => {
+  const [staff , setStaff] = useState({
     name:"",
     tel:"",
     line:"",
   })
 
   function setAllblank(){
-    setDealer({
+    setStaff({
       name:"",
       tel:"",
       line:"",
@@ -23,24 +25,24 @@ const ModalAddDealer = ({getDealer }) => {
   }
 
   const handleChange = e =>{
-    setDealer({ ...dealer , [e.target.name] : e.target.value});
+    setStaff({ ...staff , [e.target.name] : e.target.value});
   }
 
 
 
-  const saveLead = () =>{
+  const save = () =>{
 
-    axios.post(`${url}/dealer` , dealer) 
+    console.log(JSON.stringify(staff))
+    axios.post(`${url}/finance_staff` , staff )
     .then(res => {
-      console.log(res)
       M.toast({ html: `${res.data.message}` })
+      getOperatorS()
       setAllblank()
-      getDealer()
+      
     })
-    .catch(err =>{
-      M.toast({ html: `fail to add Dealer` })
-      console.log(err)
-    } )
+    .catch(err => { 
+    M.toast({ html: `Error` }) 
+    console.log(err)})
   }
 
   const close = () =>{
@@ -54,12 +56,12 @@ const ModalAddDealer = ({getDealer }) => {
 
   return (
     <div>
-      <div id="modalAddDealer" className="modal modal-fixed-footer">
+      <div id="modalAddFStaff" className="modal modal-fixed-footer">
 
         <div className="row">
           <div className="header-title">
             <div className="col s12 m12 no-col-padding">
-              <h5>เพิ่ม Dealer</h5><br />
+              <h5>เพิ่ม เจ้าหน้าที่ Operator Cartrust</h5><br />
 
 
             </div>
@@ -70,34 +72,34 @@ const ModalAddDealer = ({getDealer }) => {
         {/* body */}
         <div className="cotent-field">
           <div className="row content">
-                    <div className="col s6 m4 l4 content">
-                        <label>Name / ชื่อ - สกุล</label>
+                    <div className="col s6 m6 l4 content">
+                        <label>Name</label>
                         <input
                             type="text"
                             name="name"
-                            value={dealer.name || ""}
+                            value={staff.name || ""}
                             onChange={handleChange}
                             className="validate"
                         />
                     </div>
 
-                    <div className="col s6 m4 l4 content">
+                    <div className="col s6 m6 l4 content">
                         <label>เบอร์โทรศัพท์ / Phone Number </label>
                         <input
                             type="text"
                             name="tel"
-                            value={dealer.tel || ""}
+                            value={staff.tel || ""}
                             onChange={handleChange}
                             className="validate"
                         />
                     </div>
 
-                    <div className="col s6 m4 l4 content">
+                    <div className="col s6 m6 l4 content">
                         <label>ไลน์  / Line </label>
                         <input
                             type="text"
                             name="line"
-                            value={dealer.line || ""}
+                            value={staff.line || ""}
                             onChange={handleChange}
                             className="validate"
                         />
@@ -112,7 +114,7 @@ const ModalAddDealer = ({getDealer }) => {
 
 
         <div className="modal-footer">
-          <button className="modal-close waves-effect btn white black-text left" onClick={() => saveLead()}>Save</button>
+          <button className="modal-close waves-effect btn white black-text left" onClick={() => save()}>Save</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()} >close</button>
         </div>
       </div>
@@ -121,4 +123,4 @@ const ModalAddDealer = ({getDealer }) => {
   )
 }
 
-export default ModalAddDealer
+export default ModalAddFStaff

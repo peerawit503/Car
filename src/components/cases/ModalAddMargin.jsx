@@ -9,40 +9,38 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalAddOfficer = ({getOfficer}) => {
-  const [officer , setOfficer] = useState({
+const ModalAddMargin = ({getMargin_account}) => {
+  const [margin , setMargin] = useState({
     name:"",
-    tel:"",
-    line:"",
+
   })
 
   function setAllblank(){
-    setOfficer({
+    setMargin({
       name:"",
-      tel:"",
-      line:"",
+  
     })
   }
 
   const handleChange = e =>{
-    setOfficer({ ...officer , [e.target.name] : e.target.value});
+    setMargin({ ...margin , [e.target.name] : e.target.value});
   }
 
 
 
   const save = () =>{
 
-    console.log(JSON.stringify(officer))
-    axios.post(`${url}/contract_officer` , officer )
+    console.log(JSON.stringify(margin))
+    axios.post(`${url}/margin_account` , margin )
     .then(res => {
       M.toast({ html: `${res.data.message}` })
-      getOfficer()
+      getMargin_account()
+      setAllblank()
       
     })
     .catch(err => { 
-      M.toast({ html: `Error` }) 
+    M.toast({ html: `Error` }) 
     console.log(err)})
-    setAllblank()
   }
 
   const close = () =>{
@@ -56,12 +54,12 @@ const ModalAddOfficer = ({getOfficer}) => {
 
   return (
     <div>
-      <div id="modalAddOfficer" className="modal modal-fixed-footer">
+      <div id="modalAddMargin" className="modal modal-fixed-footer">
 
         <div className="row">
           <div className="header-title">
             <div className="col s12 m12 no-col-padding">
-              <h5>เพิ่ม เจ้าหน้าที่ทำสัญญา / Contract officer</h5><br />
+              <h5>เพิ่ม บัญชีรับเงินส่วนต่าง</h5><br />
 
 
             </div>
@@ -72,38 +70,18 @@ const ModalAddOfficer = ({getOfficer}) => {
         {/* body */}
         <div className="cotent-field">
           <div className="row content">
-                    <div className="col s6 m6 l4 content">
-                        <label>Name / ชื่อ - สกุล</label>
+                    <div className="col s6 m6 l6 content">
+                        <label>Name</label>
                         <input
                             type="text"
                             name="name"
-                            value={officer.name || ""}
+                            value={margin.name || ""}
                             onChange={handleChange}
                             className="validate"
                         />
                     </div>
 
-                    <div className="col s6 m6 l4 content">
-                        <label>เบอร์โทรศัพท์ / Phone Number </label>
-                        <input
-                            type="text"
-                            name="tel"
-                            value={officer.tel || ""}
-                            onChange={handleChange}
-                            className="validate"
-                        />
-                    </div>
-
-                    <div className="col s6 m6 l4 content">
-                        <label>ไลน์  / Line </label>
-                        <input
-                            type="text"
-                            name="line"
-                            value={officer.line || ""}
-                            onChange={handleChange}
-                            className="validate"
-                        />
-                    </div>
+                    
           
                
           </div>
@@ -123,4 +101,4 @@ const ModalAddOfficer = ({getOfficer}) => {
   )
 }
 
-export default ModalAddOfficer
+export default ModalAddMargin
