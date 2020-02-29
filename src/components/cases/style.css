@@ -12,9 +12,14 @@
     top:20%!important;
     height: 50%!important;
 }
-#modalAddCarLead{
+#modalAddCarLead {
     top:20%!important;
-    height: 30%!important;
+    height: 50%!important;
+}
+
+#modalAddOfficer{
+    top:20%!important;
+    height: 40%!important;
 }
 
 .tabslist{

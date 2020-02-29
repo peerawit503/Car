@@ -1,69 +1,65 @@
 import React, { useState, useEffect } from 'react'
-
-
+import { financeInstitution, caseSourceAll, caseTypeAll, caseStatus, provinceAll } from '../../Utility/dataCase'
+import uuid from "uuid"
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import url from '../../Utility/url'
 
-import M from 'materialize-css/dist/js/materialize.min.js'
 
-const ModalAddCarLead = ({getCartrust_lead}) => {
-  const [carLead , setcarLead] = useState({
-    cl_id4 : "",
-    name : "",
+
+const ModalAddDealer = ({getDealer }) => {
+  const [dealer , setDealer] = useState({
+    name:"",
     tel:"",
-    line:""
+    line:"",
   })
 
   function setAllblank(){
-    setcarLead({
-      cl_id4 : "",
-      name : "",
+    setDealer({
+      name:"",
       tel:"",
-      line:""
+      line:"",
     })
   }
 
-  const handleChange = (e) =>{
-    setcarLead({ ...carLead , [e.target.name] : e.target.value});
+  const handleChange = e =>{
+    setDealer({ ...officer , [e.target.name] : e.targer.value});
   }
 
 
 
   const saveLead = () =>{
 
-
-    axios.post(`${url}/cartrust_lead` , carLead)
+    axios.post(`${url}/dealer` , carLead) 
     .then(res => {
       console.log(res)
       M.toast({ html: `${res.data.message}` })
       setAllblank()
-      getCartrust_lead()
+      getDealer()
     })
     .catch(err =>{
       M.toast({ html: `fail to add cartrust lead` })
       console.log(err)
     } )
-    
   }
 
   const close = () =>{
-    console.log(carLead)
-    setcarLead({})
-    console.log(carLead)
     setAllblank()
   }
+
+  
 
   
 
 
   return (
     <div>
-      <div id="modalAddCarLead" className="modal modal-fixed-footer">
+      <div id="modalAddDealer" className="modal modal-fixed-footer">
 
         <div className="row">
           <div className="header-title">
             <div className="col s12 m12 no-col-padding">
-              <h5>Cartust Lead Refer</h5><br />
+              <h5>เพิ่ม เจ้าหน้าที่ทำสัญญา / Contract officer</h5><br />
 
 
             </div>
@@ -75,44 +71,33 @@ const ModalAddCarLead = ({getCartrust_lead}) => {
         <div className="cotent-field">
           <div className="row content">
                     <div className="col s6 m4 l4 content">
-                        <label>Lead No / หมายเลข</label>
-                        <input
-                            type="text"
-                            name="cl_id4"
-                            value={carLead.cl_id4 || ""}
-                            onChange={handleChange}
-                            className="validate"
-                        />
-                    </div>
-
-                    <div className="col s6 m4 l4 content">
-                        <label>Name / ชื่อ-สกุล</label>
+                        <label>Name / ชื่อ - สกุล</label>
                         <input
                             type="text"
                             name="name"
-                            value={carLead.name || ""}
+                            value={dealer.name || ""}
                             onChange={handleChange}
                             className="validate"
                         />
                     </div>
 
                     <div className="col s6 m4 l4 content">
-                        <label>Phone / เบอร์โทรศัพท์</label>
+                        <label>เบอร์โทรศัพท์ / Phone Number </label>
                         <input
                             type="text"
                             name="tel"
-                            value={carLead.tel || ""}
+                            value={dealer.tel || ""}
                             onChange={handleChange}
                             className="validate"
                         />
                     </div>
 
                     <div className="col s6 m4 l4 content">
-                        <label>Line / ไลน์</label>
+                        <label>ไลน์  / Line </label>
                         <input
                             type="text"
                             name="line"
-                            value={carLead.line || ""}
+                            value={dealer.line || ""}
                             onChange={handleChange}
                             className="validate"
                         />
@@ -121,6 +106,9 @@ const ModalAddCarLead = ({getCartrust_lead}) => {
                
           </div>
         </div>
+
+
+
 
 
         <div className="modal-footer">
@@ -133,4 +121,4 @@ const ModalAddCarLead = ({getCartrust_lead}) => {
   )
 }
 
-export default ModalAddCarLead
+export default ModalAddDealer
