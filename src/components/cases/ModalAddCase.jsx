@@ -2124,8 +2124,8 @@ function formatCurrency(input, blur) {
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.newfinance_other_fee) +
-                                  parseInt(newCase.cartrust_other_fee)}
+                                  parseInt(newCase.newfinance_other_fee) 
+                                 }
                                 name="total_cost"
                               />
                             </div>
