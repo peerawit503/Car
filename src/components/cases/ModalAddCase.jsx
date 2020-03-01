@@ -21,6 +21,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { REHYDRATE } from "redux-persist";
 
+import CurrencyFormat from 'react-currency-format';
+
 
 const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
@@ -154,13 +156,28 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
+  const handleChangeCurrency = e => {
 
-  function formatCurrency(input, blur) {
+    setNewCase({ ...newCase, [e.target.name]: e.target.value?e.target.value : 0 });
+  };
+  
+  const handleChangeCurrencyxxx = e => {
+
+    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value,"")?formatCurrency(e.target.value,"") : 0.00 });
+  };
+
+  const handleOnBlurCurrencyxxx = e => {
+
+    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value,"blur")?formatCurrency(e.target.value,"blur") : 0.00 });
+  };
+
+ 
+  function formatCurrency(input,blur) {
     // appends $ to value, validates decimal side
     // and puts cursor back in right position.
 
     // get input value
-    var input_val = input.val();
+    var input_val = input;
 
     // don't validate empty input
     if (input_val === "") { return; }
@@ -169,7 +186,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     var original_len = input_val.length;
 
     // initial caret position 
-    var caret_pos = input.prop("selectionStart");
+    // var caret_pos = input.prop("selectionStart");
 
     // check for decimal
     if (input_val.indexOf(".") >= 0) {
@@ -198,14 +215,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
       right_side = right_side.substring(0, 2);
 
       // join number by .
-      input_val = "$" + left_side + "." + right_side;
+      input_val =  left_side + "." + right_side;
 
     } else {
       // no decimal entered
       // add commas to number
       // remove all non-digits
       input_val = formatNumber(input_val);
-      input_val = "$" + input_val;
+      input_val =  input_val;
 
       // final formatting
       if (blur === "blur") {
@@ -214,18 +231,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     }
 
     // send updated string to input
-    input.val(input_val);
-
+    // input.val(input_val);
+    return input_val;
     // put caret back in the right position
-    var updated_len = input_val.length;
-    caret_pos = updated_len - original_len + caret_pos;
-    input[0].setSelectionRange(caret_pos, caret_pos);
+    // var updated_len = input_val.length;
+    // caret_pos = updated_len - original_len + caret_pos;
+    // input[0].setSelectionRange(caret_pos, caret_pos);
   }
 
-  const handleChangeCurrentcy = e => {
-
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value ? e.target.value : 0) });
-  };
 
 
 
@@ -1704,19 +1717,31 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
 
                           <div className="col s6 m6 l6 content">
-                            <label>Approved Amount / ยอดจัด </label>
+                            <label>Approved Amount / ยอดจัดฟฟฟฟฟฟฟฟฟฟ </label>
                             <input
-                              type="number"
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
-                              onChange={handleChangeCurrentcy}
+                              onChange={handleChangeCurrencyxxx}
                               onFocus={deletezero}
-                              onBlur={addzero}
+                              onBlur={addzero,handleOnBlurCurrencyxxx}
                               className="validate"
-                              pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                             />
                           </div>
 
+                          <div className="col s6 m6 l6 content">
+                            <label>Approved Amount / ยอดจัด </label>
+                            <CurrencyFormat
+                              thousandSeparator={true}
+                              // type="number"
+                              name="approve_amount"
+                              value={newCase.approve_amount || ""}
+                              onChange={handleChangeCurrency}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
+                          </div>
+                          
 
 
 
@@ -1740,8 +1765,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               <input
                                 type="number"
                                 name="down_amount"
-                                value={newCase.down_amount || "0"}
-                                onChange={handleChangeCurrentcy}
+                                value={newCase.down_amount || ""}
+                                onChange={handleChangeCurrency}
                                 onFocus={deletezero}
                                 onBlur={addzero}
                                 className="validate"

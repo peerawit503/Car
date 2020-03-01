@@ -18,6 +18,9 @@ import cartrustLogo from "../../img/cartrustLogo.png";
 import url from "../../Utility/url";
 import moment from "moment";
 
+import CurrencyFormat from 'react-currency-format';
+
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 pdfMake.fonts = {
@@ -199,6 +202,25 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     }
 
   };
+
+  const handleChangeCurrency = e => {
+    //  const {formattedValue, value} = values
+    if (e.target.value == "") {
+      setNewF2({
+        ...newF2,
+        [e.target.name]: "0"
+      });
+    } else {
+      
+      
+      setNewF2({
+        ...newF2,
+        [e.target.name]: parseInt(e.target.value)
+      });
+    }
+  };
+
+
 
   const handleChangeCartrustWork = e => {
     setCartrustWork({ ...cartrustWork, [e.target.name]: e.target.value });
@@ -1516,13 +1538,19 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
       result.push(
         <div className="col s6 m6 l6 content">
           <label>จำนวนเงินโอน (บาท) </label>
-          <input
-            type="number"
+          <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+            const {formattedValue, value} = values;
+            setNewF2({
+            ...newF2,
+            cheque : value
+            })}}
             min="0"
             step="any"
             value={newF2.cheque || singleCase.f2_cheque}
             name="cheque"
-            onChange={handleChangeF2}
+            // onChange={handleChangeF2}
             onFocus={deletezero}
             onBlur={addzero}
           />
@@ -1549,13 +1577,19 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
         <div className="col s6 m6 l6 content">
           <label>จ่ายมัดจำ (บาท) </label>
-          <input
-            type="number"
+          <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+            const {formattedValue, value} = values;
+            setNewF2({
+            ...newF2,
+            deposit : value
+            })}}
             min="0"
             step="any"
             value={newF2.deposit || singleCase.f2_deposit}
             name="deposit"
-            onChange={handleChangeF2}
+            // onChange={handleChangeF2}
             onFocus={deletezero}
             onBlur={addzero}
           />
@@ -1715,41 +1749,61 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>Approved Amount / ยอดจัด </label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                  thousandSeparator={true}
+                  onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                      ...newF2,
+                      approve_amount: value
+                    })}}
                     name="approve_amount"
                     value={newF2.approve_amount || singleCase.approve_amount || "0"}
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeCurrency}
                     onFocus={deletezero}
                     onBlur={addzero}
                     className="validate"
+                  
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>Close Amount / ยอดปิด </label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                  thousandSeparator={true}
                     name="close_amount"
                     value={newF2.close_amount || singleCase.close_amount || "0"}
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                     className="validate"
+                    onValueChange={(values) => {
+                      const {formattedValue, value} = values;
+                      setNewF2({
+                      ...newF2,
+                      close_amount : value
+                      })}}
                   />
                 </div>
                 
                 <div className="row col l12 no-col-padding-both no-col-margin">
                 <div className="col s6 m6 l6 content">
                   <label>Down / ดาวน์ </label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    down_amount : value
+                    })}}
                     name="down_amount"
                     value={newF2.down_amount || singleCase.down_amount || "0"}
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                     className="validate"
+                  
                   />
                 </div>
                 
@@ -1759,8 +1813,14 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    old_finance_closing_fee : value
+                    })}}
                     step="any"
                     name="old_finance_closing_fee"
                     onFocus={deletezero}
@@ -1790,14 +1850,21 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าโอนไฟแนนซ์เก่า</label>
-                  <input
-                    type="number"
-                    min="0"
-                    step="any"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    old_finance_transfer_fee : value
+                    })}}
+                    // min="0"
+                    // step="any"
                     onFocus={deletezero}
                     value={newF2.old_finance_transfer_fee || singleCase.f2_old_finance_transfer_fee}
                     name="old_finance_transfer_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeCurrency}
+
                   />
                 </div>
 
@@ -1808,7 +1875,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.old_finance_transfer_fee_note || singleCase.f2_old_finance_transfer_fee_note}
                     name="old_finance_transfer_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
@@ -1816,14 +1883,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าบริการปิดเล่ม</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    book_closing_fee : value
+                    })}}
                     min="0"
                     step="any"
                     onFocus={deletezero}
                     value={newF2.book_closing_fee || singleCase.f2_book_closing_fee}
                     name="book_closing_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                   />
                 </div>
 
@@ -1834,20 +1907,26 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     onFocus={deletezero}
                     value={newF2.book_closing_fee_note || singleCase.f2_book_closing_fee_note}
                     name="book_closing_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าโอน (บาท)</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    transfer_fee : value
+                    })}}
                     min="0"
                     step="any"
                     onFocus={deletezero}
                     value={newF2.transfer_fee || singleCase.f2_transfer_fee}
                     name="transfer_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                   />
                 </div>
 
@@ -1858,7 +1937,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     onFocus={deletezero}
                     value={newF2.transfer_fee_note || singleCase.f2_transfer_fee_note}
                     name="transfer_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
@@ -1867,8 +1946,14 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ภาษีมูลค่าเพิ่ม 7%</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    vat7_fee : value
+                    })}}
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -1887,7 +1972,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.vat7_fee_note || singleCase.f2_vat7_fee_note}
                     name="vat7_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
@@ -1895,14 +1980,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าอากร</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    duty_fee : value
+                    })}}
                     min="0"
                     step="any"
                     onFocus={deletezero}
                     value={newF2.duty_fee || singleCase.f2_duty_fee}
                     name="duty_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                   />
                 </div>
 
@@ -1913,20 +2004,26 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     onFocus={deletezero}
                     value={newF2.duty_fee_note || singleCase.f2_duty_fee_note}
                     name="duty_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าใช้จ่ายอื่น ๆ</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    cartrust_other_fee : value
+                    })}}
                     min="0"
                     step="any"
                     onFocus={deletezero}
                     value={newF2.cartrust_other_fee || singleCase.f2_cartrust_other_fee}
                     name="cartrust_other_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                   />
                 </div>
 
@@ -1936,14 +2033,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.cartrust_other_fee_note || singleCase.f2_cartrust_other_fee_note}
                     name="cartrust_other_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>รวมค่าใช้จ่ายคาร์ทรัส</label>
-                  <input
-                    type="number"
+                  <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    cartrust_total_cost : value
+                    })}}
                     min="0"
                     step="any"
                     disabled
@@ -1968,13 +2071,19 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าประกันคุ้มครองสินเชื่อ (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    car_shield_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.car_shield_fee || singleCase.f2_car_shield_fee}
                     name="car_shield_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -1986,19 +2095,25 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.car_shield_fee_note || singleCase.f2_car_shield_fee_note}
                     name="car_shield_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าประกันภัยรถยนต์ (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    car_insurance_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.car_insurance_fee || singleCase.f2_car_insurance_fee}
                     name="car_insurance_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -2010,19 +2125,25 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.car_insurance_fee_note || singleCase.f2_car_insurance_fee_note}
                     name="car_insurance_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าบริการจัดชุดโอน (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    transfer_service_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.transfer_service_fee || singleCase.f2_transfer_service_fee}
                     name="transfer_service_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -2035,19 +2156,25 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                     value={newF2.transfer_service_fee_note || singleCase.f2_transfer_service_fee_note}
                     name="transfer_service_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าทำสัญญา (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    contract_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.contract_fee || singleCase.f2_contract_fee}
                     name="contract_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -2059,19 +2186,25 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.contract_fee_note || singleCase.f2_contract_fee_note}
                     name="contract_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าโอนนอก (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    outside_transfer_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.outside_transfer_fee || singleCase.f2_outside_transfer_fee}
                     name="outside_transfer_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -2083,20 +2216,26 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.outside_transfer_fee_note || singleCase.f2_outside_transfer_fee_note}
                     name="outside_transfer_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 
                 <div className="col s6 m6 l6 content">
                   <label>ค่าใช้จ่ายอื่นๆ (บาท)</label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    newfinance_other_fee : value
+                    })}}
                     min="0"
                     step="any"
                     value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee}
                     name="newfinance_other_fee"
-                    onChange={handleChangeF2}
+                    // onChange={handleChangeF2}
                     onFocus={deletezero}
                     onBlur={addzero}
                   />
@@ -2108,26 +2247,32 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     type="text"
                     value={newF2.newfinance_other_fee_note || singleCase.f2_newfinance_other_fee_note}
                     name="newfinance_other_fee_note"
-                    onChange={handleChangeF2T}
+                    // onChange={handleChangeF2T}
                   />
                 </div>
 
                 <div className="col s12 m12 l12 content">
                   <div className="col s6 m6 l6 no-margin ">
                     <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ (บาท)</label>
-                    <input
-                      type="number"
+                    <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    new_finance_total_cost : value
+                    })}}
                       min="0"
                       step="any"
                       className="input-disable"
                       disabled
                       value={
-                        parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
-                        parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
-                        parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
-                        parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
-                        parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
-                        parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee) 
+                        parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
+                        parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
+                        parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
+                        parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
+                        parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
+                        parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee) 
                       }
                       name="new_finance_total_cost"
 
@@ -2138,25 +2283,33 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                 <div className="col s6 m12 l12 content">
                   <div className="col s6 m6 l6 no-margin ">
                     <label>รวมค่าใช้จ่ายทั้งหมด (บาท) </label>
-                    <input
-                      type="number"
+                   <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    total_cost: value
+                    })}}
                       min="0"
                       step="any"
                       disabled
-                      value={parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
-                        parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee) +
-                        parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) +
-                       ((parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
-                        parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07) +
-                        parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
-                        parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
-                        parseInt(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
-                        parseInt(newF2.car_shield_fee ? newF2.act_car_shield_fee : singleCase.f2_car_shield_fee) +
-                        parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
-                        parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
-                        parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
-                        parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
-                        parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee) }
+                      value={parseFloat(
+                        parseFloat(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
+                        parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee) +
+                        parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) +
+                       ((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
+                        parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07) +
+                        parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
+                        parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
+                        parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
+                        parseFloat(newF2.car_shield_fee ? newF2.act_car_shield_fee : singleCase.f2_car_shield_fee) +
+                        parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
+                        parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
+                        parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
+                        parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
+                        parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee)
+                        )}
                       name="total_cost"
                     />
                   </div>
@@ -2165,13 +2318,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                 <div className="col s6 m12 l12 content">
                   <div className="col s6 m6 l6 no-margin ">
                     <label>ยอดเงินที่จะได้รับ (บาท) </label>
-                    <input
-                      type="number"
+                   <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    amount_received : value
+                    })}}
                       min="0"
                       step="any"
                       disabled
                       className="input-disable"
-                      value={(parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
+                      value={parseFloat(
+                        (parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
                         parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee) +
                         parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) +
                        ((parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
@@ -2184,7 +2344,8 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                         parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
                         parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
                         parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
-                        parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee)) - (newF2.approve_amount ? newF2.approve_amount : singleCase.approve_amount)}
+                        parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee)) - (newF2.approve_amount ? newF2.approve_amount : singleCase.approve_amount)
+                        )}
                       name="amount_received"
 
                     />
@@ -2209,8 +2370,14 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
                 <div className="col s6 m6 l6 content">
                   <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
-                  <input
-                    type="number"
+                <CurrencyFormat
+                    thousandSeparator={true}
+                    onValueChange={(values) => {
+                    const {formattedValue, value} = values;
+                    setNewF2({
+                    ...newF2,
+                    old_finance_total_cost : value
+                    })}}
                     min="0"
                     step="any"
                     disabled
