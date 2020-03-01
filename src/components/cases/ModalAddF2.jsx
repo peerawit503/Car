@@ -2303,7 +2303,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                         parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
                         parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
                         parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
-                        parseFloat(newF2.car_shield_fee ? newF2.act_car_shield_fee : singleCase.f2_car_shield_fee) +
+                        parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
                         parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
                         parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
                         parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
@@ -2339,7 +2339,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                         parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
                         parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
                         parseInt(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
-                        parseInt(newF2.car_shield_fee ? newF2.act_car_shield_fee : singleCase.f2_car_shield_fee) +
+                        parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
                         parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
                         parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
                         parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
