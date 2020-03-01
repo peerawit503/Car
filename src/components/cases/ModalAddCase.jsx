@@ -269,7 +269,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     let tel_text = name + '_tel'
     let line = optionElement.getAttribute(line_text);
     let tel = optionElement.getAttribute(tel_text);
-    setNewCase({ ...newCase, cartrust_lead_refer: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+    setNewCase({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
 
   };
 
@@ -1037,6 +1037,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
             ...newCase,
             cheque : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newCase.cheque || ""}
@@ -1076,6 +1077,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
             ...newCase,
             deposit : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newCase.deposit || ""}
@@ -1738,6 +1740,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               approve_amount : value
                               })}}
+                              decimalScale= "2"
                               // 
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
@@ -1761,6 +1764,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               close_amount : value
                               })}}
+                              decimalScale= "2"
                               name="close_amount"
                               value={newCase.close_amount || ""}
                               // onChange={handleChangeF}
@@ -1774,11 +1778,18 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           <div className="row col l12 no-col-padding-both no-col-margin">
                             <div className="col s6 m6 l6 content">
                               <label>Down / ดาวน์ </label>
-                              <input
-                                
+                              <CurrencyFormat
+                                thousandSeparator={true}
+                                onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                setNewCase({
+                                ...newCase,
+                                down_amount : value
+                                })}}
+                                decimalScale= "2"
                                 name="down_amount"
                                 value={newCase.down_amount || ""}
-                                onChange={handleChangeCurrency}
+                                // onChange={handleChangeCurrency}
                                 onFocus={deletezero}
                                 onBlur={addzero}
                                 className="validate"
@@ -1797,6 +1808,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_closing_fee  : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               name="old_finance_closing_fee"
@@ -1829,6 +1841,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_transfer_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               name="old_finance_transfer_fee"
@@ -1861,6 +1874,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               book_closing_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.book_closing_fee || ""}
@@ -1891,6 +1905,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               transfer_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.transfer_fee || ""}
@@ -1921,6 +1936,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               vat7_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
@@ -1955,6 +1971,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               duty_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
 
@@ -1987,6 +2004,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               cartrust_other_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.cartrust_other_fee || ""}
@@ -2017,6 +2035,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               cartrust_total_cost : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               className="input-disable"
@@ -2049,6 +2068,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               car_shield_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.car_shield_fee || ""}
@@ -2079,6 +2099,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               car_insurance_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.car_insurance_fee || ""}
@@ -2109,6 +2130,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               transfer_service_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.transfer_service_fee || ""}
@@ -2140,6 +2162,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               contract_fee : value
                               })}}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.contract_fee || ""}
@@ -2170,6 +2193,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               outside_transfer_fee: value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.outside_transfer_fee || ""}
@@ -2200,6 +2224,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               newfinance_other_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.newfinance_other_fee || ""}
@@ -2232,6 +2257,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 new_finance_total_cost : value
                                 })}}
+                                decimalScale= "2"
                                 min="0"
                                 step="any"
                                 className="input-disable"
@@ -2260,6 +2286,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 total_cost : value
                                 })}}
+                                decimalScale= "2"
                                 min="0"
                                 step="any"
                                 disabled
@@ -2293,6 +2320,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 amount_received : value
                                 })}}
+                                decimalScale= "2"                                
                                 min="0"
                                 step="any"
                                 disabled
@@ -2343,6 +2371,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_total_cost : value
                               })}}
+                                decimalScale= "2"
                               min="0"
                               step="any"
                               disabled
@@ -2695,36 +2724,61 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                         <div className="col s6 m4 l4 content">
                           <label>Approved Amount / ยอดจัด </label>
-                          <input
-                            
-                            min="0"
-                            name="approve_amount"
-                            value={newCase.approve_amount || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              approve_amount : value
+                              })}}
+                                decimalScale= "2"
+                              // 
+                              name="approve_amount"
+                              value={newCase.approve_amount || ""}
+                              // onChange={handleChangeCurrency}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>Close Amount / ยอดปิด </label>
-                          <input
-                            
-                            min="0"
-                            name="close_amount"
-                            value={newCase.close_amount || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              close_amount : value
+                              })}}
+                                decimalScale= "2"
+                              name="close_amount"
+                              value={newCase.close_amount || ""}
+                              // onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>Down Payment / ยอดดาวน์</label>
-                          <input
-                            
-                            min="0"
+                          <CurrencyFormat
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                            const {formattedValue, value} = values;
+                            setNewCase({
+                            ...newCase,
+                            down_amount : value
+                            })}}
+                                decimalScale= "2"
                             name="down_amount"
                             value={newCase.down_amount || ""}
-                            onChange={handleChange}
+                            // onChange={handleChangeCurrency}
+                            onFocus={deletezero}
+                            onBlur={addzero}
                             className="validate"
                           />
                         </div>
@@ -2753,35 +2807,90 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                         <div className="col s6 m4 l4 content">
                           <label>ภาระหนี้</label>
-                          <input
-                            type="text"
-                            name="debt"
-                            value={newCase.old_finance_total_cost || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              old_finance_total_cost : value
+                              })}}
+                                decimalScale= "2"
+                              min="0"
+                              step="any"
+                              disabled
+                              className="input-disable"
+                              value={
+                                parseInt(newCase.close_amount) +
+                                parseInt(newCase.old_finance_transfer_fee)
+                              }
+                              name="old_finance_total_cost"
+
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>กู้ยืม</label>
-                          <input
-                            type="text"
-                            name="total_cost"
-                            disabled
-                            value={newCase.total_cost || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                          thousandSeparator={true}
+                          onValueChange={(values) => {
+                          const {formattedValue, value} = values;
+                          setNewCase({
+                          ...newCase,
+                          total_cost : value
+                          })}}
+                                decimalScale= "2"
+                          min="0"
+                          step="any"
+                          disabled
+                          value={parseInt(newCase.old_finance_transfer_fee) +
+                            parseInt(newCase.close_amount) +
+                            parseInt(newCase.book_closing_fee) +
+                            ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                            parseInt(newCase.transfer_fee) +
+                            parseInt(newCase.duty_fee) +
+                            parseInt(newCase.cartrust_other_fee) +
+                            parseInt(newCase.car_shield_fee) +
+                            parseInt(newCase.car_insurance_fee) +
+                            parseInt(newCase.transfer_service_fee) +
+                            parseInt(newCase.contract_fee) +
+                            parseInt(newCase.outside_transfer_fee) +
+                            parseInt(newCase.newfinance_other_fee)
+                          }
+                          name="total_cost"
+                        />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>ชำระให้ผู้กู้ยืม</label>
-                          <input
-                            type="text"
+                          <CurrencyFormat
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                            const {formattedValue, value} = values;
+                            setNewCase({
+                            ...newCase,
+                            amount_received : value
+                            })}}
+                                decimalScale= "2"
+                            min="0"
+                            step="any"
+                            disabled
+                            className="input-disable"
+                            value={(parseInt(newCase.old_finance_transfer_fee) +
+                              parseInt(newCase.close_amount) +
+                              parseInt(newCase.book_closing_fee) +
+                              ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                              parseInt(newCase.transfer_fee) +
+                              parseInt(newCase.duty_fee) +
+                              parseInt(newCase.cartrust_other_fee) +
+                              parseInt(newCase.car_shield_fee) +
+                              parseInt(newCase.car_insurance_fee) +
+                              parseInt(newCase.transfer_service_fee) +
+                              parseInt(newCase.contract_fee) +
+                              parseInt(newCase.outside_transfer_fee) +
+                              parseInt(newCase.newfinance_other_fee)
+                            ) - newCase.approve_amount}
                             name="amount_received"
-                            value={newCase.amount_received || ""}
-                            onChange={handleChange}
-                            className="validate"
                           />
                         </div>
                       </div>
