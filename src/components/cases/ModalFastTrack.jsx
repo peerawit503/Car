@@ -79,10 +79,14 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
       setisConfirm(false)
          //return +F2 button
         return ( 
-        <div>
-          <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
-          <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
-        </div>
+          <div>
+            <div className="row center">
+              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
+            </div>
+            <div className="row">
+                <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
+            </div>
+          </div>
        );
       
     }
@@ -156,9 +160,11 @@ const ModalFastTrack = ({ singleCase , confirm, translate} ) => {
                       name="receive_date"
                       onChange={handleChange}
                     />
+                    <ValidateCase singleCase={singleCase} />
                   </div>
-                  <div className="col s4 m4 l4 content"></div>
-            <ValidateCase singleCase={singleCase} />
+            <div className="col s4 m4 l4 content">
+            </div>
+                
             <Renderfooter />
           </div>
         </div>
