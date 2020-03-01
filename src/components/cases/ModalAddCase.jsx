@@ -1020,9 +1020,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
           <label>โอนเงินให้ </label>
           <input
             type="text"
-
             value={customer.firstname + " " + customer.lastname}
-
             name="cheque_receiver"
             disabled
           />
@@ -1031,13 +1029,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
       result.push(
         <div className="col s6 m6 l6 content">
           <label>จำนวนเงินโอน (บาท) </label>
-          <input
-            type="number"
+          <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+            const {formattedValue, value} = values;
+            setNewCase({
+            ...newCase,
+            cheque : value
+            })}}
             min="0"
             step="any"
             value={newCase.cheque || ""}
             name="cheque"
-            onChange={handleChangeF}
+            // onChange={handleChangeF}
             onFocus={deletezero}
             onBlur={addzero}
           />
@@ -1064,13 +1068,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
         <div className="col s6 m6 l6 content">
           <label>จ่ายมัดจำ (บาท) </label>
-          <input
-            type="number"
+          <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+            const {formattedValue, value} = values;
+            setNewCase({
+            ...newCase,
+            deposit : value
+            })}}
             min="0"
             step="any"
             value={newCase.deposit || ""}
             name="deposit"
-            onChange={handleChangeF}
+            // onChange={handleChangeF}
             onFocus={deletezero}
             onBlur={addzero}
           />
@@ -1716,26 +1726,22 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           </div>
 
 
-                          <div className="col s6 m6 l6 content">
-                            <label>Approved Amount / ยอดจัดฟฟฟฟฟฟฟฟฟฟ </label>
-                            <input
-                              name="approve_amount"
-                              value={newCase.approve_amount || ""}
-                              onChange={handleChangeCurrencyxxx}
-                              onFocus={deletezero}
-                              onBlur={addzero,handleOnBlurCurrencyxxx}
-                              className="validate"
-                            />
-                          </div>
+                    
 
                           <div className="col s6 m6 l6 content">
                             <label>Approved Amount / ยอดจัด </label>
                             <CurrencyFormat
                               thousandSeparator={true}
-                              // type="number"
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              approve_amount : value
+                              })}}
+                              // 
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
-                              onChange={handleChangeCurrency}
+                              // onChange={handleChangeCurrency}
                               onFocus={deletezero}
                               onBlur={addzero}
                               className="validate"
@@ -1747,11 +1753,17 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>Close Amount / ยอดปิด </label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              close_amount : value
+                              })}}
                               name="close_amount"
                               value={newCase.close_amount || ""}
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                               className="validate"
@@ -1763,7 +1775,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             <div className="col s6 m6 l6 content">
                               <label>Down / ดาวน์ </label>
                               <input
-                                type="number"
+                                
                                 name="down_amount"
                                 value={newCase.down_amount || ""}
                                 onChange={handleChangeCurrency}
@@ -1777,8 +1789,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              old_finance_closing_fee  : value
+                              })}}
                               min="0"
                               step="any"
                               name="old_finance_closing_fee"
@@ -1803,13 +1821,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอนไฟแนนซ์เก่า (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              old_finance_transfer_fee : value
+                              })}}
                               min="0"
                               step="any"
                               name="old_finance_transfer_fee"
                               value={newCase.old_finance_transfer_fee || ""}
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                               className="validate"
@@ -1829,13 +1853,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าบริการปิดเล่ม (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              book_closing_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.book_closing_fee || ""}
                               name="book_closing_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -1853,13 +1883,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอน (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              transfer_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.transfer_fee || ""}
                               name="transfer_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -1877,8 +1913,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              vat7_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
@@ -1905,14 +1947,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าอากร (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              duty_fee : value
+                              })}}
                               min="0"
                               step="any"
 
                               value={newCase.duty_fee || ""}
                               name="duty_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -1931,13 +1979,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าใช้จ่ายอื่น ๆ</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              cartrust_other_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.cartrust_other_fee || ""}
                               name="cartrust_other_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -1955,8 +2009,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>รวมค่าใช้จ่ายคาร์ทรัส (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              cartrust_total_cost : value
+                              })}}
                               min="0"
                               step="any"
                               className="input-disable"
@@ -1981,13 +2041,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าประกันสินเชื่อ (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              car_shield_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.car_shield_fee || ""}
                               name="car_shield_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2005,13 +2071,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าประกันภัยรถยนต์ (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              car_insurance_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.car_insurance_fee || ""}
                               name="car_insurance_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2029,13 +2101,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าบริการชุดโอน (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              transfer_service_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.transfer_service_fee || ""}
                               name="transfer_service_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2054,13 +2132,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าทำสัญญา (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              contract_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.contract_fee || ""}
                               name="contract_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2078,13 +2162,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอน (บาท)</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              outside_transfer_fee: value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.outside_transfer_fee || ""}
                               name="outside_transfer_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2102,13 +2192,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าใช้จ่ายอื่นๆ</label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              newfinance_other_fee : value
+                              })}}
                               min="0"
                               step="any"
                               value={newCase.newfinance_other_fee || ""}
                               name="newfinance_other_fee"
-                              onChange={handleChangeF}
+                              // onChange={handleChangeF}
                               onFocus={deletezero}
                               onBlur={addzero}
                             />
@@ -2128,8 +2224,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           <div className="col s12 m12 l12 content">
                             <div className="col s6 m6 l6 no-margin ">
                               <label>รวมค่าใช้จ่ายไฟแนนซ์ใหม่ (บาท)</label>
-                              <input
-                                type="number"
+                              <CurrencyFormat
+                                thousandSeparator={true}
+                                onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                setNewCase({
+                                ...newCase,
+                                new_finance_total_cost : value
+                                })}}
                                 min="0"
                                 step="any"
                                 className="input-disable"
@@ -2150,8 +2252,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           <div className="col s6 m12 l12 content">
                             <div className="col s6 m6 l6 no-margin ">
                               <label>รวมค่าใช้จ่ายทั้งหมด (บาท) </label>
-                              <input
-                                type="number"
+                              <CurrencyFormat
+                                thousandSeparator={true}
+                                onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                setNewCase({
+                                ...newCase,
+                                total_cost : value
+                                })}}
                                 min="0"
                                 step="any"
                                 disabled
@@ -2177,8 +2285,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           <div className="col s6 m12 l12 content">
                             <div className="col s6 m6 l6 no-margin ">
                               <label>ยอดเงินที่จะได้รับ (บาท) </label>
-                              <input
-                                type="number"
+                              <CurrencyFormat
+                                thousandSeparator={true}
+                                onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                setNewCase({
+                                ...newCase,
+                                amount_received : value
+                                })}}
                                 min="0"
                                 step="any"
                                 disabled
@@ -2221,8 +2335,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                           <div className="col s6 m6 l6 content">
                             <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
-                            <input
-                              type="number"
+                             <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              old_finance_total_cost : value
+                              })}}
                               min="0"
                               step="any"
                               disabled
@@ -2576,7 +2696,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                         <div className="col s6 m4 l4 content">
                           <label>Approved Amount / ยอดจัด </label>
                           <input
-                            type="number"
+                            
                             min="0"
                             name="approve_amount"
                             value={newCase.approve_amount || ""}
@@ -2588,7 +2708,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                         <div className="col s6 m4 l4 content">
                           <label>Close Amount / ยอดปิด </label>
                           <input
-                            type="number"
+                            
                             min="0"
                             name="close_amount"
                             value={newCase.close_amount || ""}
@@ -2600,7 +2720,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                         <div className="col s6 m4 l4 content">
                           <label>Down Payment / ยอดดาวน์</label>
                           <input
-                            type="number"
+                            
                             min="0"
                             name="down_amount"
                             value={newCase.down_amount || ""}
