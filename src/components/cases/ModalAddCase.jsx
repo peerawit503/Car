@@ -1774,11 +1774,17 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           <div className="row col l12 no-col-padding-both no-col-margin">
                             <div className="col s6 m6 l6 content">
                               <label>Down / ดาวน์ </label>
-                              <input
-                                
+                              <CurrencyFormat
+                                thousandSeparator={true}
+                                onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                setNewCase({
+                                ...newCase,
+                                down_amount : value
+                                })}}
                                 name="down_amount"
                                 value={newCase.down_amount || ""}
-                                onChange={handleChangeCurrency}
+                                // onChange={handleChangeCurrency}
                                 onFocus={deletezero}
                                 onBlur={addzero}
                                 className="validate"
@@ -2695,36 +2701,58 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                         <div className="col s6 m4 l4 content">
                           <label>Approved Amount / ยอดจัด </label>
-                          <input
-                            
-                            min="0"
-                            name="approve_amount"
-                            value={newCase.approve_amount || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              approve_amount : value
+                              })}}
+                              // 
+                              name="approve_amount"
+                              value={newCase.approve_amount || ""}
+                              // onChange={handleChangeCurrency}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>Close Amount / ยอดปิด </label>
-                          <input
-                            
-                            min="0"
-                            name="close_amount"
-                            value={newCase.close_amount || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              close_amount : value
+                              })}}
+                              name="close_amount"
+                              value={newCase.close_amount || ""}
+                              // onChange={handleChangeF}
+                              onFocus={deletezero}
+                              onBlur={addzero}
+                              className="validate"
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>Down Payment / ยอดดาวน์</label>
-                          <input
-                            
-                            min="0"
+                          <CurrencyFormat
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                            const {formattedValue, value} = values;
+                            setNewCase({
+                            ...newCase,
+                            down_amount : value
+                            })}}
                             name="down_amount"
                             value={newCase.down_amount || ""}
-                            onChange={handleChange}
+                            // onChange={handleChangeCurrency}
+                            onFocus={deletezero}
+                            onBlur={addzero}
                             className="validate"
                           />
                         </div>
@@ -2753,35 +2781,87 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
                         <div className="col s6 m4 l4 content">
                           <label>ภาระหนี้</label>
-                          <input
-                            type="text"
-                            name="debt"
-                            value={newCase.old_finance_total_cost || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                              thousandSeparator={true}
+                              onValueChange={(values) => {
+                              const {formattedValue, value} = values;
+                              setNewCase({
+                              ...newCase,
+                              old_finance_total_cost : value
+                              })}}
+                              min="0"
+                              step="any"
+                              disabled
+                              className="input-disable"
+                              value={
+                                parseInt(newCase.close_amount) +
+                                parseInt(newCase.old_finance_transfer_fee)
+                              }
+                              name="old_finance_total_cost"
+
+                            />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>กู้ยืม</label>
-                          <input
-                            type="text"
-                            name="total_cost"
-                            disabled
-                            value={newCase.total_cost || ""}
-                            onChange={handleChange}
-                            className="validate"
-                          />
+                          <CurrencyFormat
+                          thousandSeparator={true}
+                          onValueChange={(values) => {
+                          const {formattedValue, value} = values;
+                          setNewCase({
+                          ...newCase,
+                          total_cost : value
+                          })}}
+                          min="0"
+                          step="any"
+                          disabled
+                          value={parseInt(newCase.old_finance_transfer_fee) +
+                            parseInt(newCase.close_amount) +
+                            parseInt(newCase.book_closing_fee) +
+                            ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                            parseInt(newCase.transfer_fee) +
+                            parseInt(newCase.duty_fee) +
+                            parseInt(newCase.cartrust_other_fee) +
+                            parseInt(newCase.car_shield_fee) +
+                            parseInt(newCase.car_insurance_fee) +
+                            parseInt(newCase.transfer_service_fee) +
+                            parseInt(newCase.contract_fee) +
+                            parseInt(newCase.outside_transfer_fee) +
+                            parseInt(newCase.newfinance_other_fee)
+                          }
+                          name="total_cost"
+                        />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>ชำระให้ผู้กู้ยืม</label>
-                          <input
-                            type="text"
+                          <CurrencyFormat
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                            const {formattedValue, value} = values;
+                            setNewCase({
+                            ...newCase,
+                            amount_received : value
+                            })}}
+                            min="0"
+                            step="any"
+                            disabled
+                            className="input-disable"
+                            value={(parseInt(newCase.old_finance_transfer_fee) +
+                              parseInt(newCase.close_amount) +
+                              parseInt(newCase.book_closing_fee) +
+                              ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
+                              parseInt(newCase.transfer_fee) +
+                              parseInt(newCase.duty_fee) +
+                              parseInt(newCase.cartrust_other_fee) +
+                              parseInt(newCase.car_shield_fee) +
+                              parseInt(newCase.car_insurance_fee) +
+                              parseInt(newCase.transfer_service_fee) +
+                              parseInt(newCase.contract_fee) +
+                              parseInt(newCase.outside_transfer_fee) +
+                              parseInt(newCase.newfinance_other_fee)
+                            ) - newCase.approve_amount}
                             name="amount_received"
-                            value={newCase.amount_received || ""}
-                            onChange={handleChange}
-                            className="validate"
                           />
                         </div>
                       </div>
