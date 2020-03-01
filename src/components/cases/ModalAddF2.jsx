@@ -1704,6 +1704,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
             ...newF2,
             cheque : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newF2.cheque || singleCase.f2_cheque}
@@ -1743,6 +1744,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
             ...newF2,
             deposit : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newF2.deposit || singleCase.f2_deposit}
@@ -1915,6 +1917,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                       ...newF2,
                       approve_amount: value
                     })}}
+            decimalScale= "2"
                     name="approve_amount"
                     value={newF2.approve_amount || singleCase.approve_amount || "0"}
                     // onChange={handleChangeCurrency}
@@ -1941,6 +1944,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                       ...newF2,
                       close_amount : value
                       })}}
+            decimalScale= "2"
                   />
                 </div>
                 
@@ -1955,6 +1959,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     down_amount : value
                     })}}
+                    decimalScale= "2"
                     name="down_amount"
                     value={newF2.down_amount || singleCase.down_amount || "0"}
                     // onChange={handleChangeF2}
@@ -1979,6 +1984,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     old_finance_closing_fee : value
                     })}}
+                    decimalScale= "2"
                     step="any"
                     name="old_finance_closing_fee"
                     onFocus={deletezero}
@@ -2016,6 +2022,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     old_finance_transfer_fee : value
                     })}}
+                    decimalScale= "2"
                     // min="0"
                     // step="any"
                     onFocus={deletezero}
@@ -2049,6 +2056,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     book_closing_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -2079,6 +2087,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     transfer_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -2112,6 +2121,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     vat7_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -2146,6 +2156,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     duty_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -2176,6 +2187,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     cartrust_other_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     onFocus={deletezero}
@@ -2205,6 +2217,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     cartrust_total_cost : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     disabled
@@ -2237,6 +2250,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     car_shield_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.car_shield_fee || singleCase.f2_car_shield_fee}
@@ -2267,6 +2281,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     car_insurance_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.car_insurance_fee || singleCase.f2_car_insurance_fee}
@@ -2297,6 +2312,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     transfer_service_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.transfer_service_fee || singleCase.f2_transfer_service_fee}
@@ -2328,6 +2344,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     contract_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.contract_fee || singleCase.f2_contract_fee}
@@ -2358,6 +2375,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     outside_transfer_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.outside_transfer_fee || singleCase.f2_outside_transfer_fee}
@@ -2389,6 +2407,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     newfinance_other_fee : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee}
@@ -2420,6 +2439,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     new_finance_total_cost : value
                     })}}
+                    decimalScale= "2"
                       min="0"
                       step="any"
                       className="input-disable"
@@ -2449,6 +2469,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     total_cost: value
                     })}}
+                    decimalScale= "2"
                       min="0"
                       step="any"
                       disabled
@@ -2484,6 +2505,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     amount_received : value
                     })}}
+                    decimalScale= "2"
                       min="0"
                       step="any"
                       disabled
@@ -2536,6 +2558,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     ...newF2,
                     old_finance_total_cost : value
                     })}}
+                    decimalScale= "2"
                     min="0"
                     step="any"
                     disabled
