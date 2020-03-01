@@ -54,7 +54,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     case_receiver: "",
     case_source: "",
 
-    // down_amount: "",
+    down_amount: "0",
     approve_amount: "0",
     close_amount: "0",
     case_status: "ติดต่อลูกค้าไม่ได้",
@@ -89,7 +89,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     transfer_service_fee: "0",
     contract_fee: "0",
     outside_transfer_fee: "0",
-    newfinance_other_fee:"0",
+    newfinance_other_fee: "0",
     difference: true,
 
     old_finance_closing_fee_note: "",
@@ -104,10 +104,10 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     transfer_service_fee_note: "",
     contract_fee_note: "",
     outside_transfer_fee_note: "",
-    newfinance_other_fee_note:"0",
+    newfinance_other_fee_note: "",
     car_check_con: "",
     doc_storage_con: "",
-    dealer:"",
+    dealer: "",
     dealer_line: "",
     contract_officer_line: "",
     dealer_phone: "",
@@ -145,86 +145,86 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
   const handleChangeF = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value?e.target.value:0) });
+    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value ? e.target.value : 0) });
   };
 
-  
-function formatNumber(n) {
-  // format number 1000000 to 1,234,567
-  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
 
-
-function formatCurrency(input, blur) {
-  // appends $ to value, validates decimal side
-  // and puts cursor back in right position.
-  
-  // get input value
-  var input_val = input.val();
-  
-  // don't validate empty input
-  if (input_val === "") { return; }
-  
-  // original length
-  var original_len = input_val.length;
-
-  // initial caret position 
-  var caret_pos = input.prop("selectionStart");
-    
-  // check for decimal
-  if (input_val.indexOf(".") >= 0) {
-
-    // get position of first decimal
-    // this prevents multiple decimals from
-    // being entered
-    var decimal_pos = input_val.indexOf(".");
-
-    // split number by decimal point
-    var left_side = input_val.substring(0, decimal_pos);
-    var right_side = input_val.substring(decimal_pos);
-
-    // add commas to left side of number
-    left_side = formatNumber(left_side);
-
-    // validate right side
-    right_side = formatNumber(right_side);
-    
-    // On blur make sure 2 numbers after decimal
-    if (blur === "blur") {
-      right_side += "00";
-    }
-    
-    // Limit decimal to only 2 digits
-    right_side = right_side.substring(0, 2);
-
-    // join number by .
-    input_val = "$" + left_side + "." + right_side;
-
-  } else {
-    // no decimal entered
-    // add commas to number
-    // remove all non-digits
-    input_val = formatNumber(input_val);
-    input_val = "$" + input_val;
-    
-    // final formatting
-    if (blur === "blur") {
-      input_val += ".00";
-    }
+  function formatNumber(n) {
+    // format number 1000000 to 1,234,567
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
-  
-  // send updated string to input
-  input.val(input_val);
 
-  // put caret back in the right position
-  var updated_len = input_val.length;
-  caret_pos = updated_len - original_len + caret_pos;
-  input[0].setSelectionRange(caret_pos, caret_pos);
-}
-  
+
+  function formatCurrency(input, blur) {
+    // appends $ to value, validates decimal side
+    // and puts cursor back in right position.
+
+    // get input value
+    var input_val = input.val();
+
+    // don't validate empty input
+    if (input_val === "") { return; }
+
+    // original length
+    var original_len = input_val.length;
+
+    // initial caret position 
+    var caret_pos = input.prop("selectionStart");
+
+    // check for decimal
+    if (input_val.indexOf(".") >= 0) {
+
+      // get position of first decimal
+      // this prevents multiple decimals from
+      // being entered
+      var decimal_pos = input_val.indexOf(".");
+
+      // split number by decimal point
+      var left_side = input_val.substring(0, decimal_pos);
+      var right_side = input_val.substring(decimal_pos);
+
+      // add commas to left side of number
+      left_side = formatNumber(left_side);
+
+      // validate right side
+      right_side = formatNumber(right_side);
+
+      // On blur make sure 2 numbers after decimal
+      if (blur === "blur") {
+        right_side += "00";
+      }
+
+      // Limit decimal to only 2 digits
+      right_side = right_side.substring(0, 2);
+
+      // join number by .
+      input_val = "$" + left_side + "." + right_side;
+
+    } else {
+      // no decimal entered
+      // add commas to number
+      // remove all non-digits
+      input_val = formatNumber(input_val);
+      input_val = "$" + input_val;
+
+      // final formatting
+      if (blur === "blur") {
+        input_val += ".00";
+      }
+    }
+
+    // send updated string to input
+    input.val(input_val);
+
+    // put caret back in the right position
+    var updated_len = input_val.length;
+    caret_pos = updated_len - original_len + caret_pos;
+    input[0].setSelectionRange(caret_pos, caret_pos);
+  }
+
   const handleChangeCurrentcy = e => {
-  
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value?e.target.value:0) });
+
+    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value ? e.target.value : 0) });
   };
 
 
@@ -265,7 +265,7 @@ function formatCurrency(input, blur) {
     if (e.target.value === 'Kiatnakin' || e.target.value === 'Thanachart') {
       setNewCase({ ...newCase, [e.target.name]: e.target.value, new_bank: e.target.value });
     } else {
-      setNewCase({ ...newCase, [e.target.name]: e.target.value , new_bank:"" });
+      setNewCase({ ...newCase, [e.target.name]: e.target.value, new_bank: "" });
     }
 
 
@@ -739,7 +739,7 @@ function formatCurrency(input, blur) {
       case_receiver: "",
       case_source: "",
 
-      down_amount: "",
+      down_amount: "0",
       approve_amount: "",
       close_amount: "",
       case_status: "ติดต่อลูกค้าไม่ได้",
@@ -774,9 +774,9 @@ function formatCurrency(input, blur) {
       transfer_service_fee: "0",
       contract_fee: "0",
       outside_transfer_fee: "0",
-     newfinance_other_fee:"0",
+      newfinance_other_fee: "0",
       difference: true,
-      dealer:"",
+      dealer: "",
       dealer_line: "",
       contract_officer_line: "",
       dealer_phone: "",
@@ -793,7 +793,7 @@ function formatCurrency(input, blur) {
       transfer_service_fee_note: "",
       contract_fee_note: "",
       outside_transfer_fee_note: "",
-      newfinance_other_fee_note:"0",
+      newfinance_other_fee_note: "",
       car_check_con: "",
       doc_storage_con: "",
 
@@ -1104,8 +1104,8 @@ function formatCurrency(input, blur) {
               <option value="" contract_officer_line="" contract_officer_tel="" disabled>
 
                 เจ้าหน้าที่
-    
-    
+
+
           </option>
               {officerOption()}
 
@@ -1199,25 +1199,25 @@ function formatCurrency(input, blur) {
     } else if (newCase.case_source === 'Dealer') {
 
       result.push(<div className="col s6 m4 l4 content">
-      <label >Dealer</label>
-      <select
-        type="text"
-        value={newCase.dealer || ""}
-        name="dealer"
-        onChange={handleChangeDropDown}
-        className="browser-default"
-      >
-        <option value="" dealer_line="" dealer_tel="" disabled>
+        <label >Dealer</label>
+        <select
+          type="text"
+          value={newCase.dealer || ""}
+          name="dealer"
+          onChange={handleChangeDropDown}
+          className="browser-default"
+        >
+          <option value="" dealer_line="" dealer_tel="" disabled>
 
-          รับเคสจาก
-
-
+            รับเคสจาก
+  
+  
         </option>
-        {dealerOption()}
+          {dealerOption()}
 
-      </select>
-      <button className="modal-trigger" href="#modalAddDealer">Add</button>
-    </div>);
+        </select>
+        <button className="modal-trigger" href="#modalAddDealer">Add</button>
+      </div>);
 
       result.push(<div className="col s6 m4 l4 content">
         <label htmlFor="name">Phone / เบอร์โทรศัพท์</label>
@@ -1717,7 +1717,8 @@ function formatCurrency(input, blur) {
                             />
                           </div>
 
-                      
+
+
 
                           <div className="col s6 m6 l6 content">
                             <label>Close Amount / ยอดปิด </label>
@@ -1730,6 +1731,23 @@ function formatCurrency(input, blur) {
                               onBlur={addzero}
                               className="validate"
                             />
+                          </div>
+
+                          
+                          <div className="row col l12 no-col-padding-both no-col-margin">
+                            <div className="col s6 m6 l6 content">
+                              <label>Down / ดาวน์ </label>
+                              <input
+                                type="number"
+                                name="down_amount"
+                                value={newCase.down_amount || "0"}
+                                onChange={handleChangeCurrentcy}
+                                onFocus={deletezero}
+                                onBlur={addzero}
+                                className="validate"
+                              />
+                            </div>
+
                           </div>
 
                           <div className="col s6 m6 l6 content">
@@ -1827,7 +1845,7 @@ function formatCurrency(input, blur) {
                             <input
                               type="text"
                               value={newCase.transfer_fee_note || ""}
-                              name="transfer_fee_note_note"
+                              name="transfer_fee_note"
                               onChange={handleChange}
                             />
                           </div>
@@ -2076,7 +2094,7 @@ function formatCurrency(input, blur) {
                             <input
                               type="text"
                               value={newCase.newfinance_other_fee_note || ""}
-                              name="newfinance_other_fee_note "
+                              name="newfinance_other_fee_note"
                               onChange={handleChange}
                             />
                           </div>
@@ -2097,7 +2115,7 @@ function formatCurrency(input, blur) {
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee)
-                                 )}
+                                )}
                                 name="new_finance_total_cost"
 
                               />
@@ -2124,8 +2142,8 @@ function formatCurrency(input, blur) {
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.newfinance_other_fee) 
-                                 }
+                                  parseInt(newCase.newfinance_other_fee)
+                                }
                                 name="total_cost"
                               />
                             </div>
@@ -2152,8 +2170,8 @@ function formatCurrency(input, blur) {
                                   parseInt(newCase.transfer_service_fee) +
                                   parseInt(newCase.contract_fee) +
                                   parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.newfinance_other_fee) +
-                                  parseInt(newCase.cartrust_other_fee)) - newCase.approve_amount}
+                                  parseInt(newCase.newfinance_other_fee)
+                                ) - newCase.approve_amount}
                                 name="amount_received"
 
                               />

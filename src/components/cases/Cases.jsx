@@ -282,6 +282,8 @@ const Cases = (props) => {
         difference: difference.d1,
         case_receiver: props.user.firstName + ' ' + props.user.lastName,
         user_id: props.user.id,
+        vat7_fee:((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07),
+        old_finance_closing_fee:newCase.close_amount
         
       };
 
@@ -311,6 +313,8 @@ const Cases = (props) => {
             difference: difference.d1,
             case_receiver: props.user.firstName + ' ' + props.user.lastName,
             user_id: props.user.id,
+            vat7_fee:((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07),
+            old_finance_closing_fee:newCase.close_amount
             
           };
           if (res.data.message === 'success_addCustomer'){
