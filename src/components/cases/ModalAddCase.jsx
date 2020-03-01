@@ -269,7 +269,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     let tel_text = name + '_tel'
     let line = optionElement.getAttribute(line_text);
     let tel = optionElement.getAttribute(tel_text);
-    setNewCase({ ...newCase, cartrust_lead_refer: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+    setNewCase({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
 
   };
 
@@ -1037,6 +1037,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
             ...newCase,
             cheque : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newCase.cheque || ""}
@@ -1076,6 +1077,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
             ...newCase,
             deposit : value
             })}}
+            decimalScale= "2"
             min="0"
             step="any"
             value={newCase.deposit || ""}
@@ -1738,6 +1740,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               approve_amount : value
                               })}}
+                              decimalScale= "2"
                               // 
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
@@ -1761,6 +1764,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               close_amount : value
                               })}}
+                              decimalScale= "2"
                               name="close_amount"
                               value={newCase.close_amount || ""}
                               // onChange={handleChangeF}
@@ -1782,6 +1786,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 down_amount : value
                                 })}}
+                                decimalScale= "2"
                                 name="down_amount"
                                 value={newCase.down_amount || ""}
                                 // onChange={handleChangeCurrency}
@@ -1803,6 +1808,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_closing_fee  : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               name="old_finance_closing_fee"
@@ -1835,6 +1841,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_transfer_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               name="old_finance_transfer_fee"
@@ -1867,6 +1874,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               book_closing_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.book_closing_fee || ""}
@@ -1897,6 +1905,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               transfer_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.transfer_fee || ""}
@@ -1927,6 +1936,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               vat7_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
@@ -1961,6 +1971,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               duty_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
 
@@ -1993,6 +2004,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               cartrust_other_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.cartrust_other_fee || ""}
@@ -2023,6 +2035,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               cartrust_total_cost : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               className="input-disable"
@@ -2055,6 +2068,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               car_shield_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.car_shield_fee || ""}
@@ -2085,6 +2099,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               car_insurance_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.car_insurance_fee || ""}
@@ -2115,6 +2130,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               transfer_service_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.transfer_service_fee || ""}
@@ -2146,6 +2162,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               contract_fee : value
                               })}}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.contract_fee || ""}
@@ -2176,6 +2193,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               outside_transfer_fee: value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.outside_transfer_fee || ""}
@@ -2206,6 +2224,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               newfinance_other_fee : value
                               })}}
+                              decimalScale= "2"
                               min="0"
                               step="any"
                               value={newCase.newfinance_other_fee || ""}
@@ -2238,6 +2257,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 new_finance_total_cost : value
                                 })}}
+                                decimalScale= "2"
                                 min="0"
                                 step="any"
                                 className="input-disable"
@@ -2266,6 +2286,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 total_cost : value
                                 })}}
+                                decimalScale= "2"
                                 min="0"
                                 step="any"
                                 disabled
@@ -2299,6 +2320,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 ...newCase,
                                 amount_received : value
                                 })}}
+                                decimalScale= "2"                                
                                 min="0"
                                 step="any"
                                 disabled
@@ -2349,6 +2371,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_total_cost : value
                               })}}
+                                decimalScale= "2"
                               min="0"
                               step="any"
                               disabled
@@ -2709,6 +2732,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               approve_amount : value
                               })}}
+                                decimalScale= "2"
                               // 
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
@@ -2729,6 +2753,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               close_amount : value
                               })}}
+                                decimalScale= "2"
                               name="close_amount"
                               value={newCase.close_amount || ""}
                               // onChange={handleChangeF}
@@ -2748,6 +2773,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             ...newCase,
                             down_amount : value
                             })}}
+                                decimalScale= "2"
                             name="down_amount"
                             value={newCase.down_amount || ""}
                             // onChange={handleChangeCurrency}
@@ -2789,6 +2815,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               ...newCase,
                               old_finance_total_cost : value
                               })}}
+                                decimalScale= "2"
                               min="0"
                               step="any"
                               disabled
@@ -2812,6 +2839,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           ...newCase,
                           total_cost : value
                           })}}
+                                decimalScale= "2"
                           min="0"
                           step="any"
                           disabled
@@ -2843,6 +2871,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             ...newCase,
                             amount_received : value
                             })}}
+                                decimalScale= "2"
                             min="0"
                             step="any"
                             disabled
