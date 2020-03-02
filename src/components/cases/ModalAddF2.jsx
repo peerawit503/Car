@@ -2411,7 +2411,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee || ""}
+                    value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee || "0"}
                     name="newfinance_other_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
