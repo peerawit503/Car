@@ -160,7 +160,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     for (let oper of operatorS) {
 
       result.push(<option value={oper.fs_name} finance_staff_line={oper.line} finance_staff_tel={oper.tel}  >
-        {oper.fs_name},
+        {oper.fs_name}
       </option>)
     }
     return result;
@@ -2636,7 +2636,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                   >
                     <option value="" disabled>
                       เจ้าหน้าที่...
-</option>
+                    </option>
                     {
                       operaterOption()
                     }
@@ -2718,6 +2718,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
           </button>
         </div>
       </div>
+      <ModalAddFStaff getOperatorS={getOperatorS} />
     </div>
   );
 };
