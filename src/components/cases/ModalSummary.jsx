@@ -10,7 +10,7 @@ import photo from '../../img/photo.png';
 
 import Popup from 'reactjs-popup'
 
-const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
+const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS}) => {
   
   const [newCase, setNewCase] = useState({})
 
@@ -759,7 +759,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
           
         </div>
       </div>
-      <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} />
+      <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
       <ModalCancel singleCase={singleCase} />
       <ModalAddContract singleCase={singleCase} />
       <ModalImage singleCase={singleCase}/>

@@ -45,7 +45,7 @@ const Cases = (props) => {
   const [customers, setCustomers] = useState([])
   const [cases, setCases] = useState([])
   const [kpi, setKpi] = useState([])
-
+  const [operatorS, setOperatorS] = useState([])
   const [singleCase, setSingleCase] = useState([])
   const [stateSearch, setStateSearch] = useState({
     starDate: '',
@@ -141,6 +141,7 @@ const Cases = (props) => {
     M.FormSelect.init(document.querySelectorAll('select'), {});
     getAllCase()
     getKpi()
+    getOperatorS()
   }, [])
 
 
@@ -235,6 +236,14 @@ const Cases = (props) => {
   //     .catch(err => console.log(err))
 
   // }
+  const getOperatorS = () => {
+
+    axios.get(`${url}/dropdown?table=finance_staff`)
+      .then(res => {
+        setOperatorS(res.data.message);
+      })
+    }
+    
 
   const confirm = (singleCase,date) => {
     var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
@@ -270,6 +279,8 @@ const Cases = (props) => {
     })
       .catch(err => console.log(err))
   }
+
+  
 
   const saveNewCase = (newCase, customer, difference , setAllblank) => {
 
@@ -658,8 +669,8 @@ const Cases = (props) => {
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
-          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase}/>
-          <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
+          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS}/>
+          <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
           
 
