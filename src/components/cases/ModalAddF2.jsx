@@ -209,7 +209,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     } else {
       setNewF2({
         ...newF2,
-        [e.target.name]: parseInt(e.target.value)
+        [e.target.name]: parseFloat(e.target.value)
       });
     }
 
@@ -227,7 +227,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
       
       setNewF2({
         ...newF2,
-        [e.target.name]: parseInt(e.target.value)
+        [e.target.name]: parseFloat(e.target.value)
       });
     }
   };
@@ -310,20 +310,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     );
 
     // let newData = {
-    //   approve_amount: parseInt(singleCase.approve_amount),
-    //   old_finance_closing_fee: parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_close_amount),
-    //   old_finance_transfer_fee: parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
-    //   book_closing_fee: parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
-    //   vat7_fee: ((parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07)?((parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07):singleCase.f2_vat7_fee,
-    //   transfer_fee: parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
-    //   duty_fee: parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
-    //   cartrust_other_fee: parseInt(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
-    //   car_shield_fee: parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
-    //   car_insurance_fee: parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
-    //   transfer_service_fee: parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
-    //   contract_fee: parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
-    //   outside_transfer_fee: parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
-      // newfinance_other_fee: parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee),
+    //   approve_amount: parseFloat(singleCase.approve_amount),
+    //   old_finance_closing_fee: parseFloat(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_close_amount),
+    //   old_finance_transfer_fee: parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
+    //   book_closing_fee: parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
+    //   vat7_fee: ((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07)?((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07):singleCase.f2_vat7_fee,
+    //   transfer_fee: parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
+    //   duty_fee: parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
+    //   cartrust_other_fee: parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
+    //   car_shield_fee: parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
+    //   car_insurance_fee: parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
+    //   transfer_service_fee: parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
+    //   contract_fee: parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
+    //   outside_transfer_fee: parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
+      // newfinance_other_fee: parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee),
       
 
     //   approve_amount_note: newF2.approve_amount_note ? newF2.approve_amount_note : singleCase.f2_approve_amount_note,
@@ -367,21 +367,21 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     //     console.log("#####  RES  ######");
     //     console.log("Case", res.data.message);
     //     printPDF( 
-    //       parseInt(singleCase.approve_amount),
-    //       parseInt(newF2.old_finance_closing_fee? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
-    //       parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
-    //       parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
-    //       parseInt(newF2.vat7_fee ? newF2.vat7_fee : singleCase.f2_vat7_fee),
-    //       parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
-    //       parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
-    //       parseInt(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
-    //       parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
-    //       parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
-    //       parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
-    //       parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
-    //       parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
-    //       parseInt(newF2.tax_renewal_fee ? newF2.tax_renewal_fee : singleCase.f2_tax_renewal_fee),
-    //       parseInt(newF2.act_renewal_fee ? newF2.act_renewal_fee : singleCase.f2_act_renewal_fee),
+    //       parseFloat(singleCase.approve_amount),
+    //       parseFloat(newF2.old_finance_closing_fee? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
+    //       parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
+    //       parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
+    //       parseFloat(newF2.vat7_fee ? newF2.vat7_fee : singleCase.f2_vat7_fee),
+    //       parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
+    //       parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
+    //       parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
+    //       parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
+    //       parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
+    //       parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
+    //       parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
+    //       parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
+    //       parseFloat(newF2.tax_renewal_fee ? newF2.tax_renewal_fee : singleCase.f2_tax_renewal_fee),
+    //       parseFloat(newF2.act_renewal_fee ? newF2.act_renewal_fee : singleCase.f2_act_renewal_fee),
     //       newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
     //       newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
     //       newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
@@ -502,37 +502,37 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
       parseFloat(outside_transfer_fee) +
       parseFloat(newfinance_other_fee)) - approve_amount);
 
-    const cartrust_total_cost = (parseInt(old_finance_closing_fee) +
-      parseInt(old_finance_transfer_fee) +
-      parseInt(book_closing_fee) +
+    const cartrust_total_cost = (parseFloat(old_finance_closing_fee) +
+      parseFloat(old_finance_transfer_fee) +
+      parseFloat(book_closing_fee) +
       vat7_fee +
-      parseInt(transfer_fee) +
-      parseInt(duty_fee) +
-      parseInt(cartrust_other_fee))
+      parseFloat(transfer_fee) +
+      parseFloat(duty_fee) +
+      parseFloat(cartrust_other_fee))
 
-    const new_finance_total_cost = (parseInt(car_shield_fee) +
-      parseInt(car_insurance_fee) +
-      parseInt(transfer_service_fee) +
-      parseInt(contract_fee) +
-      parseInt(outside_transfer_fee) +
-      parseInt(newfinance_other_fee) 
+    const new_finance_total_cost = (parseFloat(car_shield_fee) +
+      parseFloat(car_insurance_fee) +
+      parseFloat(transfer_service_fee) +
+      parseFloat(contract_fee) +
+      parseFloat(outside_transfer_fee) +
+      parseFloat(newfinance_other_fee) 
       )
 
-    const old_finance_total_cost = (parseInt(old_finance_closing_fee) +
-      parseInt(old_finance_transfer_fee))
-    const total_cost = (parseInt(old_finance_closing_fee) +
-      parseInt(old_finance_transfer_fee) +
-      parseInt(book_closing_fee) +
+    const old_finance_total_cost = (parseFloat(old_finance_closing_fee) +
+      parseFloat(old_finance_transfer_fee))
+    const total_cost = (parseFloat(old_finance_closing_fee) +
+      parseFloat(old_finance_transfer_fee) +
+      parseFloat(book_closing_fee) +
       vat7_fee +
-      parseInt(transfer_fee) +
-      parseInt(duty_fee) +
-      parseInt(cartrust_other_fee) +
-      parseInt(car_shield_fee) +
-      parseInt(car_insurance_fee) +
-      parseInt(transfer_service_fee) +
-      parseInt(contract_fee) +
-      parseInt(outside_transfer_fee) +
-      parseInt(newfinance_other_fee) 
+      parseFloat(transfer_fee) +
+      parseFloat(duty_fee) +
+      parseFloat(cartrust_other_fee) +
+      parseFloat(car_shield_fee) +
+      parseFloat(car_insurance_fee) +
+      parseFloat(transfer_service_fee) +
+      parseFloat(contract_fee) +
+      parseFloat(outside_transfer_fee) +
+      parseFloat(newfinance_other_fee) 
       )
      
 
@@ -2126,8 +2126,8 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     step="any"
                     onFocus={deletezero}
                     value={
-                      (parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
-                      parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07
+                      (parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
+                      parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07
                     }
                     name="vat7_fee"
                     disabled
@@ -2511,20 +2511,20 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                       disabled
                       className="input-disable"
                       value={parseFloat(
-                        (parseInt(newF2.close_amount ? newF2.close_amount : singleCase.close_amount) +
-                        parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee) +
-                        parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) +
-                       ((parseInt(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
-                        parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07) +
-                        parseInt(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
-                        parseInt(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
-                        parseInt(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
-                        parseInt(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
-                        parseInt(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
-                        parseInt(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
-                        parseInt(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
-                        parseInt(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
-                        parseInt(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee)) - (newF2.approve_amount ? newF2.approve_amount : singleCase.approve_amount)
+                        (parseFloat(newF2.close_amount ? newF2.close_amount : singleCase.close_amount) +
+                        parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee) +
+                        parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) +
+                       ((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + 
+                        parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07) +
+                        parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee) +
+                        parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee) +
+                        parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee) +
+                        parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee) +
+                        parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee) +
+                        parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee) +
+                        parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee) +
+                        parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee) +
+                        parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee)) - (newF2.approve_amount ? newF2.approve_amount : singleCase.approve_amount)
                         )}
                       name="amount_received"
 
@@ -2564,8 +2564,8 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     disabled
                     className="input-disable"
                     value={
-                      parseInt(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
-                      parseInt(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee)
+                      parseFloat(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee) +
+                      parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee)
                     }
                     name="old_finance_total_cost"
 

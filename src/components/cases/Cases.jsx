@@ -147,7 +147,7 @@ const Cases = (props) => {
 
   const getAllCase = () => {
     setisLoading(true);
-    axios.get(`${url}/case_limit?size=5&page=1`)
+    axios.get(`${url}/case_all`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);

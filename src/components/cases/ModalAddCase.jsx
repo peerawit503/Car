@@ -147,7 +147,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
   const handleChangeF = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: parseInt(e.target.value ? e.target.value : 0) });
+    setNewCase({ ...newCase, [e.target.name]: parseFloat(e.target.value ? e.target.value : 0) });
   };
 
 
@@ -1939,7 +1939,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               decimalScale= "2"
                               min="0"
                               step="any"
-                              value={(parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07 || "0"}
+                              value={(parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07 || "0"}
                               name="vat7_fee"
                               disabled
                               //onChange={handleChangeF}
@@ -2041,13 +2041,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               className="input-disable"
                               disabled
                               value={
-                                parseInt(newCase.old_finance_transfer_fee) +
-                                parseInt(newCase.close_amount) +
-                                parseInt(newCase.book_closing_fee) +
-                                ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
-                                parseInt(newCase.transfer_fee) +
-                                parseInt(newCase.duty_fee) +
-                                parseInt(newCase.cartrust_other_fee)}
+                                parseFloat(newCase.old_finance_transfer_fee) +
+                                parseFloat(newCase.close_amount) +
+                                parseFloat(newCase.book_closing_fee) +
+                                ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                                parseFloat(newCase.transfer_fee) +
+                                parseFloat(newCase.duty_fee) +
+                                parseFloat(newCase.cartrust_other_fee)}
                               name="cartrust_total_cost"
                             />
                           </div>
@@ -2263,11 +2263,11 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 className="input-disable"
                                 disabled
                                 value={(
-                                  parseInt(newCase.car_shield_fee) +
-                                  parseInt(newCase.car_insurance_fee) +
-                                  parseInt(newCase.transfer_service_fee) +
-                                  parseInt(newCase.contract_fee) +
-                                  parseInt(newCase.outside_transfer_fee)
+                                  parseFloat(newCase.car_shield_fee) +
+                                  parseFloat(newCase.car_insurance_fee) +
+                                  parseFloat(newCase.transfer_service_fee) +
+                                  parseFloat(newCase.contract_fee) +
+                                  parseFloat(newCase.outside_transfer_fee)
                                 )}
                                 name="new_finance_total_cost"
 
@@ -2290,19 +2290,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 min="0"
                                 step="any"
                                 disabled
-                                value={parseInt(newCase.old_finance_transfer_fee) +
-                                  parseInt(newCase.close_amount) +
-                                  parseInt(newCase.book_closing_fee) +
-                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
-                                  parseInt(newCase.transfer_fee) +
-                                  parseInt(newCase.duty_fee) +
-                                  parseInt(newCase.cartrust_other_fee) +
-                                  parseInt(newCase.car_shield_fee) +
-                                  parseInt(newCase.car_insurance_fee) +
-                                  parseInt(newCase.transfer_service_fee) +
-                                  parseInt(newCase.contract_fee) +
-                                  parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.newfinance_other_fee)
+                                value={parseFloat(newCase.old_finance_transfer_fee) +
+                                  parseFloat(newCase.close_amount) +
+                                  parseFloat(newCase.book_closing_fee) +
+                                  ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                                  parseFloat(newCase.transfer_fee) +
+                                  parseFloat(newCase.duty_fee) +
+                                  parseFloat(newCase.cartrust_other_fee) +
+                                  parseFloat(newCase.car_shield_fee) +
+                                  parseFloat(newCase.car_insurance_fee) +
+                                  parseFloat(newCase.transfer_service_fee) +
+                                  parseFloat(newCase.contract_fee) +
+                                  parseFloat(newCase.outside_transfer_fee) +
+                                  parseFloat(newCase.newfinance_other_fee)
                                 }
                                 name="total_cost"
                               />
@@ -2325,19 +2325,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                                 step="any"
                                 disabled
                                 className="input-disable"
-                                value={(parseInt(newCase.old_finance_transfer_fee) +
-                                  parseInt(newCase.close_amount) +
-                                  parseInt(newCase.book_closing_fee) +
-                                  ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
-                                  parseInt(newCase.transfer_fee) +
-                                  parseInt(newCase.duty_fee) +
-                                  parseInt(newCase.cartrust_other_fee) +
-                                  parseInt(newCase.car_shield_fee) +
-                                  parseInt(newCase.car_insurance_fee) +
-                                  parseInt(newCase.transfer_service_fee) +
-                                  parseInt(newCase.contract_fee) +
-                                  parseInt(newCase.outside_transfer_fee) +
-                                  parseInt(newCase.newfinance_other_fee)
+                                value={(parseFloat(newCase.old_finance_transfer_fee) +
+                                  parseFloat(newCase.close_amount) +
+                                  parseFloat(newCase.book_closing_fee) +
+                                  ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                                  parseFloat(newCase.transfer_fee) +
+                                  parseFloat(newCase.duty_fee) +
+                                  parseFloat(newCase.cartrust_other_fee) +
+                                  parseFloat(newCase.car_shield_fee) +
+                                  parseFloat(newCase.car_insurance_fee) +
+                                  parseFloat(newCase.transfer_service_fee) +
+                                  parseFloat(newCase.contract_fee) +
+                                  parseFloat(newCase.outside_transfer_fee) +
+                                  parseFloat(newCase.newfinance_other_fee)
                                 ) - newCase.approve_amount}
                                 name="amount_received"
 
@@ -2377,8 +2377,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               disabled
                               className="input-disable"
                               value={
-                                parseInt(newCase.close_amount) +
-                                parseInt(newCase.old_finance_transfer_fee)
+                                parseFloat(newCase.close_amount) +
+                                parseFloat(newCase.old_finance_transfer_fee)
                               }
                               name="old_finance_total_cost"
 
@@ -2821,8 +2821,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                               disabled
                               className="input-disable"
                               value={
-                                parseInt(newCase.close_amount) +
-                                parseInt(newCase.old_finance_transfer_fee)
+                                parseFloat(newCase.close_amount) +
+                                parseFloat(newCase.old_finance_transfer_fee)
                               }
                               name="old_finance_total_cost"
 
@@ -2843,19 +2843,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                           min="0"
                           step="any"
                           disabled
-                          value={parseInt(newCase.old_finance_transfer_fee) +
-                            parseInt(newCase.close_amount) +
-                            parseInt(newCase.book_closing_fee) +
-                            ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
-                            parseInt(newCase.transfer_fee) +
-                            parseInt(newCase.duty_fee) +
-                            parseInt(newCase.cartrust_other_fee) +
-                            parseInt(newCase.car_shield_fee) +
-                            parseInt(newCase.car_insurance_fee) +
-                            parseInt(newCase.transfer_service_fee) +
-                            parseInt(newCase.contract_fee) +
-                            parseInt(newCase.outside_transfer_fee) +
-                            parseInt(newCase.newfinance_other_fee)
+                          value={parseFloat(newCase.old_finance_transfer_fee) +
+                            parseFloat(newCase.close_amount) +
+                            parseFloat(newCase.book_closing_fee) +
+                            ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                            parseFloat(newCase.transfer_fee) +
+                            parseFloat(newCase.duty_fee) +
+                            parseFloat(newCase.cartrust_other_fee) +
+                            parseFloat(newCase.car_shield_fee) +
+                            parseFloat(newCase.car_insurance_fee) +
+                            parseFloat(newCase.transfer_service_fee) +
+                            parseFloat(newCase.contract_fee) +
+                            parseFloat(newCase.outside_transfer_fee) +
+                            parseFloat(newCase.newfinance_other_fee)
                           }
                           name="total_cost"
                         />
@@ -2876,19 +2876,19 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
                             step="any"
                             disabled
                             className="input-disable"
-                            value={(parseInt(newCase.old_finance_transfer_fee) +
-                              parseInt(newCase.close_amount) +
-                              parseInt(newCase.book_closing_fee) +
-                              ((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07) +
-                              parseInt(newCase.transfer_fee) +
-                              parseInt(newCase.duty_fee) +
-                              parseInt(newCase.cartrust_other_fee) +
-                              parseInt(newCase.car_shield_fee) +
-                              parseInt(newCase.car_insurance_fee) +
-                              parseInt(newCase.transfer_service_fee) +
-                              parseInt(newCase.contract_fee) +
-                              parseInt(newCase.outside_transfer_fee) +
-                              parseInt(newCase.newfinance_other_fee)
+                            value={(parseFloat(newCase.old_finance_transfer_fee) +
+                              parseFloat(newCase.close_amount) +
+                              parseFloat(newCase.book_closing_fee) +
+                              ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                              parseFloat(newCase.transfer_fee) +
+                              parseFloat(newCase.duty_fee) +
+                              parseFloat(newCase.cartrust_other_fee) +
+                              parseFloat(newCase.car_shield_fee) +
+                              parseFloat(newCase.car_insurance_fee) +
+                              parseFloat(newCase.transfer_service_fee) +
+                              parseFloat(newCase.contract_fee) +
+                              parseFloat(newCase.outside_transfer_fee) +
+                              parseFloat(newCase.newfinance_other_fee)
                             ) - newCase.approve_amount}
                             name="amount_received"
                           />
