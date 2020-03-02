@@ -3,7 +3,8 @@ import { bold, itailic, light, normal } from './font/Sarabun';
 import { bold as bold2, normal as normal2, thin } from './font/helvethaica';
 import logo from './images/logo';
 import Pdfmake from 'pdfmake/build/pdfmake';
-
+import ModalAddFStaff from './ModalAddFStaff'
+import ModalAddMargin from './ModalAddMargin'
 import {
 
   provinceAll
@@ -2138,7 +2139,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                   <label>หมายเหตุ</label>
                   <input
                     type="text"
-                    value={newF2.vat7_fee_note || singleCase.f2_vat7_fee_note}
+                    value={newF2.vat7_fee_note || singleCase.f2_vat7_fee_note || ""}
                     name="vat7_fee_note"
                     onChange={handleChangeF2T}
                   />
@@ -2160,7 +2161,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     min="0"
                     step="any"
                     onFocus={deletezero}
-                    value={newF2.duty_fee || singleCase.f2_duty_fee}
+                    value={newF2.duty_fee || singleCase.f2_duty_fee || "0"}
                     name="duty_fee"
                     // onChange={handleChangeF2}
                   />
@@ -2171,7 +2172,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                   <input
                     type="text"
                     onFocus={deletezero}
-                    value={newF2.duty_fee_note || singleCase.f2_duty_fee_note}
+                    value={newF2.duty_fee_note || singleCase.f2_duty_fee_note || ""}
                     name="duty_fee_note"
                     onChange={handleChangeF2T}
                   />
@@ -2191,7 +2192,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     min="0"
                     step="any"
                     onFocus={deletezero}
-                    value={newF2.cartrust_other_fee || singleCase.f2_cartrust_other_fee}
+                    value={newF2.cartrust_other_fee || singleCase.f2_cartrust_other_fee || "0"}
                     name="cartrust_other_fee"
                     // onChange={handleChangeF2}
                   />
@@ -2201,7 +2202,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                   <label>หมายเหตุ</label>
                   <input
                     type="text"
-                    value={newF2.cartrust_other_fee_note || singleCase.f2_cartrust_other_fee_note}
+                    value={newF2.cartrust_other_fee_note || singleCase.f2_cartrust_other_fee_note || ""}
                     name="cartrust_other_fee_note"
                     onChange={handleChangeF2T}
                   />
@@ -2253,7 +2254,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.car_shield_fee || singleCase.f2_car_shield_fee}
+                    value={newF2.car_shield_fee || singleCase.f2_car_shield_fee || "0"}
                     name="car_shield_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
@@ -2284,7 +2285,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.car_insurance_fee || singleCase.f2_car_insurance_fee}
+                    value={newF2.car_insurance_fee || singleCase.f2_car_insurance_fee || "0"}
                     name="car_insurance_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
@@ -2296,7 +2297,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                   <label>หมายเหตุ</label>
                   <input
                     type="text"
-                    value={newF2.car_insurance_fee_note || singleCase.f2_car_insurance_fee_note}
+                    value={newF2.car_insurance_fee_note || singleCase.f2_car_insurance_fee_note }
                     name="car_insurance_fee_note"
                     onChange={handleChangeF2T}
                   />
@@ -2315,7 +2316,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.transfer_service_fee || singleCase.f2_transfer_service_fee}
+                    value={newF2.transfer_service_fee || singleCase.f2_transfer_service_fee || "0"}
                     name="transfer_service_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
@@ -2347,7 +2348,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.contract_fee || singleCase.f2_contract_fee}
+                    value={newF2.contract_fee || singleCase.f2_contract_fee || "0"}
                     name="contract_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
@@ -2410,7 +2411,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     decimalScale= "2"
                     min="0"
                     step="any"
-                    value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee}
+                    value={newF2.newfinance_other_fee || singleCase.f2_newfinance_other_fee || ""}
                     name="newfinance_other_fee"
                     // onChange={handleChangeF2}
                     onFocus={deletezero}
@@ -2639,12 +2640,11 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
                     {
                       operaterOption()
                     }
-
-
                   </select>
+                  <button className="modal-trigger" href="#modalAddFStaff">Add</button>
 
 
-
+                    <br/>
                   <label>
                     <span>จังหวัดที่อยู่อาศัย</span></label>
                   <select
@@ -2683,7 +2683,8 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
 
 
                   </select>
-
+                  <button className="modal-trigger" href="#modalAddMargin">Add</button>
+                  <br />
                   <label>
                     <span>เลขที่บัญชี</span></label>
                   <input

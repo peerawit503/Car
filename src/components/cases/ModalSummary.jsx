@@ -162,7 +162,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
         <label>CQC team</label>
         <input
           type="text"
-          value={singleCase.cqc_team || "DEFAULT"}
+          value={singleCase.cqc_team || ""}
           name="cqc_team"
           readOnly
           onChange={handleChange}
@@ -178,7 +178,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
 /Contract officer</label>
         <input
           type="text"
-          value={singleCase.contract_officer }
+          value={singleCase.contract_officer || ""}
           readOnly
           name="contract_officer"
           onChange={handleChange}
@@ -188,7 +188,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
         <label>สาขา (ธนชาติ) / Hub</label>
         <input
            type="text"
-          value={singleCase.hub}
+          value={singleCase.hub || ""}
           name="hub"
           readOnly
           
@@ -202,7 +202,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
         <label>Cartust Lead Refer./รับเคสจาก</label>
         <input
           type="text"
-          value={singleCase.cartrust_lead_refer}
+          value={singleCase.cartrust_lead_refer || ""}
           name="cartrust_lead_refer"
           readOnly
           onChange={handleChange}
@@ -336,7 +336,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 <input
                   type="text"
                   name="jobNum"
-                  value={singleCase.job_id}
+                  value={singleCase.job_id || ""} 
                   
                   
                   readOnly
@@ -360,7 +360,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 <label >Case Type / ประเภทเคส</label>
                 <input
                   name='caseType'
-                  value={singleCase.case_type || 'DEFAULT'}
+                  value={singleCase.case_type || ""}
                   readOnly
                   className='browser-default'
                 >
@@ -373,7 +373,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 <label >Case Source / รับเคสจาก</label>
                 <input
                   name='receiver'
-                  value={singleCase.case_source || ''}
+                  value={singleCase.case_source || ""}
                   
                   type="text"
                   
@@ -390,14 +390,14 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
               <div className="col s6 m6 l6 content-radonly">
                 <label>First Name - Last Name</label>
                 <input type="text"
-                  value={singleCase.name || ''} 
+                  value={singleCase.name || ""} 
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
                 <input type="text"
-                  value={singleCase.car_license}
+                  value={singleCase.car_license || ""}
                   readOnly />
               </div>
 
@@ -405,7 +405,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
                 <label >Province / ป้ายทะเบียนจังหวัด</label>
                 <input
                   name='province'
-                  value={singleCase.car_province || "DEFAULT"}
+                  value={singleCase.car_province || ""}
                   className='browser-default'
                   readOnly
                 >
