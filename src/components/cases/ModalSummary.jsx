@@ -24,7 +24,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
   
   function summaryCaseTime(reciveD ,caseS){
   
-    if(caseS == null){
+    if(caseS == null || caseS ===''){
 
       return "";
     }else{
@@ -109,10 +109,10 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
   }
   function calculateProcessDate(processBefore, processCurrent) {
     let result = [];
-    if (processCurrent == null) {
+    if (processCurrent == null || processCurrent ==='') {
       
       result.push ( <div className="col s2 m4"> </div>);
-    } else if (processCurrent != null && processBefore == null) {
+    } else if (processCurrent != null && (processBefore == null || processBefore ==='')) {
       result.push (
           dateTimeFormatted(processCurrent)
         )
@@ -220,9 +220,9 @@ const ModalSummary = ({ singleCase , kpi , getAllCase}) => {
 
   function calculateColorFromDate(processBefore, processCurrent, kpiName) {
 
-    if (processCurrent == null) {
+    if (processCurrent == null || processCurrent ==='') {
       return "summaryIcon-div gray";
-    } else if (processCurrent != null && processBefore == null) {
+    } else if (processCurrent != null && (processBefore == null || processBefore ==='')) {
       return "summaryIcon-div green";
     } else {
       var date1 = parseStringToDate(processBefore);
