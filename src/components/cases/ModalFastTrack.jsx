@@ -179,17 +179,17 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
             thousandSeparator={true}
             onValueChange={(values) => {
             const {value} = values;
-            singleCase.f2_old_finance_transfer_fee = value}}
+            singleCase.deposit = value}}
             decimalScale= "2"
             min="0"
             step="any"
-            value={singleCase.f2_old_finance_transfer_fee || "0"}
+            value={singleCase.deposit || "0"}
             name="f2_old_finance_transfer_fee"
             disabled
             // onChange={handleChangeF2}
           />
           <br/>
-           เงินมัดจำ (บาท)
+           เงินเข้าบริษัท (บาท)
          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
