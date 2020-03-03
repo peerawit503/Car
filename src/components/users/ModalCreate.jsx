@@ -18,7 +18,9 @@ const initialUser = {
   file: '',
   username: "",
   password: "",
-  password2: ""
+  password2: "",
+  line:""
+
 }
 
 const ModalCreate = ({ addUser }) => {
@@ -155,6 +157,16 @@ const ModalCreate = ({ addUser }) => {
                   type="tel"
                   name="phone"
                   value={user.tel}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label htmlFor="Phone">Line</label>
+                <input
+                  type="text"
+                  name="line"
+                  value={user.line}
                   onChange={handleChange}
                 />
               </div>

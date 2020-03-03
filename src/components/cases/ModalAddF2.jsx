@@ -310,122 +310,73 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
       newF2.province ? newF2.province : singleCase.f2_province,
     );
 
-    // let newData = {
-    //   approve_amount: parseFloat(singleCase.approve_amount),
-    //   old_finance_closing_fee: parseFloat(newF2.old_finance_closing_fee ? newF2.old_finance_closing_fee : singleCase.f2_close_amount),
-    //   old_finance_transfer_fee: parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
-    //   book_closing_fee: parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
-    //   vat7_fee: ((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07)?((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07):singleCase.f2_vat7_fee,
-    //   transfer_fee: parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
-    //   duty_fee: parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
-    //   cartrust_other_fee: parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
-    //   car_shield_fee: parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
-    //   car_insurance_fee: parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
-    //   transfer_service_fee: parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
-    //   contract_fee: parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
-    //   outside_transfer_fee: parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
-      // newfinance_other_fee: parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee),
+    let newData = {
+      approve_amount: parseFloat(singleCase.approve_amount),
+      old_finance_closing_fee: parseFloat(newF2.close_amount ? newF2.close_amount : singleCase.close_amount),
+      old_finance_transfer_fee: parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
+      book_closing_fee: parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
+      vat7_fee: ((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07)?((parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee) + parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee)) * 0.07):singleCase.f2_vat7_fee,
+      transfer_fee: parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
+      duty_fee: parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
+      cartrust_other_fee: parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
+      car_shield_fee: parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
+      car_insurance_fee: parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
+      transfer_service_fee: parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
+      contract_fee: parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
+      outside_transfer_fee: parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
+      newfinance_other_fee: parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee),
       
 
-    //   approve_amount_note: newF2.approve_amount_note ? newF2.approve_amount_note : singleCase.f2_approve_amount_note,
-    //   car_check_con: newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
-    //   doc_storage_con: newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
-    //   margin_account: newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
-    //   margin_account_no: newF2.margin_account_no ? newF2.margin_account_no : singleCase.f2_margin_account_no,
-    //   old_finance_closing_fee_note: newF2.old_finance_closing_fee_note ? newF2.old_finance_closing_fee_note : singleCase.f2_old_finance_closing_fee_note,
-    //   old_finance_transfer_fee_note: newF2.old_finance_transfer_fee_note ? newF2.old_finance_transfer_fee_note : singleCase.f2_old_finance_transfer_fee_note,
-    //   book_closing_fee_note: newF2.book_closing_fee_note ? newF2.book_closing_fee_note : singleCase.f2_book_closing_fee_note,
-    //   vat7_fee_note: newF2.vat7_fee_note ? newF2.vat7_fee_note : singleCase.f2_vat7_fee_note,
-    //   transfer_fee_note: newF2.transfer_fee_note ? newF2.transfer_fee_note : singleCase.f2_transfer_fee_note,
-    //   duty_fee_note: newF2.duty_fee_note ? newF2.duty_fee_note : singleCase.f2_duty_fee_note,
-    //   cartrust_other_fee_note: newF2.cartrust_other_fee_note ? newF2.cartrust_other_fee_note : singleCase.f2_cartrust_other_fee_note,
-    //   car_shield_fee_note: newF2.car_shield_fee_note ? newF2.car_shield_fee_note : singleCase.f2_car_shield_fee_note,
-    //   car_insurance_fee_note: newF2.car_insurance_fee_note ? newF2.car_insurance_fee_note : singleCase.f2_car_insurance_fee_note,
-    //   transfer_service_fee_note: newF2.transfer_service_fee_note ? newF2.transfer_service_fee_note : singleCase.f2_transfer_service_fee_note,
-    //   contract_fee_note: newF2.contract_fee_note ? newF2.contract_fee_note : singleCase.f2_contract_fee_note,
-    //   outside_transfer_fee_note: newF2.outside_transfer_fee_note ? newF2.outside_transfer_fee_note : singleCase.f2_outside_transfer_fee_note,
-    //   newfinance_other_fee_note: newF2.newfinance_other_fee_note ? newF2.newfinance_other_fee_note : singleCase.f2_newfinance_other_fee_note,
+      approve_amount_note: newF2.approve_amount_note ? newF2.approve_amount_note : singleCase.f2_approve_amount_note,
+      car_check_con: newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
+      doc_storage_con: newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
+      margin_account: newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
+      margin_account_no: newF2.margin_account_no ? newF2.margin_account_no : singleCase.f2_margin_account_no,
+      old_finance_closing_fee_note: newF2.old_finance_closing_fee_note ? newF2.old_finance_closing_fee_note : singleCase.f2_old_finance_closing_fee_note,
+      old_finance_transfer_fee_note: newF2.old_finance_transfer_fee_note ? newF2.old_finance_transfer_fee_note : singleCase.f2_old_finance_transfer_fee_note,
+      book_closing_fee_note: newF2.book_closing_fee_note ? newF2.book_closing_fee_note : singleCase.f2_book_closing_fee_note,
+      vat7_fee_note: newF2.vat7_fee_note ? newF2.vat7_fee_note : singleCase.f2_vat7_fee_note,
+      transfer_fee_note: newF2.transfer_fee_note ? newF2.transfer_fee_note : singleCase.f2_transfer_fee_note,
+      duty_fee_note: newF2.duty_fee_note ? newF2.duty_fee_note : singleCase.f2_duty_fee_note,
+      cartrust_other_fee_note: newF2.cartrust_other_fee_note ? newF2.cartrust_other_fee_note : singleCase.f2_cartrust_other_fee_note,
+      car_shield_fee_note: newF2.car_shield_fee_note ? newF2.car_shield_fee_note : singleCase.f2_car_shield_fee_note,
+      car_insurance_fee_note: newF2.car_insurance_fee_note ? newF2.car_insurance_fee_note : singleCase.f2_car_insurance_fee_note,
+      transfer_service_fee_note: newF2.transfer_service_fee_note ? newF2.transfer_service_fee_note : singleCase.f2_transfer_service_fee_note,
+      contract_fee_note: newF2.contract_fee_note ? newF2.contract_fee_note : singleCase.f2_contract_fee_note,
+      outside_transfer_fee_note: newF2.outside_transfer_fee_note ? newF2.outside_transfer_fee_note : singleCase.f2_outside_transfer_fee_note,
+      newfinance_other_fee_note: newF2.newfinance_other_fee_note ? newF2.newfinance_other_fee_note : singleCase.f2_newfinance_other_fee_note,
      
-    //   f2_status: "done",
-    //   cheque: newF2.f2_cheque?newF2.cheque:singleCase.f2_cheque,
-    //   cheque_receiver: singleCase.name,
-    //   deposit_receiver: singleCase.name,
-    //   deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit,
-    //   finance_staff:newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
-    //   difference:difference.d1,
-    //   province:newF2.province?newF2.province:singleCase.f2_province
-    // }
+      f2_status: "done",
+      cheque: newF2.f2_cheque?newF2.cheque:singleCase.f2_cheque,
+      cheque_receiver: singleCase.name,
+      deposit_receiver: singleCase.name,
+      deposit: newF2.f2_deposit?newF2.deposite:singleCase.f2_deposit,
+      finance_staff:newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
+      finance_staff_line:newF2.finance_staff_line ? newF2.finance_staff_line : singleCase.finance_staff_line,
+      finance_staff_tel:newF2.finance_staff_tel ? newF2.finance_staff_tel : singleCase.finance_staff_tel,
+    
+      difference:difference.d1,
+      province:newF2.province?newF2.province:singleCase.f2_province,
+      close_amount:newF2.close_amount?newF2.close_amount:singleCase.close_amount,
+      down_amount:newF2.down_amount?newF2.down_amount:singleCase.down_amount,
+    }
 
-    // var data = JSON.stringify(newData);
-    // console.log('data', data)
-    // axios
-    //   .post(`${url}/F2?case_id=${singleCase.case_id}`, data, {
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     }
-    //   })
-    //   .then(res => {
-    //     console.log("#####  RES  ######");
-    //     console.log("Case", res.data.message);
-    //     printPDF( 
-    //       parseFloat(singleCase.approve_amount),
-    //       parseFloat(newF2.old_finance_closing_fee? newF2.old_finance_closing_fee : singleCase.f2_old_finance_closing_fee),
-    //       parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
-    //       parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
-    //       parseFloat(newF2.vat7_fee ? newF2.vat7_fee : singleCase.f2_vat7_fee),
-    //       parseFloat(newF2.transfer_fee ? newF2.transfer_fee : singleCase.f2_transfer_fee),
-    //       parseFloat(newF2.duty_fee ? newF2.duty_fee : singleCase.f2_duty_fee),
-    //       parseFloat(newF2.cartrust_other_fee ? newF2.cartrust_other_fee : singleCase.f2_cartrust_other_fee),
-    //       parseFloat(newF2.car_shield_fee ? newF2.car_shield_fee : singleCase.f2_car_shield_fee),
-    //       parseFloat(newF2.car_insurance_fee ? newF2.car_insurance_fee : singleCase.f2_car_insurance_fee),
-    //       parseFloat(newF2.transfer_service_fee ? newF2.transfer_service_fee : singleCase.f2_transfer_service_fee),
-    //       parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
-    //       parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
-    //       parseFloat(newF2.tax_renewal_fee ? newF2.tax_renewal_fee : singleCase.f2_tax_renewal_fee),
-    //       parseFloat(newF2.act_renewal_fee ? newF2.act_renewal_fee : singleCase.f2_act_renewal_fee),
-    //       newF2.car_check_con ? newF2.car_check_con : singleCase.f2_car_check_con,
-    //       newF2.doc_storage_con ? newF2.doc_storage_con : singleCase.f2_doc_storage_con,
-    //       newF2.margin_account ? newF2.margin_account : singleCase.f2_margin_account,
-    //       newF2.margin_account_no ? newF2.margin_account_no : singleCase.f2_margin_account_no,
-    //       newF2.old_finance_closing_fee_note ? newF2.old_finance_closing_fee_note : singleCase.f2_old_finance_closing_fee_note,
-    //       newF2.old_finance_transfer_fee_note ? newF2.old_finance_transfer_fee_note : singleCase.f2_old_finance_transfer_fee_note,
-    //       newF2.book_closing_fee_note ? newF2.book_closing_fee_note : singleCase.f2_book_closing_fee_note,
-    //       newF2.vat7_fee_note ? newF2.vat7_fee_note : singleCase.f2_vat7_fee_note,
-    //       newF2.transfer_fee_note ? newF2.transfer_fee_note : singleCase.f2_transfer_fee_note,
-    //       newF2.duty_fee_note ? newF2.duty_fee_note : singleCase.f2_duty_fee_note,
-    //       newF2.cartrust_other_fee_note ? newF2.cartrust_other_fee_note : singleCase.f2_cartrust_other_fee_note,
-    //       newF2.car_shield_fee_note ? newF2.car_shield_fee_note : singleCase.f2_car_shield_fee_note,
-    //       newF2.car_insurance_fee_note ? newF2.car_insurance_fee_note : singleCase.f2_car_insurance_fee_note,
-    //       newF2.transfer_service_fee_note ? newF2.transfer_service_fee_note : singleCase.f2_transfer_service_fee_note,
-    //       newF2.contract_fee_note ? newF2.contract_fee_note : singleCase.f2_contract_fee_note,
-    //       newF2.outside_transfer_fee_note ? newF2.outside_transfer_fee_note : singleCase.f2_outside_transfer_fee_note,
-    //       newF2.tax_renewal_fee_note ? newF2.tax_renewal_fee_note : singleCase.f2_tax_renewal_fee_note,
-    //       newF2.act_renewal_fee_note ? newF2.act_renewal_fee_note : singleCase.f2_act_renewal_fee_note,
+    var data = JSON.stringify(newData);
+    console.log('data', data)
+    axios
+      .post(`${url}/F2?case_id=${singleCase.case_id}`, data, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => {
+        console.log("#####  RES  ######");
+        console.log("Case", res.data.message);
+        
+      })
+      .catch(err => console.log(err));
 
-    //       newF2.cheque?newF2.cheque:singleCase.f2_cheque,
-    //       singleCase.name,
-    //       singleCase.name,
-    //       newF2.deposit?newF2.deposit:singleCase.f2_deposit,
-    //       singleCase.name,
-    //       singleCase.cus_tel,
-    //       singleCase.case_type,
-    //       singleCase.case_id,
-    //       singleCase.job_id,
-    //       singleCase.new_bank,
-    //       singleCase.old_bank,
-    //       singleCase.down_amount,
-    //       singleCase.car_brand,
-    //       singleCase.car_model,
-    //       singleCase.car_license,
-    //       singleCase.car_province,
-    //       singleCase.car_year,
-    //       newF2.finance_staff?newF2.finance_staff:singleCase.finance_staff,
-    //       newF2.province?newF2.province:singleCase.f2_province,
-    //     );
-    //   })
-    //   .catch(err => console.log(err));
-
-    // console.log(newF2);
+    console.log(newF2);
   }
 
   const printPDF = (
@@ -1041,15 +992,18 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
               {
                 marginTop: 15,
                 fontSize: 12,
+                
                 stack: [
                   {
                     text: 'ค่าใช้จ่าย CarTrust',
                     bold: true,
                     fontSize: 15,
                     marginBottom: 12,
+                    
                   },
                   {
                     marginLeft: 23,
+                    
                     columns: [
                       {
                         text: '1. ยอดปิดไฟแนนซ์เก่า',
@@ -1058,11 +1012,13 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(old_finance_closing_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
                         marginLeft: 2,
                       },
+                      
                     ],
                   },
                   {
@@ -1075,6 +1031,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(old_finance_transfer_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1092,6 +1049,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(old_finance_closing_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1109,6 +1067,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(transfer_fee).toFixed(2)),
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1126,6 +1085,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(vat7_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1143,6 +1103,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(duty_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1160,6 +1121,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(transfer_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1179,6 +1141,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(cartrust_total_cost).toFixed(2)) ,
+                        alignment: 'right',
                         
                         
                       },
@@ -1205,6 +1168,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(car_shield_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1222,6 +1186,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(car_insurance_fee).toFixed(2)),
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1239,6 +1204,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(transfer_service_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1256,6 +1222,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(contract_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1273,6 +1240,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(outside_transfer_fee).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1290,6 +1258,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(newfinance_other_fee).toFixed(2)),
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1310,6 +1279,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(new_finance_total_cost).toFixed(2)),
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1329,6 +1299,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(total_cost).toFixed(2)),
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1348,6 +1319,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                       {
                         text: numberWithCommas(parseFloat(amount_received).toFixed(2)) ,
+                        alignment: 'right',
                       },
                       {
                         text: 'บาท',
@@ -1359,102 +1331,104 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
               },
               {
                 marginTop: 15,
+                fontSize: 12,
                 stack: [
                   {
                     text: 'หมายเหตุ',
                     bold: true,
-                    fontSize: 15,
+                    marginBottom:5,
                   },
                   {
-                    text: old_finance_closing_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: old_finance_closing_fee_note?old_finance_closing_fee_note:"0",
+                    color: old_finance_closing_fee_note?'black':'white',
+                   
+                    marginTop: 8,
                    
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
                     
-                    text: old_finance_transfer_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: old_finance_transfer_fee_note?old_finance_transfer_fee_note:"0",
+                    color: old_finance_transfer_fee_note?'black':'white',
+                    marginTop: 8,
                    
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: book_closing_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: book_closing_fee_note?book_closing_fee_note:"0",
+                    color: book_closing_fee_note?'black':'white',
+                    marginTop: 8,
                  
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: vat7_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: vat7_fee_note?vat7_fee_note:"0",
+                    color: vat7_fee_note?'black':'white',
+                    marginTop: 8,
                     
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: transfer_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: transfer_fee_note?transfer_fee_note:"0",
+                    color: transfer_fee_note?'black':'white',
+                    marginTop: 8,
                     
                     
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: duty_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: duty_fee_note?duty_fee_note:"0",
+                    color: duty_fee_note?'black':'white',
+                    marginTop: 8,
                     
                    
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: cartrust_other_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: cartrust_other_fee_note?cartrust_other_fee_note:"0",
+                    color: cartrust_other_fee_note?'black':'white',
+                    marginTop: 8,
                    
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: car_shield_fee_note,
-                    fontSize: 12,
+                    text: car_shield_fee_note?car_shield_fee_note:"0",
+                    color: car_shield_fee_note?'black':'white',
                     marginTop: 37,
                    
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: car_insurance_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: car_insurance_fee_note?car_insurance_fee_note:"0",
+                    color: car_insurance_fee_note?'black':'white',
+                    marginTop: 8,
                     
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: transfer_service_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: transfer_service_fee_note?transfer_service_fee_note:"0",
+                    color: transfer_service_fee_note?'black':'white',
+                    marginTop: 8,
                     
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: contract_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: contract_fee_note?contract_fee_note:"0",
+                    color: contract_fee_note?'black':'white',
+                    marginTop: 8,
                     
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: outside_transfer_fee_note,
-                    fontSize: 12,
-                    marginTop: 9,
+                    text: outside_transfer_fee_note?outside_transfer_fee_note:"0",
+                    color: outside_transfer_fee_note?'black':'white',
+                    marginTop: 8,
                   
                   },
                   { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
                   {
-                    text: newfinance_other_fee_note,
-                    fontSize: 12,
+                    text: newfinance_other_fee_note?newfinance_other_fee_note:"0",
+                    color: newfinance_other_fee_note?'black':'white',
                     marginTop: 8,
                   
                   },
@@ -1486,11 +1460,16 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                   {
                     columns: [
                       {
-                        text: 'จ่ายเป็นเงินสดให้ธนาคาร ' + old_bank,
+                        text: 'จ่ายเป็นเงินสดให้ธนาคาร ',
                         marginBottom: 7,
+                      },
+                      {
+                        text: old_bank,
+                        
                       },
                       {
                         text: numberWithCommas(parseFloat(old_finance_total_cost).toFixed(2)),
+                        alignment:'right'
                       },
                       {
                         text:'บาท' ,
@@ -1501,11 +1480,16 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                   {
                     columns: [
                       {
-                        text: 'ทำเช็คจ่ายในนาม ' + cheque_receiver,
+                        text: 'ทำเช็คจ่ายในนาม ',
                         marginBottom: 7,
+                      },
+                      {
+                        text: cheque_receiver,
+                        
                       },
                       {
                         text: numberWithCommas(parseFloat(cheque).toFixed(2)) ,
+                        alignment:'right'
                       },
                       {
                         text:'บาท' ,
@@ -1516,11 +1500,16 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                   {
                     columns: [
                       {
-                        text: 'มัดจำจ่ายให้ ' + deposit_receiver,
+                        text: 'มัดจำจ่ายให้ ' ,
                         marginBottom: 7,
                       },
                       {
+                        text: deposit_receiver,
+                        
+                      },
+                      {
                         text: numberWithCommas(parseFloat(deposit).toFixed(2)),
+                        alignment:'right'
                       },
                       {
                         text:'บาท' ,
