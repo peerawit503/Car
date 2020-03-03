@@ -236,9 +236,72 @@ const Cases = (props) => {
 
   // }
 
-  const confirm = (singleCase,date) => {
-    var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
-    console.log('###### data ########');
+  const confirm = (singleCase,date,checkCar,deposit) => {
+    // console.log("chackcar"+checkCar.d1);
+    
+    if(!checkCar.d1){
+      var data = JSON.stringify({ tracking: 'book_transfer', user_id: props.user.id ,date:date});
+      console.log('###### data ########');
+      console.log(data);
+      axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(res => {
+        console.log('#####  RES  ######');
+        console.log('Case', res.data.message);
+        // setisLoading(true);
+        checkCar.d1 = true;
+        getAllCase()
+      })
+        .catch(err => console.log(err))
+    }else{
+      console.log("deposit"+deposit);
+      if(singleCase.status === "deposit_doc_to_new_bank" && deposit !== 0){
+      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:deposit});
+      }else if(singleCase.status === "deposit_doc_to_new_bank" && deposit === 0){
+      var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
+      }else if(singleCase.status === "cash_received" && deposit === 0){
+      var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
+      }else{
+      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
+      } 
+      console.log('###### data ########');
+      console.log(data);
+      axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(res => {
+        console.log('#####  RES  ######');
+        console.log('Case', res.data.message);
+        // setisLoading(true);
+        getAllCase()
+      })
+        .catch(err => console.log(err))
+    }
+  }
+
+  function fastToP4(date){
+    var data = JSON.stringify({ tracking: 'transfer_doc_received', user_id: props.user.id ,date:date});
+    console.log('###### data ########Fastto P4');
+    console.log(data);
+    axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => {
+      console.log('#####  RES  ######');
+      console.log('Case', res.data.message);
+      // setisLoading(true);
+      getAllCase()
+    })
+      .catch(err => console.log(err))
+  }
+
+  function fastToP5(date){
+    var data = JSON.stringify({ tracking: 'transfer_doc_submitted', user_id: props.user.id ,date:date});
+    console.log('###### data ########Fastto P5');
     console.log(data);
     axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
       headers: {
@@ -657,7 +720,7 @@ const Cases = (props) => {
           </div>
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} />
+          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5}/>
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
