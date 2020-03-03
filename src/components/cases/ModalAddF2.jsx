@@ -240,7 +240,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
   };
 
   const deletezero = e => {
-    if (e.target.value == 0) {
+    if (e.target.value === 0) {
       e.target.value = "";
     }
   };
