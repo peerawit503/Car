@@ -39,8 +39,8 @@ pdfMake.fonts = {
   }
 };
 
-const ModalAddF2 = ({ singleCase, getAllCase }) => {
-  const [operatorS, setOperatorS] = useState([])
+const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
+  // const [operatorS, setOperatorS] = useState([])
   const [margin_account, setMargin_account] = useState([])
 
 
@@ -114,7 +114,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
   var summary = 0;
   useEffect(() => {
     getMargin_account()
-    getOperatorS()
+   // getOperatorS()
   }, []);
 
   function numberWithCommas(x) {
@@ -125,14 +125,14 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     setNewF2({ ...newF2, [e.target.name]: e.target.value });
   };
 
-  const getOperatorS = () => {
+  // const getOperatorS = () => {
 
-    axios.get(`${url}/dropdown?table=finance_staff`)
-      .then(res => {
-        setOperatorS(res.data.message);
-      })
-      .catch(err => console.log(err))
-  }
+  //   axios.get(`${url}/dropdown?table=finance_staff`)
+  //     .then(res => {
+  //       setOperatorS(res.data.message);
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 
   const getMargin_account = () => {
 
@@ -150,7 +150,7 @@ const ModalAddF2 = ({ singleCase, getAllCase }) => {
     let tel_text = name + '_tel'
     let line = optionElement.getAttribute(line_text);
     let tel = optionElement.getAttribute(tel_text);
-    setNewCase({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+    setNewF2({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
 
   };
 

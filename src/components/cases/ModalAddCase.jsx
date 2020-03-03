@@ -24,9 +24,9 @@ import { REHYDRATE } from "redux-persist";
 import CurrencyFormat from 'react-currency-format';
 
 
-const ModalAddCase = ({ saveNewCase, getAllCase }) => {
+const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) => {
 
-  const [operatorS, setOperatorS] = useState([])
+ // const [operatorS, setOperatorS] = useState([])
   const [validateLineTF, setValidateLineTF] = useState(true)
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
@@ -243,7 +243,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
 
 
   useEffect(() => {
-    getOperatorS()
+    // getOperatorS()
     getMargin_account()
     getCqc_team()
     getHub()
@@ -433,14 +433,15 @@ const ModalAddCase = ({ saveNewCase, getAllCase }) => {
     }
 
   }
-  const getOperatorS = () => {
 
-    axios.get(`${url}/dropdown?table=finance_staff`)
-      .then(res => {
-        setOperatorS(res.data.message);
-      })
-      .catch(err => console.log(err))
-  }
+  // const getOperatorS = () => {
+
+  //   axios.get(`${url}/dropdown?table=finance_staff`)
+  //     .then(res => {
+  //       setOperatorS(res.data.message);
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 
   const getOfficer = () => {
 
