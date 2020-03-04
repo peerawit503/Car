@@ -13,7 +13,6 @@ import Popup from 'reactjs-popup'
 const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS}) => {
   
   const [newCase, setNewCase] = useState({})
-
   useEffect(() => {
     
   })
@@ -25,15 +24,12 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
   function summaryCaseTime(reciveD ,caseS){
   
     if(caseS == null || caseS ===''){
-
       return "";
     }else{
       let lessThan = parseStringToDate(caseS)
       var moreThan = parseStringToDate(reciveD);
-
       return (Math.floor((lessThan - moreThan) / (24 * 3600 * 1000)));
     }
-   
   }
 
 
@@ -107,8 +103,48 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     }
     
   }
-  function calculateProcessDate(processBefore, processCurrent) {
+
+  function caseStatusShiftback(state) {
+    let nextstate = "";
+    if (state === 'submit_book_to_new_finance') { nextstate = 'book_deposit_received' }
+    else if (state === 'book_deposit_received') { nextstate = 'cash_received' }
+    else if (state === 'cash_received') { nextstate = 'book_received_back' }
+    else if (state === 'book_received_back') { nextstate = 'submit_book_deposit_return' }
+    else if (state === 'submit_book_deposit_return') { nextstate = 'deposit_doc_to_new_bank' }
+    else if (state === 'deposit_doc_to_new_bank') { nextstate = 'book_copy_received' }
+    else if (state === 'book_copy_received') { nextstate = 'book_transfer' }
+    else if (state === 'book_transfer') { nextstate = 'car_check_up' }
+    else if (state === 'car_check_up') { nextstate = 'submit_book_transfer' }
+    else if (state === 'submit_book_transfer') { nextstate = 'book_received' }
+    else if (state === 'book_received') { nextstate = 'transfer_doc_submitted' }
+    else if (state === 'transfer_doc_submitted') { nextstate = 'transfer_doc_received' }
+    else if (state === 'transfer_doc_received') { nextstate = 'account_closing' }
+    else if (state === 'account_closing') { nextstate = 'contact_customer' }
+    else if (state === 'contact_customer') { nextstate = 'receive' }
+    return nextstate;
+  }
+
+  function getbeforedate(status){
+    console.log("statustodate" + singleCase[statusTodate(status)]);
+    
+    if(singleCase[statusTodate(status)] === null || singleCase[statusTodate(status)] === ''){
+    console.log("in get before date");
+    status = caseStatusShiftback(status)
+      return getbeforedate(status)
+    }else{
+    return singleCase[statusTodate(status)]
+    }
+  }
+
+
+  function calculateProcessDate(processBefore, processCurrent,status) {
     let result = [];
+    if(processBefore === null || processBefore === ''){
+      processBefore = getbeforedate(status);
+      console.log("processBefore :" +processBefore);
+    }
+   
+    
     if (processCurrent == null || processCurrent ==='') {
       
       result.push ( <div className="col s2 m4"> </div>);
@@ -124,7 +160,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     } else {
       var date1 = parseStringToDate(processBefore);
       var date2 = parseStringToDate(processCurrent);
-
+      var returndate = Math.floor((date2 - date1) / (24 * 3600 * 1000));
       result.push(
         // <div className=" col s3 m1">
           dateTimeFormatted(processCurrent)
@@ -132,12 +168,50 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         )
       result.push(
       <div className="col s2 m2">
-        ( {Math.floor((date2 - date1) / (24 * 3600 * 1000))} วัน )
+        ( {returndate} วัน )
       </div>
       )
     }
     return result
   }
+
+  // function calDate(processBefore,processCurrent){
+  //   if (processCurrent == null || processCurrent ==='') {
+  //     return 0;
+  //   } else if (processCurrent != null && (processBefore == null || processBefore ==='')) {
+  //     return 0;
+  //   } else {
+  //     var date1 = parseStringToDate(processBefore);
+  //     var date2 = parseStringToDate(processCurrent);
+  //     var returndate = Math.floor((date2 - date1) / (24 * 3600 * 1000));
+  //   return returndate;
+  // }
+  // }
+   
+  
+
+
+  // function calculateTotalDate(){
+  //   let c1c2 = calDate(singleCase.receive_date,singleCase.contact_customer_date_date)
+  //   let c2c3 = calDate(singleCase.contact_customer_date,singleCase.account_closing_date)
+  //   let c3c4 = calDate(singleCase.account_closing_date,singleCase.transfer_doc_submitted_date)
+  //   let c4c5 = calDate(singleCase.transfer_doc_submitted_date,singleCase.transfer_doc_received_date)
+  //   let c5c6 = calDate(singleCase.transfer_doc_received_date,singleCase.book_received_date)
+  //   let c6c7 = calDate(singleCase.book_received_date,singleCase.submit_book_transfer_date)
+  //   let c7c8 = calDate(singleCase.submit_book_transfer_date,singleCase.car_check_up_date)
+  //   let c8c9 = calDate(singleCase.car_check_up_date,singleCase.account_closing_date)
+  //   let c9c10 = calDate(singleCase.contact_customer_date_date,singleCase.book_transfer_date)
+  //   let c10c11 = calDate(singleCase.book_transfer_date,singleCase.book_copy_received_date)
+  //   let c11c12 = calDate(singleCase.book_copy_received_date,singleCase.deposit_doc_to_new_bank_date)
+  //   let c12c13 = calDate(singleCase.deposit_doc_to_new_bank_date,singleCase.submit_book_deposit_return_date)
+  //   let c13c14 = calDate(singleCase.submit_book_deposit_return_date,singleCase.book_received_back_date)
+  //   let c14c15 = calDate(singleCase.book_received_back_date,singleCase.cash_received_date)
+  //   let c15c16 = calDate(singleCase.cash_received_date,singleCase.book_deposit_received_date)
+  //   let c16c17 = calDate(singleCase.book_deposit_received_date,singleCase.submit_book_to_new_finance_date)
+  //   return c1c2+c2c3+c3c4+c4c5+c5c6+c6c7+c7c8+c8c9+c9c10+c10c11+c11c12+c12c13+c12c13+c13c14+c14c15+c15c16+c16c17
+  //   // }
+  
+  // }
 
   function dateTimeFormatted(sringDate) {
     let result = []
@@ -196,12 +270,19 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           value={singleCase.hub || ""}
           name="hub"
           readOnly
-          
-          
         >
-      
         </input>
       </div>);
+      result.push(<div className="col s6 m4 l4 content-radonly">
+      <label>Document id / AOL</label>
+      <input
+         type="text"
+        value={singleCase.document_id || ""}
+        name="hub"
+        readOnly
+      >
+      </input>
+    </div>);
     } else if (singleCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m4 l4 content-radonly">
         <label>Cartust Lead Refer./รับเคสจาก</label>
@@ -221,7 +302,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     return (result);
   }
 
-  
+
+
+ 
+
+
 
   function calculateColorFromDate(processBefore, processCurrent, kpiName) {
 
@@ -506,6 +591,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
             <div className="row">
                 <div className="col s12 m12">
                 <h6> ระยะเวลาที่เคสอยู่ในระบบ {summaryCaseTime(singleCase.receive_date, singleCase[statusTodate(singleCase.status)])} วัน </h6>  
+            
                 </div>
               </div>
 
@@ -532,8 +618,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   2.ติดต่อลูกค้า{' '}:
                 </div>
-                {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date)}
-                <div className="col s2 m2">
+                {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date,"receive")}
+                <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['contact_customer_orange']} </span>/ <span style={{color:'red'}}>{kpi['contact_customer_red']}</span>
                 </div>
               </div>
@@ -547,8 +633,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   3.ปิดเล่ม{' '}:
                 </div>
-                {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date)}
-                <div className="col s2 m2">
+                {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date,"contact_customer")}
+                <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['account_closing_orange']} </span>/ <span style={{color:'red'}}>{kpi['account_closing_red']}</span>
                 </div>
               </div>
@@ -562,8 +648,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   4.รับชุดโอน{' '}:
                 </div>
-                {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date)}
-                <div className="col s2 m2">
+                {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"account_closing")}
+                <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['transfer_doc_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['transfer_doc_received_red']}</span>
                 </div>
               </div>
@@ -578,8 +664,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   5.ยื่นชุดโอน{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date,"transfer_doc_received")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['transfer_doc_submitted_orange']} </span>/ <span style={{color:'red'}}>{kpi['transfer_doc_submitted_red']}</span>
                 </div>
               </div>
@@ -593,7 +679,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   6.ได้รับเล่ม{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date)}
+                  {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"transfer_doc_submitted")}
                   <div className="col s2 m2">
                     KPI : <span style={{color:'orange'}}>{kpi['book_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_received_red']}</span>
                 </div>
@@ -608,8 +694,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   7.ส่งงานโอนทะเบียน{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"book_received")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['submit_book_transfer_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_transfer_red']}</span>
                 </div>
               </div>
@@ -623,8 +709,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   8.ตรวจสภาพรถ{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"submit_book_transfer")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['car_check_up_orange']} </span>/ <span style={{color:'red'}}>{kpi['car_check_up_red']}</span>
                 </div>
               </div>
@@ -638,8 +724,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   9.โอนเล่มทะเบียน{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"car_check_up")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['book_transfer_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_transfer_red']}</span>
                 </div>
               </div>
@@ -653,7 +739,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   10.รับสำเนาเล่ม{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date)}
+                  {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_transfer")}
                   <div className="col s2 m2">
                     KPI : <span style={{color:'orange'}}>{kpi['book_copy_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_copy_received_red']}</span>
                 </div>
@@ -668,8 +754,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   11.ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"book_copy_received")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['deposit_doc_to_new_bank_orange']} </span>/ <span style={{color:'red'}}>{kpi['deposit_doc_to_new_bank_red']}</span>
                 </div>
               </div>
@@ -683,8 +769,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   12.ทำเรื่องเบิกมัดจำคืน{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"deposit_doc_to_new_bank")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['submit_book_deposit_return_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_deposit_return_red']}</span>
                 </div>
               </div>
@@ -698,8 +784,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   13.รับเล่มคืน{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"submit_book_deposit_return")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['book_received_back_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_received_back_red']}</span>
                 </div>
               </div>
@@ -713,8 +799,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   14.เงินเข้าบัญชีคาร์ทรัส{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date,"book_received_back")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['cash_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['cash_received_red']}</span>
                 </div>
               </div>
@@ -728,8 +814,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   15.เงินมัดจำคืนเข้าบัญชี{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"cash_received")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['book_deposit_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_deposit_received_red']}</span>
                 </div>
               </div>
@@ -743,8 +829,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="summaryIcon-div col s5 m4">
                   16.ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:
                 </div>
-                  {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date)}
-                  <div className="col s2 m2">
+                  {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"book_deposit_received")}
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['submit_book_to_new_finance_orange']} </span>/ <span style={{color:'red'}}>{kpi['submit_book_to_new_finance_red']}</span>
                 </div>
               </div>

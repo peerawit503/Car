@@ -10,7 +10,7 @@ import CurrencyFormat from 'react-currency-format';
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} ) => {
+const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, statusDate} ) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
   const [checkp11, setcheckp11] = useState(false)
   const [renderDeposit, setrenderDeposit] = useState(false);
@@ -90,7 +90,6 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
       }
     };
   function ValidateCase(props) {
-   
     // in case 7 submit_book_transfer
     if (props.singleCase.status === 'submit_book_transfer'){
       setisConfirm(true)
@@ -261,17 +260,13 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
           setisConfirm(true)
         }
     }
-
     //nomal case return Confirm button
     return result;
   }
 
-  
-
   function Renderfooter(){
     if(isConfirm){
       return (
-        
         <div class="modal-footer">
           <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date,checkCar)}>Confirm</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancel</button>
@@ -287,24 +282,27 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
 
 
   return (
-    <div>
       <div id="modalFastTrack" className="modal modal-fixed-footer">
-          <div className="row">
+          <div className="row 15" style={{borderBottom:"1px solid", padding:"10px"}}>
             {/* <div className="header-title"> */}
-              <div className="col s12 m12 no-col-padding">
-                <h4 style={{textAlign:"center"}}>Case Status : {translate(singleCase.status)}</h4><br/>
-                <h4 style={{textAlign:"center"}}>Job Id: {singleCase.case_id}</h4><br/>
+              <div className="col s8 m8 ">
+                <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)} ({statusDate(singleCase)})</span>
               </div>
+              <div className="col s4 m4 right ">
+                <span className="right">Job Id : {singleCase.case_id}</span><br/>
+                <span className="right">F2 Status : {singleCase.F2_status}</span><br/>
+              </div>
+          </div>
             {/* </div> */}
           {/* process bar */}
 
           {/* body */}
             <div className="row content">
-            <h5 style={{textAlign:"center"}}>F2 Status : {singleCase.F2_status}</h5><br/>
-            <div className="col s4 m4 l4 content"></div>
+            <h4 style={{textAlign:"center"}}>รอยืนยัน : {translate(singleCase.status)}</h4><br/>
+            <div className="col s4 m4 content"></div>
 
-            <div className="col s4 m4 l4 content">
-                    <label>Receive Date/ วันที่รับเคส</label>
+            <div className="col s4 m4 content">
+                    <label>วันที่ดำเนินการ</label>
                     <input
                       type="date"
                       value={date || currentDateFormat(Date())}
@@ -334,8 +332,6 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
             <Renderfooter />
           </div>
         </div>
-      </div>
-    </div >
   )
 }
 
