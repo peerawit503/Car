@@ -101,7 +101,7 @@ const ModalDetail = ({ user }) => {
             />
           </div>
 
-          <div className="col s6 m4 l4 content">
+          <div className="col s6 m6 l6 content-radonly">
                 <label htmlFor="Phone">Line</label>
                 <input
                   type="text"
