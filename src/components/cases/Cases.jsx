@@ -355,7 +355,7 @@ const Cases = (props) => {
         ...newCase,
         customer_id:customer.customer_id,
         difference: difference.d1,
-        document_id : newCase.document_id?newCase.document_id :"",
+        document_id : newCase.document_id?newCase.document_id :"",       
         case_receiver : props.user.firstName,
         user_id: props.user.id,
         vat7_fee:((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07),

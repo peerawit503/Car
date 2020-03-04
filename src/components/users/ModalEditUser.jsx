@@ -20,7 +20,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
     picture: "",
     attribute:"",
     type:"",
-    line:""
+    line:"",
     
   })
   const [listTeam1, setListTeam1] = useState([])
