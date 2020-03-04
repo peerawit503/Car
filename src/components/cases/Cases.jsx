@@ -245,8 +245,8 @@ const Cases = (props) => {
     }
     
 
-  const confirm = (singleCase,date,checkCar,deposit) => {
-    // console.log("chackcar"+checkCar.d1);
+  const confirm = (singleCase,date,checkCar) => {
+    console.log("deposit"+singleCase.f2_deposit);
     
     if(!checkCar.d1){
       var data = JSON.stringify({ tracking: 'book_transfer', user_id: props.user.id ,date:date});
@@ -265,15 +265,15 @@ const Cases = (props) => {
       })
         .catch(err => console.log(err))
     }else{
-      console.log("deposit"+deposit);
-      if(singleCase.status === "deposit_doc_to_new_bank" && deposit !== 0){
-      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:deposit});
-      }else if(singleCase.status === "deposit_doc_to_new_bank" && deposit === 0){
-      var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
-      }else if(singleCase.status === "cash_received" && deposit === 0){
-      var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
+      if(singleCase.status === "deposit_doc_to_new_bank" && parseInt(singleCase.f2_deposit) !== 0){
+        console.log("incase 1");
+      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.f2_deposit});
+      }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "cash_received" )  && parseInt(singleCase.f2_deposit) === 0){
+        console.log("incase 2");
+        var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
       }else{
-      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
+        console.log("incase 3");
+        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
       } 
       console.log('###### data ########');
       console.log(data);
