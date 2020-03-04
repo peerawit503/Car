@@ -116,6 +116,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       result.push (
           dateTimeFormatted(processCurrent)
         )
+        result.push(
+          <div className="col s2 m2">
+          </div>
+          )
+        
     } else {
       var date1 = parseStringToDate(processBefore);
       var date2 = parseStringToDate(processCurrent);

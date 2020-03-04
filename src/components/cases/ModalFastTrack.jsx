@@ -12,7 +12,6 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} ) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
-  const [deposit, setdeposit] = useState(singleCase.deposit||0)
   const [checkp11, setcheckp11] = useState(false)
   const [renderDeposit, setrenderDeposit] = useState(false);
   function currentDateFormat(caseDate) {
@@ -171,6 +170,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
     }
     // if in case 13
     if (props.singleCase.status === 'book_received_back' ){
+      setrenderDeposit(false)
       setisConfirm(true)
       return (
         <div>
@@ -179,12 +179,12 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
             thousandSeparator={true}
             onValueChange={(values) => {
             const {value} = values;
-            singleCase.deposit = value}}
+            singleCase.f2_deposit = value}}
             decimalScale= "2"
             min="0"
             step="any"
-            value={singleCase.deposit || "0"}
-            name="f2_old_finance_transfer_fee"
+            value={singleCase.f2_deposit || "0"}
+            name="deposit"
             disabled
             // onChange={handleChangeF2}
           />
@@ -200,6 +200,28 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
             step="any"
             value={singleCase.f2_old_finance_transfer_fee || "0"}
             name="f2_old_finance_transfer_fee"
+            disabled
+            // onChange={handleChangeF2}
+          />
+        </div>
+      )
+    }
+    if (props.singleCase.status === 'cash_received' ){
+      setrenderDeposit(false)
+      setisConfirm(true)
+      return (
+        <div>
+         เงินมัดจำ (บาท)
+         <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+            const {value} = values;
+            singleCase.f2_deposit = value}}
+            decimalScale= "2"
+            min="0"
+            step="any"
+            value={singleCase.f2_deposit || "0"}
+            name="deposit"
             disabled
             // onChange={handleChangeF2}
           />
@@ -251,7 +273,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
       return (
         
         <div class="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date,checkCar,deposit)}>Confirm</button>
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date,checkCar)}>Confirm</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancle</button>
           </div>
       );
@@ -296,11 +318,11 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
                       thousandSeparator={true}
                       onValueChange={(values) => {
                       const {value} = values;
-                      setdeposit(value)}}
+                      singleCase.f2_deposit = value}}
                       decimalScale= "2"
                       min="0"
                       step="any"
-                      value={deposit || singleCase.deposit || "0"}
+                      value={singleCase.f2_deposit || "0"}
                       name="deposit"
                       // onChange={handleChangeF2}
                     />
