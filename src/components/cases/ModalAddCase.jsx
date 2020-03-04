@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ModalAddCarLead from './ModalAddCarLead'
 import ModalAddOfficer from './ModalAddOfficer'
 import ModalAddDealer from './ModalAddDealer'
-import ModalAddFStaff from './ModalAddFStaff'
+// import ModalAddFStaff from './ModalAddFStaff'
 import ModalAddMargin from './ModalAddMargin'
 import {
   financeInstitution,
@@ -2454,7 +2454,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                                 operaterOption()
                               }
                             </select>
-                            <button className="modal-trigger" href="#modalAddFStaff">Add</button>
+                            
                             <br />
                             <label>
                               <span>จังหวัดที่อยู่อาศัย</span></label>
@@ -2942,7 +2942,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       <ModalAddCarLead getCartrust_lead={getCartrust_lead} />
       <ModalAddOfficer getOfficer={getOfficer} />
       <ModalAddDealer getDealer={getDealer} />
-      <ModalAddFStaff getOperatorS={getOperatorS} />
+      {/* <ModalAddFStaff getOperatorS={getOperatorS} /> */}
       <ModalAddMargin getMargin_account={getMargin_account} />
     </div>
 

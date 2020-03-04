@@ -20,6 +20,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
     picture: "",
     attribute:"",
     type:"",
+    line:""
     
   })
   const [listTeam1, setListTeam1] = useState([])
@@ -51,6 +52,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
       picture: edituser.picture ? edituser.picture : "",
       attribute:edituser.attribute ? edituser.attribute:"",
       type:edituser.type?edituser.type:"",
+      line:edituser.line?edituser.line:"",
     })
   }, [edituser])
 
@@ -141,6 +143,16 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                   type="tel"
                   name="tel"
                   value={user2.tel}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
+                <label htmlFor="Phone">Line</label>
+                <input
+                  type="text"
+                  name="line"
+                  value={user2.line}
                   onChange={onChange}
                 />
               </div>
