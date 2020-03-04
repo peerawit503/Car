@@ -79,6 +79,7 @@ const Users = () => {
       role_2: u.role_2,
       role_3: u.role_3,
       type: u.type,
+      line:u.line,
       attribute: u.attribute
     }
 
