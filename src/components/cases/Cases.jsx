@@ -72,7 +72,8 @@ const Cases = (props) => {
         width: 50
       }
     },
-    { title: 'case_id', field: 'case_id' },
+    { title: 'JOB No', field: 'job_id' },
+    { title: 'Case id', field: 'case_id' },
     {
       title: 'Last Update',
       field: 'status_date',
@@ -83,6 +84,7 @@ const Cases = (props) => {
       field: 'name',
       render: rowData => <div className="customer-name-col">{rowData.name}</div>
     },
+    { title: 'Case receiver', field: 'case_receiver' },
     {
       title: 'Case Status', field: 'status',
       lookup: {
@@ -115,8 +117,7 @@ const Cases = (props) => {
         'Dealer': 'Dealer'
       },
     },
-    { title: 'JOB No', field: 'job_id' },
-    { title: 'car_license', field: 'car_license' },
+    { title: 'Car License', field: 'car_license' },
     { title: 'New Finance', field: 'new_bank' },
     {
       title: '',
