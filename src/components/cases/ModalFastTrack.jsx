@@ -274,13 +274,13 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5} )
         
         <div class="modal-footer">
           <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date,checkCar)}>Confirm</button>
-          <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancle</button>
+          <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancel</button>
           </div>
       );
     }
     return (
       <div class="modal-footer">
-        <button className="modal-close waves-effect btn white black-text right" onClick={() => close()} >Cancle</button>
+        <button className="modal-close waves-effect btn white black-text right" onClick={() => close()} >Cancel</button>
       </div>
     )
   }

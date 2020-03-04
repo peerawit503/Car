@@ -106,7 +106,7 @@ Submit Book to New Finance / ส่งเล่มให้ไฟแนนซ์
     "receive_date": "Fri, 17 Jan 2020 15:45:34 GMT",
     "receive_id": "O3qSo47rZ1ka0Av3wp29ipaWziN5yoiAGryb8i2vOL0xC9ZrE6sxxR0C3KL20mVz",
     "receive_note": "ยื่นชุดโอนไม่ได้ขาดตราประทับบริษัทตรงลายเซ็นมอบอำนาจ",
-    "status": "receive",  // complete ,cancle, 16status
+    "status": "receive",  // complete ,cancel, 16status
     "submit_book_deposit_return_date": null,
     "submit_book_deposit_return_id": null,
     "submit_book_deposit_return_note": null,

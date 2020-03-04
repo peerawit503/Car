@@ -56,7 +56,7 @@ const Navbar = (props) => {
         </li>
         <li className="Li"><Link className="white-text" to="/dashboard"><i className="material-icons white-text">dashboard</i>Dashboard</Link></li>
         <li className="Li"><Link className="white-text" to="/users"><i className="material-icons white-text">assignment_ind</i>Account</Link></li>
-        <li className="Li"><Link className="white-text" to="/customers"><i className="material-icons white-text">face</i>Cutomers</Link></li>
+        <li className="Li"><Link className="white-text" to="/customers"><i className="material-icons white-text">face</i>Customers</Link></li>
 
         <li className="Li"><Link className="white-text" to="/cases"><i className="material-icons white-text">work</i>Cases</Link></li>
         <li className="Li"><Link className="white-text" to="/executives"><i className="material-icons white-text">supervisor_account</i>Executive</Link></li>
