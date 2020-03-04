@@ -150,7 +150,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     let tel_text = name + '_tel'
     let line = optionElement.getAttribute(line_text);
     let tel = optionElement.getAttribute(tel_text);
-    setNewF2({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+    setNewF2({ ...newF2, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
 
   };
 
