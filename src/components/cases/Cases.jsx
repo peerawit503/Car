@@ -732,7 +732,7 @@ const Cases = (props) => {
           </div>
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5}/>
+          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5} statusDate={statusDate}/>
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
