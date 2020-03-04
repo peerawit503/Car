@@ -239,6 +239,55 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     setCartrustWork({ ...cartrustWork, [e.target.name]: e.target.value });
   };
 
+  const setBlank = () => {
+    setNewF2({
+    approve_amount:  "",
+    old_finance_closing_fee: "",
+    old_finance_transfer_fee:  "",
+    book_closing_fee: "",
+    vat7_fee:  "",
+    transfer_fee:"",
+    duty_fee:  "",
+    cartrust_other_fee:  "",
+    car_shield_fee: "",
+    car_insurance_fee: "",
+    transfer_service_fee:  "",
+    contract_fee:  "",
+    outside_transfer_fee:  "",
+    newfinance_other_fee:  "",
+    car_check_con:  "",
+    doc_storage_con: "",
+    margin_account: "",
+    margin_account_no:  "",
+
+    old_finance_closing_fee_note:  "",
+    old_finance_transfer_fee_note:  "",
+    book_closing_fee_note:  "",
+    vat7_fee_note:  "",
+    transfer_fee_note: "",
+    duty_fee_note:  "",
+    cartrust_other_fee_note: "",
+    car_shield_fee_note:  "",
+    car_insurance_fee_note:  "",
+    transfer_service_fee_note:  "",
+    contract_fee_note:  "",
+    outside_transfer_fee_note:  "",
+    newfinance_other_fee_note: "",
+    f2_status: "done",
+    cheque: "",
+    cheque_receiver:  "",
+    deposit_receiver:  "",
+    deposit:  "",
+    finance_staff: "",
+    finance_staff_line :"",
+    finance_staff_tel:"",
+    province: "",
+    approve_amount: "",
+    close_amount: "",
+    down_amount:  "",
+    })
+  }
+
   const deletezero = e => {
     if (e.target.value === 0) {
       e.target.value = "";
@@ -372,7 +421,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
       .then(res => {
         console.log("#####  RES  ######");
         console.log("Case", res.data.message);
-        
+        setBlank()
       })
       .catch(err => console.log(err));
 
