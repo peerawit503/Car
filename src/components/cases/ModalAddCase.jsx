@@ -8,7 +8,7 @@ import {
   financeInstitution,
   caseSourceAll,
   caseTypeAll,
-  caseStatus,
+  // caseStatus,
   provinceAll
 } from "../../Utility/dataCase";
 import uuid from "uuid";
@@ -19,7 +19,7 @@ import axios from "axios";
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { REHYDRATE } from "redux-persist";
+// import { REHYDRATE } from "redux-persist";
 
 import CurrencyFormat from 'react-currency-format';
 
@@ -27,7 +27,7 @@ import CurrencyFormat from 'react-currency-format';
 const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
 
   // const [operatorS, setOperatorS] = useState([])
-  const [validateLineTF, setValidateLineTF] = useState(true)
+  // const [validateLineTF, setValidateLineTF] = useState(true)
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
   const [hub, setHub] = useState([])
@@ -35,8 +35,10 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
   const [carBrand, setCarBrand] = useState({})
   const [carModel, setCarModel] = useState({})
   const [carYear, setCarYear] = useState({})
+  const [case_source_for_add  , setCase_source_for_add] = useState({})
   const [carSubModel, setSubModel] = useState({})
   const [officer, setOfficer] = useState({})
+  const [officerkk, setOfficerKK] = useState({})
   const [dealer, setDealer] = useState({})
   const [formState, setformState] = useState(1);
   const [difference, setDifference] = useState({ d1: true, d2: false });
@@ -252,6 +254,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     getCartrust_lead()
     getCar_brand()
     getDealer()
+    getOfficerKK()
 
     M.Modal.init(document.querySelectorAll('.modal'), {});
   }, []);
@@ -275,7 +278,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
   };
 
   const handleChangeDropDown2 = e => {
-  
+
     setNewCase({ ...newCase, [e.target.name]: e.target.value })
 
   };
@@ -384,11 +387,11 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     if (customer.firstname === "") {
       alert('Firstname if empty')
       return false;
-    } 
+    }
     else if (customer.lastname === "") {
       alert('Lastname if empty')
       return false;
-    } 
+    }
     // else if (customer.tel === "") {
     //   alert('Phone if empty')
     //   return false;
@@ -434,7 +437,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     else if (newCase.new_bank === "") {
       alert('Finance Institution is empty')
       return false;
-    } else if ( customer.email !== '' && !(re.test(customer.email))) {
+    } else if (customer.email !== '' && !(re.test(customer.email))) {
       alert('Email is valid')
     }
 
@@ -458,6 +461,15 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     axios.get(`${url}/dropdown?table=contract_officer`)
       .then(res => {
         setOfficer(res.data.message);
+      })
+      .catch(err => console.log(err))
+  }
+
+  const getOfficerKK = () => {
+
+    axios.get(`${url}/dropdown?table=contract_officer_kk`)
+      .then(res => {
+        setOfficerKK(res.data.message);
       })
       .catch(err => console.log(err))
   }
@@ -620,6 +632,18 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     let result = []
 
     for (let off of officer) {
+
+      result.push(<option value={off.co_name} contract_officer_line={off.line} contract_officer_tel={off.tel}>
+        {off.co_name}
+      </option>)
+    }
+    return result;
+  }
+
+  function officerKKOption() {
+    let result = []
+
+    for (let off of officerkk) {
 
       result.push(<option value={off.co_name} contract_officer_line={off.line} contract_officer_tel={off.tel}>
         {off.co_name}
@@ -1120,7 +1144,26 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
         </select>
       </div>);
 
+      result.push(<div className="col s6 m4 l4 content">
+        <label>เจ้าหน้าที่ทำสัญญา / Contract officer</label>
+        <select
+          type="text"
+          value={newCase.contract_officer || ""}
+          name="contract_officer"
+          onChange={handleChangeDropDown}
+          className="browser-default"
+        >
+          <option value="" contract_officer_line="" contract_officer_tel="" disabled>
 
+            เจ้าหน้าที่
+  
+  
+      </option>
+          {officerKKOption()}
+
+        </select>
+        <button className="modal-trigger" href="#modalAddOfficer" onClick={()=> setCase_source_for_add('KK')}> Add</button>
+      </div>);
 
 
     } else if (newCase.case_source === 'Thanachart') {
@@ -1145,7 +1188,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
               {officerOption()}
 
             </select>
-            <button className="modal-trigger" href="#modalAddOfficer">Add</button>
+            <button className="modal-trigger" href="#modalAddOfficer" onClick={()=> setCase_source_for_add('TB')} >Add</button>
           </div>
 
           <div className="col s6 m4 l4 content">
@@ -1232,7 +1275,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       </div>);
     } else if (newCase.case_source === 'Dealer') {
 
-      result.push(<div className="col s6 m4 l4 content" style={{marginBottom:'0px'}}>
+      result.push(<div className="col s6 m4 l4 content" style={{ marginBottom: '0px' }}>
         <label >Dealer</label>
         <select
           type="text"
@@ -1436,7 +1479,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                       className="validate"
                     />
                   </div> */}
-                  <div className="row crop">
+
                         {/* <div className="col s6 m4 l4 content">
                           <label>Case Receiver / ผู้รับเคส</label>
                           <select
@@ -1453,37 +1496,52 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                             }
                           </select>
                         </div> */}
-                        <div className="col s6 m4 l4 content" style={{marginBottom:"0px"}}>
-                          <label>Receive Date / วันที่รับเคส</label>
-                          <input
-                            type="date"
-                            value={newCase.receive_date || currentDateFormat(Date())}
-                            name="receive_date"
-                            onChange={handleChange}
-                          />
-                        </div>
+                        <div className="row crop">
+                          <div className="col s6 m4 l4 content" style={{ marginBottom: "0px" }}>
+                            <label>Receive Date / วันที่รับเคส</label>
+                            <input
+                              type="date"
+                              value={newCase.receive_date || currentDateFormat(Date())}
+                              name="receive_date"
+                              onChange={handleChange}
+                            />
+                          </div>
 
-                        <div className="col s6 m4 l4 content">
-                          <label>Case Type / ประเภทเคส</label>
-                          <select
-                            name="case_type"
-                            value={newCase.case_type || "DEFAULT"}
-                            onChange={handleChange}
-                            className="browser-default"
-                          >
-                            <option value="DEFAULT" disabled>
-                              เลือกประเภทเคส{" "}
-                            </option>
-                            {caseTypeAll.map(ct => (
-                              <option key={uuid.v4()} value={ct}>
-                                {ct}
+                          <div className="col s6 m4 l4 content">
+                            <label>Case Type / ประเภทเคส</label>
+                            <select
+                              name="case_type"
+                              value={newCase.case_type || "DEFAULT"}
+                              onChange={handleChange}
+                              className="browser-default"
+                            >
+                              <option value="DEFAULT" disabled>
+                                เลือกประเภทเคส{" "}
                               </option>
-                            ))}
-                          </select>
-                        </div>
-                       
+                              {caseTypeAll.map(ct => (
+                                <option key={uuid.v4()} value={ct}>
+                                  {ct}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
 
-   
+                          <div className="col s6 m4 l4 content">
+                            <label htmlFor="name">Document No. / เลข AOL</label>
+                            <input
+                              type="text"
+                              name="document_id"
+                              value={newCase.document_id}
+                              onChange={handleChange}
+                            />
+
+                          </div>
+
+
+
+                        </div>
+
+
                         <div className="col s6 m4 l4 content">
                           <label>Case Source / รับเคสจาก</label>
                           <select
@@ -1503,17 +1561,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                             ))}
                           </select>
                         </div>
-                        <div className="col s6 m4 l4 content">
-                          <label htmlFor="name">Document No. / เลข AOL</label>
-                          <input
-                            type="text"
-                            name="document_id"
-                            value={newCase.document_id}
-                            onChange={handleChange}
-                          />
 
-                        </div>
-                        </div>
 
 
 
@@ -3001,7 +3049,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
 
 
       <ModalAddCarLead getCartrust_lead={getCartrust_lead} />
-      <ModalAddOfficer getOfficer={getOfficer} />
+      <ModalAddOfficer getOfficer={getOfficer} case_source_for_add={case_source_for_add} getOfficerKK={getOfficerKK} />
       <ModalAddDealer getDealer={getDealer} />
       {/* <ModalAddFStaff getOperatorS={getOperatorS} /> */}
       <ModalAddMargin getMargin_account={getMargin_account} />
