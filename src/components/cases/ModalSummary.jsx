@@ -125,10 +125,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
   }
 
   function getbeforedate(status){
-    console.log("statustodate" + singleCase[statusTodate(status)]);
     
     if(singleCase[statusTodate(status)] === null || singleCase[statusTodate(status)] === ''){
-    console.log("in get before date");
     status = caseStatusShiftback(status)
       return getbeforedate(status)
     }else{
@@ -141,7 +139,6 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     let result = [];
     if(processBefore === null || processBefore === ''){
       processBefore = getbeforedate(status);
-      console.log("processBefore :" +processBefore);
     }
    
     
@@ -237,7 +234,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     let result = [];
     if (singleCase.case_source === 'Kiatnakin') {
      
-      result.push(<div className="col s6 m4 l4 content-radonly">
+      result.push(<div className="col s6 m6  content-radonly">
         <label>CQC team</label>
         <input
           type="text"
@@ -252,7 +249,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       </div>);
     } else if (singleCase.case_source === 'Thanachart') {
   
-      result.push(<div className="col s6 m4 l4 content-radonly">
+      result.push(<div className="col s6 m6  content-radonly">
         <label>เจ้าหน้าที่ทำสัญญา
 /Contract officer</label>
         <input
@@ -263,7 +260,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           onChange={handleChange}
         />
       </div>);
-      result.push(<div className="col s6 m4 l4 content-radonly">
+      result.push(<div className="col s6 m6  content-radonly">
         <label>สาขา (ธนชาติ) / Hub</label>
         <input
            type="text"
@@ -273,7 +270,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         >
         </input>
       </div>);
-      result.push(<div className="col s6 m4 l4 content-radonly">
+      result.push(<div className="col s6 m6  content-radonly">
       <label>Document id / AOL</label>
       <input
          type="text"
@@ -284,7 +281,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       </input>
     </div>);
     } else if (singleCase.case_source === 'Cartrust') {
-      result.push(<div className="col s6 m4 l4 content-radonly">
+      result.push(<div className="col s6 m6  content-radonly">
         <label>Cartust Lead Refer./รับเคสจาก</label>
         <input
           type="text"
@@ -292,10 +289,19 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           name="cartrust_lead_refer"
           readOnly
           onChange={handleChange}
-          
         >
-          
           </input>
+      </div>);
+    }else if (singleCase.case_source === 'Dealer'){
+      result.push(<div className="col s6 m6  content-radonly">
+      <label>Document id / AOL</label>
+      <input
+         type="text"
+        value={singleCase.document_id || ""}
+        name="hub"
+        readOnly
+      >
+      </input>
       </div>);
     }
 
