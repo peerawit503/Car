@@ -732,7 +732,7 @@ const Cases = (props) => {
           </div>
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5} statusDate={statusDate}/>
+          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5} statusDate={statusDate} caseStatusShift={caseStatusShift}/>
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
@@ -758,6 +758,7 @@ const mapDispatchToProps = dispatch => ({
     team,
     picture,
     token
+    // ,nickname: nickname
   ) => {
     dispatch({
       type: ActionUser.STORE_USER_INFO,
@@ -769,6 +770,7 @@ const mapDispatchToProps = dispatch => ({
       team: team,
       picture: picture,
       token: token
+      // ,nickname: nickname
     });
   }
 });

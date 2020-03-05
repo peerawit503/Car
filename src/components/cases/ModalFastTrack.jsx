@@ -10,9 +10,8 @@ import CurrencyFormat from 'react-currency-format';
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, statusDate} ) => {
+const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, statusDate, caseStatusShift} ) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
-  const [checkp11, setcheckp11] = useState(false)
   const [renderDeposit, setrenderDeposit] = useState(false);
   function currentDateFormat(caseDate) {
     if(caseDate == null){
@@ -298,7 +297,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
 
           {/* body */}
             <div className="row content">
-            <h4 style={{textAlign:"center"}}>รอยืนยัน : {translate(singleCase.status)}</h4><br/>
+            <h4 style={{textAlign:"center"}}>รอยืนยัน : {translate(caseStatusShift(singleCase.status))}</h4><br/>
             <div className="col s4 m4 content"></div>
 
             <div className="col s4 m4 content">
