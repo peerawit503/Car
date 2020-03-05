@@ -81,6 +81,16 @@ const ModalDetail = ({ user }) => {
             />
           </div>
 
+          {/* <div className="col s6 m6 l6 content-radonly">
+            <label htmlFor="name">Last name</label>
+            <input
+              type="text"
+              name="nickname"
+              value={user.nickname}
+             
+            />
+          </div> */}
+
           <div className="col s6 m6 l6 content-radonly">
             <label htmlFor="Email">Email</label>
             <input

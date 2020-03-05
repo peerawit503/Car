@@ -19,7 +19,9 @@ const initialUser = {
   username: "",
   password: "",
   password2: "",
-  line:""
+  line:"",
+  // nickname:"",
+
 
 }
 
@@ -112,7 +114,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Username">Username</label>
+                <label htmlFor="Username">Username / ชื่อผู้ใช้</label>
                 <input
                   type="text"
                   name="username"
@@ -122,7 +124,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="name">First name</label>
+                <label htmlFor="name">Firstname / ชื่อ</label>
                 <input
                   type="text"
                   name="firstname"
@@ -132,7 +134,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="name">Last name</label>
+                <label htmlFor="name">Lastname / นามสกุล</label>
                 <input
                   type="text"
                   name="lastname"
@@ -141,8 +143,18 @@ const ModalCreate = ({ addUser }) => {
                 />
               </div>
 
+              {/* <div className="col s6 m4 l4 content">
+                <label htmlFor="name">NickName / ชื่อเล่น</label>
+                <input
+                  type="text"
+                  name="nickname"
+                  value={user.nickname}
+                  onChange={handleChange}
+                />
+              </div> */}
+
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Email">Email</label>
+                <label htmlFor="Email">Email / อีเมล์</label>
                 <input
                   type="email"
                   name="email"
@@ -152,7 +164,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Phone">Phone</label>
+                <label htmlFor="Phone">Phone / เบอร์โทรศัพท์</label>
                 <input
                   type="tel"
                   name="phone"
@@ -162,7 +174,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Phone">Line</label>
+                <label htmlFor="Phone">Line / ไลน์</label>
                 <input
                   type="text"
                   name="line"
@@ -175,7 +187,7 @@ const ModalCreate = ({ addUser }) => {
 
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Address">Address</label>
+                <label htmlFor="Address">Address / ที่อยู่</label>
                 <input
                   type="text"
                   name="address"
@@ -185,7 +197,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Address">Position</label>
+                <label htmlFor="Address">Position / ตำแหน่ง</label>
                 <input
                   type="text"
                   name="position"
@@ -195,7 +207,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Address">Type</label>
+                <label htmlFor="Address">Type / ประเภท</label>
                 <input
                   type="text"
                   name="type"
@@ -205,7 +217,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Address">Attr</label>
+                <label htmlFor="Address">Attr </label>
                 <input
                   type="text"
                   name="attribute"
@@ -215,7 +227,7 @@ const ModalCreate = ({ addUser }) => {
               </div>
 
               <div className="col s6 m4 l4 content">
-                <label htmlFor="Phone">Team</label>
+                <label htmlFor="Phone">Team / ทีม</label>
                 <select
                   className="browser-default"
                   id="selectTeamModal"
@@ -224,7 +236,7 @@ const ModalCreate = ({ addUser }) => {
                   defaultValue='DEFAULT'
                   onChange={handleChange}
                 >
-                  <option value="DEFAULT" disabled>Choose your Team</option>
+                  <option value="DEFAULT" disabled>Choose your Team / เลือกทีม</option>
                   {listTeam1.map(t =>
                     (<option key={`${t.id}${t.team_id}`} value={t.id}>{t.team_name}</option>)
                   )}

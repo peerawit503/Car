@@ -2033,6 +2033,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     disabled
                     
                     className="validate"
+                    onFocus={deletezero}
+                              onBlur={addzero}
                   />
                 </div>
 
@@ -2065,6 +2067,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     // min="0"
                     // step="any"
                     onFocus={deletezero}
+                              onBlur={addzero}
                     value={newF2.old_finance_transfer_fee || singleCase.f2_old_finance_transfer_fee}
                     name="old_finance_transfer_fee"
                     // onChange={handleChangeCurrency}
@@ -2099,6 +2102,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     min="0"
                     step="any"
                     onFocus={deletezero}
+                              onBlur={addzero}
                     value={newF2.book_closing_fee || singleCase.f2_book_closing_fee}
                     name="book_closing_fee"
                     // onChange={handleChangeF2}
@@ -2109,7 +2113,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                   <label>หมายเหตุ</label>
                   <input
                     type="text"
-                    onFocus={deletezero}
+                   
                     value={newF2.book_closing_fee_note || singleCase.f2_book_closing_fee_note}
                     name="book_closing_fee_note"
                     onChange={handleChangeF2T}
@@ -2133,6 +2137,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     value={newF2.transfer_fee || singleCase.f2_transfer_fee}
                     name="transfer_fee"
                     // onChange={handleChangeF2}
+                    onFocus={deletezero}
+                              onBlur={addzero}
                   />
                 </div>
 
@@ -2607,7 +2613,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee)
                     }
                     name="old_finance_total_cost"
-
+                    onFocus={deletezero}
+                              onBlur={addzero}
                   />
                 </div>
 

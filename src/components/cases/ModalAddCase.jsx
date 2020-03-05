@@ -24,9 +24,9 @@ import { REHYDRATE } from "redux-persist";
 import CurrencyFormat from 'react-currency-format';
 
 
-const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) => {
+const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
 
- // const [operatorS, setOperatorS] = useState([])
+  // const [operatorS, setOperatorS] = useState([])
   const [validateLineTF, setValidateLineTF] = useState(true)
   const [margin_account, setMargin_account] = useState([])
   const [cqc_team, setCqc_team] = useState([])
@@ -114,6 +114,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
     contract_officer_line: "",
     dealer_phone: "",
     contract_officer_phone: "",
+    document_id: "",
 
     margin_account: "",
 
@@ -158,21 +159,21 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
   const handleChangeCurrency = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: e.target.value?e.target.value : 0 });
+    setNewCase({ ...newCase, [e.target.name]: e.target.value ? e.target.value : 0 });
   };
-  
+
   const handleChangeCurrencyxxx = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value,"")?formatCurrency(e.target.value,"") : 0.00 });
+    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value, "") ? formatCurrency(e.target.value, "") : 0.00 });
   };
 
   const handleOnBlurCurrencyxxx = e => {
 
-    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value,"blur")?formatCurrency(e.target.value,"blur") : 0.00 });
+    setNewCase({ ...newCase, [e.target.name]: formatCurrency(e.target.value, "blur") ? formatCurrency(e.target.value, "blur") : 0.00 });
   };
 
- 
-  function formatCurrency(input,blur) {
+
+  function formatCurrency(input, blur) {
     // appends $ to value, validates decimal side
     // and puts cursor back in right position.
 
@@ -215,14 +216,14 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       right_side = right_side.substring(0, 2);
 
       // join number by .
-      input_val =  left_side + "." + right_side;
+      input_val = left_side + "." + right_side;
 
     } else {
       // no decimal entered
       // add commas to number
       // remove all non-digits
       input_val = formatNumber(input_val);
-      input_val =  input_val;
+      input_val = input_val;
 
       // final formatting
       if (blur === "blur") {
@@ -270,6 +271,12 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
     let line = optionElement.getAttribute(line_text);
     let tel = optionElement.getAttribute(tel_text);
     setNewCase({ ...newCase, [name]: e.target.value, [line_text]: line ? line : "", [tel_text]: tel ? tel : "" })
+
+  };
+
+  const handleChangeDropDown2 = e => {
+  
+    setNewCase({ ...newCase, [e.target.name]: e.target.value })
 
   };
 
@@ -377,22 +384,25 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
     if (customer.firstname === "") {
       alert('Firstname if empty')
       return false;
-    } else if (customer.lastname === "") {
+    } 
+    else if (customer.lastname === "") {
       alert('Lastname if empty')
       return false;
-    } else if (customer.tel === "") {
-      alert('Phone if empty')
-      return false;
-    } else if (customer.line === "") {
-      alert('Line if empty')
-      return false;
-    } else if (customer.license_id === "") {
-      alert('License Id if empty')
-      return false;
-    } else if (customer.birthday === "") {
-      alert('Birthday is empty')
-      return false;
-    } else if (newCase.receive_date === "") {
+    } 
+    // else if (customer.tel === "") {
+    //   alert('Phone if empty')
+    //   return false;
+    // } else if (customer.line === "") {
+    //   alert('Line if empty')
+    //   return false;
+    // } else if (customer.license_id === "") {
+    //   alert('License Id if empty')
+    //   return false;
+    // } else if (customer.birthday === "") {
+    //   alert('Birthday is empty')
+    //   return false;
+    // } 
+    else if (newCase.receive_date === "") {
       alert('Receive Date is empty')
       return false;
     } else if (newCase.case_type === "") {
@@ -424,7 +434,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
     else if (newCase.new_bank === "") {
       alert('Finance Institution is empty')
       return false;
-    } else if (customer.email === '' || !(re.test(customer.email))) {
+    } else if ( customer.email !== '' && !(re.test(customer.email))) {
       alert('Email is valid')
     }
 
@@ -506,14 +516,10 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
     var config = {
 
     };
-    axios.get(`/get_brand`, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      }
-    })
+    axios.get(`${url}/brand`)
       .then(res => {
         console.log(res.data)
-        setCarBrand(res.data.results);
+        setCarBrand(res.data.data);
       })
       .catch(err => console.log(err))
   }
@@ -524,7 +530,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       brand: car_brand_s
     }
     console.log(JSON.stringify(data))
-    axios.post(`/get_model`, JSON.stringify(data), {
+    axios.post(`/model`, JSON.stringify(data), {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -543,7 +549,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       brand: car_brand,
       model: car_model
     }
-    axios.post(`/get_year`, JSON.stringify(data), {
+    axios.post(`${url}/year`, JSON.stringify(data), {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -564,7 +570,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       year: car_year,
 
     }
-    axios.post(`/get_sub_model`, JSON.stringify(data), {
+    axios.post(`${url}/sub_model`, JSON.stringify(data), {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -754,8 +760,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
       case_source: "",
 
       down_amount: "0",
-      approve_amount: "",
-      close_amount: "",
+      approve_amount: "0",
+      close_amount: "0",
       case_status: "ติดต่อลูกค้าไม่ได้",
       receive_date: currentDateFormat(Date()),
 
@@ -1033,12 +1039,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
           <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {formattedValue, value} = values;
-            setNewCase({
-            ...newCase,
-            cheque : value
-            })}}
-            decimalScale= "2"
+              const { formattedValue, value } = values;
+              setNewCase({
+                ...newCase,
+                cheque: value
+              })
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={newCase.cheque || ""}
@@ -1073,12 +1080,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
           <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {formattedValue, value} = values;
-            setNewCase({
-            ...newCase,
-            deposit : value
-            })}}
-            decimalScale= "2"
+              const { formattedValue, value } = values;
+              setNewCase({
+                ...newCase,
+                deposit: value
+              })
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={newCase.deposit || ""}
@@ -1114,6 +1122,24 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
           {cqc_teamOption()}
         </select>
       </div>);
+
+
+
+
+      result.push(<div className="col s6 m4 l4 content">
+        <label htmlFor="name">Document No. / เลข AOL</label>
+        <input
+          type="text"
+          name="document_id"
+          value={newCase.document_id}
+          onChange={handleChange}
+          
+
+        />
+      </div>);
+
+
+
     } else if (newCase.case_source === 'Thanachart') {
 
       result.push(
@@ -1162,6 +1188,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
         </div>);
 
+
+      result.push(<div className="col s6 m4 l4 content">
+        <label htmlFor="name">Document No. / เลข AOL</label>
+        <input
+          type="text"
+          name="document_id"
+          value={newCase.document_id}
+          onChange={handleChange}
+        />
+      </div>);
 
 
 
@@ -1236,8 +1272,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
           <option value="" dealer_line="" dealer_tel="" disabled>
 
             รับเคสจาก
-  
-  
+
+
         </option>
           {dealerOption()}
 
@@ -1298,7 +1334,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                       <div className="row content">
                         <div className="row crop">
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="name">First name</label>
+                            <label htmlFor="name">Firstname / ชื่อ</label>
                             <input
                               type="text"
                               name="firstname"
@@ -1308,7 +1344,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="name">Last name</label>
+                            <label htmlFor="name">Lastname / นามสกุล</label>
                             <input
                               type="text"
                               name="lastname"
@@ -1318,7 +1354,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className={CheckRedEmail(customer.email) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
-                            <label htmlFor="Email">Email</label>
+                            <label htmlFor="Email">Email / อีเมล์</label>
                             <input
                               type="email"
                               name="email"
@@ -1330,7 +1366,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                         <div className="row crop">
                           <div className={CheckRedTel(customer.tel) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
-                            <label htmlFor="Phone">Phone1</label>
+                            <label htmlFor="Phone">Phone1 / เบอร์โทรศัพท์</label>
                             <input
                               type="tel"
                               name="tel"
@@ -1342,7 +1378,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
 
                           <div className={CheckRedTel(customer.tel2) ? "col s6 m4 l4 contentred" : "col s6 m4 l4 content"}>
-                            <label htmlFor="Phone">Phone2</label>
+                            <label htmlFor="Phone">Phone2 / เบอร์โทรศัพท์ </label>
                             <input
                               type="tel"
                               name="tel2"
@@ -1353,7 +1389,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="line">Line</label>
+                            <label htmlFor="line">Line / ไลน์</label>
                             <input
                               type="text"
                               name="line"
@@ -1365,7 +1401,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                         </div>
 
                         <div className="col s6 m4 l4 content">
-                          <label htmlFor="birthday">Birthday</label>
+                          <label htmlFor="birthday">Birthday / วันเกิด</label>
                           <input
                             type="date"
                             name="birthday"
@@ -1376,7 +1412,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
 
                         <div className="col s6 m8 l8 content">
-                          <label htmlFor="home_no">ที่อยู่</label>
+                          <label htmlFor="home_no">Address / ที่อยู่</label>
                           <input
                             type="text"
                             name="address"
@@ -1388,7 +1424,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
 
                         <div className="col s6 m4 l4 content">
-                          <label htmlFor="province">จังหวัด</label>
+                          <label htmlFor="province">Province / จังหวัด</label>
                           <select
                             type="text"
                             name="province"
@@ -1408,7 +1444,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                         </div>
 
                         <div className="col s6 m4 l4 content">
-                          <label htmlFor="post_code">รหัสไปรษณีย์</label>
+                          <label htmlFor="post_code">Postcode / รหัสไปรษณีย์</label>
                           <input
                             type="text"
                             name="post_code"
@@ -1430,57 +1466,75 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                       className="validate"
                     />
                   </div> */}
-                        <div className="row crop">
-                          <div className="col s6 m4 l4 content">
-                            <label>Receive Date/ วันที่รับเคส</label>
-                            <input
-                              type="date"
-                              value={newCase.receive_date || currentDateFormat(Date())}
-                              name="receive_date"
-                              onChange={handleChange}
-                            />
-                          </div>
-
-                          <div className="col s6 m4 l4 content">
-                            <label>Case Type / ประเภทเคส</label>
-                            <select
-                              name="case_type"
-                              value={newCase.case_type || "DEFAULT"}
-                              onChange={handleChange}
-                              className="browser-default"
-                            >
-                              <option value="DEFAULT" disabled>
-                                เลือกประเภทเคส{" "}
-                              </option>
-                              {caseTypeAll.map(ct => (
-                                <option key={uuid.v4()} value={ct}>
-                                  {ct}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-
-                          <div className="col s6 m4 l4 content">
-                            <label>Case Source / รับเคสจาก</label>
-                            <select
-                              name="case_source"
-                              value={newCase.case_source || "DEFAULT"}
-                              onChange={handleChangeCaseSource}
-                              type="text"
-                              className="browser-default"
-                            >
-                              <option value="DEFAULT" disabled>
-                                รับเคสจาก{" "}
-                              </option>
-                              {caseSourceAll.map(ct => (
-                                <option key={uuid.v4()} value={ct}>
-                                  {ct}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                  <div className="row crop">
+                        {/* <div className="col s6 m4 l4 content">
+                          <label>Case Receiver / ผู้รับเคส</label>
+                          <select
+                            name="case_receiver"
+                            value={newCase.case_receiver}
+                            onChange={handleChangeDropDown2}
+                            className="browser-default"
+                          >
+                            <option value="" disabled>
+                              เจ้าหน้าที่...
+                            </option>
+                            {
+                              operaterOption()
+                            }
+                          </select>
+                        </div> */}
+                        <div className="col s6 m4 l4 content">
+                          <label>Receive Date / วันที่รับเคส</label>
+                          <input
+                            type="date"
+                            value={newCase.receive_date || currentDateFormat(Date())}
+                            name="receive_date"
+                            onChange={handleChange}
+                          />
                         </div>
+
+                        <div className="col s6 m4 l4 content">
+                          <label>Case Type / ประเภทเคส</label>
+                          <select
+                            name="case_type"
+                            value={newCase.case_type || "DEFAULT"}
+                            onChange={handleChange}
+                            className="browser-default"
+                          >
+                            <option value="DEFAULT" disabled>
+                              เลือกประเภทเคส{" "}
+                            </option>
+                            {caseTypeAll.map(ct => (
+                              <option key={uuid.v4()} value={ct}>
+                                {ct}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                       
+
+   
+                        <div className="col s6 m4 l4 content">
+                          <label>Case Source / รับเคสจาก</label>
+                          <select
+                            name="case_source"
+                            value={newCase.case_source || "DEFAULT"}
+                            onChange={handleChangeCaseSource}
+                            type="text"
+                            className="browser-default"
+                          >
+                            <option value="DEFAULT" disabled>
+                              รับเคสจาก{" "}
+                            </option>
+                            {caseSourceAll.map(ct => (
+                              <option key={uuid.v4()} value={ct}>
+                                {ct}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        </div>
+
 
 
 
@@ -1491,7 +1545,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                         </div>
                         <div className="row crop">
                           <div className="col s6 m4 l4 content">
-                            <label>เลขที่ใบขับขี่</label>
+                            <label> ID / เลขที่บัตรประชาชน</label>
                             <input
                               type="text"
                               name="license_id"
@@ -1504,7 +1558,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
 
                           <div className="col s6 m4 l4 content">
-                            <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
+                            <label>Licence Plate No. / หมายเลขป้ายทะเบียน</label>
                             <input
                               type="text"
                               name="car_license"
@@ -1608,7 +1662,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className="col s6 m4 l4 content">
-                            <label>Current Finance ไฟแนนซ์เดิม</label>
+                            <label>Current Finance / ไฟแนนซ์เดิม</label>
                             <select
                               name="old_bank"
                               value={newCase.old_bank || "DEFAULT"}
@@ -1654,7 +1708,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                         <div className="row crop">
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="Picture">รูปรถ</label>
+                            <label htmlFor="Picture">Car Image / รูปรถ</label>
                             <input
                               type="file"
                               name="take_car_picture"
@@ -1663,7 +1717,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="Picture">รูปเล่มทะเบียน</label>
+                            <label htmlFor="Picture">Car License Book / รูปเล่มทะเบียนรถ</label>
                             <input
                               type="file"
                               name="car_license_book_picture"
@@ -1672,7 +1726,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
                           <div className="col s6 m4 l4 content">
-                            <label htmlFor="Picture">รูปใบขับขี่</label>
+                            <label htmlFor="Picture">License ID / รูปใบขับขี่</label>
                             <input
                               type="file"
                               name="license_id_picture"
@@ -1729,19 +1783,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           </div>
 
 
-                    
+
 
                           <div className="col s6 m6 l6 content">
                             <label>Approved Amount / ยอดจัด </label>
                             <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              approve_amount : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  approve_amount: value
+                                })
+                              }}
+                              decimalScale="2"
                               // 
                               name="approve_amount"
                               value={newCase.approve_amount || ""}
@@ -1751,21 +1806,22 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                               className="validate"
                             />
                           </div>
-                          
+
 
 
 
                           <div className="col s6 m6 l6 content">
                             <label>Close Amount / ยอดปิด </label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              close_amount : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  close_amount: value
+                                })
+                              }}
+                              decimalScale="2"
                               name="close_amount"
                               value={newCase.close_amount || ""}
                               // onChange={handleChangeF}
@@ -1775,19 +1831,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                             />
                           </div>
 
-                          
+
                           <div className="row col l12 no-col-padding-both no-col-margin">
                             <div className="col s6 m6 l6 content">
-                              <label>Down / ดาวน์ </label>
+                              <label>Down Amount / ยอดดาวน์ </label>
                               <CurrencyFormat
                                 thousandSeparator={true}
                                 onValueChange={(values) => {
-                                const {formattedValue, value} = values;
-                                setNewCase({
-                                ...newCase,
-                                down_amount : value
-                                })}}
-                                decimalScale= "2"
+                                  const { formattedValue, value } = values;
+                                  setNewCase({
+                                    ...newCase,
+                                    down_amount: value
+                                  })
+                                }}
+                                decimalScale="2"
                                 name="down_amount"
                                 value={newCase.down_amount || ""}
                                 // onChange={handleChangeCurrency}
@@ -1801,15 +1858,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              old_finance_closing_fee  : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  old_finance_closing_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               name="old_finance_closing_fee"
@@ -1834,15 +1892,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอนไฟแนนซ์เก่า (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              old_finance_transfer_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  old_finance_transfer_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               name="old_finance_transfer_fee"
@@ -1867,15 +1926,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าบริการปิดเล่ม (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              book_closing_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  book_closing_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.book_closing_fee || ""}
@@ -1898,15 +1958,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอน (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              transfer_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  transfer_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.transfer_fee || ""}
@@ -1929,15 +1990,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ภาษีมูลค่าเพิ่ม 7% (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              vat7_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  vat7_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={(parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07 || "0"}
@@ -1964,15 +2026,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าอากร (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              duty_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  duty_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
 
@@ -1997,15 +2060,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าใช้จ่ายอื่น ๆ</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              cartrust_other_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  cartrust_other_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.cartrust_other_fee || ""}
@@ -2028,15 +2092,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>รวมค่าใช้จ่ายคาร์ทรัส (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              cartrust_total_cost : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  cartrust_total_cost: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               className="input-disable"
@@ -2061,15 +2126,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าประกันสินเชื่อ (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              car_shield_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  car_shield_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.car_shield_fee || ""}
@@ -2092,15 +2158,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าประกันภัยรถยนต์ (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              car_insurance_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  car_insurance_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.car_insurance_fee || ""}
@@ -2123,15 +2190,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าบริการชุดโอน (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              transfer_service_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  transfer_service_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.transfer_service_fee || ""}
@@ -2155,14 +2223,15 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าทำสัญญา (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              contract_fee : value
-                              })}}
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  contract_fee: value
+                                })
+                              }}
                               decimalScale="2"
                               min="0"
                               step="any"
@@ -2186,15 +2255,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าโอน (บาท)</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              outside_transfer_fee: value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  outside_transfer_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.outside_transfer_fee || ""}
@@ -2217,15 +2287,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>ค่าใช้จ่ายอื่นๆ</label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              newfinance_other_fee : value
-                              })}}
-                              decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  newfinance_other_fee: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               value={newCase.newfinance_other_fee || ""}
@@ -2253,12 +2324,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                               <CurrencyFormat
                                 thousandSeparator={true}
                                 onValueChange={(values) => {
-                                const {formattedValue, value} = values;
-                                setNewCase({
-                                ...newCase,
-                                new_finance_total_cost : value
-                                })}}
-                                decimalScale= "2"
+                                  const { formattedValue, value } = values;
+                                  setNewCase({
+                                    ...newCase,
+                                    new_finance_total_cost: value
+                                  })
+                                }}
+                                decimalScale="2"
                                 min="0"
                                 step="any"
                                 className="input-disable"
@@ -2282,12 +2354,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                               <CurrencyFormat
                                 thousandSeparator={true}
                                 onValueChange={(values) => {
-                                const {formattedValue, value} = values;
-                                setNewCase({
-                                ...newCase,
-                                total_cost : value
-                                })}}
-                                decimalScale= "2"
+                                  const { formattedValue, value } = values;
+                                  setNewCase({
+                                    ...newCase,
+                                    total_cost: value
+                                  })
+                                }}
+                                decimalScale="2"
                                 min="0"
                                 step="any"
                                 disabled
@@ -2316,12 +2389,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                               <CurrencyFormat
                                 thousandSeparator={true}
                                 onValueChange={(values) => {
-                                const {formattedValue, value} = values;
-                                setNewCase({
-                                ...newCase,
-                                amount_received : value
-                                })}}
-                                decimalScale= "2"                                
+                                  const { formattedValue, value } = values;
+                                  setNewCase({
+                                    ...newCase,
+                                    amount_received: value
+                                  })
+                                }}
+                                decimalScale="2"
                                 min="0"
                                 step="any"
                                 disabled
@@ -2364,15 +2438,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
 
                           <div className="col s6 m6 l6 content">
                             <label>จำนวนเงินสดที่จ่ายให้ธนาคาร(บาท) </label>
-                             <CurrencyFormat
+                            <CurrencyFormat
                               thousandSeparator={true}
                               onValueChange={(values) => {
-                              const {formattedValue, value} = values;
-                              setNewCase({
-                              ...newCase,
-                              old_finance_total_cost : value
-                              })}}
-                                decimalScale= "2"
+                                const { formattedValue, value } = values;
+                                setNewCase({
+                                  ...newCase,
+                                  old_finance_total_cost: value
+                                })
+                              }}
+                              decimalScale="2"
                               min="0"
                               step="any"
                               disabled
@@ -2454,7 +2529,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                                 operaterOption()
                               }
                             </select>
-                            
+
                             <br />
                             <label>
                               <span>จังหวัดที่อยู่อาศัย</span></label>
@@ -2726,42 +2801,44 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                         <div className="col s6 m4 l4 content">
                           <label>Approved Amount / ยอดจัด </label>
                           <CurrencyFormat
-                              thousandSeparator={true}
-                              onValueChange={(values) => {
-                              const {formattedValue, value} = values;
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                              const { formattedValue, value } = values;
                               setNewCase({
-                              ...newCase,
-                              approve_amount : value
-                              })}}
-                                decimalScale= "2"
-                              // 
-                              name="approve_amount"
-                              value={newCase.approve_amount || ""}
-                              // onChange={handleChangeCurrency}
-                              onFocus={deletezero}
-                              onBlur={addzero}
-                              className="validate"
-                            />
+                                ...newCase,
+                                approve_amount: value
+                              })
+                            }}
+                            decimalScale="2"
+                            // 
+                            name="approve_amount"
+                            value={newCase.approve_amount || ""}
+                            // onChange={handleChangeCurrency}
+                            onFocus={deletezero}
+                            onBlur={addzero}
+                            className="validate"
+                          />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>Close Amount / ยอดปิด </label>
                           <CurrencyFormat
-                              thousandSeparator={true}
-                              onValueChange={(values) => {
-                              const {formattedValue, value} = values;
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                              const { formattedValue, value } = values;
                               setNewCase({
-                              ...newCase,
-                              close_amount : value
-                              })}}
-                                decimalScale= "2"
-                              name="close_amount"
-                              value={newCase.close_amount || ""}
-                              // onChange={handleChangeF}
-                              onFocus={deletezero}
-                              onBlur={addzero}
-                              className="validate"
-                            />
+                                ...newCase,
+                                close_amount: value
+                              })
+                            }}
+                            decimalScale="2"
+                            name="close_amount"
+                            value={newCase.close_amount || ""}
+                            // onChange={handleChangeF}
+                            onFocus={deletezero}
+                            onBlur={addzero}
+                            className="validate"
+                          />
                         </div>
 
                         <div className="col s6 m4 l4 content">
@@ -2769,12 +2846,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           <CurrencyFormat
                             thousandSeparator={true}
                             onValueChange={(values) => {
-                            const {formattedValue, value} = values;
-                            setNewCase({
-                            ...newCase,
-                            down_amount : value
-                            })}}
-                                decimalScale= "2"
+                              const { formattedValue, value } = values;
+                              setNewCase({
+                                ...newCase,
+                                down_amount: value
+                              })
+                            }}
+                            decimalScale="2"
                             name="down_amount"
                             value={newCase.down_amount || ""}
                             // onChange={handleChangeCurrency}
@@ -2809,57 +2887,59 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                         <div className="col s6 m4 l4 content">
                           <label>ภาระหนี้</label>
                           <CurrencyFormat
-                              thousandSeparator={true}
-                              onValueChange={(values) => {
-                              const {formattedValue, value} = values;
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                              const { formattedValue, value } = values;
                               setNewCase({
-                              ...newCase,
-                              old_finance_total_cost : value
-                              })}}
-                                decimalScale= "2"
-                              min="0"
-                              step="any"
-                              disabled
-                              className="input-disable"
-                              value={
-                                parseFloat(newCase.close_amount) +
-                                parseFloat(newCase.old_finance_transfer_fee)
-                              }
-                              name="old_finance_total_cost"
+                                ...newCase,
+                                old_finance_total_cost: value
+                              })
+                            }}
+                            decimalScale="2"
+                            min="0"
+                            step="any"
+                            disabled
+                            className="input-disable"
+                            value={
+                              parseFloat(newCase.close_amount) +
+                              parseFloat(newCase.old_finance_transfer_fee)
+                            }
+                            name="old_finance_total_cost"
 
-                            />
+                          />
                         </div>
 
                         <div className="col s6 m4 l4 content">
                           <label>กู้ยืม</label>
                           <CurrencyFormat
-                          thousandSeparator={true}
-                          onValueChange={(values) => {
-                          const {formattedValue, value} = values;
-                          setNewCase({
-                          ...newCase,
-                          total_cost : value
-                          })}}
-                                decimalScale= "2"
-                          min="0"
-                          step="any"
-                          disabled
-                          value={parseFloat(newCase.old_finance_transfer_fee) +
-                            parseFloat(newCase.close_amount) +
-                            parseFloat(newCase.book_closing_fee) +
-                            ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
-                            parseFloat(newCase.transfer_fee) +
-                            parseFloat(newCase.duty_fee) +
-                            parseFloat(newCase.cartrust_other_fee) +
-                            parseFloat(newCase.car_shield_fee) +
-                            parseFloat(newCase.car_insurance_fee) +
-                            parseFloat(newCase.transfer_service_fee) +
-                            parseFloat(newCase.contract_fee) +
-                            parseFloat(newCase.outside_transfer_fee) +
-                            parseFloat(newCase.newfinance_other_fee)
-                          }
-                          name="total_cost"
-                        />
+                            thousandSeparator={true}
+                            onValueChange={(values) => {
+                              const { formattedValue, value } = values;
+                              setNewCase({
+                                ...newCase,
+                                total_cost: value
+                              })
+                            }}
+                            decimalScale="2"
+                            min="0"
+                            step="any"
+                            disabled
+                            value={parseFloat(newCase.old_finance_transfer_fee) +
+                              parseFloat(newCase.close_amount) +
+                              parseFloat(newCase.book_closing_fee) +
+                              ((parseFloat(newCase.book_closing_fee) + parseFloat(newCase.transfer_fee)) * 0.07) +
+                              parseFloat(newCase.transfer_fee) +
+                              parseFloat(newCase.duty_fee) +
+                              parseFloat(newCase.cartrust_other_fee) +
+                              parseFloat(newCase.car_shield_fee) +
+                              parseFloat(newCase.car_insurance_fee) +
+                              parseFloat(newCase.transfer_service_fee) +
+                              parseFloat(newCase.contract_fee) +
+                              parseFloat(newCase.outside_transfer_fee) +
+                              parseFloat(newCase.newfinance_other_fee)
+                            }
+                            name="total_cost"
+                          />
                         </div>
 
                         <div className="col s6 m4 l4 content">
@@ -2867,12 +2947,13 @@ const ModalAddCase = ({ saveNewCase, getAllCase , operatorS , getOperatorS  }) =
                           <CurrencyFormat
                             thousandSeparator={true}
                             onValueChange={(values) => {
-                            const {formattedValue, value} = values;
-                            setNewCase({
-                            ...newCase,
-                            amount_received : value
-                            })}}
-                                decimalScale= "2"
+                              const { formattedValue, value } = values;
+                              setNewCase({
+                                ...newCase,
+                                amount_received: value
+                              })
+                            }}
+                            decimalScale="2"
                             min="0"
                             step="any"
                             disabled
