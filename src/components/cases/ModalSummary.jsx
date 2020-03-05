@@ -441,7 +441,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Receiver Date/ วันที่รับเคส</label>
+                <label >Receive Date/ วันที่รับเคส</label>
                 <input
                   type="text"
                   value={dateFormated(singleCase.date_create)}

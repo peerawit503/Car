@@ -125,6 +125,7 @@ const mapDispatchToProps = dispatch => ({
     team,
     picture,
     token
+    // ,nickname
   ) => {
     dispatch({
       type: ActionUser.STORE_USER_INFO,
@@ -136,6 +137,7 @@ const mapDispatchToProps = dispatch => ({
       team: team,
       picture: picture,
       token: token
+      // ,nickname
     });
   },
   clearUser: (

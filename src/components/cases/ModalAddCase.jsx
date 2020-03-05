@@ -530,7 +530,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       brand: car_brand_s
     }
     console.log(JSON.stringify(data))
-    axios.post(`/model`, JSON.stringify(data), {
+    axios.post(`${url}/model`, JSON.stringify(data), {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -538,7 +538,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     })
       .then(res => {
         console.log('success get car mdel', res.data)
-        setCarModel(res.data.results);
+        setCarModel(res.data.data);
       })
       .catch(err => console.log(err))
   }
@@ -556,7 +556,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     })
       .then(res => {
 
-        setCarYear(res.data.results);
+        setCarYear(res.data.data);
       })
       .catch(err => console.log(err))
   }
@@ -576,7 +576,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     })
       .then(res => {
 
-        setSubModel(res.data.results);
+        setSubModel(res.data.data);
       })
       .catch(err => console.log(err))
   }
@@ -1120,15 +1120,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
         </select>
       </div>);
 
-      result.push(<div className="col s6 m4 l4 content">
-        <label htmlFor="name">Document No. / เลข AOL</label>
-        <input
-          type="text"
-          name="document_id"
-          value={newCase.document_id}
-          onChange={handleChange}
-        />
-      </div>);
 
 
 
@@ -1179,17 +1170,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
 
 
         </div>);
-
-
-      result.push(<div className="col s6 m4 l4 content">
-        <label htmlFor="name">Document No. / เลข AOL</label>
-        <input
-          type="text"
-          name="document_id"
-          value={newCase.document_id}
-          onChange={handleChange}
-        />
-      </div>);
 
 
 
@@ -1252,7 +1232,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       </div>);
     } else if (newCase.case_source === 'Dealer') {
 
-      result.push(<div className="col s6 m4 l4 content" style={{marginBottom:'5px'}}>
+      result.push(<div className="col s6 m4 l4 content" style={{marginBottom:'0px'}}>
         <label >Dealer</label>
         <select
           type="text"
@@ -1288,19 +1268,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           onChange={handleChangeCustomer}
         />
       </div>);
-
-      result.push(<div className="row content">
-            <div className="col row s6 m4">
-            <label htmlFor="name">Document No. / เลข AOL</label>
-            <input
-              type="text"
-              name="document_id"
-              value={newCase.document_id}
-              onChange={handleChange}
-            />
-            </div></div>);
-
-
 
     }
 
@@ -1486,7 +1453,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                             }
                           </select>
                         </div> */}
-                        <div className="col s6 m4 l4 content">
+                        <div className="col s6 m4 l4 content" style={{marginBottom:"0px"}}>
                           <label>Receive Date / วันที่รับเคส</label>
                           <input
                             type="date"
@@ -1535,6 +1502,16 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                               </option>
                             ))}
                           </select>
+                        </div>
+                        <div className="col s6 m4 l4 content">
+                          <label htmlFor="name">Document No. / เลข AOL</label>
+                          <input
+                            type="text"
+                            name="document_id"
+                            value={newCase.document_id}
+                            onChange={handleChange}
+                          />
+
                         </div>
                         </div>
 
@@ -2590,7 +2567,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                       <div className="row content">
 
 
-                        <div className="col s6 m4 l4 content">
+                        <div className="col s6 m4 l4 content" >
                           <label>Receive Date/ วันที่รับเคส</label>
                           <input
                             type="date"
