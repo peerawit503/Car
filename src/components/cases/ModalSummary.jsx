@@ -134,13 +134,64 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     }
   }
 
+  function getbeforedateCurrent(status){
+    return singleCase[statusTodate(status)]
+  }
 
+  function getbeforestatusCurrent(status){
+    return status
+  }
+    
   function calculateProcessDate(processBefore, processCurrent,status) {
     let result = [];
     if(processBefore === null || processBefore === ''){
       processBefore = getbeforedate(status);
     }
-   
+   if((processCurrent === null || processCurrent === '' )&& singleCase.status !== getbeforestatusCurrent(status) ){
+      let t = new Date(getbeforedateCurrent(status));
+     console.log("processCurrentDATE:" + t);
+     if (status === 'submit_book_transfer' || status ==='book_deposit_received'){
+      var n = new Date();
+       n.setDate(t.getDate() + 1)
+    //  processCurrent = Date.parse(getbeforedateCurrent(status)+1)
+     console.log("processCurrentDATE:" + n);
+     processCurrent = "a "+mounthNotoWord(n.getMonth())+" "+n.getDay()+" "+n.getFullYear();
+     console.log("processCurrentDATE:asd" + processCurrent);
+      }
+      processCurrent = "a "+t.getDay()+" "+mounthNotoWord(t.getMonth())+" "+t.getFullYear();
+    //  console.log("processCurrentDATE" + tomorrow.setDate(Date.parse(getbeforedateCurrent(status))));
+    //  console.log("processCurrentDATE" + tomorrow);
+    //  console.log("processCurrentDATE" + Date.getDate(Date.parse(getbeforedateCurrent(status)+1)));
+   }
+   function mounthNotoWord(no){
+     if(no === 1){
+       return 'Jan'
+      }else if(no === 2){
+        return 'Feb'
+      }else if(no === 3){
+        return 'Mar'
+      }else if(no === 4){
+        return 'Apr'
+      }else if(no === 5){
+        return 'May'
+      }else if(no === 6){
+        return 'Jun'
+      }else if(no === 7){
+        return 'Jul'
+      }else if(no === 8){
+        return 'Aug'
+      }else if(no === 9){
+        return 'Sep'
+      }else if(no === 10){
+        return 'Oct'
+      }else if(no === 11){
+        return 'Nov'
+      }else if(no === 12){
+        return 'Dec'
+      }
+
+   }
+
     
     if (processCurrent == null || processCurrent ==='') {
       
