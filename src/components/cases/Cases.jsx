@@ -250,7 +250,7 @@ const Cases = (props) => {
     console.log("deposit"+singleCase.f2_deposit);
     
     if(!checkCar.d1){
-      var data = JSON.stringify({ tracking: 'book_transfer', user_id: props.user.id ,date:date});
+      var data = JSON.stringify({ tracking: 'book_transfer', user_id: props.user.id ,date:date , yes_no:checkCar});
       console.log('###### data ########');
       console.log(data);
       axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
