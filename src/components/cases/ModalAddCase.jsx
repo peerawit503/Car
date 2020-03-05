@@ -534,7 +534,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       }
     })
       .then(res => {
@@ -553,7 +552,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       }
     })
       .then(res => {
@@ -574,7 +572,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       }
     })
       .then(res => {
@@ -1123,9 +1120,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
         </select>
       </div>);
 
-
-
-
       result.push(<div className="col s6 m4 l4 content">
         <label htmlFor="name">Document No. / เลข AOL</label>
         <input
@@ -1133,8 +1127,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           name="document_id"
           value={newCase.document_id}
           onChange={handleChange}
-          
-
         />
       </div>);
 
@@ -1260,7 +1252,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       </div>);
     } else if (newCase.case_source === 'Dealer') {
 
-      result.push(<div className="col s6 m4 l4 content">
+      result.push(<div className="col s6 m4 l4 content" style={{marginBottom:'5px'}}>
         <label >Dealer</label>
         <select
           type="text"
@@ -1270,10 +1262,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           className="browser-default"
         >
           <option value="" dealer_line="" dealer_tel="" disabled>
-
             รับเคสจาก
-
-
         </option>
           {dealerOption()}
 
@@ -1299,6 +1288,20 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           onChange={handleChangeCustomer}
         />
       </div>);
+
+      result.push(<div className="row content">
+            <div className="col row s6 m4">
+            <label htmlFor="name">Document No. / เลข AOL</label>
+            <input
+              type="text"
+              name="document_id"
+              value={newCase.document_id}
+              onChange={handleChange}
+            />
+            </div></div>);
+
+
+
     }
 
     return (result);
