@@ -88,22 +88,22 @@ const Cases = (props) => {
     {
       title: 'Case Status', field: 'status',
       lookup: {
-        'receive': '1.วันที่รับเคส',
-        'contact_customer': '2.วันที่ติดต่อลูกค้า',
-        'account_closing': '3.วันที่ปิดเล่ม',
-        'transfer_doc_received': '4.วันรับชุดโอน',
-        'transfer_doc_submitted': '5.วันยื่นชุดโอน',
-        'book_received': '6.วันที่ได้รับเล่ม',
-        'submit_book_transfer': '7.วันที่ส่งงานโอนทะเบียน',
-        'car_check_up': '8.วันตรวจสภาพรถ',
-        'book_transfer': '9.โอนเล่มทะเบียน',
-        'book_copy_received': '10.รับสำเนาเล่ม',
-        'deposit_doc_to_new_bank': '11.ส่งเอกสารเบิกเงินธนาคารใหม่',
-        'submit_book_deposit_return': '12.ทำเรื่องเบิกมัดจำคืน',
-        'book_received_back': '13.รับเล่มคืน',
-        'cash_received': '14.เงินเข้าบัญชีคาร์ทรัส',
-        'book_deposit_received': '15.เงินมัดจำคืนเข้าบัญชี',
-        'submit_book_to_new_finance': '16.ส่งเล่มให้ไฟแนนซ์ใหม่',
+        'receive': 'รอติดต่อลูกค้า',
+        'contact_customer': 'รอปิดเล่ม',
+        'account_closing': 'รอชุดโอน',
+        'transfer_doc_received': 'รอชุดโอน',
+        'transfer_doc_submitted': 'รอได้รับเล่ม',
+        'book_received': 'รอส่งงานโอนทะเบียน',
+        'submit_book_transfer': 'รอตรวจสภาพรถ',
+        'car_check_up': 'รอโอนเล่มทะเบียน',
+        'book_transfer': 'รอรับสำเนาเล่ม',
+        'book_copy_received': 'รอส่งเอกสารเบิกเงินธนาคารใหม่',
+        'deposit_doc_to_new_bank': 'รอทำเรื่องเบิกมัดจำคืน',
+        'submit_book_deposit_return': 'รอรับเล่มคืน',
+        'book_received_back': 'รอเงินเข้าบัญชีคาร์ทรัส',
+        'cash_received': 'รอเงินมัดจำคืนเข้าบัญชี',
+        'book_deposit_received': 'รอส่งเล่มให้ไฟแนนซ์ใหม่',
+        'submit_book_to_new_finance': 'เสร็จสิ้น',
       },
       //  defaultGroupOrder: 0,
       sorting: false
@@ -453,22 +453,22 @@ const Cases = (props) => {
 
   function translate(state) {
     var trans = '';
-    if (state === 'receive') { trans = '1.วันที่รับเคส'; }
-    else if (state === 'contact_customer') { trans = '2.วันที่ติดต่อลูกค้า' }
-    else if (state === 'account_closing') { trans = '3.วันที่ปิดเล่ม' }
-    else if (state === 'transfer_doc_received') { trans = '4.วันรับชุดโอน' }
-    else if (state === 'transfer_doc_submitted') { trans = '5.วันยื่นชุดโอน' }
-    else if (state === 'book_received') { trans = '6.วันที่ได้รับเล่ม' }
-    else if (state === 'submit_book_transfer') { trans = '7.วันที่ส่งงานโอนทะเบียน' }
-    else if (state === 'car_check_up') { trans = '8.วันตรวจสภาพรถ' }
-    else if (state === 'book_transfer') { trans = '9.โอนเล่มทะเบียน' }
-    else if (state === 'book_copy_received') { trans = '10.รับสำเนาเล่ม' }
-    else if (state === 'deposit_doc_to_new_bank') { trans = '11.ส่งเอกสารเบิกเงินธนาคารใหม่' }
-    else if (state === 'submit_book_deposit_return') { trans = '12.ทำเรื่องเบิกมัดจำคืน' }
-    else if (state === 'book_received_back') { trans = '13.รับเล่มคืน' }
-    else if (state === 'cash_received') { trans = '14.เงินเข้าบัญชีคาร์ทรัส' }
-    else if (state === 'book_deposit_received') { trans = '15.เงินมัดจำคืนเข้าบัญชี' }
-    else if (state === 'submit_book_to_new_finance') { trans = '16.ส่งเล่มให้ไฟแนนซ์ใหม่' }
+    if (state === 'receive') { trans = 'รับเคส'; }
+    else if (state === 'contact_customer') { trans = 'ติดต่อลูกค้า' }
+    else if (state === 'account_closing') { trans = 'ปิดเล่ม' }
+    else if (state === 'transfer_doc_received') { trans = 'รับชุดโอน' }
+    else if (state === 'transfer_doc_submitted') { trans = 'ยื่นชุดโอน' }
+    else if (state === 'book_received') { trans = 'ได้รับเล่ม' }
+    else if (state === 'submit_book_transfer') { trans = 'ส่งงานโอนทะเบียน' }
+    else if (state === 'car_check_up') { trans = 'วตรวจสภาพรถ' }
+    else if (state === 'book_transfer') { trans = 'โอนเล่มทะเบียน' }
+    else if (state === 'book_copy_received') { trans = 'รับสำเนาเล่ม' }
+    else if (state === 'deposit_doc_to_new_bank') { trans = 'ส่งเอกสารเบิกเงินธนาคารใหม่' }
+    else if (state === 'submit_book_deposit_return') { trans = 'ทำเรื่องเบิกมัดจำคืน' }
+    else if (state === 'book_received_back') { trans = 'รับเล่มคืน' }
+    else if (state === 'cash_received') { trans = 'เงินเข้าบัญชีคาร์ทรัส' }
+    else if (state === 'book_deposit_received') { trans = 'เงินมัดจำคืนเข้าบัญชี' }
+    else if (state === 'submit_book_to_new_finance') { trans = 'ส่งเล่มให้ไฟแนนซ์ใหม่' }
 
     return trans;
   }

@@ -234,12 +234,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
     let result =[]
     // if in case 3 transfer_doc_received and F2_status ===null
     if (props.singleCase.status === 'account_closing') {
-      result.push(
-        <div className="row">
-          <button className="waves-effect btn blue lighten left " onClick={() => fastToP4(date)}>fastToP4</button>
-          <button className="waves-effect btn blue lighten left " onClick={() => fastToP5(date)}>fastToP5</button>
-        </div>
-      )
+     
       if(props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === ''){
       console.log(props.singleCase.F2_status);
       console.log(props.singleCase.contact_customer_date);
@@ -285,7 +280,8 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
           <div className="row 15" style={{borderBottom:"1px solid", padding:"10px"}}>
             {/* <div className="header-title"> */}
               <div className="col s8 m8 ">
-                <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)} ({statusDate(singleCase)})</span>
+                <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)}</span><br/>
+                <span >ตั้งแต่วันที่ {statusDate(singleCase)}</span>
               </div>
               <div className="col s4 m4 right ">
                 <span className="right">Job Id : {singleCase.case_id}</span><br/>
@@ -297,34 +293,34 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
 
           {/* body */}
             <div className="row content">
-            <h4 style={{textAlign:"center"}}>รอยืนยัน : {translate(caseStatusShift(singleCase.status))}</h4><br/>
+            <h4 style={{textAlign:"center"}}>รอ{translate(caseStatusShift(singleCase.status)) } </h4><br/>
             <div className="col s4 m4 content"></div>
 
             <div className="col s4 m4 content">
-                    <label>วันที่ดำเนินการ</label>
-                    <input
-                      type="date"
-                      value={date || currentDateFormat(Date())}
-                      name="receive_date"
-                      onChange={handleChange}
-                    />
-                    <ValidateCase singleCase={singleCase} />
-                    <div style={{display: renderDeposit ? 'block' : 'none'}}>
-                      <label>จ่ายมัดจำ (บาท) </label>
-                      <CurrencyFormat
-                      thousandSeparator={true}
-                      onValueChange={(values) => {
-                      const {value} = values;
-                      singleCase.f2_deposit = value}}
-                      decimalScale= "2"
-                      min="0"
-                      step="any"
-                      value={singleCase.f2_deposit || "0"}
-                      name="deposit"
-                      // onChange={handleChangeF2}
-                    />
-                    </div>
-                  </div>
+                <label>วันที่ดำเนินการ</label>
+                <input
+                  type="date"
+                  value={date || currentDateFormat(Date())}
+                  name="receive_date"
+                  onChange={handleChange}
+                />
+                <ValidateCase singleCase={singleCase} />
+                <div style={{display: renderDeposit ? 'block' : 'none'}}>
+                  <label>จ่ายมัดจำ (บาท) </label>
+                  <CurrencyFormat
+                  thousandSeparator={true}
+                  onValueChange={(values) => {
+                  const {value} = values;
+                  singleCase.f2_deposit = value}}
+                  decimalScale= "2"
+                  min="0"
+                  step="any"
+                  value={singleCase.f2_deposit || "0"}
+                  name="deposit"
+                  // onChange={handleChangeF2}
+                />
+                </div>
+              </div>
             <div className="col s4 m4 l4 content">
             </div>
                 

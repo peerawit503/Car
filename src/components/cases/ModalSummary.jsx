@@ -599,7 +599,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  1.รับเคส{' '}:
+                  วันที่รับเคส{' '}:
                 </div>
                   {dateTimeFormatted(singleCase.receive_date)}
                  
@@ -612,7 +612,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  2.ติดต่อลูกค้า{' '}:
+                วันที่ติดต่อลูกค้า{' '}:
                 </div>
                 {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date,"receive")}
                 <div className="col s2 m3">
@@ -627,7 +627,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  3.ปิดเล่ม{' '}:
+                วันที่ปิดเล่ม{' '}:
                 </div>
                 {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date,"contact_customer")}
                 <div className="col s2 m3">
@@ -642,7 +642,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  4.รับชุดโอน{' '}:
+                วันที่รับชุดโอน{' '}:
                 </div>
                 {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"account_closing")}
                 <div className="col s2 m3">
@@ -658,7 +658,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  5.ยื่นชุดโอน{' '}:
+                วันที่ยื่นชุดโอน{' '}:
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date,"transfer_doc_received")}
                   <div className="col s2 m3">
@@ -673,7 +673,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  6.ได้รับเล่ม{' '}:
+                วันที่ได้รับเล่ม{' '}:
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"transfer_doc_submitted")}
                   <div className="col s2 m2">
@@ -688,7 +688,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  7.ส่งงานโอนทะเบียน{' '}:
+                วันที่ส่งงานโอนทะเบียน{' '}:
                 </div>
                   {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"book_received")}
                   <div className="col s2 m3">
@@ -703,7 +703,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  8.ตรวจสภาพรถ{' '}:
+                วันที่ตรวจสภาพรถ{' '}:
                 </div>
                   {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"submit_book_transfer")}
                   <div className="col s2 m3">
@@ -718,7 +718,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  9.โอนเล่มทะเบียน{' '}:
+                วันที่โอนเล่มทะเบียน{' '}:
                 </div>
                   {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"car_check_up")}
                   <div className="col s2 m3">
@@ -733,7 +733,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  10.รับสำเนาเล่ม{' '}:
+                วันที่รับสำเนาเล่ม{' '}:
                 </div>
                   {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_transfer")}
                   <div className="col s2 m2">
@@ -748,7 +748,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  11.ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:
+                วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:
                 </div>
                   {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"book_copy_received")}
                   <div className="col s2 m3">
@@ -763,7 +763,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  12.ทำเรื่องเบิกมัดจำคืน{' '}:
+                วันที่ทำเรื่องเบิกมัดจำคืน{' '}:
                 </div>
                   {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"deposit_doc_to_new_bank")}
                   <div className="col s2 m3">
@@ -778,7 +778,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  13.รับเล่มคืน{' '}:
+                วันที่รับเล่มคืน{' '}:
                 </div>
                   {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"submit_book_deposit_return")}
                   <div className="col s2 m3">
@@ -793,7 +793,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  14.เงินเข้าบัญชีคาร์ทรัส{' '}:
+                วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:
                 </div>
                   {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date,"book_received_back")}
                   <div className="col s2 m3">
@@ -808,7 +808,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  15.เงินมัดจำคืนเข้าบัญชี{' '}:
+                วันที่เงินมัดจำคืนเข้าบัญชี{' '}:
                 </div>
                   {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"cash_received")}
                   <div className="col s2 m3">
@@ -823,7 +823,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  16.ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:
+                วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:
                 </div>
                   {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"book_deposit_received")}
                   <div className="col s2 m3">
