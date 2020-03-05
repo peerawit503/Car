@@ -270,16 +270,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         >
         </input>
       </div>);
-      result.push(<div className="col s6 m6  content-radonly">
-      <label>Document id / AOL</label>
-      <input
-         type="text"
-        value={singleCase.document_id || ""}
-        name="hub"
-        readOnly
-      >
-      </input>
-    </div>);
+   
     } else if (singleCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m6  content-radonly">
         <label>Cartust Lead Refer./รับเคสจาก</label>
@@ -292,18 +283,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         >
           </input>
       </div>);
-    }else if (singleCase.case_source === 'Dealer'){
-      result.push(<div className="col s6 m6  content-radonly">
-      <label>Document id / AOL</label>
-      <input
-         type="text"
-        value={singleCase.document_id || ""}
-        name="hub"
-        readOnly
-      >
-      </input>
-      </div>);
     }
+    
 
     return (result);
   }
@@ -475,8 +456,17 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   
                   readOnly />
               </div>
-
-              
+           <div className="col s6 m6  content-radonly">
+              <label>Document id / AOL</label>
+              <input
+                type="text"
+                value={singleCase.document_id || ""}
+                name="hub"
+                readOnly
+              >
+              </input>
+            </div>
+                      
               {caseSource()}
 
               <div className="col s12 m12  head-section no-col-padding">
