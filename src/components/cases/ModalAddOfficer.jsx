@@ -9,11 +9,12 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalAddOfficer = ({getOfficer}) => {
+const ModalAddOfficer = ({getOfficer , case_source_for_add , getOfficerKK }) => {
   const [officer , setOfficer] = useState({
     name:"",
     tel:"",
     line:"",
+    type:""
   })
 
   function setAllblank(){
@@ -21,6 +22,7 @@ const ModalAddOfficer = ({getOfficer}) => {
       name:"",
       tel:"",
       line:"",
+      type:""
     })
   }
 
@@ -32,11 +34,18 @@ const ModalAddOfficer = ({getOfficer}) => {
 
   const save = () =>{
 
-    console.log(JSON.stringify(officer))
-    axios.post(`${url}/contract_officer` , officer )
+    console.log(case_source_for_add)
+    // setOfficer({...officer , type:case_source_for_add})
+    let data  = {
+      ...officer,
+      type:case_source_for_add
+    }
+    console.log(JSON.stringify(data))
+    axios.post(`${url}/contract_officer` , data )
     .then(res => {
       M.toast({ html: `${res.data.message}` })
       getOfficer()
+      getOfficerKK();
       
     })
     .catch(err => { 

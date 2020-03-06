@@ -20,7 +20,7 @@ const initialUser = {
   password: "",
   password2: "",
   line:"",
-  // nickname:"",
+  nickname:"",
 
 
 }
@@ -143,7 +143,7 @@ const ModalCreate = ({ addUser }) => {
                 />
               </div>
 
-              {/* <div className="col s6 m4 l4 content">
+              <div className="col s6 m4 l4 content">
                 <label htmlFor="name">NickName / ชื่อเล่น</label>
                 <input
                   type="text"
@@ -151,7 +151,7 @@ const ModalCreate = ({ addUser }) => {
                   value={user.nickname}
                   onChange={handleChange}
                 />
-              </div> */}
+              </div>
 
               <div className="col s6 m4 l4 content">
                 <label htmlFor="Email">Email / อีเมล์</label>
