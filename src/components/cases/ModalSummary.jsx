@@ -144,53 +144,31 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     
   function calculateProcessDate(processBefore, processCurrent,status) {
     let result = [];
-    if(processBefore === null || processBefore === ''){
-      processBefore = getbeforedate(status);
-    }
-   if((processCurrent === null || processCurrent === '' )&& singleCase.status !== getbeforestatusCurrent(status) ){
+    if((processCurrent === null || processCurrent === '' ) && processBefore !== '' && singleCase.status !== status){
       let t = new Date(getbeforedateCurrent(status));
-     console.log("processCurrentDATE:" + t);
-     if (status === 'submit_book_transfer' || status ==='book_deposit_received'){
-      var n = new Date();
-       n.setDate(t.getDate() + 1)
-    //  processCurrent = Date.parse(getbeforedateCurrent(status)+1)
-     console.log("processCurrentDATE:" + n);
-     processCurrent = "a "+mounthNotoWord(n.getMonth())+" "+n.getDay()+" "+n.getFullYear();
-     console.log("processCurrentDATE:asd" + processCurrent);
+
+  
+
+     if (status === 'submit_book_transfer' || status ==='deposit_doc_to_new_bank'){
+         t.setDate(t.getDate() + 1)
+     //    n.setDate(t.getDate() + 1)
+    // //  processCurrent = Date.parse(getbeforedateCurrent(status)+1)
+    //  console.log("processCurrentDATE:2" + n);
+    //  processCurrent = "a "+mounthNotoWord(n.getMonth())+" "+n.getDay()+" "+n.getFullYear();
+    //  console.log("processCurrentDATE:3" + processCurrent);
       }
-      processCurrent = "a "+t.getDay()+" "+mounthNotoWord(t.getMonth())+" "+t.getFullYear();
+      processCurrent = t.getDay()+", "+t.getDate()+" "+monthNotoWord(t.getMonth())+" "+t.getFullYear();
     //  console.log("processCurrentDATE" + tomorrow.setDate(Date.parse(getbeforedateCurrent(status))));
     //  console.log("processCurrentDATE" + tomorrow);
     //  console.log("processCurrentDATE" + Date.getDate(Date.parse(getbeforedateCurrent(status)+1)));
+      console.log("processCurrent:"+processCurrent);
+      
    }
-   function mounthNotoWord(no){
-     if(no === 1){
-       return 'Jan'
-      }else if(no === 2){
-        return 'Feb'
-      }else if(no === 3){
-        return 'Mar'
-      }else if(no === 4){
-        return 'Apr'
-      }else if(no === 5){
-        return 'May'
-      }else if(no === 6){
-        return 'Jun'
-      }else if(no === 7){
-        return 'Jul'
-      }else if(no === 8){
-        return 'Aug'
-      }else if(no === 9){
-        return 'Sep'
-      }else if(no === 10){
-        return 'Oct'
-      }else if(no === 11){
-        return 'Nov'
-      }else if(no === 12){
-        return 'Dec'
-      }
-
-   }
+   
+   if((processBefore === null || processBefore === '') ){
+     
+      processBefore = getbeforedate(status);
+    }
 
     
     if (processCurrent == null || processCurrent ==='') {
@@ -222,6 +200,40 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     }
     return result
   }
+
+  function monthNotoWord(no){
+    no=no+1;
+    if(no===13){
+      no=1;
+    }
+    if(no === 1){
+      return 'Jan'
+     }else if(no === 2){
+       return 'Feb'
+     }else if(no === 3){
+       return 'Mar'
+     }else if(no === 4){
+       return 'Apr'
+     }else if(no === 5){
+       return 'May'
+     }else if(no === 6){
+       return 'Jun'
+     }else if(no === 7){
+       return 'Jul'
+     }else if(no === 8){
+       return 'Aug'
+     }else if(no === 9){
+       return 'Sep'
+     }else if(no === 10){
+       return 'Oct'
+     }else if(no === 11){
+       return 'Nov'
+     }else if(no === 12){
+       return 'Dec'
+     }
+
+  }
+
 
   // function calDate(processBefore,processCurrent){
   //   if (processCurrent == null || processCurrent ==='') {
