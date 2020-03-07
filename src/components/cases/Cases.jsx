@@ -249,29 +249,13 @@ const Cases = (props) => {
   const confirm = (singleCase,date,checkCar) => {
     console.log("deposit"+singleCase.f2_deposit);
     
-    if(!checkCar.d1){
-      var data = JSON.stringify({ tracking: 'book_transfer', user_id: props.user.id ,date:date , yes_no:checkCar});
-      console.log('###### data ########');
-      console.log(data);
-      axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(res => {
-        console.log('#####  RES  ######');
-        console.log('Case', res.data.message);
-        // setisLoading(true);
-        checkCar.d1 = true;
-        getAllCase()
-      })
-        .catch(err => console.log(err))
-    }else{
-      if(singleCase.status === "deposit_doc_to_new_bank" && parseInt(singleCase.f2_deposit) !== 0){
-        console.log("incase 1");
-      var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.f2_deposit});
-      }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "cash_received" )  && parseInt(singleCase.f2_deposit) === 0){
+  
+      if(singleCase.status === 'submit_book_transfer'){
+      var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
+      console.log("incase 1");
+      }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "book_received_back" )){
         console.log("incase 2");
-        var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
+        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.deposit});
       }else{
         console.log("incase 3");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
@@ -289,7 +273,6 @@ const Cases = (props) => {
         getAllCase()
       })
         .catch(err => console.log(err))
-    }
   }
 
   function fastToP4(date){
