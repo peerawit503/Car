@@ -90,8 +90,8 @@ const Cases = (props) => {
       lookup: {
         'receive': 'รอติดต่อลูกค้า',
         'contact_customer': 'รอปิดเล่ม',
-        'account_closing': 'รอชุดโอน',
-        'transfer_doc_received': 'รอชุดโอน',
+        'account_closing': 'รอรับชุดโอน',
+        'transfer_doc_received': 'รอยื่นชุดโอน',
         'transfer_doc_submitted': 'รอได้รับเล่ม',
         'book_received': 'รอส่งงานโอนทะเบียน',
         'submit_book_transfer': 'รอตรวจสภาพรถ',
@@ -255,7 +255,7 @@ const Cases = (props) => {
       console.log("incase 1");
       }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "book_received_back" )){
         console.log("incase 2");
-        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.deposit});
+        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.f2_deposit});
       }else{
         console.log("incase 3");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
