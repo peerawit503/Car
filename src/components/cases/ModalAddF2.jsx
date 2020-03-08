@@ -666,8 +666,9 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                         marginBottom: 7,
                       },
                       {
-                       
+                        width: 'auto',
                         text: case_type.trim(),
+                        marginLeft: 5,
                         
                       },
                     ],
