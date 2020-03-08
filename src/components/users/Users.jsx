@@ -132,8 +132,8 @@ const Users = () => {
   }
 
   let columnObject = useState([
-    { title: 'id'},
-    { title: 'picture', 
+    { title: 'ID'},
+    { title: 'Picture', 
       render:rowdata => 
       <div>
       { rowdata.picture
@@ -141,12 +141,12 @@ const Users = () => {
       : <img src={ userImage } alt="img.profile" className="userImage"  /> }
     </div>
     },
-    { title: 'firstname', field: 'firstname', },
-    { title: 'lastname', field: 'lastname' },
-    { title: 'position', field: 'position' },
-    { title: 'authority', field: 'authority' },
-    { title: 'tel', field: 'tel' },
-    { title: 'email', field: 'email' },
+    { title: 'First Name', field: 'firstname', },
+    { title: 'Last Name', field: 'lastname' },
+    { title: 'Position', field: 'position' },
+    { title: 'Authority', field: 'authority' },
+    { title: 'Tel', field: 'tel' },
+    { title: 'Email', field: 'email' },
     { title: '',
       render:rowData =>
       <div>

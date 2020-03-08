@@ -1167,9 +1167,9 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           {cqc_teamOption()}
         </select>
       </div>);
-
+ 
       result.push(<div className="col s6 m4 l4 content">
-        <label>เจ้าหน้าที่ทำสัญญา / Contract officer</label>
+        <label>Contract officer / เจ้าหน้าที่ทำสัญญา</label>
         <select
           type="text"
           value={newCase.contract_officer || ""}
@@ -1194,7 +1194,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
 
       result.push(
         <div className="row crop">
-          <div className="col s6 m4 l4 content">
+          <div className="col s6 m4 l4">
             <label>เจ้าหน้าที่ทำสัญญา / Contract officer</label>
             <select
               type="text"
@@ -1226,7 +1226,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           </div>
 
           <div className="col s6 m4 l4 content">
-            <label htmlFor="name">Line</label>
+            <label htmlFor="name">Line / ไลน์</label>
             <input
               type="text"
               name="contract_officer_line"
@@ -1234,14 +1234,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
               readOnly
             />
           </div>
-
-
-        </div>);
-
-
-
-      result.push(<div className="col s6 m4 l4 content">
-        <label>สาขา (ธนชาติ) / Hub</label>
+          <div className="col s6 m4 l4 content">
+        <label>Hub / สาขา (ธนชาติ) </label>
         <select
           type="text"
           value={newCase.hub}
@@ -1254,11 +1248,15 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
           </option>
           {hubOption()}
         </select>
-
+        </div>
       </div>);
+
+
+
+    
     } else if (newCase.case_source === 'Cartrust') {
-      result.push(<div className="col s6 m4 l4 content">
-        <label >Cartust Lead Refer./รับเคสจาก</label>
+      result.push(<div className="col s6 m4 l4 " >
+        <label >Cartrust Lead Refer./รับเคสจาก</label>
         <select
           type="text"
           value={newCase.cartrust_lead_refer || ""}
@@ -1289,7 +1287,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       </div>);
 
       result.push(<div className="col s6 m4 l4 content">
-        <label htmlFor="name">Line</label>
+        <label htmlFor="name">Line / ไลน์</label>
         <input
           type="text"
           name="cartrust_lead_refer_line"

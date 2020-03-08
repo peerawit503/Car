@@ -313,8 +313,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     } else if (singleCase.case_source === 'Thanachart') {
   
       result.push(<div className="col s6 m6  content-radonly">
-        <label>เจ้าหน้าที่ทำสัญญา
-/Contract officer</label>
+        <label>Contract officer / เจ้าหน้าที่ทำสัญญา </label>
         <input
           type="text"
           value={singleCase.contract_officer || ""}
@@ -324,7 +323,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         />
       </div>);
       result.push(<div className="col s6 m6  content-radonly">
-        <label>สาขา (ธนชาติ) / Hub</label>
+        <label>Hub / สาขา (ธนชาติ) </label>
         <input
            type="text"
           value={singleCase.hub || ""}
@@ -336,7 +335,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
    
     } else if (singleCase.case_source === 'Cartrust') {
       result.push(<div className="col s6 m6  content-radonly">
-        <label>Cartust Lead Refer./รับเคสจาก</label>
+        <label>Cartust Lead Refer / รับเคสจาก</label>
         <input
           type="text"
           value={singleCase.cartrust_lead_refer || ""}
@@ -543,7 +542,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   readOnly />
               </div>
            <div className="col s6 m6  content-radonly">
-              <label>Document id / AOL</label>
+              <label>Document No. / AOL</label>
               <input
                 type="text"
                 value={singleCase.document_id || ""}
