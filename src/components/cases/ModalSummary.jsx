@@ -458,7 +458,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <a href="#modalImage" className="modal-trigger waves-effect white right"><img src={photo} alt="take_car_picture" className="userImage" style={{width:'50px'}}/></a>
               </div>
               <div className="col m2 ">
-              <h6> {singleCase.F2_status == null?'F2 Complete':'F2 Incomplete'}</h6>
+              <h6> {singleCase.F2_status === 'done'?'F2 Complete':'F2 Incomplete'}</h6>
               </div>
               <div className="col m2 ">
               <div className="new-button-iner">
