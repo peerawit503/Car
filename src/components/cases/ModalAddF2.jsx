@@ -90,7 +90,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
    
     close_amount: singleCase.close_amount ? singleCase.close_amount :"",
     down_amount: singleCase.down_amount ? singleCase.down_amount : "",
-    first_differance:singleCase.first_differance ? singleCase.first_differance:""
+    difference_fee:singleCase.f2_difference_fee ? singleCase.f2_difference_fee:"0"
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -1036,7 +1036,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
             marginTop: 10,
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1 }],
+            canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 0.5 }],
             margin: 5,
           },
           {
@@ -1397,7 +1397,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     marginTop: 8,
                    
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     
                     text: old_finance_transfer_fee_note?old_finance_transfer_fee_note:"0",
@@ -1405,21 +1405,21 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     marginTop: 8,
                    
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: book_closing_fee_note?book_closing_fee_note:"0",
                     color: book_closing_fee_note?'black':'white',
                     marginTop: 8,
                  
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: vat7_fee_note?vat7_fee_note:"0",
                     color: vat7_fee_note?'black':'white',
                     marginTop: 8,
                     
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: transfer_fee_note?transfer_fee_note:"0",
                     color: transfer_fee_note?'black':'white',
@@ -1427,7 +1427,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     
                     
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: duty_fee_note?duty_fee_note:"0",
                     color: duty_fee_note?'black':'white',
@@ -1435,56 +1435,56 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     
                    
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: cartrust_other_fee_note?cartrust_other_fee_note:"0",
                     color: cartrust_other_fee_note?'black':'white',
                     marginTop: 8,
                    
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: car_shield_fee_note?car_shield_fee_note:"0",
                     color: car_shield_fee_note?'black':'white',
                     marginTop: 37,
                    
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: car_insurance_fee_note?car_insurance_fee_note:"0",
                     color: car_insurance_fee_note?'black':'white',
                     marginTop: 8,
                     
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: transfer_service_fee_note?transfer_service_fee_note:"0",
                     color: transfer_service_fee_note?'black':'white',
                     marginTop: 8,
                     
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: contract_fee_note?contract_fee_note:"0",
                     color: contract_fee_note?'black':'white',
                     marginTop: 8,
                     
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: outside_transfer_fee_note?outside_transfer_fee_note:"0",
                     color: outside_transfer_fee_note?'black':'white',
                     marginTop: 8,
                   
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   {
                     text: newfinance_other_fee_note?newfinance_other_fee_note:"0",
                     color: newfinance_other_fee_note?'black':'white',
                     marginTop: 8,
                   
                   },
-                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 1 }]},
+                  { canvas: [{ type: 'line', x1: 0, y1: 2, x2: 200, y2: 2, lineWidth: 0.2 }]},
                   
                 ],
               },
@@ -1495,7 +1495,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
             marginTop: 5,
           },
           {
-            canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 1 }],
+            canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595 - 2 * 40, y2: 5, lineWidth: 0.5 }],
             margin: 5,
           },
           {
@@ -1807,7 +1807,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
 
   function firstDiffer(){
     let result = [];
-    if(newCase.case_source === 'Thanachart'){
+    if(singleCase.case_source === 'Thanachart'){
       result.push(<div className="col s6 m6 l6 content">
       <label>เงินส่วนต่างก้อนแรก</label>
       <CurrencyFormat
@@ -1815,15 +1815,15 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
         onValueChange={(values) => {
           const { formattedValue , value } = values;
           setNewCase({
-            ...newCase,
-            old_finance_closing_fee: value
+            ...newF2,
+            difference_fee: value
           })
         }}
         decimalScale="2"
         min="0"
         step="any"
-        name="first_differance"
-        value={newCase.first_differance || ""}
+        name="difference_fee"
+        value={newF2.difference_fee || ""}
         // onChange={handleChangeF}
         onFocus={deletezero}
         onBlur={addzero}

@@ -125,7 +125,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     deposit: "0",
     cheque_receiver: "",
     deposit_receiver: "",
-    first_differance:"0"
+    difference_fee:"0"
 
   });
 
@@ -848,7 +848,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       cheque_receiver: "",
       deposit_receiver: "",
       province: "",
-      first_differance:""
+      difference_fee:"0"
     });
   }
 
@@ -990,21 +990,21 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     let result = [];
     if(newCase.case_source === 'Thanachart'){
       result.push(<div className="col s6 m6 l6 content">
-      <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
+      <label>เงินส่วนต่างก้อนแรก</label>
       <CurrencyFormat
         thousandSeparator={true}
         onValueChange={(values) => {
           const { formattedValue , value } = values;
           setNewCase({
             ...newCase,
-            old_finance_closing_fee: value
+            difference_fee: value
           })
         }}
         decimalScale="2"
         min="0"
         step="any"
-        name="first_differance"
-        value={newCase.first_differance || ""}
+        name="difference_fee"
+        value={newCase.difference_fee || ""}
         // onChange={handleChangeF}
         onFocus={deletezero}
         onBlur={addzero}
