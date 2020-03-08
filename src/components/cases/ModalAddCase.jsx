@@ -125,6 +125,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     deposit: "0",
     cheque_receiver: "",
     deposit_receiver: "",
+    first_differance:"0"
 
   });
 
@@ -846,7 +847,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       deposit: "0",
       cheque_receiver: "",
       deposit_receiver: "",
-      province: ""
+      province: "",
+      first_differance:""
     });
   }
 
@@ -880,18 +882,11 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
     setblankCustomer();
 
   };
-  const backpage = () => {
-    console.log(newCase);
-    if (formState === 2) {
-      setformState(1);
-    } else if (formState === 3) {
-      setformState(2);
-    }
-  };
+
   const validateLine = (e) => {
     let name = e.target.name;
     let val = e.target.value
-    if (val != "" && val != null) {
+    if (val !== "" && val != null) {
       axios.get(`${url}/check?table=customer&key=${e.target.name}&value=${e.target.value}`)
         .then(res => {
           if (!res.data.message) {
@@ -930,7 +925,7 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
   }
 
   const deletezero = e => {
-    if (e.target.value == 0) {
+    if (e.target.value === 0) {
       e.target.value = "";
     }
   };
@@ -989,6 +984,35 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
       return (caseDate.split(" ")[3] + '-' + month + '-' + caseDate.split(" ")[1]);
 
     }
+  }
+//เงินส่วนต่างก้อนแรก
+  function firstDiffer(){
+    let result = [];
+    if(newCase.case_source === 'Thanachart'){
+      result.push(<div className="col s6 m6 l6 content">
+      <label>ค่าปิดไฟแนนซ์เก่า (บาท)</label>
+      <CurrencyFormat
+        thousandSeparator={true}
+        onValueChange={(values) => {
+          const { formattedValue , value } = values;
+          setNewCase({
+            ...newCase,
+            old_finance_closing_fee: value
+          })
+        }}
+        decimalScale="2"
+        min="0"
+        step="any"
+        name="first_differance"
+        value={newCase.first_differance || ""}
+        // onChange={handleChangeF}
+        onFocus={deletezero}
+        onBlur={addzero}
+        className="validate"
+      />
+    </div>)
+    }
+    return result;
   }
 
   function currentDateFormat(caseDate) {
@@ -1881,6 +1905,8 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
                                 className="validate"
                               />
                             </div>
+
+                            {firstDiffer()}
 
                           </div>
 

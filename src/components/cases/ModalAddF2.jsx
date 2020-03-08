@@ -10,14 +10,14 @@ import {
   provinceAll
 } from "../../Utility/dataCase";
 import uuid from "uuid";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 /* img */
 import cartrustLogo from "../../img/cartrustLogo.png";
 import url from "../../Utility/url";
-import moment from "moment";
+// import moment from "moment";
 
 import CurrencyFormat from 'react-currency-format';
 
@@ -49,7 +49,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     approve_amount: singleCase.approve_amount ? singleCase.approve_amount : "",
     old_finance_closing_fee: singleCase.f2_old_finance_closing_fee ? singleCase.f2_old_finance_closing_fee : "",
     old_finance_transfer_fee: singleCase.f2_old_finance_transfer_fee ? singleCase.f2_old_finance_transfer_fee : "",
-    book_closing_fee: singleCase.f2_book_closing_fee != 0 ? singleCase.f2_book_closing_fee : "",
+    book_closing_fee: singleCase.f2_book_closing_fee !== 0 ? singleCase.f2_book_closing_fee : "",
     vat7_fee: singleCase.f2_vat7_fee ? singleCase.f2_vat7_fee : "",
     transfer_fee: singleCase.f2_transfer_fee ? singleCase.f2_transfer_fee : "",
     duty_fee: singleCase.f2_duty_fee ? singleCase.f2_duty_fee : "",
@@ -87,14 +87,14 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     finance_staff_line : singleCase.finance_staff_line?singleCase.finance_staff_line:"",
     finance_staff_tel:singleCase.finance_staff_tel?singleCase.finance_staff_tel:"",
     province: singleCase.f2_province,
-    approve_amount:singleCase.approve_amount ? singleCase.approve_amount : "",
+   
     close_amount: singleCase.close_amount ? singleCase.close_amount :"",
     down_amount: singleCase.down_amount ? singleCase.down_amount : "",
-
+    first_differance:singleCase.first_differance ? singleCase.first_differance:""
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
-  const [bank, setBank] = useState({ b1: true, b2: false });
+  // const [bank, setBank] = useState({ b1: true, b2: false });
   const [difference, setDifference] = useState({ d1: true, d2: false });
   const [cartrustWork, setCartrustWork] = useState({
     conditionCheckCar: "",
@@ -111,7 +111,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
       setDifference({ d1: false, d2: true })
     }
   }
-  var summary = 0;
+  // var summary = 0;
   useEffect(() => {
     getMargin_account()
    // getOperatorS()
@@ -282,7 +282,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     finance_staff_line :"",
     finance_staff_tel:"",
     province: "",
-    approve_amount: "",
+   
     close_amount: "",
     down_amount:  "",
     })
@@ -294,8 +294,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     }
   };
 
-  const handleChangeB_1 = e => setBank({ b1: true, b2: false });
-  const handleChangeB_2 = e => setBank({ b1: false, b2: true });
+  // const handleChangeB_1 = e => setBank({ b1: true, b2: false });
+  // const handleChangeB_2 = e => setBank({ b1: false, b2: true });
 
   const handleChangeD_1 = e => setDifference({ d1: true, d2: false });
   const handleChangeD_2 = e => setDifference({ d1: false, d2: true });
@@ -357,6 +357,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
       newF2.finance_staff_line ? newF2.finance_staff_line : singleCase.finance_staff_line,
       newF2.finance_staff_tel ? newF2.finance_staff_tel : singleCase.finance_staff_tel,
       newF2.province ? newF2.province : singleCase.f2_province,
+      difference.d1,
+    
     );
 
     let newData = {
@@ -481,8 +483,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     finance_staff,
     finance_staff_line,
     finance_staff_tel,
-    province
-
+    province,
+    difference
 
   ) => {
 
@@ -1526,7 +1528,8 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       },
                     ],
                   },
-                  {
+                 
+                  difference?{
                     columns: [
                       {
                         text: 'ทำเช็คจ่ายในนาม ',
@@ -1545,8 +1548,9 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                         marginLeft:2,
                       },
                     ],
-                  },
-                  {
+                  }:"",
+
+                  difference?{
                     columns: [
                       {
                         text: 'มัดจำจ่ายให้ ' ,
@@ -1565,7 +1569,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                         marginLeft:2,
                       },
                     ],
-                  },
+                  }:"",
                 ],
               },
             ],
@@ -1800,6 +1804,35 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     return result;
   }
 
+  function firstDiffer(){
+    let result = [];
+    if(newCase.case_source === 'Thanachart'){
+      result.push(<div className="col s6 m6 l6 content">
+      <label>เงินส่วนต่างก้อนแรก</label>
+      <CurrencyFormat
+        thousandSeparator={true}
+        onValueChange={(values) => {
+          const { formattedValue , value } = values;
+          setNewCase({
+            ...newCase,
+            old_finance_closing_fee: value
+          })
+        }}
+        decimalScale="2"
+        min="0"
+        step="any"
+        name="first_differance"
+        value={newCase.first_differance || ""}
+        // onChange={handleChangeF}
+        onFocus={deletezero}
+        onBlur={addzero}
+        className="validate"
+      />
+    </div>)
+    }
+    return result;
+  }
+
   const close = () => {
     setformState(1);
     setNewF2({
@@ -2008,7 +2041,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                   
                   />
                 </div>
-                
+                {firstDiffer()}
                 </div>
 
 
@@ -2686,10 +2719,9 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                       operaterOption()
                     }
                   </select>
-                  <button className="modal-trigger" href="#modalAddFStaff">Add</button>
+                  
 
-
-                    <br/>
+                    
                   <label>
                     <span>จังหวัดที่อยู่อาศัย</span></label>
                   <select
