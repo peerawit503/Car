@@ -90,7 +90,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
    
     close_amount: singleCase.close_amount ? singleCase.close_amount :"",
     down_amount: singleCase.down_amount ? singleCase.down_amount : "",
-    difference_fee:singleCase.f2_difference_fee ? singleCase.f2_difference_fee:"0"
+    difference_fee:singleCase.f2_difference_fee ? singleCase.f2_difference_fee:""
   });
   const [formState, setformState] = useState(1);
   const [newCase, setNewCase] = useState({});
@@ -363,7 +363,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
     );
 
     let newData = {
-      approve_amount: parseFloat(singleCase.approve_amount),
+      approve_amount: parseFloat(newF2.approve_amount ? newF2.approve_amount :singleCase.approve_amount),
       old_finance_closing_fee: parseFloat(newF2.close_amount ? newF2.close_amount : singleCase.close_amount),
       old_finance_transfer_fee: parseFloat(newF2.old_finance_transfer_fee ? newF2.old_finance_transfer_fee : singleCase.f2_old_finance_transfer_fee),
       book_closing_fee: parseFloat(newF2.book_closing_fee ? newF2.book_closing_fee : singleCase.f2_book_closing_fee),
@@ -1816,7 +1816,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
         thousandSeparator={true}
         onValueChange={(values) => {
           const { formattedValue , value } = values;
-          setNewCase({
+          setNewF2({
             ...newF2,
             difference_fee: value
           })
@@ -2070,7 +2070,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     disabled
                     
                     className="validate"
-                    onFocus={deletezero}
+                   
                               onBlur={addzero}
                   />
                 </div>

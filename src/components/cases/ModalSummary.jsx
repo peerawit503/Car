@@ -552,6 +552,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               >
               </input>
             </div>
+
+            <div className="col s6 m6 l6 content-radonly">
+                <label>Case Reciever  / ผู้รับเคส </label>
+                <input type="text"
+                value={singleCase.case_receiver}
+                name="approve_amount"
+                readOnly />
+              </div>
+
                       
               {caseSource()}
 
@@ -632,7 +641,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <label>Finance Institution / สถาบันการเงิน</label>
                 <input
                   name="new_bank"
-                  value={singleCase.new_bank || ""}
+                  value={singleCase.new_bank}
                   className='browser-default'
                   onChange={handleChange}
                 >
@@ -643,7 +652,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <div className="col s6 m6 l6 content-radonly">
                 <label>Approved Amount / ยอดจัด </label>
                 <input type="text"
-                value={singleCase.approve_amount || ""}
+                value={singleCase.approve_amount}
                 name="approve_amount"
                 readOnly />
               </div>
@@ -651,14 +660,14 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <div className="col s6 m6 l6 content-radonly">
                 <label>Close Amount / ยอดปิด </label>
                 <input type="text" 
-                value ={singleCase.close_amount || ""}
+                value ={singleCase.close_amount }
                 name="close_amount" readOnly/>
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Down Payment / ยอดดาวน์</label>
                 <input type="text" 
-                value ={singleCase.down_amount || ""} 
+                value ={singleCase.down_amount } 
                 name="down_payment" readOnly/>
               </div>
 
