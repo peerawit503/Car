@@ -285,11 +285,12 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
    
     close_amount: "",
     down_amount:  "",
+    difference_fee:""
     })
   }
 
   const deletezero = e => {
-    if (e.target.value == 0) {
+    if (e.target.value === 0) {
       e.target.value = "";
     }
   };
@@ -376,6 +377,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
       contract_fee: parseFloat(newF2.contract_fee ? newF2.contract_fee : singleCase.f2_contract_fee),
       outside_transfer_fee: parseFloat(newF2.outside_transfer_fee ? newF2.outside_transfer_fee : singleCase.f2_outside_transfer_fee),
       newfinance_other_fee: parseFloat(newF2.newfinance_other_fee ? newF2.newfinance_other_fee : singleCase.f2_newfinance_other_fee),
+      difference_fee: parseFloat(newF2.difference_fee ? newF2.difference_fee : singleCase.f2_difference_fee),
       
 
       approve_amount_note: newF2.approve_amount_note ? newF2.approve_amount_note : singleCase.f2_approve_amount_note,
