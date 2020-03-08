@@ -289,7 +289,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
   }
 
   const deletezero = e => {
-    if (e.target.value === 0) {
+    if (e.target.value == 0) {
       e.target.value = "";
     }
   };
@@ -1958,13 +1958,14 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     })}}
             decimalScale= "2"
                     name="approve_amount"
-                    value={newF2.approve_amount || singleCase.approve_amount || "0"}
+                    value={newF2.approve_amount || singleCase.approve_amount }
                     // onChange={handleChangeCurrency}
                     onFocus={deletezero}
                     onBlur={addzero}
                     className="validate"
                   
                   />
+                    approve {singleCase.approve_amount}
                 </div>
 
                 <div className="col s6 m6 l6 content">
