@@ -106,11 +106,11 @@ const Customers = () => {
   }
 
   let columnObject = useState([{ title: 'ID', field: 'id' },
-  { title: 'firstname', field: 'firstname' },
-  { title: 'lastname', field: 'lastname' },
-  { title: 'tel', field: 'tel' },
-  { title: 'line', field: 'line' },
-  { title: 'email', field: 'email' },
+  { title: 'First Name', field: 'firstname' },
+  { title: 'Last Name', field: 'lastname' },
+  { title: 'Tel', field: 'tel' },
+  { title: 'Line', field: 'line' },
+  { title: 'Email', field: 'email' },
   { title: ',' ,
   render: rowData => 
     <div>
