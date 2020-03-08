@@ -1823,7 +1823,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
         min="0"
         step="any"
         name="difference_fee"
-        value={newF2.difference_fee || ""}
+        value={newF2.difference_fee || singleCase.f2_difference_fee}
         // onChange={handleChangeF}
         onFocus={deletezero}
         onBlur={addzero}
@@ -1999,7 +1999,7 @@ const ModalAddF2 = ({ singleCase, getAllCase , operatorS , getOperatorS}) => {
                     className="validate"
                   
                   />
-                    approve {singleCase.approve_amount}
+                   
                 </div>
 
                 <div className="col s6 m6 l6 content">
