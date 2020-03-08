@@ -12,6 +12,7 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, statusDate, caseStatusShift} ) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
+  const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
   const [renderDeposit, setrenderDeposit] = useState(false);
   function currentDateFormat(caseDate) {
     if(caseDate == null){
@@ -76,6 +77,8 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
 
     const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
     const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
+    const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
+    const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true },singleCase.f2_deposit = 0);
 
     const deletezero = e => {
       if (e.target.value === 0) {
@@ -88,6 +91,10 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
         e.target.value = "0";
       }
     };
+
+    
+
+
   function ValidateCase(props) {
     // in case 7 submit_book_transfer
     if (props.singleCase.status === 'submit_book_transfer'){
@@ -140,9 +147,31 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
                       disabled
                       // onChange={handleChangeF2}
                     />
-         
+           <span className=" col s12 m12">
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="difference_y"
+                        checked={checkDeposit.d1}
+                        onChange={handlecheckDeposit_1}
+                      />
+                      <span>มีมัดจำ</span>
+                    </label>
+                  </span>
+                  <span className=" col s12 m12">
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="difference_n"
+                        checked={checkDeposit.d2}
+                        onChange={handlecheckDeposit_2}
+                      />
+                      <span>ไม่มีมัดจำ</span>
+                    </label>
+                  </span>
         </div>
       )
+
     }
     // in case 15 book_deposit_received
     if (props.singleCase.status === 'book_deposit_received' ){
@@ -305,7 +334,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
                   onChange={handleChange}
                 />
                 <ValidateCase singleCase={singleCase} />
-                <div style={{display: renderDeposit ? 'block' : 'none'}}>
+                <div style={{display: renderDeposit && checkDeposit.d1 ? 'block' : 'none'}}>
                   <label>จ่ายมัดจำ (บาท) </label>
                   <CurrencyFormat
                   thousandSeparator={true}
@@ -317,6 +346,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
                   step="any"
                   value={singleCase.f2_deposit || "0"}
                   name="deposit"
+                  disabled={checkDeposit.d2}
                   // onChange={handleChangeF2}
                 />
                 </div>
