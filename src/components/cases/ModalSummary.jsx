@@ -10,7 +10,7 @@ import photo from '../../img/photo.png';
 
 import Popup from 'reactjs-popup'
 
-const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS}) => {
+const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS , translate}) => {
   
   const [newCase, setNewCase] = useState({})
   useEffect(() => {
@@ -405,7 +405,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           </div>
           </Popup> 
       )
-    }else if ((status === 'submit_book_deposit_return' || status === 'book_deposit_received') && singleCase.f2_deposit == 0){
+    }else if ((status === 'submit_book_deposit_return' || status === 'book_deposit_received') && singleCase.f2_deposit_12 == 0){
       return (
         <Popup
         trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
@@ -486,7 +486,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <input
                   name="caseStatus"
                    type="text"
-                  value={singleCase.case_status || ""}
+                  value={translate(singleCase.status) || ""}
                   readOnly
                 >
                   
@@ -553,7 +553,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
             </div>
 
             <div className="col s6 m6 l6 content-radonly">
-                <label>Case Reciever  / ผู้รับเคส </label>
+                <label>Case Reciever / ผู้รับเคส </label>
                 <input type="text"
                 value={singleCase.case_receiver}
                 name="approve_amount"
@@ -670,6 +670,12 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 name="down_payment" readOnly/>
               </div>
 
+              <div className="col s6 m6 l6 content-radonly">
+                <label>Deposit Return / เบิกมัดจำคืน</label>
+                <input type="text" 
+                value ={singleCase.f2_deposit_12 } 
+                name="down_payment" readOnly/>
+              </div>
 
 
 
