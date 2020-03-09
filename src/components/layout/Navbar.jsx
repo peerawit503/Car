@@ -9,7 +9,6 @@ import Box from '@material-ui/core/Box';
 
 import './style.css';
 const uu = localStorage.getItem('user')
-console.log(uu)
 
 const Navbar = (props) => {
   useEffect(() => {

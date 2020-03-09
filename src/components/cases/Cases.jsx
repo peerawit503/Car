@@ -154,7 +154,7 @@ const Cases = (props) => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
         setisLoading(false);
-        console.log("in getAllCase")
+        // console.log("in getAllCase")
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
@@ -168,7 +168,7 @@ const Cases = (props) => {
     var red;
     var orange;
     for (var x of kpiData) {
-      var element = {};
+      // var element = {};
       red = x.case_type + '_red';
       orange = x.case_type + '_orange';
       result[red] = x.red;

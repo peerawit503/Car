@@ -651,34 +651,44 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <div className="col s6 m6 l6 content-radonly">
                 <label>Approved Amount / ยอดจัด </label>
                 <CurrencyFormat
-                    thousandSeparator={true}
+                thousandSeparator={true}
                 value={singleCase.approve_amount}
                 name="approve_amount"
+                suffix =" บาท"
                 readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Close Amount / ยอดปิด </label>
                 <CurrencyFormat
-                    thousandSeparator={true}
+                thousandSeparator={true}
                 value ={singleCase.close_amount }
-                name="close_amount" readOnly/>
+                name="close_amount" 
+                suffix =" บาท"
+                readOnly
+                />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Down Payment / ยอดดาวน์</label>
                 <CurrencyFormat
-                    thousandSeparator={true}
+                thousandSeparator={true}
                 value ={singleCase.down_amount } 
-                name="down_payment" readOnly/>
+                name="down_payment" 
+                suffix =" บาท"
+                readOnly
+                />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Deposit Return / เบิกมัดจำคืน</label>
                 <CurrencyFormat
-                    thousandSeparator={true}
+                thousandSeparator={true}
                 value ={singleCase.f2_deposit_12 } 
-                name="down_payment" readOnly/>
+                name="down_payment"
+                suffix =" บาท"
+                readOnly
+                />
               </div>
 
 

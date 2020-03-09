@@ -265,8 +265,6 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
     if (props.singleCase.status === 'account_closing') {
      
       if(props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === ''){
-      console.log(props.singleCase.F2_status);
-      console.log(props.singleCase.contact_customer_date);
       setisConfirm(false)
          //return +F2 button
         result.push ( 
