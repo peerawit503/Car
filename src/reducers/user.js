@@ -24,7 +24,8 @@ function userReducer(state = initialState, action) {
           position: action.position,
           team: action.team,
           picture: action.picture,
-          token: action.token
+          token: action.token,
+          nickname : action.nickname
       };
     case ActionUser.STORE_USER_TOKEN:
       return {
