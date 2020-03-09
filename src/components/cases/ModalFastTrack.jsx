@@ -78,7 +78,7 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
     const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
     const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
     const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
-    const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true },singleCase.f2_deposit = 0);
+    const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true },singleCase.f2_deposit_12 = 0);
 
     const deletezero = e => {
       if (e.target.value === 0) {
@@ -206,11 +206,11 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
             thousandSeparator={true}
             onValueChange={(values) => {
             const {value} = values;
-            singleCase.f2_deposit = value}}
+            singleCase.f2_deposit_12 = value}}
             decimalScale= "2"
             min="0"
             step="any"
-            value={singleCase.f2_deposit || "0"}
+            value={singleCase.f2_deposit_12 || "0"}
             name="deposit"
             disabled
             // onChange={handleChangeF2}
@@ -243,11 +243,11 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
             thousandSeparator={true}
             onValueChange={(values) => {
             const {value} = values;
-            singleCase.f2_deposit = value}}
+            singleCase.f2_deposit_12 = value}}
             decimalScale= "2"
             min="0"
             step="any"
-            value={singleCase.f2_deposit || "0"}
+            value={singleCase.f2_deposit_12 || "0"}
             name="deposit"
             disabled
             // onChange={handleChangeF2}
@@ -340,11 +340,11 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
                   thousandSeparator={true}
                   onValueChange={(values) => {
                   const {value} = values;
-                  singleCase.f2_deposit = value}}
+                  singleCase.f2_deposit_12 = value}}
                   decimalScale= "2"
                   min="0"
                   step="any"
-                  value={singleCase.f2_deposit || "0"}
+                  value={singleCase.f2_deposit_12 || "0"}
                   name="deposit"
                   disabled={checkDeposit.d2}
                   // onChange={handleChangeF2}
