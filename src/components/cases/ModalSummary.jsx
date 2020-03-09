@@ -8,6 +8,8 @@ import confirm from '../../img/confirm.png';
 import plus from '../../img/plus-white.png';
 import photo from '../../img/photo.png';
 
+import CurrencyFormat from 'react-currency-format';
+
 import Popup from 'reactjs-popup'
 
 const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS , translate}) => {
@@ -443,8 +445,6 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     <div>
       <div id="modalSummary" className="modal modal-fixed-footer modal90height">
 
-
-
         <div className="modal-content modal-content-override">
           <div className="row ">
             <div className="header-title">
@@ -650,7 +650,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Approved Amount / ยอดจัด </label>
-                <input type="text"
+                <CurrencyFormat
+                    thousandSeparator={true}
                 value={singleCase.approve_amount}
                 name="approve_amount"
                 readOnly />
@@ -658,21 +659,24 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Close Amount / ยอดปิด </label>
-                <input type="text" 
+                <CurrencyFormat
+                    thousandSeparator={true}
                 value ={singleCase.close_amount }
                 name="close_amount" readOnly/>
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Down Payment / ยอดดาวน์</label>
-                <input type="text" 
+                <CurrencyFormat
+                    thousandSeparator={true}
                 value ={singleCase.down_amount } 
                 name="down_payment" readOnly/>
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
                 <label>Deposit Return / เบิกมัดจำคืน</label>
-                <input type="text" 
+                <CurrencyFormat
+                    thousandSeparator={true}
                 value ={singleCase.f2_deposit_12 } 
                 name="down_payment" readOnly/>
               </div>
