@@ -443,7 +443,7 @@ const Cases = (props) => {
     else if (state === 'transfer_doc_submitted') { trans = 'ยื่นชุดโอน' }
     else if (state === 'book_received') { trans = 'ได้รับเล่ม' }
     else if (state === 'submit_book_transfer') { trans = 'ส่งงานโอนทะเบียน' }
-    else if (state === 'car_check_up') { trans = 'วตรวจสภาพรถ' }
+    else if (state === 'car_check_up') { trans = 'ตรวจสภาพรถ' }
     else if (state === 'book_transfer') { trans = 'โอนเล่มทะเบียน' }
     else if (state === 'book_copy_received') { trans = 'รับสำเนาเล่ม' }
     else if (state === 'deposit_doc_to_new_bank') { trans = 'ส่งเอกสารเบิกเงินธนาคารใหม่' }
