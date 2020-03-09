@@ -9,7 +9,8 @@ var initialState = {
   position: null,
   team: null,
   picture: null,
-  tiken: null
+  token: null,
+  nickname: null
 };
 
 function userReducer(state = initialState, action) {
@@ -24,7 +25,8 @@ function userReducer(state = initialState, action) {
           position: action.position,
           team: action.team,
           picture: action.picture,
-          token: action.token
+          token: action.token,
+          nickname: action.nickname
       };
     case ActionUser.STORE_USER_TOKEN:
       return {

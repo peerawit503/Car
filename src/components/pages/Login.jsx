@@ -31,10 +31,10 @@ const Login = (props) => {
             M.toast({ html: 'Login เรียบร้อย' })
             setRedriect(true)
             // set localstate
-            const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
-            await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
-            // const {user_id, firstname, lastname, username, position, team, picture, token,nickname} = res.data.user
-            // await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token,nickname)
+            // const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
+            // await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
+            const {user_id, firstname, lastname, username, position, team, picture, token,nickname} = res.data.user
+            await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token,nickname)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", res.data.user)
           }else{
@@ -125,7 +125,7 @@ const mapDispatchToProps = dispatch => ({
     team,
     picture,
     token
-    // ,nickname
+    ,nickname
   ) => {
     dispatch({
       type: ActionUser.STORE_USER_INFO,
@@ -137,7 +137,7 @@ const mapDispatchToProps = dispatch => ({
       team: team,
       picture: picture,
       token: token
-      // ,nickname
+      ,nickname: nickname
     });
   },
   clearUser: (

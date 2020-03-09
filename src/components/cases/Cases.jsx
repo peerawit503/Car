@@ -247,7 +247,7 @@ const Cases = (props) => {
     
 
   const confirm = (singleCase,date,checkCar) => {
-    console.log("deposit"+singleCase.f2_deposit);
+    console.log("deposit"+singleCase.f2_deposit_12);
     
   
       if(singleCase.status === 'submit_book_transfer'){
@@ -255,7 +255,7 @@ const Cases = (props) => {
       console.log("incase 1");
       }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "book_received_back" )){
         console.log("incase 2");
-        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit:singleCase.f2_deposit});
+        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
       }else{
         console.log("incase 3");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
@@ -339,7 +339,7 @@ const Cases = (props) => {
         customer_id:customer.customer_id,
         difference: difference.d1,
         document_id : newCase.document_id?newCase.document_id :"",       
-        case_receiver : props.user.firstName,
+        case_receiver : props.user.nickname,
         user_id: props.user.id,
         vat7_fee:((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07),
         old_finance_closing_fee:newCase.close_amount
@@ -371,7 +371,7 @@ const Cases = (props) => {
             customer_id: res.data.customer_id,
             difference: difference.d1,
             document_id : newCase.document_id?newCase.document_id :"",
-            case_receiver : props.user.firstName,
+            case_receiver : props.user.nickname,
             user_id: props.user.id,
             vat7_fee:((parseInt(newCase.book_closing_fee) + parseInt(newCase.transfer_fee)) * 0.07),
             old_finance_closing_fee:newCase.close_amount
@@ -718,7 +718,7 @@ const Cases = (props) => {
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5} statusDate={statusDate} caseStatusShift={caseStatusShift}/>
-          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS}/>
+          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
           
@@ -742,8 +742,8 @@ const mapDispatchToProps = dispatch => ({
     position,
     team,
     picture,
-    token
-    // ,nickname: nickname
+    token,
+    nickname
   ) => {
     dispatch({
       type: ActionUser.STORE_USER_INFO,
@@ -754,8 +754,8 @@ const mapDispatchToProps = dispatch => ({
       position: position,
       team: team,
       picture: picture,
-      token: token
-      // ,nickname: nickname
+      token: token,
+      nickname: nickname
     });
   }
 });
