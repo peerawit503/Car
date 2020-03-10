@@ -371,9 +371,9 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       var Pkpi = Math.floor((date2 - date1) / (24 * 3600 * 1000));
       var red = kpiName + "_red";
       var orange = kpiName + "_orange";
-      if (Pkpi >= kpi[orange] && Pkpi < kpi[red]) {
+      if (Pkpi >= kpi[orange]+1 && Pkpi < kpi[red]+1) {
         return "summaryIcon-div yellow";
-      } else if (Pkpi >= kpi[red]) {
+      } else if (Pkpi >= kpi[red]+1) {
         return "summaryIcon-div red";
       } else {
         return "summaryIcon-div green";

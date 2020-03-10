@@ -10,14 +10,15 @@ import CurrencyFormat from 'react-currency-format';
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, statusDate, caseStatusShift} ) => {
+const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, statusDate, caseStatusShift }) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
+  const [checkDeposit_book, setcheckDeposit_book] = useState({ d1: true, d2: false });
   const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
   const [renderDeposit, setrenderDeposit] = useState(false);
   function currentDateFormat(caseDate) {
-    if(caseDate == null){
+    if (caseDate == null) {
       return 0;
-    }else{
+    } else {
       var mountCaracterString = caseDate.split(" ")[1];
       var month;
       if (mountCaracterString === 'Jan') {
@@ -57,241 +58,359 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
         month = "12";
       }
 
-      return (caseDate.split(" ")[3]+'-'+month+'-'+caseDate.split(" ")[2]);
-     
-      }
+      return (caseDate.split(" ")[3] + '-' + month + '-' + caseDate.split(" ")[2]);
+
     }
+  }
 
-  const [isConfirm , setisConfirm] = useState(true)
-  const [date , SetDate] = useState(currentDateFormat(Date()))
+  const [isConfirm, setisConfirm] = useState(true)
+  const [date, SetDate] = useState(currentDateFormat(Date()))
 
 
 
-    const handleChange = e=>{
-        SetDate(e.target.value)
+  const handleChange = e => {
+    SetDate(e.target.value)
+  }
+
+  const close = () => {
+    SetDate(currentDateFormat(Date()))
+  }
+
+  const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
+  const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
+  const handlecheckDeposit_book_1 = e => setcheckDeposit_book({ d1: true, d2: false });
+  const handlecheckDeposit_book_2 = e => setcheckDeposit_book({ d1: false, d2: true });
+  const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
+  const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true }, singleCase.f2_deposit_12 = 0);
+
+  const deletezero = e => {
+    if (e.target.value === 0) {
+      e.target.value = "";
     }
+  };
 
-    const close = () => {
-      SetDate(currentDateFormat(Date()))
+  const addzero = e => {
+    if (e.target.value === "") {
+      e.target.value = "0";
     }
+  };
 
-    const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
-    const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
-    const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
-    const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true },singleCase.f2_deposit_12 = 0);
 
-    const deletezero = e => {
-      if (e.target.value === 0) {
-        e.target.value = "";
-      }
-    };
-
-    const addzero = e => {
-      if (e.target.value === "") {
-        e.target.value = "0";
-      }
-    };
-
-    
 
 
   function ValidateCase(props) {
-    // in case 7 submit_book_transfer
-    if (props.singleCase.status === 'submit_book_transfer'){
+    // in case 2 submit_book_transfer
+    if (props.singleCase.status === 'contact_customer') {
       setisConfirm(true)
       return (
         <div>
-     
-        <span className=" col s12 m12">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="difference_y"
-                        checked={checkCar.d1}
-                        onChange={handlecheckCar_1}
-                      />
-                      <span>ตรวจสภาพรถ</span>
-                    </label>
-                  </span>
-                  <span className=" col s12 m12">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="difference_n"
-                        checked={checkCar.d2}
-                        onChange={handlecheckCar_2}
-                      />
-                      <span>ไม่ตรวจสภาพรถ</span>
-                    </label>
-                  </span>
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_y"
+                checked={checkDeposit_book.d1}
+                onChange={handlecheckDeposit_book_1}
+              />
+              <span>มีเล่มมัดจำ</span>
+            </label>
+          </span>
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_n"
+                checked={checkDeposit_book.d2}
+                onChange={handlecheckDeposit_book_2}
+              />
+              <span>ไม่มีเล่มมัดจำ</span>
+            </label>
+          </span>
         </div>
       )
     }
+    // in case 7 submit_book_transfer
+    if (props.singleCase.status === 'submit_book_transfer') {
+      setisConfirm(true)
+      return (
+        <div>
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_y"
+                checked={checkCar.d1}
+                onChange={handlecheckCar_1}
+              />
+              <span>ตรวจสภาพรถ</span>
+            </label>
+          </span>
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_n"
+                checked={checkCar.d2}
+                onChange={handlecheckCar_2}
+              />
+              <span>ไม่ตรวจสภาพรถ</span>
+            </label>
+          </span>
+        </div>
+      )
+    }
+    if (props.singleCase.status === 'car_check_up') {
+      setisConfirm(true)
+      return (
+        <div className='row m12 s12'>
+          <div className='col m6'>
+            <div className='row col m12 no-margin'>
+              <label>10วันที่ดำเนินการ</label>
+            </div>
+            <div className='row m12'>
+              <div className='col m6'>
+                <input
+                  type="date"
+                  value={date || currentDateFormat(Date())}
+                  name="receive_date"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='col m6'>
+                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+              </div>
+            </div>
+          </div>
+          <div className='col m6'>
+            <div className='row col m12 no-margin'>
+              <label>13วันที่ดำเนินการ</label>
+            </div>
+            <div className='row m12'>
+              <div className='col m6'>
+                <input
+                  type="date"
+                  value={date || currentDateFormat(Date())}
+                  name="receive_date"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='col m6'>
+                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+              </div>
+            </div>
+          </div>
+          <div className='row m12 s12'>
+            <div className='col m6'>
+              <div className='row col m12 no-margin'>
+                <label>11วันที่ดำเนินการ</label>
+              </div>
+              <div className='row m12'>
+                <div className='col m6'>
+                  <input
+                    type="date"
+                    value={date || currentDateFormat(Date())}
+                    name="receive_date"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='col m6'>
+                  <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+                </div>
+              </div>
+            </div>
+            <div className='col m6'>
+              <div className='row col m12 no-margin'>
+                <label>12วันที่ดำเนินการ</label>
+              </div>
+              <div className='row m12'>
+                <div className='col m6'>
+                  <input
+                    type="date"
+                    value={date || currentDateFormat(Date())}
+                    name="receive_date"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='col m6'>
+                  <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     //in case 11 deposit_doc_to_new_bank
-    if (props.singleCase.status === 'deposit_doc_to_new_bank'){
+    if (props.singleCase.status === 'deposit_doc_to_new_bank') {
       setrenderDeposit(true)
       setisConfirm(true)
       return (
         <div>
-        ยอดปิด (บาท) 
+          ยอดปิด (บาท)
          <CurrencyFormat
-                      thousandSeparator={true}
-                      onValueChange={(values) => {
-                      const {value} = values;
-                      singleCase.close_amount = value}}
-                      decimalScale= "2"
-                      min="0"
-                      step="any"
-                      value={singleCase.close_amount || "0"}
-                      name="close_amount"
-                      disabled
-                      // onChange={handleChangeF2}
-                    />
-           <span className=" col s12 m12">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="difference_y"
-                        checked={checkDeposit.d1}
-                        onChange={handlecheckDeposit_1}
-                      />
-                      <span>มีมัดจำ</span>
-                    </label>
-                  </span>
-                  <span className=" col s12 m12">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="difference_n"
-                        checked={checkDeposit.d2}
-                        onChange={handlecheckDeposit_2}
-                      />
-                      <span>ไม่มีมัดจำ</span>
-                    </label>
-                  </span>
+            thousandSeparator={true}
+            onValueChange={(values) => {
+              const { value } = values;
+              singleCase.close_amount = value
+            }}
+            decimalScale="2"
+            min="0"
+            step="any"
+            value={singleCase.close_amount || "0"}
+            name="close_amount"
+            disabled
+          // onChange={handleChangeF2}
+          />
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_y"
+                checked={checkDeposit.d1}
+                onChange={handlecheckDeposit_1}
+              />
+              <span>มีมัดจำ</span>
+            </label>
+          </span>
+          <span className=" col s12 m12">
+            <label>
+              <input
+                type="checkbox"
+                name="difference_n"
+                checked={checkDeposit.d2}
+                onChange={handlecheckDeposit_2}
+              />
+              <span>ไม่มีมัดจำ</span>
+            </label>
+          </span>
         </div>
       )
 
     }
     // in case 15 book_deposit_received
-    if (props.singleCase.status === 'book_deposit_received' ){
+    if (props.singleCase.status === 'book_deposit_received') {
       setisConfirm(true)
       return (
         <div>
-         เงินมัดจำ (บาท)
+          เงินมัดจำ (บาท)
          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {value} = values;
-            singleCase.f2_old_finance_transfer_fee = value}}
-            decimalScale= "2"
+              const { value } = values;
+              singleCase.f2_old_finance_transfer_fee = value
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={singleCase.f2_old_finance_transfer_fee || "0"}
             name="f2_old_finance_transfer_fee"
             disabled
-            // onChange={handleChangeF2}
+          // onChange={handleChangeF2}
           />
         </div>
       )
     }
     // if in case 13
-    if (props.singleCase.status === 'book_received_back' ){
+    if (props.singleCase.status === 'book_received_back') {
       setrenderDeposit(false)
       setisConfirm(true)
       return (
         <div>
-         เงินมัดจำ (บาท)
+          เงินมัดจำ (บาท)
          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {value} = values;
-            singleCase.f2_deposit_12 = value}}
-            decimalScale= "2"
+              const { value } = values;
+              singleCase.f2_deposit_12 = value
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={singleCase.f2_deposit_12 || "0"}
             name="deposit"
             disabled
-            // onChange={handleChangeF2}
+          // onChange={handleChangeF2}
           />
-          <br/>
-           เงินเข้าบริษัท (บาท)
+          <br />
+          เงินเข้าบริษัท (บาท)
          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {value} = values;
-            singleCase.f2_old_finance_transfer_fee = value}}
-            decimalScale= "2"
+              const { value } = values;
+              singleCase.f2_old_finance_transfer_fee = value
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={singleCase.f2_old_finance_transfer_fee || "0"}
             name="f2_old_finance_transfer_fee"
             disabled
-            // onChange={handleChangeF2}
+          // onChange={handleChangeF2}
           />
         </div>
       )
     }
-    if (props.singleCase.status === 'cash_received' ){
+    if (props.singleCase.status === 'cash_received') {
       setrenderDeposit(false)
       setisConfirm(true)
       return (
         <div>
-         เงินมัดจำ (บาท)
+          เงินมัดจำ (บาท)
          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
-            const {value} = values;
-            singleCase.f2_deposit_12 = value}}
-            decimalScale= "2"
+              const { value } = values;
+              singleCase.f2_deposit_12 = value
+            }}
+            decimalScale="2"
             min="0"
             step="any"
             value={singleCase.f2_deposit_12 || "0"}
             name="deposit"
             disabled
-            // onChange={handleChangeF2}
+          // onChange={handleChangeF2}
           />
         </div>
       )
     }
-    else{
+    else {
       setrenderDeposit(false)
       setisConfirm(true)
     }
 
-    let result =[]
+    let result = []
     // if in case 3 transfer_doc_received and F2_status ===null
     if (props.singleCase.status === 'account_closing') {
-     
-      if(props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === ''){
-      setisConfirm(false)
-         //return +F2 button
-        result.push ( 
+
+      if (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '') {
+        setisConfirm(false)
+        //return +F2 button
+        result.push(
           <div>
             <div className="row center">
-              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>F2</a>
+              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
             </div>
             <div className="row">
-                <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img  src={plus} style={{marginBottom:'3px'}} className="alert-icon" alt="fireSpot"/>Contract Information</a> 
+              <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
             </div>
           </div>
-       );
-        }else{
-          setisConfirm(true)
-        }
+        );
+      } else {
+        setisConfirm(true)
+      }
     }
     //nomal case return Confirm button
     return result;
   }
 
-  function Renderfooter(){
-    if(isConfirm){
+  function Renderfooter() {
+    if (isConfirm) {
       return (
         <div class="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase,date,checkCar)}>Confirm</button>
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>Cancel</button>
-          </div>
+        </div>
       );
     }
     return (
@@ -303,58 +422,58 @@ const ModalFastTrack = ({ singleCase , confirm, translate, fastToP4, fastToP5, s
 
 
   return (
-      <div id="modalFastTrack" className="modal modal-fixed-footer">
-          <div className="row 15" style={{borderBottom:"1px solid", padding:"10px"}}>
-            {/* <div className="header-title"> */}
-              <div className="col s8 m8 ">
-                <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)}</span><br/>
-                <span >ตั้งแต่วันที่ {statusDate(singleCase)}</span>
-              </div>
-              <div className="col s4 m4 right ">
-                <span className="right">Job Id : {singleCase.case_id}</span><br/>
-                <span className="right">F2 Status : {singleCase.F2_status}</span><br/>
-              </div>
-          </div>
-            {/* </div> */}
-          {/* process bar */}
+    <div id="modalFastTrack" className="modal modal-fixed-footer">
+      <div className="row 15" style={{ borderBottom: "1px solid", padding: "10px" }}>
+        {/* <div className="header-title"> */}
+        <div className="col s8 m8 ">
+          <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)}</span><br />
+          <span >ตั้งแต่วันที่ {statusDate(singleCase)}</span>
+        </div>
+        <div className="col s4 m4 right ">
+          <span className="right">Job Id : {singleCase.case_id}</span><br />
+          <span className="right">F2 Status : {singleCase.F2_status}</span><br />
+        </div>
+      </div>
+      {/* </div> */}
+      {/* process bar */}
 
-          {/* body */}
-            <div className="row content">
-            <h4 style={{textAlign:"center"}}>รอ{translate(caseStatusShift(singleCase.status)) } </h4><br/>
-            <div className="col s4 m4 content"></div>
-
-            <div className="col s4 m4 content">
-                <label>วันที่ดำเนินการ</label>
-                <input
-                  type="date"
-                  value={date || currentDateFormat(Date())}
-                  name="receive_date"
-                  onChange={handleChange}
-                />
-                <ValidateCase singleCase={singleCase} />
-                <div style={{display: renderDeposit && checkDeposit.d1 ? 'block' : 'none'}}>
-                  <label>จ่ายมัดจำ (บาท) </label>
-                  <CurrencyFormat
-                  thousandSeparator={true}
-                  onValueChange={(values) => {
-                  const {value} = values;
-                  singleCase.f2_deposit_12 = value}}
-                  decimalScale= "2"
-                  min="0"
-                  step="any"
-                  value={singleCase.f2_deposit_12 || "0"}
-                  name="deposit"
-                  disabled={checkDeposit.d2}
-                  // onChange={handleChangeF2}
-                />
-                </div>
-              </div>
-            <div className="col s4 m4 l4 content">
-            </div>
-                
-            <Renderfooter />
+      {/* body */}
+      <div className="row content">
+        <h4 style={{ textAlign: "center" }}>รอ{translate(caseStatusShift(singleCase.status))} </h4><br />
+        <div className="col s12 m12 content">
+          <div className="col s4 m4 content"></div>
+          <div className="col s4 m4 content">
+            <label>วันที่ดำเนินการ</label>
+            <input
+              type="date"
+              value={date || currentDateFormat(Date())}
+              name="receive_date"
+              onChange={handleChange}
+            />
           </div>
         </div>
+        <ValidateCase singleCase={singleCase} />
+        <div className='col s4 m4 content' style={{ display: renderDeposit && checkDeposit.d1 ? 'block' : 'none' }} >
+          <label>จ่ายมัดจำ (บาท) </label>
+          <CurrencyFormat
+            thousandSeparator={true}
+            onValueChange={(values) => {
+              const { value } = values;
+              singleCase.f2_deposit_12 = value
+            }}
+            decimalScale="2"
+            min="0"
+            step="any"
+            value={singleCase.f2_deposit_12 || "0"}
+            name="deposit"
+            disabled={checkDeposit.d2}
+          // onChange={handleChangeF2}
+          />
+        </div>
+      </div>
+      <Renderfooter />
+    </div>
+
   )
 }
 
