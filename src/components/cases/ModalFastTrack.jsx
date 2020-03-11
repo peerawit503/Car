@@ -106,7 +106,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
 
 
   function ValidateCase(props) {
-    if (props.singleCase.status === 'receive') {
+    if (props.singleCase.status === 'receive' || props.singleCase.status === 'contact_customer' || props.singleCase.status === 'account_closing' || props.singleCase.status === 'transfer_doc_received' || props.singleCase.status === 'transfer_doc_submitted') {
       setisConfirm(true)
       return (
         <div className='row m12 s12'>
