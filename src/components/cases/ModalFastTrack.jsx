@@ -99,6 +99,31 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
 
 
   function ValidateCase(props) {
+    if (props.singleCase.status === 'receive') {
+      setisConfirm(true)
+      return (
+        <div className='row m12 s12'>
+          <div className='col m6'>
+            <div className='row col m12 no-margin'>
+              <label>2.5วันที่รับชุดโอน</label>
+            </div>
+            <div className='row m12'>
+              <div className='col m6'>
+                <input
+                  type="date"
+                  value={date || currentDateFormat(Date())}
+                  name="receive_date"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='col m6'>
+                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
     // in case 2 submit_book_transfer
     if (props.singleCase.status === 'contact_customer') {
       setisConfirm(true)
@@ -165,7 +190,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
         <div className='row m12 s12'>
           <div className='col m6'>
             <div className='row col m12 no-margin'>
-              <label>10วันที่ดำเนินการ</label>
+              <label>รับสำเนาเล่ม</label>
             </div>
             <div className='row m12'>
               <div className='col m6'>
@@ -183,7 +208,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
           </div>
           <div className='col m6'>
             <div className='row col m12 no-margin'>
-              <label>13วันที่ดำเนินการ</label>
+              <label>ส่งเอกสารเบิกเงินธนาคารใหม่</label>
             </div>
             <div className='row m12'>
               <div className='col m6'>
@@ -202,7 +227,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
           <div className='row m12 s12'>
             <div className='col m6'>
               <div className='row col m12 no-margin'>
-                <label>11วันที่ดำเนินการ</label>
+                <label>ทำเรื่องเบิกมัดจำคืน</label>
               </div>
               <div className='row m12'>
                 <div className='col m6'>
@@ -220,7 +245,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
             </div>
             <div className='col m6'>
               <div className='row col m12 no-margin'>
-                <label>12วันที่ดำเนินการ</label>
+                <label>รับเล่มคืน</label>
               </div>
               <div className='row m12'>
                 <div className='col m6'>
