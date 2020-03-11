@@ -253,7 +253,7 @@ const Cases = (props) => {
       if(singleCase.status === 'submit_book_transfer'){
       var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
       console.log("incase 1");
-      }else if((singleCase.status === "deposit_doc_to_new_bank" || singleCase.status === "book_received_back" )){
+      }else if((singleCase.status === "transfer_doc_received" )){
         console.log("incase 2");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
       }else{

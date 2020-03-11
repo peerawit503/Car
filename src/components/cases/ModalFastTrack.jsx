@@ -95,6 +95,13 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
     }
   };
 
+  const handleChangeF2T = e => {
+    if (e.target.value == "") {
+        e.target.name= " "
+    } else {
+        e.target.name= e.target.value
+    }
+  };
 
 
 
@@ -124,36 +131,63 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
         </div>
       )
     }
-    // in case 2 submit_book_transfer
-    if (props.singleCase.status === 'contact_customer') {
+
+    
+    let result = []
+    // if in case 3 transfer_doc_received and F2_status ===null
+    if (singleCase.status === 'contact_customer') {
+
+      if (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '') {
+      setisConfirm(false)
+        //return +F2 button
+        result.push(
+          <div>
+            <div className="row center">
+              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
+            </div>
+            <div className="row center">
+              <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
+            </div>
+          
+          </div>
+
+        );
+      } else {
+        setisConfirm(true)
+      }
+    }
+
+
+    if (props.singleCase.status === 'transfer_doc_received') {
+      setrenderDeposit(true)
       setisConfirm(true)
       return (
-        <div>
-          <span className=" col s12 m12">
-            <label>
-              <input
-                type="checkbox"
-                name="difference_y"
-                checked={checkDeposit_book.d1}
-                onChange={handlecheckDeposit_book_1}
-              />
-              <span>มีเล่มมัดจำ</span>
-            </label>
-          </span>
-          <span className=" col s12 m12">
-            <label>
-              <input
-                type="checkbox"
-                name="difference_n"
-                checked={checkDeposit_book.d2}
-                onChange={handlecheckDeposit_book_2}
-              />
-              <span>ไม่มีเล่มมัดจำ</span>
-            </label>
-          </span>
-        </div>
-      )
-    }
+        <div className="row center m4">
+        <span className=" col s12 m12">
+          <label>
+            <input
+              type="checkbox"
+              name="difference_y"
+              checked={checkDeposit.d1}
+              onChange={handlecheckDeposit_1}
+            />
+            <span>มีมัดจำ</span>
+          </label>
+        </span>
+        <span className=" col s12 m12">
+          <label>
+            <input
+              type="checkbox"
+              name="difference_n"
+              checked={checkDeposit.d2}
+              onChange={handlecheckDeposit_2}
+            />
+            <span>ไม่มีมัดจำ</span>
+          </label>
+        </span>
+      </div>
+        )
+      }
     // in case 7 submit_book_transfer
     if (props.singleCase.status === 'submit_book_transfer') {
       setisConfirm(true)
@@ -184,96 +218,108 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
         </div>
       )
     }
-    if (props.singleCase.status === 'car_check_up') {
+    // if (props.singleCase.status === 'car_check_up') {
+    //   setisConfirm(true)
+    //   return (
+    //     <div className='row m12 s12'>
+    //       <div className='col m6'>
+    //         <div className='row col m12 no-margin'>
+    //           <label>รับสำเนาเล่ม</label>
+    //         </div>
+    //         <div className='row m12'>
+    //           <div className='col m6'>
+    //             <input
+    //               type="date"
+    //               value={date || currentDateFormat(Date())}
+    //               name="receive_date"
+    //               onChange={handleChange}
+    //             />
+    //           </div>
+    //           <div className='col m6'>
+    //             <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='col m6'>
+    //         <div className='row col m12 no-margin'>
+    //           <label>ส่งเอกสารเบิกเงินธนาคารใหม่</label>
+    //         </div>
+    //         <div className='row m12'>
+    //           <div className='col m6'>
+    //             <input
+    //               type="date"
+    //               value={date || currentDateFormat(Date())}
+    //               name="receive_date"
+    //               onChange={handleChange}
+    //             />
+    //           </div>
+    //           <div className='col m6'>
+    //             <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className='row m12 s12'>
+    //         <div className='col m6'>
+    //           <div className='row col m12 no-margin'>
+    //             <label>ทำเรื่องเบิกมัดจำคืน</label>
+    //           </div>
+    //           <div className='row m12'>
+    //             <div className='col m6'>
+    //               <input
+    //                 type="date"
+    //                 value={date || currentDateFormat(Date())}
+    //                 name="receive_date"
+    //                 onChange={handleChange}
+    //               />
+    //             </div>
+    //             <div className='col m6'>
+    //               <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         <div className='col m6'>
+    //           <div className='row col m12 no-margin'>
+    //             <label>รับเล่มคืน</label>
+    //           </div>
+    //           <div className='row m12'>
+    //             <div className='col m6'>
+    //               <input
+    //                 type="date"
+    //                 value={date || currentDateFormat(Date())}
+    //                 name="receive_date"
+    //                 onChange={handleChange}
+    //               />
+    //             </div>
+    //             <div className='col m6'>
+    //               <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )
+    // }
+    if (props.singleCase.status === 'book_received') {
       setisConfirm(true)
       return (
-        <div className='row m12 s12'>
-          <div className='col m6'>
-            <div className='row col m12 no-margin'>
-              <label>รับสำเนาเล่ม</label>
-            </div>
-            <div className='row m12'>
-              <div className='col m6'>
-                <input
-                  type="date"
-                  value={date || currentDateFormat(Date())}
-                  name="receive_date"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='col m6'>
-                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
-              </div>
-            </div>
-          </div>
-          <div className='col m6'>
-            <div className='row col m12 no-margin'>
-              <label>ส่งเอกสารเบิกเงินธนาคารใหม่</label>
-            </div>
-            <div className='row m12'>
-              <div className='col m6'>
-                <input
-                  type="date"
-                  value={date || currentDateFormat(Date())}
-                  name="receive_date"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='col m6'>
-                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
-              </div>
-            </div>
-          </div>
-          <div className='row m12 s12'>
-            <div className='col m6'>
-              <div className='row col m12 no-margin'>
-                <label>ทำเรื่องเบิกมัดจำคืน</label>
-              </div>
-              <div className='row m12'>
-                <div className='col m6'>
-                  <input
-                    type="date"
-                    value={date || currentDateFormat(Date())}
-                    name="receive_date"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className='col m6'>
-                  <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
-                </div>
-              </div>
-            </div>
-            <div className='col m6'>
-              <div className='row col m12 no-margin'>
-                <label>รับเล่มคืน</label>
-              </div>
-              <div className='row m12'>
-                <div className='col m6'>
-                  <input
-                    type="date"
-                    value={date || currentDateFormat(Date())}
-                    name="receive_date"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className='col m6'>
-                  <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
+      <div>
+        <label>ส่งตรวจ</label>
+        <input
+          type="text"
+          name="old_finance_closing_fee_note"
+          value={singleCase.chack_car_at || ""}
+          onChange={handleChangeF2T}
+          className="validate"
+        />
+      </div>)
     }
-
     //in case 11 deposit_doc_to_new_bank
     if (props.singleCase.status === 'deposit_doc_to_new_bank') {
-      setrenderDeposit(true)
       setisConfirm(true)
       return (
-        <div>
+        <div className='col row m4'>
           ยอดปิด (บาท)
-         <CurrencyFormat
+          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
               const { value } = values;
@@ -287,28 +333,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
             disabled
           // onChange={handleChangeF2}
           />
-          <span className=" col s12 m12">
-            <label>
-              <input
-                type="checkbox"
-                name="difference_y"
-                checked={checkDeposit.d1}
-                onChange={handlecheckDeposit_1}
-              />
-              <span>มีมัดจำ</span>
-            </label>
-          </span>
-          <span className=" col s12 m12">
-            <label>
-              <input
-                type="checkbox"
-                name="difference_n"
-                checked={checkDeposit.d2}
-                onChange={handlecheckDeposit_2}
-              />
-              <span>ไม่มีมัดจำ</span>
-            </label>
-          </span>
+
         </div>
       )
 
@@ -319,7 +344,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
       return (
         <div>
           เงินมัดจำ (บาท)
-         <CurrencyFormat
+          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
               const { value } = values;
@@ -343,7 +368,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
       return (
         <div>
           เงินมัดจำ (บาท)
-         <CurrencyFormat
+          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
               const { value } = values;
@@ -359,7 +384,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
           />
           <br />
           เงินเข้าบริษัท (บาท)
-         <CurrencyFormat
+          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
               const { value } = values;
@@ -382,7 +407,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
       return (
         <div>
           เงินมัดจำ (บาท)
-         <CurrencyFormat
+          <CurrencyFormat
             thousandSeparator={true}
             onValueChange={(values) => {
               const { value } = values;
@@ -403,28 +428,8 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
       setrenderDeposit(false)
       setisConfirm(true)
     }
-
-    let result = []
-    // if in case 3 transfer_doc_received and F2_status ===null
-    if (props.singleCase.status === 'account_closing') {
-
-      if (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '') {
-        setisConfirm(false)
-        //return +F2 button
-        result.push(
-          <div>
-            <div className="row center">
-              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
-            </div>
-            <div className="row">
-              <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
-            </div>
-          </div>
-        );
-      } else {
-        setisConfirm(true)
-      }
-    }
+    
+ 
     //nomal case return Confirm button
     return result;
   }
