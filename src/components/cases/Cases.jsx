@@ -11,7 +11,6 @@ import ModalDeleteCase from './ModalDeleteCase';
 
 import url from '../../Utility/url'
 import axios from 'axios';
-import uuid from "uuid"
 import M from 'materialize-css/dist/js/materialize.min.js'
 // import B from 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -31,36 +30,34 @@ import confirmIcon from '../../img/confirm.png';
 import confirmIconDisable from '../../img/correctDisable.png';
 import sumary from '../../img/report.png';
 import plus from '../../img/plus-white.png';
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 /* Mockdata */
 
 // import caseData from './data.json';
-const useId = 'mohexc'
+
 
 
 
 const Cases = (props) => {
 
-  const [customers, setCustomers] = useState([])
+
   const [cases, setCases] = useState([])
   const [kpi, setKpi] = useState([])
   const [operatorS, setOperatorS] = useState([])
   const [singleCase, setSingleCase] = useState([])
-  const [stateSearch, setStateSearch] = useState({
-    starDate: '',
-    endDate: ""
-  })
 
-  const [textSearch, setTextSearch] = useState('')
+
+
   const [isLoading, setisLoading] = useState(true)
 
   // page
-  const [currPage, setCurrPage] = useState(1)
+
   const [limitPage, setLimitPage] = useState(20)
   const [totalCase, setTotalCase] = useState(0)
   const [totalPage, setTotalPage] = useState(Math.ceil(totalCase / limitPage))
-  
+  const [caseTable1 , setCaseTable1] = useState(0)
+  const [caseTable2 , setCaseTable2] = useState(0)
 
 
 
@@ -159,6 +156,74 @@ const Cases = (props) => {
       .catch(err => console.log(err))
 
 
+  }
+
+  const getKKCase_1_5 = () => {
+    setisLoading(true);
+    axios.get(`${url}/case_1_5`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getKKCase_6_9 = () => {
+    setisLoading(true);
+    axios.get(`${url}/case_6_9`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getKKCase_10_16 = () => {
+    setisLoading(true);
+    axios.get(`${url}/case_10_16`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getSpecificCase = (casesource , group) =>{
+    if (casesource === 'KK'){
+     setCaseTable1(group)
+     if(group === 0){
+       getAllCase()
+     }
+     else if ( group === 1){
+       getKKCase_1_5()
+     }
+     else if (group === 2){
+       getKKCase_6_9()
+     }
+     else if (group === 3){
+       getKKCase_10_16()
+     }
+    }
+
+    if (casesource === 'CT'){
+      setCaseTable2(group)
+    }
+    console.log(casesource , " : " , group)
   }
 
   const setKpiForUse = (kpiData) => {
@@ -711,6 +776,45 @@ const Cases = (props) => {
 
           {/* TABALE */}
           <div className="row" class="input-table">
+
+          <Tabs  >
+                <TabList >
+                  <div class="tabslist">
+                    <Tab id="tab1" onClick={() => getSpecificCase('KK',caseTable1)}>TB/KK</Tab>
+                    <Tab id="tab2" onClick={() => getSpecificCase('CT',caseTable2)}>CT/DL</Tab>
+                    
+                  </div>
+                </TabList>
+                <TabPanel>
+                <Tabs defaultIndex={caseTable1} >
+                <TabList >
+                  <div class="tabslist">
+                    <Tab onClick={() => getSpecificCase('KK',0)}>All</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',1)}>1</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',2)}>2</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',3)}>3</Tab>
+                    
+                  </div>
+                </TabList>
+                </Tabs>
+                </TabPanel>
+                <TabPanel>
+                <Tabs defaultIndex={caseTable2}>
+                <TabList >
+                  <div class="tabslist">
+                    <Tab onClick={() => getSpecificCase('CT',0)}>All</Tab>
+                    <Tab onClick={() => getSpecificCase('CT',1)}>1</Tab>
+                    <Tab onClick={() => getSpecificCase('CT',2)}>2</Tab>
+                    <Tab onClick={() => getSpecificCase('CT',3)}>3</Tab>
+                    
+                  </div>
+                </TabList>
+                </Tabs>
+                </TabPanel>
+
+              </Tabs>
+
+
             <br />
             <MaterialTable
               title="Case"
