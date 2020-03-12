@@ -10,9 +10,8 @@ import CurrencyFormat from 'react-currency-format';
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, statusDate, caseStatusShift }) => {
+const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift,confirm_sub}) => {
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
-  const [checkDeposit_book, setcheckDeposit_book] = useState({ d1: true, d2: false });
   const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
   const [renderDeposit, setrenderDeposit] = useState(false);
   function currentDateFormat(caseDate) {
@@ -78,8 +77,6 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
 
   const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
   const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
-  const handlecheckDeposit_book_1 = e => setcheckDeposit_book({ d1: true, d2: false });
-  const handlecheckDeposit_book_2 = e => setcheckDeposit_book({ d1: false, d2: true });
   const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
   const handlecheckDeposit_2 = e => setcheckDeposit({ d1: false, d2: true }, singleCase.f2_deposit_12 = 0);
 
@@ -104,15 +101,14 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
   };
 
 
-
   function ValidateCase(props) {
-    if (props.singleCase.status === 'receive' || props.singleCase.status === 'contact_customer' || props.singleCase.status === 'account_closing' || props.singleCase.status === 'transfer_doc_received' || props.singleCase.status === 'transfer_doc_submitted') {
+    if ((props.singleCase.status === 'receive' || props.singleCase.status === 'contact_customer' || props.singleCase.status === 'account_closing' || props.singleCase.status === 'transfer_doc_received' || props.singleCase.status === 'transfer_doc_submitted') &&  singleCase.transfer_doc_received_date === '') {
       setisConfirm(true)
       return (
         <div className='row m12 s12'>
           <div className='col m6'>
             <div className='row col m12 no-margin'>
-              <label>2.5วันที่รับชุดโอน</label>
+              <label>วันที่รับชุดโอน</label>
             </div>
             <div className='row m12'>
               <div className='col m6'>
@@ -124,7 +120,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, fastToP4, fastToP5, st
                 />
               </div>
               <div className='col m6'>
-                <button className="modal-close waves-effect btn blue lighten left " onClick={() => confirm(singleCase, date, checkCar)}>Confirm</button>
+                <button className="waves-effect btn blue lighten left " onClick={() => confirm_sub(singleCase, date, checkCar)}>Confirm</button>
               </div>
             </div>
           </div>

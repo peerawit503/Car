@@ -90,8 +90,7 @@ const Cases = (props) => {
       lookup: {
         'receive': 'รอติดต่อลูกค้า',
         'contact_customer': 'รอปิดเล่ม',
-        'account_closing': 'รอรับชุดโอน',
-        'transfer_doc_received': 'รอยื่นชุดโอน',
+        'account_closing': 'รอยื่นชุดโอน',
         'transfer_doc_submitted': 'รอได้รับเล่ม',
         'book_received': 'รอส่งงานโอนทะเบียน',
         'submit_book_transfer': 'รอตรวจสภาพรถ',
@@ -256,6 +255,9 @@ const Cases = (props) => {
       }else if((singleCase.status === "transfer_doc_received" )){
         console.log("incase 2");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
+      }else if((singleCase.status === "account_closing" )){
+        console.log("incase 2");
+        var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
       }else{
         console.log("incase 3");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
@@ -274,6 +276,24 @@ const Cases = (props) => {
       })
         .catch(err => console.log(err))
   }
+
+  const confirm_sub = (singleCase,date) => {
+    
+    var data = JSON.stringify({ tracking: 'transfer_doc_received', user_id: props.user.id ,date:date});
+    console.log('###### data ########');
+    console.log(data);
+    axios.post(`${url}/fast_tracking2?case_id=${singleCase.case_id}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => {
+      console.log('#####  RES  ######');
+      console.log('Case', res.data.message);
+      // setisLoading(true);
+    })
+      .catch(err => console.log(err))
+}
+
 
   function fastToP4(date){
     var data = JSON.stringify({ tracking: 'transfer_doc_received', user_id: props.user.id ,date:date});
@@ -717,7 +737,7 @@ const Cases = (props) => {
           </div>
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
-          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} fastToP4={fastToP4} fastToP5={fastToP5} statusDate={statusDate} caseStatusShift={caseStatusShift}/>
+          <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} statusDate={statusDate} caseStatusShift={caseStatusShift} confirm_sub={confirm_sub}/>
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
