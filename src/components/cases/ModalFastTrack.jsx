@@ -103,14 +103,14 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
 
 
   function ValidateCase(props) {
+    let result = []
     if ((props.singleCase.status === 'receive' ||
       props.singleCase.status === 'contact_customer' ||
       props.singleCase.status === 'account_closing' ||
       props.singleCase.status === 'transfer_doc_received' ||
       props.singleCase.status === 'transfer_doc_submitted') &&
       singleCase.transfer_doc_received_date === '') {
-      setisConfirm(true)
-      return (
+      result.push(
         <div className='row m12 s12'>
           <div className='col m6'>
             <div className='row col m12 no-margin'>
@@ -132,14 +132,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
           </div>
         </div>
       )
-    }
-
-
-    let result = []
-    // if in case 3 transfer_doc_received and F2_status ===null
-    if (singleCase.status === 'contact_customer') {
-
-      if (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '') {
+      if (props.singleCase.status === 'contact_customer' && (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '')) {
         setisConfirm(false)
         //return +F2 button
         result.push(
@@ -154,11 +147,10 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
           </div>
 
         );
-      } else {
+      }else{
         setisConfirm(true)
       }
     }
-
 
     if (props.singleCase.status === 'transfer_doc_received') {
       setrenderDeposit(true)
@@ -304,7 +296,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     if (props.singleCase.status === 'book_received') {
       setisConfirm(true)
       return (
-        <div>
+        <div className='row col m4 s4 '>
           <label>ส่งตรวจ</label>
           <input
             type="text"
@@ -344,7 +336,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     if (props.singleCase.status === 'book_deposit_received') {
       setisConfirm(true)
       return (
-        <div>
+        <div className='row col m4'>
           เงินมัดจำ (บาท)
           <CurrencyFormat
             thousandSeparator={true}
@@ -368,7 +360,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       setrenderDeposit(false)
       setisConfirm(true)
       return (
-        <div>
+        <div className='row col m4'>
           เงินมัดจำ (บาท)
           <CurrencyFormat
             thousandSeparator={true}
@@ -407,7 +399,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       setrenderDeposit(false)
       setisConfirm(true)
       return (
-        <div>
+        <div className='row col m4'>
           เงินมัดจำ (บาท)
           <CurrencyFormat
             thousandSeparator={true}
@@ -452,7 +444,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     )
   }
 
-  function RenerWorking() {
+  function RenderWorking() {
     let status = singleCase.status
 
     if(singleCase.status === 'car_check_up' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')){
@@ -464,7 +456,6 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     }else{
       status = caseStatusShift(singleCase.status)
     }
-
     return (
       <h4 style={{ textAlign: "center" }}>รอ{translate(status)} </h4>
     )
@@ -488,7 +479,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
 
       {/* body */}
       <div className="row content">
-        <RenerWorking />
+        <RenderWorking />
         <div className="col s12 m12 content">
           <div className="col s4 m4 content"></div>
           <div className="col s4 m4 content">
