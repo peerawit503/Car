@@ -158,9 +158,9 @@ const Cases = (props) => {
 
   }
 
-  const getKKCase_1_5 = () => {
+  const getAllCaseWithCaseSource = (casesource) => {
     setisLoading(true);
-    axios.get(`${url}/case_1_5`)
+    axios.get(`${url}/search_case?parameter=case_source&value=${casesource}`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -173,9 +173,9 @@ const Cases = (props) => {
 
   }
 
-  const getKKCase_6_9 = () => {
+  const getKKCase_1_5 = (casesource) => {
     setisLoading(true);
-    axios.get(`${url}/case_6_9`)
+    axios.get(`${url}/case_1_5?case_source=${casesource}`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -188,9 +188,54 @@ const Cases = (props) => {
 
   }
 
-  const getKKCase_10_16 = () => {
+  const getKKCase_6_9 = (casesource) => {
     setisLoading(true);
-    axios.get(`${url}/case_10_16`)
+    axios.get(`${url}/case_6_9?case_source=${casesource}`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getKKCase_10_16 = (casesource) => {
+    setisLoading(true);
+    axios.get(`${url}/case_10_16?case_source=${casesource}`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getCartrustCase = (casesource) => {
+    setisLoading(true);
+    axios.get(`${url}/case_cartrust`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+
+
+  }
+
+  const getDealerCase = (casesource) => {
+    setisLoading(true);
+    axios.get(`${url}/case_dealer`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -207,22 +252,44 @@ const Cases = (props) => {
     if (casesource === 'KK'){
      setCaseTable1(group)
      if(group === 0){
-       getAllCase()
+      getAllCaseWithCaseSource("Kiatnakin")
      }
      else if ( group === 1){
-       getKKCase_1_5()
+       getKKCase_1_5("Kiatnakin")
      }
      else if (group === 2){
-       getKKCase_6_9()
+       getKKCase_6_9("Kiatnakin")
      }
      else if (group === 3){
-       getKKCase_10_16()
+       getKKCase_10_16("Kiatnakin")
      }
     }
+    else if (casesource === 'TB'){
+      setCaseTable1(group)
+      if(group === 0){
+        getAllCaseWithCaseSource("Thanachart")
+      }
+      else if ( group === 1){
+        getKKCase_1_5("Thanachart")
+      }
+      else if (group === 2){
+        getKKCase_6_9("Thanachart")
+      }
+      else if (group === 3){
+        getKKCase_10_16("Thanachart")
+      }
+     }
 
     if (casesource === 'CT'){
       setCaseTable2(group)
+      getCartrustCase()
     }
+
+    if (casesource === 'DL'){
+      setCaseTable2(group)
+      getDealerCase()
+    }
+
     console.log(casesource , " : " , group)
   }
 
@@ -788,8 +855,11 @@ const Cases = (props) => {
           <Tabs  >
                 <TabList >
                   <div class="tabslist">
-                    <Tab id="tab1" onClick={() => getSpecificCase('KK',caseTable1)}>TB/KK</Tab>
-                    <Tab id="tab2" onClick={() => getSpecificCase('CT',caseTable2)}>CT/DL</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',caseTable1)}>Thanachart</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',caseTable1)}>Kiatnakin</Tab>
+                    <Tab onClick={() => getSpecificCase('CT',caseTable2)}>Cartrust</Tab>
+                    <Tab onClick={() => getSpecificCase('DL',caseTable2)}>Dealer</Tab>
+                    
                     
                   </div>
                 </TabList>
