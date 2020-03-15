@@ -8,7 +8,7 @@ import url from '../../Utility/url'
 
 
 
-const ModalProcess = ({ currentProcess}) => {
+const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
 
    const [date, setDate] = useState()
 
@@ -66,7 +66,16 @@ const ModalProcess = ({ currentProcess}) => {
   }
 
   function close() {
-    
+    setDate()
+  }
+  const save = () => {
+    let data = {
+      case_id : singleCase.case_id,
+      date:date,
+      tracking:currentProcess.process
+    }
+
+    saveProcess(data)
   }
 
   return (
@@ -77,7 +86,7 @@ const ModalProcess = ({ currentProcess}) => {
           <div className="row">
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
-               Process : {currentProcess.processThai}
+              <h4>  Process : {currentProcess.processThai} </h4>
               
               
                
@@ -91,10 +100,10 @@ const ModalProcess = ({ currentProcess}) => {
 
 
           <div className="cotent-field">
-            <div className="row content">
-             <div className="col m6">
+            <div className="row">
+             <div className="col m6 content-radonly">
              <div className="col s6 m6 l6 content-radonly">
-                <label>Process Receive /</label>
+                ชื่อผู้ดำเนินการ
                 <input
                 thousandSeparator={true}
                 value={currentProcess.processTracker}
@@ -108,8 +117,8 @@ const ModalProcess = ({ currentProcess}) => {
              Process Date : {currentProcess.processDate}
              </div> */}
 
-             <div className="col m6">
-             Process Date
+             <div className="col m6 content">
+             วันที่
              <input
                   type="date"
                   value={date || currentDateFormat(currentProcess.processDate)}
@@ -125,7 +134,7 @@ const ModalProcess = ({ currentProcess}) => {
 
 
         <div className="modal-footer">
-          <button className="modal-close waves-effect btn blue lighten left ">Save</button>
+          <button className="modal-close waves-effect btn blue lighten left " onClick={() => save() }>Save</button>
           <button className="modal-close waves-effect btn white black-text right" onClick={() => close()}>close</button>
         </div>
       </div>

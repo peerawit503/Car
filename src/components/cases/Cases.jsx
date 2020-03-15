@@ -56,6 +56,7 @@ const Cases = (props) => {
   const [limitPage, setLimitPage] = useState(20)
   const [totalCase, setTotalCase] = useState(0)
   const [totalPage, setTotalPage] = useState(Math.ceil(totalCase / limitPage))
+  const [currentCaseSource , setCurrentCaseSource] = useState("ALL")
   const [caseTable1 , setCaseTable1] = useState(0)
   const [caseTable2 , setCaseTable2] = useState(0)
 
@@ -249,7 +250,9 @@ const Cases = (props) => {
   }
 
   const getSpecificCase = (casesource , group) =>{
+    setCurrentCaseSource(casesource)
     if (casesource==='ALL'){
+      
       getAllCase()
     }
     else if (casesource === 'KK'){
@@ -378,6 +381,19 @@ const Cases = (props) => {
         setOperatorS(res.data.message);
       })
     }
+
+  const saveProcess = (data) =>{
+    let sendData = {
+      ...data,
+      user_id: props.user.id
+    }
+    axios.post(`${url}/fast_tracking2?case_id=${data.case_id}` , sendData)
+    .then(res => {
+      getSpecificCase(currentCaseSource,currentCaseSource==='KK'?caseTable1:caseTable2)
+      console.log(res)
+    }).catch(err => console.log(err))
+  }
+  
     
 
   const confirm = (singleCase,date,checkCar) => {
@@ -898,7 +914,7 @@ const Cases = (props) => {
           
           <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} statusDate={statusDate} caseStatusShift={caseStatusShift} confirm_sub={confirm_sub}/>
-          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate}/>
+          <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate} saveProcess={saveProcess}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
           

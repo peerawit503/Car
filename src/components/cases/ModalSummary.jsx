@@ -12,7 +12,7 @@ import CurrencyFormat from 'react-currency-format';
 
 import Popup from 'reactjs-popup'
 
-const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS , translate}) => {
+const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS , translate , saveProcess}) => {
   
   const [newCase, setNewCase] = useState({})
   const [currentProcess , setCurrentProcess] = useState({
@@ -169,7 +169,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     //  console.log("processCurrentDATE" + tomorrow.setDate(Date.parse(getbeforedateCurrent(status))));
     //  console.log("processCurrentDATE" + tomorrow);
     //  console.log("processCurrentDATE" + Date.getDate(Date.parse(getbeforedateCurrent(status)+1)));
-      console.log("processCurrent:"+processCurrent);
+      // console.log("processCurrent:"+processCurrent);
       
    }
    
@@ -181,7 +181,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     
     if (processCurrent == null || processCurrent ==='') {
       
-      result.push ( <div className="col s2 m3"> </div>);
+      result.push ( <div className="col s2 m4"> </div>);
     } else if (processCurrent != null && (processBefore == null || processBefore ==='')) {
       result.push (
           dateTimeFormatted(processCurrent)
@@ -719,7 +719,14 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  <label className="modal-trigger" href="#modalProcess" onClick = {() => setCurrentProcess({processTracker :singleCase.case_receiver , processDate:  singleCase.receive_date ,  process:"receive" , processThai: "รับเคส"} )}>วันที่รับเคส</label>{' '}:
+                  <label 
+                   className={singleCase.receive_date!==null & singleCase.receive_date!==""?"modal-trigger":""}
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.case_receiver , 
+                    processDate:  singleCase.receive_date ,  
+                    process:"receive" , 
+                    processThai: "รับเคส"} )}>วันที่รับเคส{' '}:</label>
                 </div>
                   {dateTimeFormatted(singleCase.receive_date)}
                  
@@ -732,7 +739,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ติดต่อลูกค้า{' '}:
+                <label 
+                   className={singleCase.contact_customer_date!==null & singleCase.contact_customer_date!==""?"modal-trigger":""}
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.contact_customer_id , 
+                    processDate:  singleCase.contact_customer_date ,  
+                    process:"contact_customer" , 
+                    processThai: "ติดต่อลูกค้า"} )}>วันที่ติดต่อลูกค้า{' '}:</label>
+              
                 </div>
                 {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date,"receive")}
                 <div className="col s2 m3">
@@ -750,7 +765,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ปิดเล่ม{' '}:
+                <label 
+                  className={singleCase.account_closing_date!==null & singleCase.account_closing_date!==""?"modal-trigger":""}
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.account_closing_id , 
+                    processDate:  singleCase.account_closing_date ,  
+                    process:"account_closing" , 
+                    processThai: "ปิดเล่ม"} )}>วันที่ปิดเล่ม{' '}:</label>
+              
                 </div>
                 {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date,"contact_customer")}
                 <div className="col s2 m3">
@@ -765,7 +788,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่รับชุดโอน{' '}:
+                <label 
+                  className={singleCase.transfer_doc_received_date!==null & singleCase.transfer_doc_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.transfer_doc_received_id , 
+                    processDate:  singleCase.transfer_doc_received_date ,  
+                    process:"transfer_doc_received" , 
+                    processThai: "รับชุดโอน"} )}>วันที่รับชุดโอน{' '}:</label>
+                
                 </div>
                 {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date,"account_closing")}
                 <div className="col s2 m3">
@@ -781,7 +812,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ยื่นชุดโอน{' '}:
+                <label 
+                  className={singleCase.transfer_doc_submitted_date!==null & singleCase.transfer_doc_submitted_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.transfer_doc_submitted_id , 
+                    processDate:  singleCase.transfer_doc_submitted_date ,  
+                    process:"transfer_doc_submitted" , 
+                    processThai: "ยื่นชุดโอน"} )}>วันที่ยื่นชุดโอน{' '}:</label>
+              
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date,"transfer_doc_received")}
                   <div className="col s2 m3">
@@ -796,7 +835,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ได้รับเล่ม{' '}:
+                <label 
+                  className={singleCase.book_received_date!==null & singleCase.book_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_received_id , 
+                    processDate:  singleCase.book_received_date ,  
+                    process:"book_received" , 
+                    processThai: "ได้รับเล่ม"} )}>วันที่ได้รับเล่ม{' '}:</label>
+            
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"transfer_doc_submitted")}
                   <div className="col s2 m3">
@@ -813,7 +860,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ส่งงานโอนทะเบียน{' '}:
+                <label 
+                  className={singleCase.submit_book_transfer_date!==null & singleCase.submit_book_transfer_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.submit_book_transfer_id , 
+                    processDate:  singleCase.submit_book_transfer_date ,  
+                    process:"submit_book_transfer" , 
+                    processThai: "ส่งงานโอนทะเบียน"} )}>วันที่ส่งงานโอนทะเบียน{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date,"book_received")}
                   <div className="col s2 m3">
@@ -828,7 +883,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ตรวจสภาพรถ{' '}:
+                <label 
+                  className={singleCase.car_check_up_date!==null & singleCase.car_check_up_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.car_check_up_id , 
+                    processDate:  singleCase.car_check_up_date ,  
+                    process:"car_check_up" , 
+                    processThai: "ตรวจสภาพรถ"} )}>วันที่ตรวจสภาพรถ{' '}:</label>
+                
                 </div>
                   {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date,"submit_book_transfer")}
                   <div className="col s2 m3">
@@ -843,7 +906,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่โอนเล่มทะเบียน{' '}:
+                <label 
+                  className={singleCase.book_transfer_date!==null & singleCase.book_transfer_date!==""?"modal-trigger":""}
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_transfer_id , 
+                    processDate:  singleCase.book_transfer_date ,  
+                    process:"book_transfer" , 
+                    processThai: "โอนเล่มทะเบียน"} )}>วันที่โอนเล่มทะเบียน{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date,"car_check_up")}
                   <div className="col s2 m3">
@@ -858,7 +929,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่รับสำเนาเล่ม{' '}:
+                <label 
+                  className={singleCase.book_copy_received_date!==null & singleCase.book_copy_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_copy_received_id , 
+                    processDate:  singleCase.book_copy_received_date ,  
+                    process:"book_copy_received" , 
+                    processThai: "รับสำเนาเล่ม"} )}>วันที่รับสำเนาเล่ม{' '}:</label>
+             
                 </div>
                   {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date,"book_transfer")}
                   <div className="col s2 m2">
@@ -873,7 +952,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:
+                <label 
+                  className={singleCase.deposit_doc_to_new_bank_date!==null & singleCase.deposit_doc_to_new_bank_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.deposit_doc_to_new_bank_id , 
+                    processDate:  singleCase.deposit_doc_to_new_bank_date ,  
+                    process:"deposit_doc_to_new_bank" , 
+                    processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date,"book_copy_received")}
                   <div className="col s2 m3">
@@ -888,7 +975,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ทำเรื่องเบิกมัดจำคืน{' '}:
+                <label 
+                  className={singleCase.submit_book_deposit_return_date!==null & singleCase.submit_book_deposit_return_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.submit_book_deposit_return_id , 
+                    processDate:  singleCase.submit_book_deposit_return_date ,  
+                    process:"submit_book_deposit_return" , 
+                    processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
+             
                 </div>
                   {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date,"deposit_doc_to_new_bank")}
                   <div className="col s2 m3">
@@ -903,7 +998,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่รับเล่มคืน{' '}:
+                <label 
+                  className={singleCase.book_received_back_date!==null & singleCase.book_received_back_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_received_back_id , 
+                    processDate:  singleCase.book_received_back_date ,  
+                    process:"book_received_back" , 
+                    processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
+          
                 </div>
                   {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date,"submit_book_deposit_return")}
                   <div className="col s2 m3">
@@ -918,7 +1021,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:
+                <label 
+                  className={singleCase.cash_received_date!==null & singleCase.cash_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.cash_received_id , 
+                    processDate:  singleCase.cash_received_date ,  
+                    process:"cash_received" , 
+                    processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date,"book_received_back")}
                   <div className="col s2 m3">
@@ -933,7 +1044,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่เงินมัดจำคืนเข้าบัญชี{' '}:
+                <label 
+                  className={singleCase.book_deposit_received_date!==null & singleCase.book_deposit_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_deposit_received_id , 
+                    processDate:  singleCase.book_deposit_received_date ,  
+                    process:"book_deposit_received" , 
+                    processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date,"cash_received")}
                   <div className="col s2 m3">
@@ -948,7 +1067,15 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:
+                <label 
+                  className={singleCase.submit_book_to_new_finance_date!==null & singleCase.submit_book_to_new_finance_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.submit_book_to_new_finance_id , 
+                    processDate:  singleCase.submit_book_to_new_finance_date ,  
+                    process:"submit_book_to_new_finance" , 
+                    processThai: "ส่งเล่มให้ไฟแนนซ์ใหม่"} )}>วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:</label>
+               
                 </div>
                   {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date,"book_deposit_received")}
                   <div className="col s2 m3">
@@ -975,7 +1102,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       <ModalCancel singleCase={singleCase} />
       <ModalAddContract singleCase={singleCase} />
       <ModalImage singleCase={singleCase} />
-      <ModalProcess  currentProcess = {currentProcess}/>
+      <ModalProcess  currentProcess = {currentProcess} saveProcess={saveProcess} singleCase={singleCase}/>
     </div >
 
    
