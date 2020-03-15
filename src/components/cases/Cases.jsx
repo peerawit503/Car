@@ -249,7 +249,10 @@ const Cases = (props) => {
   }
 
   const getSpecificCase = (casesource , group) =>{
-    if (casesource === 'KK'){
+    if (casesource==='ALL'){
+      getAllCase()
+    }
+    else if (casesource === 'KK'){
      setCaseTable1(group)
      if(group === 0){
       getAllCaseWithCaseSource("Kiatnakin")
@@ -265,7 +268,7 @@ const Cases = (props) => {
      }
     }
     else if (casesource === 'TB'){
-      setCaseTable1(group)
+      setCaseTable2(group)
       if(group === 0){
         getAllCaseWithCaseSource("Thanachart")
       }
@@ -281,12 +284,12 @@ const Cases = (props) => {
      }
 
     if (casesource === 'CT'){
-      setCaseTable2(group)
+      
       getCartrustCase()
     }
 
     if (casesource === 'DL'){
-      setCaseTable2(group)
+     
       getDealerCase()
     }
 
@@ -788,7 +791,7 @@ const Cases = (props) => {
             </div>
             <div className="new-button col m4 right">
               <div className="new-button-iner col m12">
-                <a class='dropdown-trigger btn tde-g'
+                <a className='dropdown-trigger btn tde-g'
                   href='#'
                   data-target='dropdown1'
                   style={{ width: '100%' }}
@@ -822,15 +825,19 @@ const Cases = (props) => {
           <Tabs  >
                 <TabList >
                   <div class="tabslist">
+                    <Tab onClick={() => getSpecificCase('ALL',caseTable1)}>All</Tab>
                     <Tab onClick={() => getSpecificCase('TB',caseTable1)}>Thanachart</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',caseTable1)}>Kiatnakin</Tab>
-                    <Tab onClick={() => getSpecificCase('CT',caseTable2)}>Cartrust</Tab>
-                    <Tab onClick={() => getSpecificCase('DL',caseTable2)}>Dealer</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',caseTable2)}>Kiatnakin</Tab>
+                    <Tab onClick={() => getSpecificCase('CT',0)}>Cartrust</Tab>
+                    <Tab onClick={() => getSpecificCase('DL',0)}>Dealer</Tab>
                     
                     
                   </div>
                 </TabList>
                 <TabPanel>
+                </TabPanel>
+                <TabPanel>
+                  
                 <Tabs defaultIndex={caseTable1} >
                 <TabList >
                   <div class="tabslist">
@@ -847,14 +854,18 @@ const Cases = (props) => {
                 <Tabs defaultIndex={caseTable2}>
                 <TabList >
                   <div class="tabslist">
-                    <Tab onClick={() => getSpecificCase('CT',0)}>All</Tab>
-                    <Tab onClick={() => getSpecificCase('CT',1)}>1</Tab>
-                    <Tab onClick={() => getSpecificCase('CT',2)}>2</Tab>
-                    <Tab onClick={() => getSpecificCase('CT',3)}>3</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',0)}>All</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',1)}>1</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',2)}>2</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',3)}>3</Tab>
                     
                   </div>
                 </TabList>
                 </Tabs>
+                </TabPanel>
+                <TabPanel>
+                </TabPanel>
+                <TabPanel>
                 </TabPanel>
 
               </Tabs>
