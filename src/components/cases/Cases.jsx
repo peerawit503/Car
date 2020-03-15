@@ -313,8 +313,8 @@ const Cases = (props) => {
   const confirm = (singleCase,date,checkCar) => {
     console.log("deposit"+singleCase.f2_deposit_12);
     
-  
-      if(singleCase.status === 'submit_book_transfer'){
+      
+      if(singleCase.status === 'submit_book_transfer'){// if ส่งงานโอนทะเบียน sent car checkup
       var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
       console.log("incase 1");
       }else if((singleCase.status === "transfer_doc_received" )){
@@ -323,7 +323,15 @@ const Cases = (props) => {
       }else if((singleCase.status === "account_closing" )){
         console.log("incase 2");
         var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
-      }else{
+      }else if ((singleCase.status === "car_check_up" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+        var data = JSON.stringify({ tracking: 'submit_book_deposit_return', user_id: props.user.id ,date:date});
+      }  else if ((singleCase.status === "submit_book_deposit_return" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+        var data = JSON.stringify({ tracking: 'book_copy_received', user_id: props.user.id ,date:date});
+      }  else if ((singleCase.status === "book_copy_received" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+        var data = JSON.stringify({ tracking: 'deposit_doc_to_new_bank', user_id: props.user.id ,date:date});
+      }
+
+      else{
         console.log("incase 3");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
       } 
