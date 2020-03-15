@@ -8,20 +8,65 @@ import url from '../../Utility/url'
 
 
 
-const ModalProcess = ({ singleCase}) => {
+const ModalProcess = ({ currentProcess}) => {
 
-  const [newNote, setNewNote] = useState({})
+   const [date, setDate] = useState()
 
   const handleChange = (e) => {
-    setNewNote({ ...newNote, [e.target.name]: e.target.value })
+    setDate( e.target.value )
   }
-  function getnote(CaseStatus){
-    let status_note = CaseStatus + "_note";
-    return status_note;
+ 
+
+  function currentDateFormat(caseDate) {
+    if (caseDate == null) {
+      return 0;
+    } else {
+      var mountCaracterString = caseDate.split(" ")[2];
+      var month;
+      if (mountCaracterString === 'Jan') {
+        month = "01";
+      }
+      else if (mountCaracterString === 'Feb') {
+        month = "02";
+      }
+      else if (mountCaracterString === 'Mar') {
+        month = "03";
+      }
+      else if (mountCaracterString === 'Apr') {
+        month = "04";
+      }
+      else if (mountCaracterString === 'May') {
+        month = "05";
+      }
+      else if (mountCaracterString === 'Jun') {
+        month = "06";
+      }
+      else if (mountCaracterString === 'Jul') {
+        month = "07";
+      }
+      else if (mountCaracterString === 'Aug') {
+        month = "08";
+      }
+      else if (mountCaracterString === 'Sep') {
+        month = "09";
+      }
+      else if (mountCaracterString === 'Oct') {
+        month = "10";
+      }
+      else if (mountCaracterString === 'Nov') {
+        month = "11";
+      }
+      else if (mountCaracterString === 'Dec') {
+        month = "12";
+      }
+
+      return (caseDate.split(" ")[3] + '-' + month + '-' + caseDate.split(" ")[1]);
+
+    }
   }
 
   function close() {
-    setNewNote({});
+    
   }
 
   return (
@@ -32,7 +77,10 @@ const ModalProcess = ({ singleCase}) => {
           <div className="row">
             <div className="header-title">
               <div className="col s12 m12 no-col-padding">
-               Header
+               Process : {currentProcess.processThai}
+              
+              
+               
               </div>
             </div>
           </div>
@@ -44,7 +92,32 @@ const ModalProcess = ({ singleCase}) => {
 
           <div className="cotent-field">
             <div className="row content">
-              Content
+             <div className="col m6">
+             <div className="col s6 m6 l6 content-radonly">
+                <label>Process Receive /</label>
+                <input
+                thousandSeparator={true}
+                value={currentProcess.processTracker}
+                name="approve_amount"
+                suffix =" บาท"
+                readOnly />
+              </div>
+             </div>
+
+             {/* <div className="col m6">
+             Process Date : {currentProcess.processDate}
+             </div> */}
+
+             <div className="col m6">
+             Process Date
+             <input
+                  type="date"
+                  value={date || currentDateFormat(currentProcess.processDate)}
+                  name="date"
+                  onChange={handleChange}
+                />
+             
+             </div>
 
             </div>
           </div>

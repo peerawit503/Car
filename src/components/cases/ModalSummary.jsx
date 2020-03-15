@@ -3,7 +3,7 @@ import ModalAddF2 from './ModalAddF2';
 import ModalAddContract from './modalAddContract';
 import ModalImage from './ModalImage';
 import ModalCancel from './ModalCancel';
-
+import ModalProcess from './ModalProcess'
 import confirm from '../../img/confirm.png';
 import plus from '../../img/plus-white.png';
 import photo from '../../img/photo.png';
@@ -15,6 +15,12 @@ import Popup from 'reactjs-popup'
 const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS , translate}) => {
   
   const [newCase, setNewCase] = useState({})
+  const [currentProcess , setCurrentProcess] = useState({
+    processTracker :"",
+    processDate : "",
+    process : "",
+    processThai : ""
+  })
   useEffect(() => {
     
   })
@@ -175,7 +181,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     
     if (processCurrent == null || processCurrent ==='') {
       
-      result.push ( <div className="col s2 m4"> </div>);
+      result.push ( <div className="col s2 m3"> </div>);
     } else if (processCurrent != null && (processBefore == null || processBefore ==='')) {
       result.push (
           dateTimeFormatted(processCurrent)
@@ -713,7 +719,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
-                  วันที่รับเคส{' '}:
+                  <label className="modal-trigger" href="#modalProcess" onClick = {() => setCurrentProcess({processTracker :singleCase.case_receiver , processDate:  singleCase.receive_date ,  process:"receive" , processThai: "รับเคส"} )}>วันที่รับเคส</label>{' '}:
                 </div>
                   {dateTimeFormatted(singleCase.receive_date)}
                  
@@ -732,6 +738,9 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['contact_customer_orange']} </span>/ <span style={{color:'red'}}>{kpi['contact_customer_red']}</span>
                 </div>
+                {/* <div className="col s2 m1">
+                  asd
+                </div> */}
               </div>
 
               <div className="row">
@@ -790,9 +799,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 วันที่ได้รับเล่ม{' '}:
                 </div>
                   {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date,"transfer_doc_submitted")}
-                  <div className="col s2 m2">
+                  <div className="col s2 m3">
                     KPI : <span style={{color:'orange'}}>{kpi['book_received_orange']} </span>/ <span style={{color:'red'}}>{kpi['book_received_red']}</span>
                 </div>
+                
+                
               </div>
 
               <div className="row">
@@ -963,7 +974,8 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
       <ModalCancel singleCase={singleCase} />
       <ModalAddContract singleCase={singleCase} />
-      <ModalImage singleCase={singleCase}/>
+      <ModalImage singleCase={singleCase} />
+      <ModalProcess  currentProcess = {currentProcess}/>
     </div >
 
    

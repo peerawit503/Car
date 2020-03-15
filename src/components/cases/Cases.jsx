@@ -841,10 +841,10 @@ const Cases = (props) => {
                 <Tabs defaultIndex={caseTable1} >
                 <TabList >
                   <div class="tabslist">
-                    <Tab onClick={() => getSpecificCase('KK',0)}>All</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',1)}>1</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',2)}>2</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',3)}>3</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',0)}>All</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',1)}>1</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',2)}>2</Tab>
+                    <Tab onClick={() => getSpecificCase('TB',3)}>3</Tab>
                     
                   </div>
                 </TabList>
@@ -854,10 +854,10 @@ const Cases = (props) => {
                 <Tabs defaultIndex={caseTable2}>
                 <TabList >
                   <div class="tabslist">
-                    <Tab onClick={() => getSpecificCase('TB',0)}>All</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',1)}>1</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',2)}>2</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',3)}>3</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',0)}>All</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',1)}>1</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',2)}>2</Tab>
+                    <Tab onClick={() => getSpecificCase('KK',3)}>3</Tab>
                     
                   </div>
                 </TabList>
