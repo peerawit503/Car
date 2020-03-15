@@ -344,7 +344,8 @@ const Cases = (props) => {
       }).then(res => {
         console.log('#####  RES  ######');
         console.log('Case', res.data.message);
-        // setisLoading(true);
+        M.toast({ html: `${res.data.message}` })
+      // setisLoading(true);
         getAllCase()
       })
         .catch(err => console.log(err))
@@ -362,45 +363,12 @@ const Cases = (props) => {
     }).then(res => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
+      M.toast({ html: `${res.data.message}` })
+      getAllCase()
       // setisLoading(true);
     })
       .catch(err => console.log(err))
 }
-
-
-  function fastToP4(date){
-    var data = JSON.stringify({ tracking: 'transfer_doc_received', user_id: props.user.id ,date:date});
-    console.log('###### data ########Fastto P4');
-    console.log(data);
-    axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
-      console.log('#####  RES  ######');
-      console.log('Case', res.data.message);
-      // setisLoading(true);
-      getAllCase()
-    })
-      .catch(err => console.log(err))
-  }
-
-  function fastToP5(date){
-    var data = JSON.stringify({ tracking: 'transfer_doc_submitted', user_id: props.user.id ,date:date});
-    console.log('###### data ########Fastto P5');
-    console.log(data);
-    axios.post(`${url}/fast_tracking?case_id=${singleCase.case_id}`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
-      console.log('#####  RES  ######');
-      console.log('Case', res.data.message);
-      // setisLoading(true);
-      getAllCase()
-    })
-      .catch(err => console.log(err))
-  }
 
   const saveNote = (newNote, singleCase) => {
     // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
@@ -710,8 +678,7 @@ const Cases = (props) => {
     let nextstate = "";
     if (state === 'receive') { nextstate = 'contact_customer' }
     else if (state === 'contact_customer') { nextstate = 'account_closing' }
-    else if (state === 'account_closing') { nextstate = 'transfer_doc_received' }
-    else if (state === 'transfer_doc_received') { nextstate = 'transfer_doc_submitted' }
+    else if (state === 'account_closing') { nextstate = 'transfer_doc_submitted' }
     else if (state === 'transfer_doc_submitted') { nextstate = 'book_received' }
     else if (state === 'book_received') { nextstate = 'submit_book_transfer' }
     else if (state === 'submit_book_transfer') { nextstate = 'car_check_up' }
