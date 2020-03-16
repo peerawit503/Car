@@ -102,7 +102,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
           <div className="cotent-field">
             <div className="row">
              <div className="col m6 content-radonly">
-             <div className="col s6 m6 l6 content-radonly">
+            
                 Process Recorder / ชื่อผู้ดำเนินการ
                 <input
                 thousandSeparator={true}
@@ -110,7 +110,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
                 name="approve_amount"
                 suffix =" บาท"
                 readOnly />
-              </div>
+              
              </div>
 
              {/* <div className="col m6">
