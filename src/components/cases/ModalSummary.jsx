@@ -356,18 +356,20 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
     if (processCurrent == null || processCurrent === '') {
       return "summaryIcon-div gray";
-    } else if (processCurrent != null && (processBefore == null || processBefore === '')) {
-      return "summaryIcon-div green";
-    } else {
+    } 
+    // else if (processCurrent != null && (processBefore == null || processBefore === '')) {
+    //   return "summaryIcon-div green";
+    // } 
+    else {
 
 
-      if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== kpiName) {
-        let t = new Date(getbeforedateCurrent(kpiName));
-        processCurrent = t.getDay() + ", " + t.getDate() + " " + monthNotoWord(t.getMonth()) + " " + t.getFullYear();
-      }
-      if ((processBefore === null || processBefore === '')) {
-        processBefore = getbeforedate(kpiName);
-      }
+      // if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== kpiName) {
+      //   let t = new Date(getbeforedateCurrent(kpiName));
+      //   processCurrent = t.getDay() + ", " + t.getDate() + " " + monthNotoWord(t.getMonth()) + " " + t.getFullYear();
+      // }
+      // if ((processBefore === null || processBefore === '')) {
+      //   processBefore = getbeforedate(kpiName);
+      // }
 
       
       var date1 = parseStringToDate(processBefore);
@@ -382,7 +384,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       } else if (Pkpi >= kpi[red] + 1) {
         return "summaryIcon-div red";
       } else {
-        console.log("kpi green");
+        // console.log("kpi green");
         
         return "summaryIcon-div green";
       }
