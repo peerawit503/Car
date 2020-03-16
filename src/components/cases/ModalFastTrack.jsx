@@ -11,6 +11,7 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
 const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift, confirm_sub }) => {
+  
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
   const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
   const [renderDeposit, setrenderDeposit] = useState(false);
@@ -92,13 +93,6 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     }
   };
 
-  const handleChangeF2T = e => {
-    if (e.target.value == "") {
-      e.target.name = " "
-    } else {
-      e.target.name = e.target.value
-    }
-  };
 
 
 
@@ -110,6 +104,9 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       props.singleCase.status === 'transfer_doc_received' ||
       props.singleCase.status === 'transfer_doc_submitted') &&
       singleCase.transfer_doc_received_date === '') {
+        if(singleCase.status === 'book_received'){
+          setisConfirm(false)
+        }
       result.push(
         <div className='row m12 s12'>
           <div className='col m6'>
@@ -132,24 +129,20 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
           </div>
         </div>
       )
-      if (props.singleCase.status === 'contact_customer' && (props.singleCase.F2_status === 'None' || props.singleCase.F2_status === null || props.singleCase.F2_status === '')) {
-        setisConfirm(false)
-        //return +F2 button
-        result.push(
-          <div>
-            <div className="row center">
-              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
-            </div>
-            <div className="row center">
-              <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
-            </div>
-
+    }
+    if (singleCase.status === 'contact_customer' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')) {
+      setisConfirm(false)
+      //return +F2 button
+      return (
+        <div>
+          <div className="row center">
+            <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
           </div>
-
-        );
-      }else{
-        setisConfirm(true)
-      }
+          <div className="row center">
+            <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
+          </div>
+        </div>
+      );
     }
 
     if (props.singleCase.status === 'transfer_doc_received') {
@@ -298,11 +291,14 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       return (
         <div className='row col m4 s4 '>
           <label>ส่งตรวจ</label>
-          <input
+          <CurrencyFormat
             type="text"
-            name="old_finance_closing_fee_note"
-            value={singleCase.chack_car_at || ""}
-            onChange={handleChangeF2T}
+            name="submit_book_transfer_check"
+            value={singleCase.submit_book_transfer_check || ""}
+            onValueChange={(values) => {
+              const { value } = values;
+              singleCase.submit_book_transfer_check = value
+            }}
             className="validate"
           />
         </div>)
@@ -418,10 +414,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
-    else {
-      setrenderDeposit(false)
-      setisConfirm(true)
-    }
+  
 
 
     //nomal case return Confirm button
