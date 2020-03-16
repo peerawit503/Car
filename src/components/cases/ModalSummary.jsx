@@ -574,14 +574,14 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>First Name - Last Name</label>
+                <label>First Name - Last Name / ชื่อ - นามสกุล</label>
                 <input type="text"
                   value={singleCase.name || ""} 
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Licence Plate No. หมายเลขป้ายทะเบียน</label>
+                <label>Licence Plate / หมายเลขป้ายทะเบียน</label>
                 <input type="text"
                   value={singleCase.car_license || ""}
                   readOnly />
@@ -631,7 +631,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Current Finance ไฟแนนซ์เดิม</label>
+                <label>Current Finance / ไฟแนนซ์เดิม</label>
                 <input
                   name="oldFinance"
                   value={singleCase.old_bank || ""}
