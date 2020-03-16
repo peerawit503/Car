@@ -743,7 +743,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                    className={singleCase.contact_customer_date!==null & singleCase.contact_customer_date!==""?"modal-trigger":""}
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.contact_customer_id , 
+                    processTracker :singleCase.contact_customer_nickname , 
                     processDate:  singleCase.contact_customer_date ,  
                     process:"contact_customer" , 
                     processThai: "ติดต่อลูกค้า"} )}>วันที่ติดต่อลูกค้า{' '}:</label>
@@ -769,7 +769,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.account_closing_date!==null & singleCase.account_closing_date!==""?"modal-trigger":""}
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.account_closing_id , 
+                    processTracker :singleCase.account_closing_nickname , 
                     processDate:  singleCase.account_closing_date ,  
                     process:"account_closing" , 
                     processThai: "ปิดเล่ม"} )}>วันที่ปิดเล่ม{' '}:</label>
@@ -792,7 +792,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.transfer_doc_received_date!==null & singleCase.transfer_doc_received_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.transfer_doc_received_id , 
+                    processTracker :singleCase.transfer_doc_received_nickname , 
                     processDate:  singleCase.transfer_doc_received_date ,  
                     process:"transfer_doc_received" , 
                     processThai: "รับชุดโอน"} )}>วันที่รับชุดโอน{' '}:</label>
@@ -816,7 +816,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.transfer_doc_submitted_date!==null & singleCase.transfer_doc_submitted_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.transfer_doc_submitted_id , 
+                    processTracker :singleCase.transfer_doc_submitted_nickname , 
                     processDate:  singleCase.transfer_doc_submitted_date ,  
                     process:"transfer_doc_submitted" , 
                     processThai: "ยื่นชุดโอน"} )}>วันที่ยื่นชุดโอน{' '}:</label>
@@ -839,7 +839,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.book_received_date!==null & singleCase.book_received_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_received_id , 
+                    processTracker :singleCase.book_received_nickname , 
                     processDate:  singleCase.book_received_date ,  
                     process:"book_received" , 
                     processThai: "ได้รับเล่ม"} )}>วันที่ได้รับเล่ม{' '}:</label>
@@ -864,7 +864,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.submit_book_transfer_date!==null & singleCase.submit_book_transfer_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.submit_book_transfer_id , 
+                    processTracker :singleCase.submit_book_transfer_nickname , 
                     processDate:  singleCase.submit_book_transfer_date ,  
                     process:"submit_book_transfer" , 
                     processThai: "ส่งงานโอนทะเบียน"} )}>วันที่ส่งงานโอนทะเบียน{' '}:</label>
@@ -887,7 +887,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.car_check_up_date!==null & singleCase.car_check_up_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.car_check_up_id , 
+                    processTracker :singleCase.car_check_up_nickname , 
                     processDate:  singleCase.car_check_up_date ,  
                     process:"car_check_up" , 
                     processThai: "ตรวจสภาพรถ"} )}>วันที่ตรวจสภาพรถ{' '}:</label>
@@ -910,7 +910,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.book_transfer_date!==null & singleCase.book_transfer_date!==""?"modal-trigger":""}
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_transfer_id , 
+                    processTracker :singleCase.book_transfer_nickname , 
                     processDate:  singleCase.book_transfer_date ,  
                     process:"book_transfer" , 
                     processThai: "โอนเล่มทะเบียน"} )}>วันที่โอนเล่มทะเบียน{' '}:</label>
@@ -933,7 +933,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.book_copy_received_date!==null & singleCase.book_copy_received_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_copy_received_id , 
+                    processTracker :singleCase.book_copy_received_nickname , 
                     processDate:  singleCase.book_copy_received_date ,  
                     process:"book_copy_received" , 
                     processThai: "รับสำเนาเล่ม"} )}>วันที่รับสำเนาเล่ม{' '}:</label>
@@ -956,7 +956,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.deposit_doc_to_new_bank_date!==null & singleCase.deposit_doc_to_new_bank_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.deposit_doc_to_new_bank_id , 
+                    processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
                     processDate:  singleCase.deposit_doc_to_new_bank_date ,  
                     process:"deposit_doc_to_new_bank" , 
                     processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
@@ -979,7 +979,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.submit_book_deposit_return_date!==null & singleCase.submit_book_deposit_return_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.submit_book_deposit_return_id , 
+                    processTracker :singleCase.submit_book_deposit_return_nickname , 
                     processDate:  singleCase.submit_book_deposit_return_date ,  
                     process:"submit_book_deposit_return" , 
                     processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
@@ -1002,7 +1002,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.book_received_back_date!==null & singleCase.book_received_back_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_received_back_id , 
+                    processTracker :singleCase.book_received_back_nickname , 
                     processDate:  singleCase.book_received_back_date ,  
                     process:"book_received_back" , 
                     processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
@@ -1025,7 +1025,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.cash_received_date!==null & singleCase.cash_received_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.cash_received_id , 
+                    processTracker :singleCase.cash_received_nickname , 
                     processDate:  singleCase.cash_received_date ,  
                     process:"cash_received" , 
                     processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
@@ -1048,7 +1048,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.book_deposit_received_date!==null & singleCase.book_deposit_received_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_deposit_received_id , 
+                    processTracker :singleCase.book_deposit_received_nickname , 
                     processDate:  singleCase.book_deposit_received_date ,  
                     process:"book_deposit_received" , 
                     processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
@@ -1071,7 +1071,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   className={singleCase.submit_book_to_new_finance_date!==null & singleCase.submit_book_to_new_finance_date!==""?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.submit_book_to_new_finance_id , 
+                    processTracker :singleCase.submit_book_to_new_finance_nickname , 
                     processDate:  singleCase.submit_book_to_new_finance_date ,  
                     process:"submit_book_to_new_finance" , 
                     processThai: "ส่งเล่มให้ไฟแนนซ์ใหม่"} )}>วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:</label>

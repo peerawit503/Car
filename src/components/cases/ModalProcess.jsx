@@ -103,7 +103,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
             <div className="row">
              <div className="col m6 content-radonly">
              <div className="col s6 m6 l6 content-radonly">
-                ชื่อผู้ดำเนินการ
+                Process Recorder / ชื่อผู้ดำเนินการ
                 <input
                 thousandSeparator={true}
                 value={currentProcess.processTracker}
@@ -118,7 +118,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
              </div> */}
 
              <div className="col m6 content">
-             วันที่
+             Date / วันที่
              <input
                   type="date"
                   value={date || currentDateFormat(currentProcess.processDate)}
