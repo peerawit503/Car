@@ -11,7 +11,7 @@ import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
 const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift, confirm_sub }) => {
-  
+
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
   const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
   const [renderDeposit, setrenderDeposit] = useState(false);
@@ -97,19 +97,21 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
 
 
   function ValidateCase(props) {
-    let result = []
+      setrenderDeposit(false)
+      let result = []
     if ((props.singleCase.status === 'receive' ||
       props.singleCase.status === 'contact_customer' ||
       props.singleCase.status === 'account_closing' ||
       props.singleCase.status === 'transfer_doc_received' ||
-      props.singleCase.status === 'transfer_doc_submitted') &&
+      props.singleCase.status === 'transfer_doc_submitted' ||
+      props.singleCase.status === 'book_received') &&
       singleCase.transfer_doc_received_date === '') {
-        if(singleCase.status === 'book_received'){
-          setisConfirm(false)
-        }
+      if (props.singleCase.status === 'book_received') {
+        setisConfirm(false)
+      }
       result.push(
-        <div className='row m12 s12'>
-          <div className='col m6'>
+        <div className='row col m6'>
+          <div className='col m12'>
             <div className='row col m12 no-margin'>
               <label>วันที่รับชุดโอน</label>
             </div>
@@ -130,26 +132,25 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
+ 
     if (singleCase.status === 'contact_customer' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')) {
       setisConfirm(false)
       //return +F2 button
-      return (
+      result.push(
         <div>
-          <div className="row center">
+          <div className="row col m6">
             <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
           </div>
-          <div className="row center">
+          <div className="row col m6">
             <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
           </div>
         </div>
       );
     }
-
-    if (props.singleCase.status === 'transfer_doc_received') {
+    if (props.singleCase.status === 'contact_customer') {
       setrenderDeposit(true)
-      setisConfirm(true)
-      return (
-        <div className="row center m4">
+       result.push (
+        <div className="row m4">
           <span className=" col s12 m12">
             <label>
               <input
@@ -175,6 +176,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
+
     // in case 7 submit_book_transfer
     if (props.singleCase.status === 'submit_book_transfer') {
       setisConfirm(true)
@@ -414,7 +416,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
-  
+
 
 
     //nomal case return Confirm button
@@ -438,20 +440,24 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
   }
 
   function RenderWorking() {
+  
+    return (
+      <h4 style={{ textAlign: "center" }}>รอ{translate(ReturnWorking())} </h4>
+    )
+  }
+  function ReturnWorking(){
     let status = singleCase.status
 
-    if(singleCase.status === 'car_check_up' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')){
+    if (singleCase.status === 'car_check_up' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
       status = 'submit_book_deposit_return'
-    }else if(singleCase.status === 'submit_book_deposit_return' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')){
+    } else if (singleCase.status === 'submit_book_deposit_return' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
       status = 'book_copy_received'
-    }else if(singleCase.status === 'book_copy_received' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')){
+    } else if (singleCase.status === 'book_copy_received' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
       status = 'deposit_doc_to_new_bank'
-    }else{
+    } else {
       status = caseStatusShift(singleCase.status)
     }
-    return (
-      <h4 style={{ textAlign: "center" }}>รอ{translate(status)} </h4>
-    )
+    return status
   }
 
   return (
@@ -476,7 +482,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         <div className="col s12 m12 content">
           <div className="col s4 m4 content"></div>
           <div className="col s4 m4 content">
-            <label>วันที่ดำเนินการ</label>
+            <label>วันที่{translate(ReturnWorking())} </label>
             <input
               type="date"
               value={date || currentDateFormat(Date())}
