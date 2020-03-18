@@ -399,28 +399,33 @@ const Cases = (props) => {
   const confirm = (singleCase,date,checkCar) => {
     console.log("deposit"+singleCase.f2_deposit_12);
     
-    if ((singleCase.status === "car_check_up" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
-      var data = JSON.stringify({ tracking: 'submit_book_deposit_return', user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
-    }else if ((singleCase.status === "submit_book_deposit_return" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
-      var data = JSON.stringify({ tracking: 'book_copy_received', user_id: props.user.id ,date:date});
-    }else if ((singleCase.status === "book_copy_received" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
-      var data = JSON.stringify({ tracking: 'deposit_doc_to_new_bank', user_id: props.user.id ,date:date});
-      }else if(singleCase.status === 'submit_book_transfer'){// if ส่งงานโอนทะเบียน sent car checkup
-      var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
-      console.log("incase 1");
-      }else if((singleCase.status === "transfer_doc_received" || singleCase.status === "deposit_doc_to_new_bank")){
-        console.log("incase 2");
-        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
+    if(singleCase.status === 'contact_customer'){
+      var data = JSON.stringify({ tracking: 'account_closing', user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
+    }else if(singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0){
+      var data = JSON.stringify({ tracking: 'book_received', user_id: props.user.id ,date:date });
       }else if((singleCase.status === "book_received" )){
-        console.log("incase 2");
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, submit_book_transfer_check:singleCase.submit_book_transfer_check});
-      }else if((singleCase.status === "account_closing" )){
-        console.log("incase 2");
-        var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
-      }else if (singleCase.status === 'book_received_back') {
-        var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date ,deposit_12:singleCase.f2_deposit_12 });
+        // if ((singleCase.status === "car_check_up" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+    //   var data = JSON.stringify({ tracking: 'submit_book_deposit_return', user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
+    // }else if ((singleCase.status === "submit_book_deposit_return" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+    //   var data = JSON.stringify({ tracking: 'book_copy_received', user_id: props.user.id ,date:date});
+    // }else if ((singleCase.status === "book_copy_received" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+    //   var data = JSON.stringify({ tracking: 'deposit_doc_to_new_bank', user_id: props.user.id ,date:date});
+    //   }else if(singleCase.status === 'submit_book_transfer'){// if ส่งงานโอนทะเบียน sent car checkup
+    //   var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
+    //   console.log("incase 1");
+    //   }else if((singleCase.status === "transfer_doc_received" || singleCase.status === "deposit_doc_to_new_bank")){
+    //     console.log("incase 2");
+    //     var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
+    //   }else if((singleCase.status === "account_closing" )){
+    //     console.log("incase 2");
+    //     var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date});
+    //   }else if (singleCase.status === 'book_received_back') {
+    //     var data = JSON.stringify({ tracking: nextStep(nextStep(singleCase.status)), user_id: props.user.id ,date:date ,deposit_12:singleCase.f2_deposit_12 });
       }else{
-        console.log("incase 3");
+        //nomal fasttrack
+        console.log("ft normal");
+        
         var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
       } 
       console.log('###### data ########');
@@ -558,8 +563,7 @@ const Cases = (props) => {
     var prevDate = '';
     if (state === 'receive') { prevDate = 'contact_customer'; }
     else if (state === 'contact_customer') { prevDate = 'account_closing' }
-    else if (state === 'account_closing') { prevDate = 'transfer_doc_received' }
-    else if (state === 'transfer_doc_received') { prevDate = 'transfer_doc_submitted' }
+    else if (state === 'account_closing') { prevDate = 'transfer_doc_submitted' }
     else if (state === 'transfer_doc_submitted') { prevDate = 'book_received' }
     else if (state === 'book_received') { prevDate = 'submit_book_transfer' }
     else if (state === 'submit_book_transfer') { prevDate = 'car_check_up' }
@@ -914,7 +918,7 @@ const Cases = (props) => {
             </div> */}
           </div>
           
-          <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} />
+          <ModalAddNote singleCase={singleCase} translate={translate} caseStatusShift={caseStatusShift} saveNote={saveNote} setSingleCase={setSingleCase}/>
           <ModalFastTrack singleCase={singleCase} confirm={confirm} translate={translate} statusDate={statusDate} caseStatusShift={caseStatusShift} confirm_sub={confirm_sub}/>
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate} saveProcess={saveProcess}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
