@@ -150,9 +150,32 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     return status
   }
 
+  function calculateProcessDate2(processBefore, processCurrent, status)
+  {
+
+      let result = [];
+      if (processCurrent === null || processCurrent === ''){
+        result.push(<div className="col s2 m4"> </div>);
+      }else{
+        var date1 = parseStringToDate(processBefore);
+      var date2 = parseStringToDate(processCurrent);
+      var returndate = Math.floor((date2 - date1) / (24 * 3600 * 1000));
+      result.push(
+        // <div className=" col s3 m1">
+        dateTimeFormatted(processCurrent)
+        // </div>
+      )
+      result.push(
+        <div className="col s2 m2">
+          ( {returndate} วัน )
+      </div>
+      )
+      }
+      return result;
+  }
   function calculateProcessDate(processBefore, processCurrent, status) {
     let result = [];
-    if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status) {
+    if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && singleCase.status !== 'account_closing') {
       let t = new Date(getbeforedateCurrent(status));
       if (status === 'submit_book_transfer' || status === 'deposit_doc_to_new_bank') {
         t.setDate(t.getDate() + 1)
@@ -168,7 +191,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
     if (processCurrent == null || processCurrent === '') {
 
-      result.push(<div className="col s2 m3"> </div>);
+      result.push(<div className="col s2 m4"> </div>);
     } else if (processCurrent != null && (processBefore == null || processBefore === '')) {
       result.push(
         dateTimeFormatted(processCurrent)
@@ -811,7 +834,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date, "transfer_doc_submitted")}>
+                  <div className={calculateColorFromDate(singleCase.account_closing_date, singleCase.transfer_doc_submitted_date, "transfer_doc_submitted")}>
                     {GenerateNote(singleCase.transfer_doc_submitted_note, "transfer_doc_submitted")}
                   </div>
                 </div>
@@ -826,7 +849,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ยื่นชุดโอน"} )}>วันที่ยื่นชุดโอน{' '}:</label>
               
                 </div>
-                {calculateProcessDate(singleCase.transfer_doc_received_date, singleCase.transfer_doc_submitted_date, "transfer_doc_received")}
+                {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_submitted_date, "transfer_doc_received")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['transfer_doc_submitted_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['transfer_doc_submitted_red']}</span>
                 </div>
