@@ -131,16 +131,17 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     setrendertransfer_check(false)
     setisConfirm(true)
     let result = []
+    let status = caseStatusShift(singleCase.status);
     //วันที่รับชุดโอน 2-6
-    if ((singleCase.status === 'contact_customer' ||
-      singleCase.status === 'account_closing' ||
-      singleCase.status === 'transfer_doc_submitted' ||
-      singleCase.status === 'book_received') &&
+    if ((status === 'account_closing' ||
+      status === 'transfer_doc_submitted' ||
+      status === 'book_received' ||
+      status === 'submit_book_transfer') &&
       (singleCase.case_source === 'Thanachart' ||
         singleCase.case_source === 'Kiatnakin') &&
       singleCase.transfer_doc_received_date === '') {
       //ถ้าอยู่ p6 แต่ยังไม่ได้กรอก ให้ปิดปุ่ม comfirm
-      if (singleCase.status === 'book_received') {
+      if (status === 'submit_book_transfer') {
         setisConfirm(false)
       }
       result.push(
@@ -167,7 +168,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       )
     }
     //รอปิดเล่ม และ ยังไม่ได้ทำ f2
-    if (singleCase.status === 'contact_customer' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')) {
+    if (status === 'account_closing' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')) {
       setisConfirm(false)
       result.push(
         <div>
@@ -179,7 +180,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       );
     }
     //รอปิดเล่ม กรอก มัดจำ
-    if (singleCase.status === 'contact_customer') {
+    if (status === 'account_closing') {
       setrenderDeposit(true)
       result.push(
         <div className="row m4">
@@ -209,12 +210,12 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       )
     }
     //รอส่งงานโอนทะเบียน
-    if (singleCase.status === 'book_received') {
+    if (status === 'submit_book_transfer') {
       setrendertransfer_check(true)
     }
 
     // in case 7 submit_book_transfer
-    if (singleCase.status === 'submit_book_transfer') {
+    if (status === 'car_check_up') {
       result.push(
         <div>
           <span className=" col s12 m12">

@@ -759,6 +759,7 @@ const Cases = (props) => {
 if((caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 == 0) || //in case 16 และ ไม่มีมัดจำ
     (caseInRow.status === 'book_deposit_received' && caseInRow.f2_deposit_12 > 0) || //in case 15 และ มีมัดจำ
     ((caseInRow.status === 'case_received' && caseInRow.f2_deposit_12 == 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer'))||// in case p14ไม่มีมัดจำ และ ct/dl
+    
     (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
       (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
       caseInRow.process == 'cancel' ){ //check alert
