@@ -399,7 +399,7 @@ const Cases = (props) => {
   const confirm = (singleCase,date,checkCar) => {
     console.log("deposit"+singleCase.f2_deposit_12);
     
-    if(singleCase.status === 'contact_customer' ||singleCase.status === 'deposit_doc_to_new_bank'||singleCase.status ==='submit_book_to_new_finance' ){ // status contack_customer send tracking = account_closing and deposit_12
+    if(singleCase.status === 'contact_customer' ||singleCase.status === 'deposit_doc_to_new_bank'||singleCase.status ==='submit_book_to_new_finance'  || singleCase.status === 'cash_received'){ // status contack_customer send tracking = account_closing and deposit_12
       var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
     }else if(singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0){ //status = account_closing send tracking = book_received 
       var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date });
@@ -756,13 +756,14 @@ const Cases = (props) => {
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-if((caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 == 0) || //in case 16 และ ไม่มีมัดจำ
+if(
+  (caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 === 0) || //in case 16 และ ไม่มีมัดจำ
     (caseInRow.status === 'book_deposit_received' && caseInRow.f2_deposit_12 > 0) || //in case 15 และ มีมัดจำ
-    ((caseInRow.status === 'case_received' && caseInRow.f2_deposit_12 == 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer'))||// in case p14ไม่มีมัดจำ และ ct/dl
-    
+    ((caseInRow.status === 'cash_received' && caseInRow.f2_deposit_12 === 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer'))||// in case p14ไม่มีมัดจำ และ ct/dl
+
     (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
       (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
-      caseInRow.process == 'cancel' ){ //check alert
+      caseInRow.process === 'cancel' ){ //check alert
       console.log("f2_deposit_12:"+caseInRow.f2_deposit_12);
       
       return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
