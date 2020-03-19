@@ -10,7 +10,7 @@ import CurrencyFormat from 'react-currency-format';
 import cartrustLogo from '../../img/cartrustLogo.svg'
 
 
-const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift, confirm_sub , setSingleCase}) => {
+const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift, confirm_sub, setSingleCase }) => {
 
   const [checkCar, setcheckCar] = useState({ d1: true, d2: false });
   const [checkDeposit, setcheckDeposit] = useState({ d1: true, d2: false });
@@ -100,10 +100,10 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     //  const {formattedValue, value} = values
     if (e.target.value === "") {
 
-      singleCase.submit_book_transfer_check= "";
+      singleCase.submit_book_transfer_check = "";
       setsubmit_book("")
     } else {
-      singleCase.submit_book_transfer_check= e.target.value;
+      singleCase.submit_book_transfer_check = e.target.value;
       setsubmit_book(e.target.value)
     }
     // console.log("handlechange"+singleCase.submit_book_transfer_check);
@@ -127,14 +127,19 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
 
 
   function ValidateCase_new() {
-      setrenderDeposit(false)
-      setisConfirm(true)
-      let result = []
-      if ((singleCase.status === 'contact_customer' ||
+    setrenderDeposit(false)
+    setrendertransfer_check(false)
+    setisConfirm(true)
+    let result = []
+    //วันที่รับชุดโอน 2-6
+    if ((singleCase.status === 'contact_customer' ||
       singleCase.status === 'account_closing' ||
       singleCase.status === 'transfer_doc_submitted' ||
       singleCase.status === 'book_received') &&
+      (singleCase.case_source === 'Thanachart' ||
+        singleCase.case_source === 'Kiatnakin') &&
       singleCase.transfer_doc_received_date === '') {
+      //ถ้าอยู่ p6 แต่ยังไม่ได้กรอก ให้ปิดปุ่ม comfirm
       if (singleCase.status === 'book_received') {
         setisConfirm(false)
       }
@@ -161,110 +166,22 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
-
-      if(singleCase.status === 'contact_customer' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')){
-        setisConfirm(false)
-        result.push(
-          <div>
-            <div className="row col m6">
-              <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
-              <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
-            </div>
-          </div>
-        );
-      }
-
-      if (singleCase.status === 'contact_customer') {
-      setrenderDeposit(true)
-      result.push (
-          <div className="row m4">
-            <span className=" col s12 m12">
-              <label>
-                <input
-                  type="checkbox"
-                  name="difference_y"
-                  checked={checkDeposit.d1}
-                  onChange={handlecheckDeposit_1}
-                />
-                <span>มีมัดจำ</span>
-              </label>
-            </span>
-            <span className=" col s12 m12">
-              <label>
-                <input
-                  type="checkbox"
-                  name="difference_n"
-                  checked={checkDeposit.d2}
-                  onChange={handlecheckDeposit_2}
-                />
-                <span>ไม่มีมัดจำ</span>
-              </label>
-            </span>
-          </div>
-        )
-      }
-
-      if (singleCase.status === 'book_received') {
-        setrendertransfer_check(true)
-      }
-      return result;
-  }
-
-
-  function ValidateCase(props) {
-      setrenderDeposit(false)
-      let result = []
-    if ((props.singleCase.status === 'receive' ||
-      props.singleCase.status === 'contact_customer' ||
-      props.singleCase.status === 'account_closing' ||
-      props.singleCase.status === 'transfer_doc_received' ||
-      props.singleCase.status === 'transfer_doc_submitted' ||
-      props.singleCase.status === 'book_received') &&
-      singleCase.transfer_doc_received_date === '') {
-      if (props.singleCase.status === 'book_received') {
-        setisConfirm(false)
-      }
-      result.push(
-        <div className='row col m6'>
-          <div className='col m12'>
-            <div className='row col m12 no-margin'>
-              <label>วันที่รับชุดโอน</label>
-            </div>
-            <div className='row m12'>
-              <div className='col m6'>
-                <input
-                  type="date"
-                  value={date || currentDateFormat(Date())}
-                  name="receive_date"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='col m6'>
-                <button className="waves-effect btn blue lighten left " onClick={() => confirm_sub(singleCase, date, checkCar)}>Confirm</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
- 
+    //รอปิดเล่ม และ ยังไม่ได้ทำ f2
     if (singleCase.status === 'contact_customer' && (singleCase.F2_status === 'None' || singleCase.F2_status === null || singleCase.F2_status === '')) {
       setisConfirm(false)
-      //return +F2 button
       result.push(
         <div>
           <div className="row col m6">
             <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
-          </div>
-          <div className="row col m6">
             <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
           </div>
         </div>
       );
     }
-    if (props.singleCase.status === 'contact_customer') {
+    //รอปิดเล่ม กรอก มัดจำ
+    if (singleCase.status === 'contact_customer') {
       setrenderDeposit(true)
-       result.push (
+      result.push(
         <div className="row m4">
           <span className=" col s12 m12">
             <label>
@@ -291,11 +208,14 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
+    //รอส่งงานโอนทะเบียน
+    if (singleCase.status === 'book_received') {
+      setrendertransfer_check(true)
+    }
 
     // in case 7 submit_book_transfer
-    if (props.singleCase.status === 'submit_book_transfer') {
-      setisConfirm(true)
-      return (
+    if (singleCase.status === 'submit_book_transfer') {
+      result.push(
         <div>
           <span className=" col s12 m12">
             <label>
@@ -322,8 +242,17 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
       )
     }
+    return result;
+  }
 
-  
+
+  function ValidateCase(props) {
+    setrenderDeposit(false)
+    let result = []
+
+
+
+
     //in case 11 deposit_doc_to_new_bank
     if (props.singleCase.status === 'deposit_doc_to_new_bank') {
       setisConfirm(true)
@@ -456,28 +385,35 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
 
   function RenderWorking() {
     return (
-      <h4 style={{ textAlign: "center" }}>รอ{translate(ReturnWorking())} </h4>
+      <h4 style={{ textAlign: "center" }}>รอ{translate(caseStatusShift(singleCase.status))} </h4>
     )
   }
-  function ReturnWorking(){
-    let status = singleCase.status
-    if (singleCase.status === 'car_check_up' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
-      status = 'submit_book_deposit_return'
-    } else if (singleCase.status === 'submit_book_deposit_return' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
-      status = 'book_copy_received'
-    } else if (singleCase.status === 'book_copy_received' && (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust')) {
-      status = 'deposit_doc_to_new_bank'
-    } 
-    
-    else if (singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0){
-      status = 'book_received'
-    }
-    
-    else {
-      status = caseStatusShift(singleCase.status)
-    }
-    return status
-  }
+  // function ReturnWorking() {
+  //   let status = ""
+  //   //in case DEALER & Cartrust
+  //   if (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust') {
+  //     if (singleCase.f2_deposit_12 > 0) {//in case มีมีดจำ
+  //       if (singleCase.status === 'book_received') { status = 'deposit_doc_to_new_bank' } //6 -> 11
+  //       else if (singleCase.status === 'deposit_doc_to_new_bank') { status = 'cash_received' } // 11 -> 14
+  //       else if (singleCase.status === 'cash_received') { status = 'submit_book_deposit_return' }//14 -> 12 
+  //       else if (singleCase.status === 'submit_book_deposit_return') { status = 'book_deposit_received' } // 12-> 15
+  //     }
+  //     else if (singleCase.f2_deposit_12 == 0) { //in case ไม่มีมัดจำ
+  //       if (singleCase.status === 'book_transfer') { status = 'book_received_back' } //9 ->13
+  //       else if (singleCase.status === 'book_received_back') { status = 'deposit_doc_to_new_bank' } //13-> 11
+  //       else if (singleCase.status === 'deposit_doc_to_new_bank') { status = 'cash_received' } // 11->14
+  //     }
+  //   }
+
+  //   else if (singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0 && (singleCase.case_source === 'Thanachart' || singleCase.case_source === 'Kiatnakin')) {
+  //     status = 'book_received' //3->6
+  //   }
+
+  //   else {
+  //     status = caseStatusShift(singleCase.status)
+  //   }
+  //   return status
+  // }
 
   return (
     <div id="modalFastTrack" className="modal modal-fixed-footer">
@@ -501,7 +437,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         <div className="col s12 m12 content">
           <div className="col s4 m4 content"></div>
           <div className="col s4 m4 content">
-            <label>วันที่{translate(ReturnWorking())} </label>
+            <label>วันที่{translate(caseStatusShift(singleCase.status))} </label>
             <input
               type="date"
               value={date || currentDateFormat(Date())}
@@ -510,7 +446,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
             />
           </div>
         </div>
-        <ValidateCase_new/>
+        <ValidateCase_new />
         <div className='col s4 m4 content' style={{ display: renderDeposit && checkDeposit.d1 ? 'block' : 'none' }} >
           <label>จ่ายมัดจำ (บาท) </label>
           <CurrencyFormat
@@ -529,15 +465,15 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
           />
         </div>
         <div className='col s4 m4 content' style={{ display: rendertransfer_check ? 'block' : 'none' }} >
-            <label>ส่งตรวจ</label>
-            <input
-              type="text"
-              name="submit_book_transfer_check"
-              value={submit_book || singleCase.submit_book_transfer_check || ""}
-              onChange={handleChangeF2T}
-              className="validate"
-            />
-          </div>
+          <label>ส่งตรวจ</label>
+          <input
+            type="text"
+            name="submit_book_transfer_check"
+            value={submit_book || singleCase.submit_book_transfer_check || ""}
+            onChange={handleChangeF2T}
+            className="validate"
+          />
+        </div>
       </div>
       <Renderfooter />
     </div>

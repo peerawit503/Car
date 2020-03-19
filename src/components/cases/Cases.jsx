@@ -86,21 +86,21 @@ const Cases = (props) => {
     {
       title: 'Case Status', field: 'status',
       lookup: {
-        'receive': 'รอติดต่อลูกค้า',
-        'contact_customer': 'รอปิดเล่ม',
-        'account_closing': 'รอยื่นชุดโอน',
-        'transfer_doc_submitted': 'รอได้รับเล่ม',
-        'book_received': 'รอส่งงานโอนทะเบียน',
-        'submit_book_transfer': 'รอตรวจสภาพรถ',
-        'car_check_up': 'รอโอนเล่มทะเบียน',
-        'book_transfer': 'รอรับสำเนาเล่ม',
-        'book_copy_received': 'รอส่งเอกสารเบิกเงินธนาคารใหม่',
-        'deposit_doc_to_new_bank': 'รอทำเรื่องเบิกมัดจำคืน',
-        'submit_book_deposit_return': 'รอรับเล่มคืน',
-        'book_received_back': 'รอเงินเข้าบัญชีคาร์ทรัส',
-        'cash_received': 'รอเงินมัดจำคืนเข้าบัญชี',
-        'book_deposit_received': 'รอส่งเล่มให้ไฟแนนซ์ใหม่',
-        'submit_book_to_new_finance': 'เสร็จสิ้น',
+        'receive': 'รับเคสแล้ว',
+        'contact_customer': 'ติดต่อลูกค้าแล้ว',
+        'account_closing': 'ปิดเล่มแล้ว',
+        'transfer_doc_submitted': 'ยื่นชุดโอนแล้ว',
+        'book_received': 'ได้รับเล่มแล้ว',
+        'submit_book_transfer': 'ส่งงานโอนทะเบียนแล้ว',
+        'car_check_up': 'ตรวจสภาพรถแล้ว',
+        'book_transfer': 'โอนเล่มทะเบียนแล้ว',
+        'book_copy_received': 'รับสำเนาเล่มแล้ว',
+        'deposit_doc_to_new_bank': 'ส่งเอกสารเบิกเงินธนาคารใหม่แล้ว',
+        'cash_received': 'เงินเข้าบัญชีคาร์ทรัสแล้ว',
+        'book_received_back': 'รับเล่มคืนแล้ว',
+        'submit_book_to_new_finance': 'ส่งเล่มให้ไฟแนนซ์ใหม่แล้ว',
+        'submit_book_deposit_return': 'ทำเรื่องเบิกมัดจำคืนแล้ว',
+        'book_deposit_received': 'เงินมัดจำคืนเข้าบัญชีแล้ว',
       },
       //  defaultGroupOrder: 0,
       sorting: false
@@ -399,21 +399,22 @@ const Cases = (props) => {
   const confirm = (singleCase,date,checkCar) => {
     console.log("deposit"+singleCase.f2_deposit_12);
     
-    if(singleCase.status === 'contact_customer'){
-      var data = JSON.stringify({ tracking: 'account_closing', user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
-    }else if(singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0){
-      var data = JSON.stringify({ tracking: 'book_received', user_id: props.user.id ,date:date });
-      }else if((singleCase.status === "book_received" )){
-        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, submit_book_transfer_check:singleCase.submit_book_transfer_check});
-        // if ((singleCase.status === "car_check_up" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
+    if(singleCase.status === 'contact_customer' ||singleCase.status === 'deposit_doc_to_new_bank'||singleCase.status ==='submit_book_to_new_finance' ){ // status contack_customer send tracking = account_closing and deposit_12
+      var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
+    }else if(singleCase.status === 'account_closing' && singleCase.f2_deposit_12 > 0){ //status = account_closing send tracking = book_received 
+      var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date });
+      }else if((singleCase.status === "book_received" )){ // status = book_received send tracking = subnit_book_transfer and submit_book_transfer_check
+        var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date, submit_book_transfer_check:singleCase.submit_book_transfer_check});
+      }else if(singleCase.status === 'submit_book_transfer'){// status = submit_book_transfer send tracking car_check_up and yes_no
+      var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
+      }else if(singleCase.status === 'deposit_doc_to_new_bank'){// status = submit_book_transfer send tracking car_check_up and yes_no
+      var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
+      // if ((singleCase.status === "car_check_up" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
     //   var data = JSON.stringify({ tracking: 'submit_book_deposit_return', user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
     // }else if ((singleCase.status === "submit_book_deposit_return" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
     //   var data = JSON.stringify({ tracking: 'book_copy_received', user_id: props.user.id ,date:date});
     // }else if ((singleCase.status === "book_copy_received" && (singleCase.case_source === "Cartrust" || singleCase.case_source === "Dealer"))){
     //   var data = JSON.stringify({ tracking: 'deposit_doc_to_new_bank', user_id: props.user.id ,date:date});
-    //   }else if(singleCase.status === 'submit_book_transfer'){// if ส่งงานโอนทะเบียน sent car checkup
-    //   var data = JSON.stringify({ tracking: 'car_check_up', user_id: props.user.id ,date:date, yes_no:checkCar.d1?"yes":"no"});
-    //   console.log("incase 1");
     //   }else if((singleCase.status === "transfer_doc_received" || singleCase.status === "deposit_doc_to_new_bank")){
     //     console.log("incase 2");
     //     var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date, deposit_12:singleCase.f2_deposit_12});
@@ -426,7 +427,7 @@ const Cases = (props) => {
         //nomal fasttrack
         console.log("ft normal");
         
-        var data = JSON.stringify({ tracking: nextStep(singleCase.status), user_id: props.user.id ,date:date});
+        var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date});
       } 
       console.log('###### data ########');
       console.log(data);
@@ -561,29 +562,35 @@ const Cases = (props) => {
 
   function nextStep(state) {
     var prevDate = '';
+    //1 -> 2
     if (state === 'receive') { prevDate = 'contact_customer'; }
+    //2 -> 3
     else if (state === 'contact_customer') { prevDate = 'account_closing' }
+    //3 -> 5
     else if (state === 'account_closing') { prevDate = 'transfer_doc_submitted' }
+    //5 -> 6
     else if (state === 'transfer_doc_submitted') { prevDate = 'book_received' }
+    //6 -> 7
     else if (state === 'book_received') { prevDate = 'submit_book_transfer' }
+    //7 -> 8
     else if (state === 'submit_book_transfer') { prevDate = 'car_check_up' }
+    //8 -> 9
     else if (state === 'car_check_up') { prevDate = 'book_transfer' }
+    //9 -> 10
     else if (state === 'book_transfer') { prevDate = 'book_copy_received' }
+    //10 ->11
     else if (state === 'book_copy_received') { prevDate = 'deposit_doc_to_new_bank' }
-    else if (state === 'deposit_doc_to_new_bank') { prevDate = 'submit_book_deposit_return' }
-    else if (state === 'submit_book_deposit_return') { prevDate = 'book_received_back' }
-    else if (state === 'book_received_back') { prevDate = 'cash_received' }
-    else if (state === 'cash_received') {
-      //for skip 14 to 16 if no deposit received
-      if (singleCase.f2_old_finance_transfer_fee === null || singleCase.f2_old_finance_transfer_fee <= 0) {
-        prevDate = 'submit_book_to_new_finance'
-      } else {
-        prevDate = 'book_deposit_received'
-      }
-    }
-    else if (state === 'book_deposit_received') { prevDate = 'submit_book_to_new_finance' }
-    else if (state === 'submit_book_to_new_finance') { prevDate = 'submit_book_to_new_finance' }
-
+    //11 ->14
+    else if (state === 'deposit_doc_to_new_bank') { prevDate = 'cash_received' }
+    //14 -> 13 
+    else if (state === 'cash_received') { prevDate = 'book_received_back' }
+    //13 -> 16
+    else if (state === 'book_received_back') { prevDate = 'submit_book_to_new_finance' }
+    //16 -> 12
+    else if (state === 'submit_book_to_new_finance') { prevDate = 'submit_book_deposit_return' }
+    //12 -> 15
+    else if (state === 'submit_book_deposit_return') { prevDate = 'book_deposit_received' }
+ 
     return prevDate;
   }
 
@@ -749,13 +756,16 @@ const Cases = (props) => {
     let alertRed = caseInRow.status + "_red";
     let alertOrange = caseInRow.status + "_orange";
 
-    if ((caseInRow.status == 'submit_book_to_new_finance') ||
-     (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||
-      (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||
-      caseInRow.process == 'cancel' ) {
+if((caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 == 0) || //in case 16 และ ไม่มีมัดจำ
+    (caseInRow.status === 'book_deposit_received' && caseInRow.f2_deposit_12 > 0) || //in case 15 และ มีมัดจำ
+    ((caseInRow.status === 'case_received' && caseInRow.f2_deposit_12 == 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer'))||// in case p14ไม่มีมัดจำ และ ct/dl
+    (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
+      (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
+      caseInRow.process == 'cancel' ){ //check alert
+      console.log("f2_deposit_12:"+caseInRow.f2_deposit_12);
+      
       return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
     }
-
     else {
       return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
     }
@@ -767,28 +777,36 @@ const Cases = (props) => {
 
 
   function caseStatusShift(state) {
-    let nextstate = "";
-    if (state === 'receive') { nextstate = 'contact_customer' }
-    else if (state === 'contact_customer') { nextstate = 'account_closing' }
-    else if (state === 'account_closing') { nextstate = 'transfer_doc_submitted' }
-    else if (state === 'transfer_doc_submitted') { nextstate = 'book_received' }
-    else if (state === 'book_received') { nextstate = 'submit_book_transfer' }
-    else if (state === 'submit_book_transfer') { nextstate = 'car_check_up' }
-    else if (state === 'car_check_up') { nextstate = 'book_transfer' }
-    else if (state === 'book_transfer') { nextstate = 'book_copy_received' }
-    else if (state === 'book_copy_received') { nextstate = 'deposit_doc_to_new_bank' }
-    else if (state === 'deposit_doc_to_new_bank') { nextstate = 'submit_book_deposit_return' }
-    else if (state === 'submit_book_deposit_return') { nextstate = 'book_received_back' }
-    else if (state === 'book_received_back') { nextstate = 'cash_received' }
-    else if (state === 'cash_received') { nextstate = 'book_deposit_received' }
-    else if (state === 'book_deposit_received') { nextstate = 'submit_book_to_new_finance' }
-    else if (state === 'submit_book_to_new_finance') { nextstate = 'submit_book_to_new_finance' }
-    return nextstate;
+    let status = ""
+    //in case DEALER & Cartrust
+    if (singleCase.case_source === 'Dealer' || singleCase.case_source === 'Cartrust') {
+      if (singleCase.f2_deposit_12 > 0) {//in case มีมีดจำ
+        if (state === 'book_received') { status = 'deposit_doc_to_new_bank' } //6 -> 11
+        else if (state === 'deposit_doc_to_new_bank') { status = 'cash_received' } // 11 -> 14
+        else if (state === 'cash_received') { status = 'submit_book_deposit_return' }//14 -> 12 
+        else if (state === 'submit_book_deposit_return') { status = 'book_deposit_received' } // 12-> 15
+      }
+      else if (singleCase.f2_deposit_12 == 0) { //in case ไม่มีมัดจำ
+        if (state === 'book_transfer') { status = 'book_received_back' } //9 ->13
+        else if (state === 'book_received_back') { status = 'deposit_doc_to_new_bank' } //13-> 11
+        else if (state === 'deposit_doc_to_new_bank') { status = 'cash_received' } // 11->14
+      }
+    }
+
+    else if (state === 'account_closing' 
+    && singleCase.f2_deposit_12 > 0
+     && (singleCase.case_source === 'Thanachart' || singleCase.case_source === 'Kiatnakin')
+     ) {
+      status = 'book_received' //3->6
+    }
+   
+    if(status===''){
+      return nextStep(state)
+    }else{
+      return status
+    }
+
   }
-
-
- 
-
 
   return (
     <>
