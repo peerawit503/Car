@@ -174,14 +174,18 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       return result;
   }
   function calculateProcessDate(processBefore, processCurrent, status) {
+    
     let result = [];
-    if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && singleCase.status !== 'account_closing') {
-      let t = new Date(getbeforedateCurrent(status));
-      if (status === 'submit_book_transfer' || status === 'deposit_doc_to_new_bank') {
-        t.setDate(t.getDate() + 1)
-      }
-      processCurrent = t.getDay() + ", " + t.getDate() + " " + monthNotoWord(t.getMonth()) + " " + t.getFullYear();
-      console.log("processCurrent:" + processCurrent);
+    // if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && singleCase.status !== 'account_closing' && status !== 'transfer_doc_received' && status !== 'car_check_up'  && status !== 'book_received' && status !== 'cash_received') {
+    //   let t = new Date(getbeforedateCurrent(status));
+    //   if (status === 'submit_book_transfer' || status === 'deposit_doc_to_new_bank') {
+    //     t.setDate(t.getDate() + 1)
+    //   }
+    //   processCurrent = t.getDay() + ", " + t.getDate() + " " + monthNotoWord(t.getMonth()) + " " + t.getFullYear();
+    //   console.log("processCurrent:" + processCurrent);
+    // }
+    if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && status === 'transfer_doc_received') {
+      result.push(<div className="col s2 m4"> </div>);
     }
 
     if ((processBefore === null || processBefore === '')) {
@@ -290,6 +294,161 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
   //   // }
 
   // }
+
+  function deposit_doc_to_new_bank_and_book_receive_back(){
+    if((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 === 0){
+      return(<div className="row" >
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.book_transfer_date, singleCase.book_received_back_date, "book_received_back")}>
+          {GenerateNote(singleCase.book_received_back_note, "book_received_back")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.book_received_back_date!==null & singleCase.book_received_back_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.book_received_back_nickname , 
+          processDate:  singleCase.book_received_back_date ,  
+          process:"book_received_back" , 
+          processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
+
+      </div>
+      {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_received_back_date, "cash_received")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['book_received_back_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_received_back_red']}</span>
+      </div>
+    </div>)
+    }else{
+      return(<div className="row">
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date, "deposit_doc_to_new_bank")}>
+          {GenerateNote(singleCase.deposit_doc_to_new_bank_note, "deposit_doc_to_new_bank")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.deposit_doc_to_new_bank_date!==null & singleCase.deposit_doc_to_new_bank_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
+          processDate:  singleCase.deposit_doc_to_new_bank_date ,  
+          process:"deposit_doc_to_new_bank" , 
+        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
+     
+      </div>
+      {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date, "book_copy_received")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['deposit_doc_to_new_bank_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['deposit_doc_to_new_bank_red']}</span>
+      </div>
+    </div>)
+    }
+    
+  }
+
+
+  function cash_received_and_book_received_back_date(){
+    if((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 === 0){
+      return(<div className="row">
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.deposit_doc_to_new_bank_date, "deposit_doc_to_new_bank")}>
+          {GenerateNote(singleCase.deposit_doc_to_new_bank_note, "deposit_doc_to_new_bank")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.deposit_doc_to_new_bank_date!==null & singleCase.deposit_doc_to_new_bank_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
+          processDate:  singleCase.deposit_doc_to_new_bank_date ,  
+          process:"deposit_doc_to_new_bank" , 
+        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
+     
+      </div>
+      {calculateProcessDate(singleCase.book_received_back_date, singleCase.deposit_doc_to_new_bank_date, "book_received_back")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['deposit_doc_to_new_bank_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['deposit_doc_to_new_bank_red']}</span>
+      </div>
+    </div>)
+    
+    }else{
+      return( <div className="row">
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "cash_received")}>
+          {GenerateNote(singleCase.cash_received_note, "cash_received")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.cash_received_date!==null & singleCase.cash_received_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.cash_received_nickname , 
+          processDate:  singleCase.cash_received_date ,  
+          process:"cash_received" , 
+          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
+     
+      </div>
+      {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "deposit_doc_to_new_bank")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['cash_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['cash_received_red']}</span>
+      </div>
+    </div>)
+    }
+  }
+
+  function book_received_back_and_cash_received(){
+    if((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 === 0){
+      return( <div className="row">
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "cash_received")}>
+          {GenerateNote(singleCase.cash_received_note, "cash_received")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.cash_received_date!==null & singleCase.cash_received_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.cash_received_nickname , 
+          processDate:  singleCase.cash_received_date ,  
+          process:"cash_received" , 
+          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
+     
+      </div>
+      {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "deposit_doc_to_new_bank")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['cash_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['cash_received_red']}</span>
+      </div>
+    </div>)
+    
+    }else{
+      return(<div className="row" >
+      <div className="col s3 m1">
+        <div className={calculateColorFromDate(singleCase.cash_received_date, singleCase.book_received_back_date, "book_received_back")}>
+          {GenerateNote(singleCase.book_received_back_note, "book_received_back")}
+        </div>
+      </div>
+      <div className="summaryIcon-div col s5 m4">
+      <label 
+        className={singleCase.book_received_back_date!==null & singleCase.book_received_back_date!==""?"modal-trigger":""} 
+        href="#modalProcess" 
+        onClick = {() => setCurrentProcess({
+          processTracker :singleCase.book_received_back_nickname , 
+          processDate:  singleCase.book_received_back_date ,  
+          process:"book_received_back" , 
+          processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
+
+      </div>
+      {calculateProcessDate(singleCase.cash_received_date, singleCase.book_received_back_date, "cash_received")}
+      <div className="col s2 m3">
+        KPI : <span style={{ color: 'orange' }}>{kpi['book_received_back_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_received_back_red']}</span>
+      </div>
+    </div>
+      )
+    }
+  }
 
   function dateTimeFormatted(sringDate) {
     let result = []
@@ -440,7 +599,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           </div>
         </Popup>
       )
-    } else if ((status === 'submit_book_deposit_return' || status === 'book_deposit_received') && singleCase.f2_deposit_12 == 0) {
+    } else if ((status === 'submit_book_deposit_return' || status === 'book_deposit_received' ) && singleCase.f2_deposit_12 === 0 && (singleCase.case_source === 'Kiatnakin' || singleCase.case_source === 'Thanachart')) {
       return (
         <Popup
           trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
@@ -453,6 +612,74 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         </Popup>
       )
     }
+    else if ((status === 'submit_book_transfer' || status === 'car_check_up' || status === 'book_transfer' || status === 'book_received_back' || status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 !== 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer')) {
+      return (
+        <Popup
+          trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+          position="bottom center"
+          closeOnDocumentClick
+        >
+          <div>
+            มีมัดจำ
+          </div>
+        </Popup>
+      )
+    }
+
+    else if (( status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 === 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer')) {
+      return (
+        <Popup
+          trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+          position="bottom center"
+          closeOnDocumentClick
+        >
+          <div>
+            ไม่มีมัดจำ
+          </div>
+        </Popup>
+      )
+    }
+
+    else if ( status === 'transfer_doc_submitted'  && singleCase.f2_deposit_12 !== 0  && (singleCase.case_source === 'Kiatnakin' || singleCase.case_source === 'Thanachart')) {
+      return (
+        <Popup
+          trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+          position="bottom center"
+          closeOnDocumentClick
+        >
+          <div>
+            ไม่มีมัดจำ
+          </div>
+        </Popup>
+      )
+    }else if (status === 'transfer_doc_received' && (singleCase.transfer_doc_received_date === '' || singleCase.transfer_doc_received_date === null) && (singleCase.case_source === 'Kiatnakin' ||singleCase.case_source === 'Thanachart') ){
+      return (
+        <Popup
+          trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+          position="bottom center"
+          closeOnDocumentClick
+        >
+          <div>
+            ยังไม่ได้กรอกวันรับชุดโอน
+          </div>
+        </Popup>
+      )
+    }
+    else if ((status === 'transfer_doc_received' || status === 'book_copy_received' || status === 'submit_book_to_new_finance') && (singleCase.transfer_doc_received_date === '' || singleCase.transfer_doc_received_date === null) && (singleCase.case_source === 'Cartrust' ||singleCase.case_source === 'Dealer') ){
+      return (
+        <Popup
+          trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
+          position="bottom center"
+          closeOnDocumentClick
+        >
+          <div>
+            ไม่มี Process นี้ใน case source {singleCase.case_source}
+          </div>
+        </Popup>
+      )
+    }
+
+  
     return <img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />
   }
 
@@ -808,9 +1035,9 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row" >
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date, "transfer_doc_received")}>
+                  <div className={calculateColorFromDate(singleCase.contact_customer_date, singleCase.transfer_doc_received_date, "transfer_doc_received")}>
                     {GenerateNote(singleCase.transfer_doc_received_note, "transfer_doc_received")}
                   </div>
                 </div>
@@ -825,7 +1052,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "รับชุดโอน"} )}>วันที่รับชุดโอน{' '}:</label>
                 
                 </div>
-                {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_received_date, "account_closing")}
+                {calculateProcessDate(singleCase.contact_customer_date, singleCase.transfer_doc_received_date, "transfer_doc_received")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['transfer_doc_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['transfer_doc_received_red']}</span>
                 </div>
@@ -857,7 +1084,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date, "book_received")}>
+                  <div className={calculateColorFromDate(((singleCase.case_source === 'Kiatnakin' || singleCase.case_source === 'Thanachart' ) && singleCase.f2_deposit_12 !== 0 )?singleCase.account_closing_date:singleCase.transfer_doc_submitted_date, singleCase.book_received_date, "book_received")}>
                     {GenerateNote(singleCase.book_received_note, "book_received")}
                   </div>
                 </div>
@@ -872,7 +1099,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ได้รับเล่ม"} )}>วันที่ได้รับเล่ม{' '}:</label>
             
                 </div>
-                {calculateProcessDate(singleCase.transfer_doc_submitted_date, singleCase.book_received_date, "transfer_doc_submitted")}
+                {calculateProcessDate(((singleCase.case_source === 'Kiatnakin' || singleCase.case_source === 'Thanachart' ) && singleCase.f2_deposit_12 !== 0 )?singleCase.account_closing_date:singleCase.transfer_doc_submitted_date, singleCase.book_received_date, "transfer_doc_submitted")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['book_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_received_red']}</span>
                 </div>
@@ -905,13 +1132,13 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date, "car_check_up")}>
+                  <div className={calculateColorFromDate(singleCase.submit_book_transfer_date, (singleCase.car_check_up_yn==='no')?'':singleCase.car_check_up_date, "car_check_up")}>
                     {GenerateNote(singleCase.car_check_up, "car_check_up")}
                   </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
                 <label 
-                  className={singleCase.car_check_up_date!==null & singleCase.car_check_up_date!==""?"modal-trigger":""} 
+                  className={(singleCase.car_check_up_date!==null & singleCase.car_check_up_date!=="" && singleCase.car_check_up_yn==='yes')?"modal-trigger":""} 
                   href="#modalProcess" 
                   onClick = {() => setCurrentProcess({
                     processTracker :singleCase.car_check_up_nickname , 
@@ -920,7 +1147,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ตรวจสภาพรถ"} )}>วันที่ตรวจสภาพรถ{' '}:</label>
                 
                 </div>
-                {calculateProcessDate(singleCase.submit_book_transfer_date, singleCase.car_check_up_date, "submit_book_transfer")}
+                {calculateProcessDate(singleCase.submit_book_transfer_date, (singleCase.car_check_up_yn==='no')?'':singleCase.car_check_up_date, "car_check_up")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['car_check_up_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['car_check_up_red']}</span>
                 </div>
@@ -928,7 +1155,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.car_check_up_date, singleCase.book_transfer_date, "book_transfer")}>
+                  <div className={calculateColorFromDate((singleCase.car_check_up_yn==='yes')?singleCase.car_check_up_date:singleCase.submit_book_transfer_date, singleCase.book_transfer_date, "book_transfer")}>
                     {GenerateNote(singleCase.book_transfer_note, "book_transfer")}
                   </div>
                 </div>
@@ -943,7 +1170,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "โอนเล่มทะเบียน"} )}>วันที่โอนเล่มทะเบียน{' '}:</label>
                
                 </div>
-                {calculateProcessDate(singleCase.car_check_up_date, singleCase.book_transfer_date, "car_check_up")}
+                {calculateProcessDate((singleCase.car_check_up_yn==='yes')?singleCase.car_check_up_date:singleCase.submit_book_transfer_date, singleCase.book_transfer_date, "car_check_up")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['book_transfer_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_transfer_red']}</span>
                 </div>
@@ -952,7 +1179,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <div className="row">
                 <div className="col s3 m1">
                   <div className={calculateColorFromDate(singleCase.book_transfer_date, singleCase.book_copy_received_date, "book_copy_received")}>
-                    {GenerateNote(singleCase.book_copy_received_note, "book_copy_received_note")}
+                    {GenerateNote(singleCase.book_copy_received_note, "book_copy_received")}
                   </div>
                 </div>
                 <div className="summaryIcon-div col s5 m4">
@@ -972,124 +1199,18 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date, "deposit_doc_to_new_bank")}>
-                    {GenerateNote(singleCase.deposit_doc_to_new_bank_note, "deposit_doc_to_new_bank")}
-                  </div>
-                </div>
-                <div className="summaryIcon-div col s5 m4">
-                <label 
-                  className={singleCase.deposit_doc_to_new_bank_date!==null & singleCase.deposit_doc_to_new_bank_date!==""?"modal-trigger":""} 
-                  href="#modalProcess" 
-                  onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
-                    processDate:  singleCase.deposit_doc_to_new_bank_date ,  
-                    process:"deposit_doc_to_new_bank" , 
-                    processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
-               
-                </div>
-                {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date, "book_copy_received")}
-                <div className="col s2 m3">
-                  KPI : <span style={{ color: 'orange' }}>{kpi['deposit_doc_to_new_bank_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['deposit_doc_to_new_bank_red']}</span>
-                </div>
-              </div>
+                   
+              {deposit_doc_to_new_bank_and_book_receive_back()}
+              {cash_received_and_book_received_back_date()}
+              {book_received_back_and_cash_received()}
+
+
+              
+
 
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
-                    {GenerateNote(singleCase.submit_book_deposit_return_note, "submit_book_deposit_return")}
-                  </div>
-                </div>
-                <div className="summaryIcon-div col s5 m4">
-                <label 
-                  className={singleCase.submit_book_deposit_return_date!==null & singleCase.submit_book_deposit_return_date!==""?"modal-trigger":""} 
-                  href="#modalProcess" 
-                  onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.submit_book_deposit_return_nickname , 
-                    processDate:  singleCase.submit_book_deposit_return_date ,  
-                    process:"submit_book_deposit_return" , 
-                    processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
-             
-                </div>
-                {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.submit_book_deposit_return_date, "deposit_doc_to_new_bank")}
-                <div className="col s2 m3">
-                  KPI : <span style={{ color: 'orange' }}>{kpi['submit_book_deposit_return_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['submit_book_deposit_return_red']}</span>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date, "book_received_back")}>
-                    {GenerateNote(singleCase.book_received_back_note, "book_received_back")}
-                  </div>
-                </div>
-                <div className="summaryIcon-div col s5 m4">
-                <label 
-                  className={singleCase.book_received_back_date!==null & singleCase.book_received_back_date!==""?"modal-trigger":""} 
-                  href="#modalProcess" 
-                  onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_received_back_nickname , 
-                    processDate:  singleCase.book_received_back_date ,  
-                    process:"book_received_back" , 
-                    processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
-          
-                </div>
-                {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_received_back_date, "submit_book_deposit_return")}
-                <div className="col s2 m3">
-                  KPI : <span style={{ color: 'orange' }}>{kpi['book_received_back_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_received_back_red']}</span>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.cash_received_date, "cash_received")}>
-                    {GenerateNote(singleCase.cash_received_note, "cash_received")}
-                  </div>
-                </div>
-                <div className="summaryIcon-div col s5 m4">
-                <label 
-                  className={singleCase.cash_received_date!==null & singleCase.cash_received_date!==""?"modal-trigger":""} 
-                  href="#modalProcess" 
-                  onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.cash_received_nickname , 
-                    processDate:  singleCase.cash_received_date ,  
-                    process:"cash_received" , 
-                    processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
-               
-                </div>
-                {calculateProcessDate(singleCase.book_received_back_date, singleCase.cash_received_date, "book_received_back")}
-                <div className="col s2 m3">
-                  KPI : <span style={{ color: 'orange' }}>{kpi['cash_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['cash_received_red']}</span>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.cash_received_date, singleCase.book_deposit_received_date, "book_deposit_received")}>
-                    {GenerateNote(singleCase.book_deposit_received_note, "book_deposit_received")}
-                  </div>
-                </div>
-                <div className="summaryIcon-div col s5 m4">
-                <label 
-                  className={singleCase.book_deposit_received_date!==null & singleCase.book_deposit_received_date!==""?"modal-trigger":""} 
-                  href="#modalProcess" 
-                  onClick = {() => setCurrentProcess({
-                    processTracker :singleCase.book_deposit_received_nickname , 
-                    processDate:  singleCase.book_deposit_received_date ,  
-                    process:"book_deposit_received" , 
-                    processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
-               
-                </div>
-                {calculateProcessDate(singleCase.cash_received_date, singleCase.book_deposit_received_date, "cash_received")}
-                <div className="col s2 m3">
-                  KPI : <span style={{ color: 'orange' }}>{kpi['book_deposit_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_deposit_received_red']}</span>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col s3 m1">
-                  <div className={calculateColorFromDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date, "submit_book_to_new_finance")}>
+                  <div className={calculateColorFromDate(singleCase.book_received_back_date, singleCase.submit_book_to_new_finance_date, "submit_book_to_new_finance")}>
                     {GenerateNote(singleCase.submit_book_to_new_finance_note, "submit_book_to_new_finance")}
                   </div>
                 </div>
@@ -1104,11 +1225,64 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ส่งเล่มให้ไฟแนนซ์ใหม่"} )}>วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:</label>
                
                 </div>
-                {calculateProcessDate(singleCase.book_deposit_received_date, singleCase.submit_book_to_new_finance_date, "book_deposit_received")}
+                {calculateProcessDate(singleCase.book_received_back_date, singleCase.submit_book_to_new_finance_date, "book_received_back")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['submit_book_to_new_finance_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['submit_book_to_new_finance_red']}</span>
                 </div>
               </div>
+
+              
+              <div className="row">
+                <div className="col s3 m1">
+                  <div className={calculateColorFromDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.cash_received_date:singleCase.submit_book_to_new_finance_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
+                    {GenerateNote(singleCase.submit_book_deposit_return_note, "submit_book_deposit_return")}
+                  </div>
+                </div>
+                <div className="summaryIcon-div col s5 m4">
+                <label 
+                  className={singleCase.submit_book_deposit_return_date!==null & singleCase.submit_book_deposit_return_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.submit_book_deposit_return_nickname , 
+                    processDate:  singleCase.submit_book_deposit_return_date ,  
+                    process:"submit_book_deposit_return" , 
+                    processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
+             
+                </div>
+                {calculateProcessDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.cash_received_date:singleCase.submit_book_to_new_finance_date, singleCase.submit_book_deposit_return_date, "submit_book_to_new_finance")}
+                <div className="col s2 m3">
+                  KPI : <span style={{ color: 'orange' }}>{kpi['submit_book_deposit_return_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['submit_book_deposit_return_red']}</span>
+                </div>
+              </div>
+
+             
+
+              
+
+              <div className="row">
+                <div className="col s3 m1">
+                  <div className={calculateColorFromDate(singleCase.submit_book_deposit_return_date, singleCase.book_deposit_received_date, "book_deposit_received")}>
+                    {GenerateNote(singleCase.book_deposit_received_note, "book_deposit_received")}
+                  </div>
+                </div>
+                <div className="summaryIcon-div col s5 m4">
+                <label 
+                  className={singleCase.book_deposit_received_date!==null & singleCase.book_deposit_received_date!==""?"modal-trigger":""} 
+                  href="#modalProcess" 
+                  onClick = {() => setCurrentProcess({
+                    processTracker :singleCase.book_deposit_received_nickname , 
+                    processDate:  singleCase.book_deposit_received_date ,  
+                    process:"book_deposit_received" , 
+                    processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
+               
+                </div>
+                {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_deposit_received_date, "submit_book_deposit_return")}
+                <div className="col s2 m3">
+                  KPI : <span style={{ color: 'orange' }}>{kpi['book_deposit_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_deposit_received_red']}</span>
+                </div>
+              </div>
+
+              
 
 
             </div>

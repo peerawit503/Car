@@ -707,7 +707,7 @@ const Cases = (props) => {
       // console.log(date2)
       // console.log(date1)
       // console.log(case_id)
-      // console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
+      console.log(Math.floor((date1 - date2) / (24 * 3600 * 1000)))
       return (Math.floor((date1 - date2) / (24 * 3600 * 1000)));
       // console.log(Math.floor((date1-date2)/(24*3600*1000)));
     }
