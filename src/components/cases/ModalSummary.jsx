@@ -612,7 +612,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         </Popup>
       )
     }
-    else if ((status === 'submit_book_transfer' || status === 'car_check_up' || status === 'book_transfer' || status === 'book_received_back' || status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 !== 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer')) {
+    else if ((status === 'submit_book_transfer' || status === 'car_check_up' || status === 'book_transfer' || status === 'book_received_back' || status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 !== 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && (singleCase.status !== 'receive' && singleCase.status !== 'contact_customer' && singleCase.status !== 'account_closing')) {
       return (
         <Popup
           trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
@@ -626,7 +626,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       )
     }
 
-    else if (( status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 === 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer')) {
+    else if (( status === 'submit_book_deposit_return' || status ==='book_deposit_received') && singleCase.f2_deposit_12 === 0 && (singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && (singleCase.status !== 'receive' && singleCase.status !== 'contact_customer' && singleCase.status !== 'account_closing')) {
       return (
         <Popup
           trigger={<img src={confirm} className="summaryIcon" alt={singleCase.submit_book_to_new_finance_note} />}
