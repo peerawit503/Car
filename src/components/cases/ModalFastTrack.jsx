@@ -247,127 +247,6 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
   }
 
 
-  function ValidateCase(props) {
-    setrenderDeposit(false)
-    let result = []
-
-
-
-
-    //in case 11 deposit_doc_to_new_bank
-    if (props.singleCase.status === 'deposit_doc_to_new_bank') {
-      setisConfirm(true)
-      return (
-        <div className='col row m4'>
-          ยอดปิด (บาท)
-          <CurrencyFormat
-            thousandSeparator={true}
-            onValueChange={(values) => {
-              const { value } = values;
-              singleCase.close_amount = value
-            }}
-            decimalScale="2"
-            min="0"
-            step="any"
-            value={singleCase.close_amount || "0"}
-            name="close_amount"
-            disabled
-          // onChange={handleChangeF2}
-          />
-        </div>
-      )
-
-    }
-    // in case 15 book_deposit_received
-    if (props.singleCase.status === 'book_deposit_received') {
-      setisConfirm(true)
-      return (
-        <div className='row col m4'>
-          เงินมัดจำ (บาท)
-          <CurrencyFormat
-            thousandSeparator={true}
-            onValueChange={(values) => {
-              const { value } = values;
-              singleCase.f2_old_finance_transfer_fee = value
-            }}
-            decimalScale="2"
-            min="0"
-            step="any"
-            value={singleCase.f2_old_finance_transfer_fee || "0"}
-            name="f2_old_finance_transfer_fee"
-            disabled
-          // onChange={handleChangeF2}
-          />
-        </div>
-      )
-    }
-    // if in case 13
-    if (props.singleCase.status === 'book_received_back') {
-      setrenderDeposit(false)
-      setisConfirm(true)
-      return (
-        <div className='row col m4'>
-          เงินมัดจำ (บาท)
-          <CurrencyFormat
-            thousandSeparator={true}
-            onValueChange={(values) => {
-              const { value } = values;
-              singleCase.f2_deposit_12 = value
-            }}
-            decimalScale="2"
-            min="0"
-            step="any"
-            value={singleCase.f2_deposit_12 || "0"}
-            name="deposit"
-            disabled
-          // onChange={handleChangeF2}
-          />
-          <br />
-          เงินเข้าบริษัท (บาท)
-          <CurrencyFormat
-            thousandSeparator={true}
-            onValueChange={(values) => {
-              const { value } = values;
-              singleCase.f2_old_finance_transfer_fee = value
-            }}
-            decimalScale="2"
-            min="0"
-            step="any"
-            value={singleCase.f2_old_finance_transfer_fee || "0"}
-            name="f2_old_finance_transfer_fee"
-            disabled
-          // onChange={handleChangeF2}
-          />
-        </div>
-      )
-    }
-    if (props.singleCase.status === 'cash_received') {
-      setrenderDeposit(false)
-      setisConfirm(true)
-      return (
-        <div className='row col m4'>
-          เงินมัดจำ (บาท)
-          <CurrencyFormat
-            thousandSeparator={true}
-            onValueChange={(values) => {
-              const { value } = values;
-              singleCase.f2_deposit_12 = value
-            }}
-            decimalScale="2"
-            min="0"
-            step="any"
-            value={singleCase.f2_deposit_12 || "0"}
-            name="deposit"
-            disabled
-          // onChange={handleChangeF2}
-          />
-        </div>
-      )
-    }
-    //nomal case return Confirm button
-    return result;
-  }
-
   function Renderfooter() {
     if (isConfirm) {
       return (
@@ -433,7 +312,36 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       {/* process bar */}
 
       {/* body */}
-      <div className="row content">
+      <div className="row">
+        <div className="f2info row m8 center">
+          <tr>
+            <th>Information</th>      
+          </tr>
+          <tr>
+            <td>ชื่อลูกค้า</td>
+            <td>{singleCase.name}</td>
+            <td>เบอร์ติดต่อ</td>
+            <td>{singleCase.cus_tel}</td>
+          </tr>
+          <tr>
+            <td>Document No.</td>
+            <td>{singleCase.document_id}</td>
+            <td>Car Brand</td>
+            <td>{singleCase.car_brand}</td>
+          </tr>
+          <tr>
+            <td>Car Model</td>
+            <td>{singleCase.car_model}</td>
+            <td>Car Province</td>
+            <td>{singleCase.car_province}</td>
+          </tr>
+          <tr>
+            <td>Car Year</td>
+            <td>{singleCase.car_year}</td>
+            <td>Contract officer</td>
+            <td>{singleCase.contract_officer}</td>
+          </tr>
+          </div>
         <RenderWorking />
         <div className="col s12 m12 content">
           <div className="col s4 m4 content"></div>
