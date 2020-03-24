@@ -173,8 +173,10 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       }
       return result;
   }
+  
+
   function calculateProcessDate(processBefore, processCurrent, status) {
-    
+   
     let result = [];
     // if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && singleCase.status !== 'account_closing' && status !== 'transfer_doc_received' && status !== 'car_check_up'  && status !== 'book_received' && status !== 'cash_received') {
     //   let t = new Date(getbeforedateCurrent(status));
@@ -184,11 +186,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     //   processCurrent = t.getDay() + ", " + t.getDate() + " " + monthNotoWord(t.getMonth()) + " " + t.getFullYear();
     //   console.log("processCurrent:" + processCurrent);
     // }
-    if ((processCurrent === null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && status === 'transfer_doc_received') {
+    if ((processCurrent == null || processCurrent === '') && processBefore !== '' && singleCase.status !== status && status === 'transfer_doc_received') {
       result.push(<div className="col s2 m4"> </div>);
     }
 
-    if ((processBefore === null || processBefore === '')) {
+    if ((processBefore == null || processBefore === '')) {
       processBefore = getbeforedate(status);
     }
 
@@ -222,7 +224,21 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
     }
     return result
   }
-
+  
+  function calculateKpi(processBefore, processCurrent){
+   
+    if(processBefore === '' || processBefore == null || processCurrent === '' || processCurrent == null ){
+      // console.log('ssss')
+      return '( 0 วัน )';
+    }
+    else{
+      var date1 = parseStringToDate(processBefore);
+      var date2 = parseStringToDate(processCurrent);
+      var returndate = Math.floor((date2 - date1) / (24 * 3600 * 1000));
+      
+    return '( ' + returndate + ' วัน )' ;
+    }
+  }
   function monthNotoWord(no) {
     no = no + 1;
     if (no === 13) {
@@ -311,7 +327,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.book_received_back_nickname , 
           processDate:  singleCase.book_received_back_date ,  
           process:"book_received_back" , 
-          processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
+          processThai: "รับเล่มคืน"} )}>13.วันที่รับเล่มคืน{' '}:</label>
 
       </div>
       {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_received_back_date, "cash_received")}
@@ -334,7 +350,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
           processDate:  singleCase.deposit_doc_to_new_bank_date ,  
           process:"deposit_doc_to_new_bank" , 
-        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
+        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>11.วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
      
       </div>
       {calculateProcessDate(singleCase.book_copy_received_date, singleCase.deposit_doc_to_new_bank_date, "book_copy_received")}
@@ -363,7 +379,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.deposit_doc_to_new_bank_nickname , 
           processDate:  singleCase.deposit_doc_to_new_bank_date ,  
           process:"deposit_doc_to_new_bank" , 
-        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
+        processThai: "ส่งเอกสารเบิกเงินธนาคารใหม่"} )}>11.วันที่ส่งเอกสารเบิกเงินธนาคารใหม่{' '}:</label>
      
       </div>
       {calculateProcessDate(singleCase.book_received_back_date, singleCase.deposit_doc_to_new_bank_date, "book_received_back")}
@@ -387,7 +403,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.cash_received_nickname , 
           processDate:  singleCase.cash_received_date ,  
           process:"cash_received" , 
-          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
+          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>12.วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
      
       </div>
       {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "deposit_doc_to_new_bank")}
@@ -414,7 +430,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.cash_received_nickname , 
           processDate:  singleCase.cash_received_date ,  
           process:"cash_received" , 
-          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
+          processThai: "เงินเข้าบัญชีคาร์ทรัส"} )}>12.วันที่เงินเข้าบัญชีคาร์ทรัส{' '}:</label>
      
       </div>
       {calculateProcessDate(singleCase.deposit_doc_to_new_bank_date, singleCase.cash_received_date, "deposit_doc_to_new_bank")}
@@ -438,7 +454,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
           processTracker :singleCase.book_received_back_nickname , 
           processDate:  singleCase.book_received_back_date ,  
           process:"book_received_back" , 
-          processThai: "รับเล่มคืน"} )}>วันที่รับเล่มคืน{' '}:</label>
+          processThai: "รับเล่มคืน"} )}>13.วันที่รับเล่มคืน{' '}:</label>
 
       </div>
       {calculateProcessDate(singleCase.book_copy_received_date, singleCase.book_received_back_date, "book_copy_received")}
@@ -566,15 +582,30 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
       var orange = kpiName + "_orange";
       console.log(kpiName+"pkpi"+ Pkpi);
       
-      if (Pkpi >= kpi[orange] + 1 && Pkpi < kpi[red] + 1) {
-        return "summaryIcon-div yellow";
-      } else if (Pkpi >= kpi[red] + 1) {
-        return "summaryIcon-div red";
-      } else {
-        // console.log("kpi green");
-        
-        return "summaryIcon-div green";
+      if (kpiName === 'book_transfer' ){
+        var red2 =  "car_check_up_red";
+        var orange2 = "car_check_up_orange";
+        if (Pkpi > kpi[orange]  + kpi[orange2]  && Pkpi < kpi[red] + kpi[red2] ) {
+          return "summaryIcon-div yellow";
+        } else if (Pkpi >= kpi[red] + 1) {
+          return "summaryIcon-div red";
+        } else {
+          // console.log("kpi green");
+          
+          return "summaryIcon-div green";
+        }
+      }else{
+        if (Pkpi >= kpi[orange] + 1 && Pkpi < kpi[red] + 1) {
+          return "summaryIcon-div yellow";
+        } else if (Pkpi >= kpi[red] + 1) {
+          return "summaryIcon-div red";
+        } else {
+          // console.log("kpi green");
+          
+          return "summaryIcon-div green";
+        }
       }
+     
     }
   }
 
@@ -985,7 +1016,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.case_receiver , 
                     processDate:  singleCase.receive_date ,  
                     process:"receive" , 
-                    processThai: "รับเคส"} )}>วันที่รับเคส{' '}:</label>
+                    processThai: "รับเคส"} )}>1.วันที่รับเคส{' '}:</label>
                 </div>
                 {dateTimeFormatted(singleCase.receive_date)}
 
@@ -1005,7 +1036,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.contact_customer_nickname , 
                     processDate:  singleCase.contact_customer_date ,  
                     process:"contact_customer" , 
-                    processThai: "ติดต่อลูกค้า"} )}>วันที่ติดต่อลูกค้า{' '}:</label>
+                    processThai: "ติดต่อลูกค้า"} )}>2.วันที่ติดต่อลูกค้า{' '}:</label>
               
                 </div>
                 {calculateProcessDate(singleCase.receive_date, singleCase.contact_customer_date, "receive")}
@@ -1031,7 +1062,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.account_closing_nickname , 
                     processDate:  singleCase.account_closing_date ,  
                     process:"account_closing" , 
-                    processThai: "ปิดเล่ม"} )}>วันที่ปิดเล่ม{' '}:</label>
+                    processThai: "ปิดเล่ม"} )}>3.วันที่ปิดเล่ม{' '}:</label>
               
                 </div>
                 {calculateProcessDate(singleCase.contact_customer_date, singleCase.account_closing_date, "contact_customer")}
@@ -1054,7 +1085,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.transfer_doc_received_nickname , 
                     processDate:  singleCase.transfer_doc_received_date ,  
                     process:"transfer_doc_received" , 
-                    processThai: "รับชุดโอน"} )}>วันที่รับชุดโอน{' '}:</label>
+                    processThai: "รับชุดโอน"} )}>4.วันที่รับชุดโอน{' '}:</label>
                 
                 </div>
                 {calculateProcessDate(singleCase.contact_customer_date, singleCase.transfer_doc_received_date, "transfer_doc_received")}
@@ -1078,7 +1109,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.transfer_doc_submitted_nickname , 
                     processDate:  singleCase.transfer_doc_submitted_date ,  
                     process:"transfer_doc_submitted" , 
-                    processThai: "ยื่นชุดโอน"} )}>วันที่ยื่นชุดโอน{' '}:</label>
+                    processThai: "ยื่นชุดโอน"} )}>5.วันที่ยื่นชุดโอน{' '}:</label>
               
                 </div>
                 {calculateProcessDate(singleCase.account_closing_date, singleCase.transfer_doc_submitted_date, "transfer_doc_received")}
@@ -1101,7 +1132,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.book_received_nickname , 
                     processDate:  singleCase.book_received_date ,  
                     process:"book_received" , 
-                    processThai: "ได้รับเล่ม"} )}>วันที่ได้รับเล่ม{' '}:</label>
+                    processThai: "ได้รับเล่ม"} )}>6.วันที่ได้รับเล่ม{' '}:</label>
             
                 </div>
                 {calculateProcessDate(((singleCase.case_source === 'Kiatnakin' || singleCase.case_source === 'Thanachart' ) && singleCase.f2_deposit_12 !== 0 )?singleCase.account_closing_date:singleCase.transfer_doc_submitted_date, singleCase.book_received_date, "transfer_doc_submitted")}
@@ -1126,7 +1157,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.submit_book_transfer_nickname , 
                     processDate:  singleCase.submit_book_transfer_date ,  
                     process:"submit_book_transfer" , 
-                    processThai: "ส่งงานโอนทะเบียน"} )}>วันที่ส่งงานโอนทะเบียน{' '}:</label>
+                    processThai: "ส่งงานโอนทะเบียน"} )}>7.วันที่ส่งงานโอนทะเบียน{' '}:</label>
                
                 </div>
                 {calculateProcessDate(singleCase.book_received_date, singleCase.submit_book_transfer_date, "book_received")}
@@ -1149,7 +1180,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.car_check_up_nickname , 
                     processDate:  singleCase.car_check_up_date ,  
                     process:"car_check_up" , 
-                    processThai: "ตรวจสภาพรถ"} )}>วันที่ตรวจสภาพรถ{' '}:</label>
+                    processThai: "ตรวจสภาพรถ"} )}>8.วันที่ตรวจสภาพรถ{' '}:</label>
                 
                 </div>
                 {calculateProcessDate(singleCase.submit_book_transfer_date, (singleCase.car_check_up_yn==='no')?'':singleCase.car_check_up_date, "car_check_up")}
@@ -1172,7 +1203,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.book_transfer_nickname , 
                     processDate:  singleCase.book_transfer_date ,  
                     process:"book_transfer" , 
-                    processThai: "โอนเล่มทะเบียน"} )}>วันที่โอนเล่มทะเบียน{' '}:</label>
+                    processThai: "โอนเล่มทะเบียน"} )}>9.วันที่โอนเล่มทะเบียน{' '}:</label>
                
                 </div>
                 {calculateProcessDate((singleCase.car_check_up_yn==='yes')?singleCase.car_check_up_date:singleCase.submit_book_transfer_date, singleCase.book_transfer_date, "car_check_up")}
@@ -1195,7 +1226,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.book_copy_received_nickname , 
                     processDate:  singleCase.book_copy_received_date ,  
                     process:"book_copy_received" , 
-                    processThai: "รับสำเนาเล่ม"} )}>วันที่รับสำเนาเล่ม{' '}:</label>
+                    processThai: "รับสำเนาเล่ม"} )}>10.วันที่รับสำเนาเล่ม{' '}:</label>
              
                 </div>
                 {calculateProcessDate(singleCase.book_transfer_date, singleCase.book_copy_received_date, "book_transfer")}
@@ -1227,7 +1258,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.submit_book_to_new_finance_nickname , 
                     processDate:  singleCase.submit_book_to_new_finance_date ,  
                     process:"submit_book_to_new_finance" , 
-                    processThai: "ส่งเล่มให้ไฟแนนซ์ใหม่"} )}>วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:</label>
+                    processThai: "ส่งเล่มให้ไฟแนนซ์ใหม่"} )}>14.วันที่ส่งเล่มให้ไฟแนนซ์ใหม่{' '}:</label>
                
                 </div>
                 {calculateProcessDate(singleCase.book_received_back_date, singleCase.submit_book_to_new_finance_date, "book_received_back")}
@@ -1239,7 +1270,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.cash_received_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
+                  <div className={calculateColorFromDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.book_received_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
                     {GenerateNote(singleCase.submit_book_deposit_return_note, "submit_book_deposit_return")}
                   </div>
                 </div>
@@ -1251,7 +1282,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.submit_book_deposit_return_nickname , 
                     processDate:  singleCase.submit_book_deposit_return_date ,  
                     process:"submit_book_deposit_return" , 
-                    processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
+                    processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>15วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
              
                 </div>
                 {calculateProcessDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.cash_received_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, ((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?"submit_book_to_new_finance":"book_copy_received")}
@@ -1278,12 +1309,41 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processTracker :singleCase.book_deposit_received_nickname , 
                     processDate:  singleCase.book_deposit_received_date ,  
                     process:"book_deposit_received" , 
-                    processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
+                    processThai: "เงินมัดจำคืนเข้าบัญชี"} )}>16.วันที่เงินมัดจำคืนเข้าบัญชี{' '}:</label>
                
                 </div>
                 {calculateProcessDate(singleCase.submit_book_deposit_return_date, singleCase.book_deposit_received_date, "submit_book_deposit_return")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['book_deposit_received_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['book_deposit_received_red']}</span>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col m6">
+                  <div className="col m4">
+                  P11 - P3 :
+                  </div>
+                  <div className="col m8">
+                {calculateKpi(singleCase.contact_customer_date, singleCase.deposit_doc_to_new_bank_date)}
+                </div>
+                </div>
+
+                <div className="col m6">
+                  <div className="col m4">
+                  P14 - P1 :
+                  </div>
+                  <div className="col m8">
+                {calculateKpi(singleCase.receive_date, singleCase.submit_book_to_new_finance_date)}
+                </div>
+                </div>
+
+                <div className="col m6">
+                  <div className="col m4">
+                  P11 - P1 :
+                  </div>
+                  <div className="col m8">
+                {calculateKpi(singleCase.receive_date, singleCase.deposit_doc_to_new_bank_date)}
+                </div>
                 </div>
               </div>
 
