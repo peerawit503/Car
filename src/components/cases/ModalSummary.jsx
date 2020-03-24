@@ -778,11 +778,11 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               <div className="col s12 m12  head-section no-col-padding ">
               </div>
               <div className="col s6 m6 l6 content-radonly">
-                <label >Case Status / สถานะเคส</label>
+                <label >สถานะเคส</label>
                 <input
                   name="caseStatus"
                   type="text"
-                  value={translate(singleCase.status) || ""}
+                  value={singleCase.next_status_text || ""}
                   readOnly
                 >
 
@@ -803,7 +803,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Receive Date/ วันที่รับเคส</label>
+                <label >วันที่รับเคส</label>
                 <input
                   type="text"
                   value={dateFormated(singleCase.date_create)}
@@ -815,7 +815,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Case Type / ประเภทเคส</label>
+                <label >ประเภทเคส</label>
                 <input
                   name='caseType'
                   value={singleCase.case_type || ""}
@@ -828,7 +828,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
 
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Case Source / รับเคสจาก</label>
+                <label >รับเคสจาก</label>
                 <input
                   name='receiver'
                   value={singleCase.case_source || ""}
@@ -838,7 +838,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   readOnly />
               </div>
               <div className="col s6 m6  content-radonly">
-                <label>Document No. / AOL</label>
+                <label>AOL</label>
                 <input
                   type="text"
                   value={singleCase.document_id || ""}
@@ -849,7 +849,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Case Reciever / ผู้รับเคส </label>
+                <label>ผู้รับเคส </label>
                 <input type="text"
                   value={singleCase.case_receiver}
                   name="approve_amount"
@@ -864,21 +864,21 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>First Name - Last Name / ชื่อ - นามสกุล</label>
+                <label>ชื่อ - นามสกุล</label>
                 <input type="text"
                   value={singleCase.name || ""}
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Licence Plate / หมายเลขป้ายทะเบียน</label>
+                <label>หมายเลขป้ายทะเบียน</label>
                 <input type="text"
                   value={singleCase.car_license || ""}
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label >Province / ป้ายทะเบียนจังหวัด</label>
+                <label >ป้ายทะเบียนจังหวัด</label>
                 <input
                   name='province'
                   value={singleCase.car_province || ""}
@@ -890,21 +890,21 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Brand / ยี่ห้อ</label>
+                <label>ยี่ห้อ</label>
                 <input type="text"
                   value={singleCase.car_brand || ""}
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Model / รุ่นรถ</label>
+                <label>รุ่นรถ</label>
                 <input type="text"
                   value={singleCase.car_model || ""}
                   readOnly />
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Sub-model / รุ่นย่อย</label>
+                <label>รุ่นย่อย</label>
                 <input type="text"
                   value={singleCase.car_sub_model || ""}
                   name="car_sub_model"
@@ -912,7 +912,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Car Year / ปีรถ</label>
+                <label>ปีรถ</label>
                 <input type="text"
                   value={singleCase.car_year || ""}
                   name="car_year"
@@ -921,7 +921,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Current Finance / ไฟแนนซ์เดิม</label>
+                <label>ไฟแนนซ์เดิม</label>
                 <input
                   name="oldFinance"
                   value={singleCase.old_bank || ""}
@@ -933,7 +933,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Finance Institution / สถาบันการเงิน</label>
+                <label>สถาบันการเงิน</label>
                 <input
                   name="new_bank"
                   value={singleCase.new_bank}
@@ -945,7 +945,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Approved Amount / ยอดจัด </label>
+                <label>ยอดจัด </label>
                 <CurrencyFormat
                   thousandSeparator={true}
                   value={singleCase.approve_amount}
@@ -955,7 +955,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Close Amount / ยอดปิด </label>
+                <label>ยอดปิด </label>
                 <CurrencyFormat
                   thousandSeparator={true}
                   value={singleCase.close_amount}
@@ -966,7 +966,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Down Payment / ยอดดาวน์</label>
+                <label>ยอดดาวน์</label>
                 <CurrencyFormat
                   thousandSeparator={true}
                   value={singleCase.down_amount}
@@ -977,7 +977,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               </div>
 
               <div className="col s6 m6 l6 content-radonly">
-                <label>Deposit Return / เบิกมัดจำคืน</label>
+                <label>เบิกมัดจำคืน</label>
                 <CurrencyFormat
                   thousandSeparator={true}
                   value={singleCase.f2_deposit_12}
