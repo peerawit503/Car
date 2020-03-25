@@ -101,6 +101,7 @@ const Cases = (props) => {
         'submit_book_to_new_finance': 'รอส่งเล่มให้ไฟแนนซ์ใหม่',
         'submit_book_deposit_return': 'รอทำเรื่องเบิกมัดจำคืน',
         'book_deposit_received': 'รอเงินมัดจำคืนเข้าบัญชี',
+        'complete':'เสร็จสิ้น'
       },
       //  defaultGroupOrder: 0,
       sorting: false
