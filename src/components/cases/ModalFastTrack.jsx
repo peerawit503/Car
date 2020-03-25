@@ -173,6 +173,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       result.push(
         <div>
           <div className="row col m6">
+            <label style={{margin:'5px'}}>F2</label><br/>
             <a className="btn modal-trigger tde m6" href="#modalAddF2" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />F2</a>
             <a className="btn modal-trigger tde m6" href="#modalAddContractInfo" ><img src={plus} style={{ marginBottom: '3px' }} className="alert-icon" alt="fireSpot" />Contract Information</a>
           </div>
@@ -299,49 +300,63 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     <div id="modalFastTrack" className="modal modal-fixed-footer">
       <div className="row 15" style={{ borderBottom: "1px solid", padding: "10px" }}>
         {/* <div className="header-title"> */}
-        <div className="col s8 m8 ">
-          <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)}</span><br />
-          <span >ตั้งแต่วันที่ {statusDate(singleCase)}</span>
+        {/* <div className="col s8 m8 ">
+        
         </div>
         <div className="col s4 m4 right ">
+          <span >สถานะเคสปัจจุบัน : {translate(singleCase.status)}</span><br />
+          <span >ตั้งแต่วันที่ {statusDate(singleCase)}</span>
           <span className="right">Job Id : {singleCase.case_id}</span><br />
           <span className="right">F2 Status : {singleCase.F2_status}</span><br />
-        </div>
+        </div> */}
+        <div className="f2info row col m12 left">
+          <tr>
+            <th>Information</th>      
+          </tr>
+          <tr>
+            <td style={{backgroundColor:'#03a9f4'}}>ชื่อลูกค้า</td>
+            <td>{singleCase.name}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>เบอร์ติดต่อ</td>
+            <td>{singleCase.cus_tel}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>สถานะเคสปัจจุบัน</td>
+            <td>{translate(singleCase.status)}แล้ว</td>
+          </tr>
+          <tr>
+            <td style={{backgroundColor:'#03a9f4'}}>Document No.</td>
+            <td>{singleCase.document_id}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>Car Brand</td>
+            <td>{singleCase.car_brand}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>ตั้งแต่วันที่</td>
+            <td>{statusDate(singleCase)}</td>
+          </tr>
+          <tr>
+            <td style={{backgroundColor:'#03a9f4'}}>Car Model</td>
+            <td>{singleCase.car_model}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>Car Province</td>
+            <td>{singleCase.car_province}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>Job Id</td>
+            <td>{singleCase.case_id}</td>
+          </tr>
+          <tr>
+            <td style={{backgroundColor:'#03a9f4'}}>Car Year</td>
+            <td>{singleCase.car_year}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>Contract officer</td>
+            <td>{singleCase.contract_officer}</td>
+            <td style={{backgroundColor:'#03a9f4'}}>F2 Status</td>
+            <td>{singleCase.F2_status}</td>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+          </tr>
+
+          </div>
       </div>
       {/* </div> */}
       {/* process bar */}
 
       {/* body */}
       <div className="row">
-        <div className="f2info row m8 center">
-          <tr>
-            <th>Information</th>      
-          </tr>
-          <tr>
-            <td>ชื่อลูกค้า</td>
-            <td>{singleCase.name}</td>
-            <td>เบอร์ติดต่อ</td>
-            <td>{singleCase.cus_tel}</td>
-          </tr>
-          <tr>
-            <td>Document No.</td>
-            <td>{singleCase.document_id}</td>
-            <td>Car Brand</td>
-            <td>{singleCase.car_brand}</td>
-          </tr>
-          <tr>
-            <td>Car Model</td>
-            <td>{singleCase.car_model}</td>
-            <td>Car Province</td>
-            <td>{singleCase.car_province}</td>
-          </tr>
-          <tr>
-            <td>Car Year</td>
-            <td>{singleCase.car_year}</td>
-            <td>Contract officer</td>
-            <td>{singleCase.contract_officer}</td>
-          </tr>
-          </div>
         <RenderWorking />
         <div className="col s12 m12 content">
           <div className="col s4 m4 content"></div>

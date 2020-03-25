@@ -49,9 +49,17 @@
     height:40em!important;
 }
 .f2info td,.f2info th{
-    padding:0px;
+    padding:1px;
     padding-left: 5px;
+    width: 15%;
+
 }
+.f2info td{
+    border:solid;
+    border-color: white;
+    border-width: 1px;
+}
+
 .tabslist{
     font-size: large;
 }
