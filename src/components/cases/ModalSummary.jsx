@@ -1270,7 +1270,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
               
               <div className="row">
                 <div className="col s3 m1">
-                  <div className={calculateColorFromDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.book_received_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
+                  <div className={calculateColorFromDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.transfer_doc_submitted_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, "submit_book_deposit_return")}>
                     {GenerateNote(singleCase.submit_book_deposit_return_note, "submit_book_deposit_return")}
                   </div>
                 </div>
@@ -1285,7 +1285,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ทำเรื่องเบิกมัดจำคืน"} )}>15วันที่ทำเรื่องเบิกมัดจำคืน{' '}:</label>
              
                 </div>
-                {calculateProcessDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.cash_received_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, ((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?"submit_book_to_new_finance":"book_copy_received")}
+                {calculateProcessDate(((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?singleCase.transfer_doc_submitted_date:singleCase.book_copy_received_date, singleCase.submit_book_deposit_return_date, ((singleCase.case_source === 'Cartrust' || singleCase.case_source === 'Dealer') && singleCase.f2_deposit_12 !== 0 )?"submit_book_to_new_finance":"book_copy_received")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['submit_book_deposit_return_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['submit_book_deposit_return_red']}</span>
                 </div>
