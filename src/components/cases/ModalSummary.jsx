@@ -1183,7 +1183,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                     processThai: "ตรวจสภาพรถ"} )}>8.วันที่ตรวจสภาพรถ{' '}:</label>
                 
                 </div>
-                {calculateProcessDate(singleCase.submit_book_transfer_date, (singleCase.car_check_up_yn==='no')?'':singleCase.car_check_up_date, "car_check_up")}
+                {calculateProcessDate(singleCase.submit_book_transfer_date, (singleCase.car_check_up_yn==='no')?'':singleCase.car_check_up_date, "submit_book_transfer")}
                 <div className="col s2 m3">
                   KPI : <span style={{ color: 'orange' }}>{kpi['car_check_up_orange']} </span>/ <span style={{ color: 'red' }}>{kpi['car_check_up_red']}</span>
                 </div>
@@ -1324,7 +1324,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
                   P11 - P3 :
                   </div>
                   <div className="col m8">
-                {calculateKpi(singleCase.contact_customer_date, singleCase.deposit_doc_to_new_bank_date)}
+                {calculateKpi(singleCase.account_closing_date, singleCase.deposit_doc_to_new_bank_date)}
                 </div>
                 </div>
 
