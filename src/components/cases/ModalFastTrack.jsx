@@ -389,7 +389,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
           />
         </div>
         <div className='col s4 m4 content' style={{ display: rendertransfer_check ? 'block' : 'none' }} >
-          <label>ส่งตรวจ</label>
+          <label>Vender</label>
           <input
             type="text"
             name="submit_book_transfer_check"
