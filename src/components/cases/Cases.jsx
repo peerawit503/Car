@@ -70,19 +70,24 @@ const Cases = (props) => {
         width: 50
       }
     },
-    { title: 'JOB No', field: 'job_id' },
-    { title: 'Case id', field: 'case_id' },
     {
-      title: 'Last Update',
-      field: 'status_date',
-      render: rowData => <div>{statusDate(rowData)}</div>
+      title:'Total Date',
+      field:'total_date',
+      defaultSort:'desc'
     },
+    {
+      title:'Receive Date',
+      field:'receive_date',
+    render: rowData => <div>{rowData.receive_date.split(" ")[1]+' ' + rowData.receive_date.split(" ")[2] + ' ' + rowData.receive_date.split(" ")[3]}</div>
+    },
+ 
+    { title: 'JOB No', field: 'job_id' },
     {
       title: 'Customers Name',
       field: 'name',
       render: rowData => <div className="customer-name-col">{rowData.name}</div>
     },
-    { title: 'Case receiver', field: 'case_receiver' },
+    { title: 'Car License', field: 'car_license' },
     {
       title: 'Case Status', field: 'next_status',
       lookup: {
@@ -107,6 +112,12 @@ const Cases = (props) => {
       sorting: false
     },
     {
+      title: 'Last Update',
+      field: 'status_date',
+      render: rowData => <div>{statusDate(rowData)}</div>
+    },
+    { title: 'Case receiver', field: 'case_receiver' },
+    {
       title: 'Case Soure', field: 'case_source',
       lookup: {
         'Kiatnakin': 'Kiatnakin',
@@ -115,8 +126,6 @@ const Cases = (props) => {
         'Dealer': 'Dealer'
       },
     },
-    { title: 'Car License', field: 'car_license' },
-    { title: 'New Finance', field: 'new_bank' },
     {
       title: '',
       render: rowData =>
