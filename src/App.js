@@ -29,7 +29,9 @@ const App = () => {
         <Switch>
           <Route exact path="/about"><About /></Route>
           <Route exact path="/cases"><Cases /> /></Route>
-          <Route exact path="/dashboard"><Dashboard /></Route>
+          <Route exact path="/cases/:param"><Cases /></Route>
+          <Route exact path="/dashboard/"><Dashboard /></Route>
+         
           <Route exact path="/register"><Register /></Route>
           <Route exact path="/users"><Users /></Route>
           <Route exact path="/customers"><Customers /></Route>

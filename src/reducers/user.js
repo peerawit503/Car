@@ -7,7 +7,7 @@ var initialState = {
   lastName: null,
   username: null,
   position: null,
-  team: null,
+  team_id: null,
   picture: null,
   token: null,
   nickname: null
@@ -23,7 +23,7 @@ function userReducer(state = initialState, action) {
           lastName: action.lastName,
           username: action.username,
           position: action.position,
-          team: action.team,
+          team_id: action.team_id,
           picture: action.picture,
           token: action.token,
           nickname: action.nickname

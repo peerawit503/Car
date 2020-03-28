@@ -13,7 +13,7 @@ import url from '../../Utility/url'
 import axios from 'axios';
 import M from 'materialize-css/dist/js/materialize.min.js'
 // import B from 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useParams} from "react-router";
 import { connect } from "react-redux";
 import ActionUser from "../../actions/actionUser";
 
@@ -46,7 +46,7 @@ const Cases = (props) => {
   const [kpi, setKpi] = useState([])
   const [operatorS, setOperatorS] = useState([])
   const [singleCase, setSingleCase] = useState([])
-
+  let { param } = useParams();
 
 
   const [isLoading, setisLoading] = useState(true)
@@ -156,7 +156,9 @@ const Cases = (props) => {
 
   const getAllCase = () => {
     setisLoading(true);
-    axios.get(`${url}/case_all`)
+    if(param){
+      if(param === 'CS'){
+        axios.get(`${url}/case_1_3?case_source`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -165,13 +167,54 @@ const Cases = (props) => {
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
+      }
+      else if(param === 'TF'){
+        axios.get(`${url}/case_4_14?case_source`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'FT'){
+        axios.get(`${url}/case_15_16?case_source`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }else{
+        setCases({});
+        setTotalCase(0);
+        setisLoading(false);
+      }
+    }else{
+      axios.get(`${url}/case_all`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+    }
+    
 
 
   }
 
   const getAllCaseWithCaseSource = (casesource) => {
     setisLoading(true);
-    axios.get(`${url}/search_case?parameter=case_source&value=${casesource}`)
+    if(param){
+      if(param === 'CS'){
+        axios.get(`${url}/case_1_3?case_source=${casesource}`)
       .then(res => {
         setCases(res.data.message);
         setTotalCase(res.data.message.length);
@@ -180,6 +223,45 @@ const Cases = (props) => {
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
+      }
+      else if(param === 'TF'){
+        axios.get(`${url}/case_4_14?case_source=${casesource}`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'FT'){
+        axios.get(`${url}/case_15_16?case_source=${casesource}`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }else{
+        setCases({});
+        setTotalCase(0);
+        setisLoading(false);
+      }
+    }else{
+      axios.get(`${url}/search_case?parameter=case_source&value=${casesource}`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+    }
+    
 
 
   }
@@ -755,7 +837,43 @@ const Cases = (props) => {
 
     return result;
   }
-
+  function tabPanel(){
+    let result = [];
+    if(!param){
+      result.push(<TabPanel>
+        </TabPanel>
+        )
+      result.push(<TabPanel >
+          
+        <Tabs defaultIndex={caseTable1} >
+        <TabList >
+          <div class="tabslist">
+            <Tab onClick={() => getSpecificCase('TB',0)}>All</Tab>
+            <Tab onClick={() => getSpecificCase('TB',1)}>1</Tab>
+            <Tab onClick={() => getSpecificCase('TB',2)}>2</Tab>
+            <Tab onClick={() => getSpecificCase('TB',3)}>3</Tab>
+            
+          </div>
+        </TabList>
+        </Tabs>
+        </TabPanel>
+       );
+       result.push( <TabPanel>
+        <Tabs defaultIndex={caseTable2}>
+        <TabList >
+          <div class="tabslist">
+            <Tab onClick={() => getSpecificCase('KK',0)}>All</Tab>
+            <Tab onClick={() => getSpecificCase('KK',1)}>1</Tab>
+            <Tab onClick={() => getSpecificCase('KK',2)}>2</Tab>
+            <Tab onClick={() => getSpecificCase('KK',3)}>3</Tab>
+            
+          </div>
+        </TabList>
+        </Tabs>
+        </TabPanel>)
+    }
+    return result;
+  }
   function alertCheck(caseInRow) {
 
 
@@ -886,35 +1004,7 @@ if(
                     
                   </div>
                 </TabList>
-                <TabPanel>
-                </TabPanel>
-                <TabPanel>
-                  
-                <Tabs defaultIndex={caseTable1} >
-                <TabList >
-                  <div class="tabslist">
-                    <Tab onClick={() => getSpecificCase('TB',0)}>All</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',1)}>1</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',2)}>2</Tab>
-                    <Tab onClick={() => getSpecificCase('TB',3)}>3</Tab>
-                    
-                  </div>
-                </TabList>
-                </Tabs>
-                </TabPanel>
-                <TabPanel>
-                <Tabs defaultIndex={caseTable2}>
-                <TabList >
-                  <div class="tabslist">
-                    <Tab onClick={() => getSpecificCase('KK',0)}>All</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',1)}>1</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',2)}>2</Tab>
-                    <Tab onClick={() => getSpecificCase('KK',3)}>3</Tab>
-                    
-                  </div>
-                </TabList>
-                </Tabs>
-                </TabPanel>
+                {tabPanel()}
                 <TabPanel>
                 </TabPanel>
                 <TabPanel>
