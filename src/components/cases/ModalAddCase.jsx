@@ -40,7 +40,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
   const [officer, setOfficer] = useState({})
   const [officerkk, setOfficerKK] = useState({})
   const [dealer, setDealer] = useState({})
-  const [formState, setformState] = useState(1);
   const [difference, setDifference] = useState({ d1: true, d2: false });
 
   const [newCase, setNewCase] = useState({
@@ -526,9 +525,6 @@ const ModalAddCase = ({ saveNewCase, getAllCase, operatorS, getOperatorS }) => {
   }
 
   const getCar_brand = () => {
-    var config = {
-
-    };
     axios.get(`${url}/brand`)
       .then(res => {
         console.log(res.data)

@@ -391,6 +391,7 @@ const Cases = (props) => {
     console.log(casesource , " : " , group)
   }
 
+  
   const setKpiForUse = (kpiData) => {
 
     var result = new Object();
@@ -532,7 +533,7 @@ const Cases = (props) => {
         console.log('Case', res.data.message);
         M.toast({ html: `${res.data.message}` })
       // setisLoading(true);
-        getAllCase()
+      getSpecificCase(currentCaseSource,currentCaseSource==='KK'?caseTable1:caseTable2)
       })
         .catch(err => console.log(err))
   }

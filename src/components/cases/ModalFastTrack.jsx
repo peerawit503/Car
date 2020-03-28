@@ -4,10 +4,12 @@ import axios from 'axios';
 import url from '../../Utility/url'
 import plus from '../../img/plus-white.png';
 import ModalAddContractInfo from './ModalAddContractInfo'
-import CurrencyFormat from 'react-currency-format';
+import ModalAddVender from './ModalAddVender'
 
+import CurrencyFormat from 'react-currency-format';
+import ModalAddDealer from './ModalAddDealer'
 /* img */
-import cartrustLogo from '../../img/cartrustLogo.svg'
+
 
 
 const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatusShift, confirm_sub, setSingleCase }) => {
@@ -17,6 +19,7 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
   const [renderDeposit, setrenderDeposit] = useState(false);
   const [rendertransfer_check, setrendertransfer_check] = useState(false);
   const [submit_book, setsubmit_book] = useState();
+  const [vender, setVender] = useState({})
   function currentDateFormat(caseDate) {
     if (caseDate == null) {
       return 0;
@@ -68,7 +71,12 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
   const [isConfirm, setisConfirm] = useState(true)
   const [date, SetDate] = useState(currentDateFormat(Date()))
 
+  useEffect(() => {
+    // getOperatorS()
+    getVender()
 
+    
+  }, []);
 
   const handleChange = e => {
     SetDate(e.target.value)
@@ -78,6 +86,21 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     SetDate(currentDateFormat(Date()))
   }
 
+  const getVender = () => {
+
+    axios.get(`${url}/dropdown?table=vendor`)
+      .then(res => {
+        console.log('9999999' , res.data.message)
+        setVender(res.data.message);
+      })
+      .catch(err => console.log(err))
+  }
+
+  
+
+  const doNotThing = () => {
+
+  }
   const handlecheckCar_1 = e => setcheckCar({ d1: true, d2: false });
   const handlecheckCar_2 = e => setcheckCar({ d1: false, d2: true });
   const handlecheckDeposit_1 = e => setcheckDeposit({ d1: true, d2: false });
@@ -124,7 +147,24 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
     }
   };
 
+  function venderOption() {
+    let result = []
+      if(Object.keys(vender).length === 0){
 
+      }else{
+for (let ven of vender) {
+        console.log(ven)
+        result.push(<option value={ven.vendor_name} ven_tel={ven.tel} ven_contact_name={ven.contact_name}>
+          {ven.vendor_name}
+        </option>)
+      }
+      }
+
+      
+    
+    
+    return result;
+  }
 
   function ValidateCase_new() {
     setrenderDeposit(false)
@@ -390,16 +430,33 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
         </div>
         <div className='col s4 m4 content' style={{ display: rendertransfer_check ? 'block' : 'none' }} >
           <label>Vender</label>
-          <input
+          {/* <input
             type="text"
             name="submit_book_transfer_check"
             value={submit_book || singleCase.submit_book_transfer_check || ""}
             onChange={handleChangeF2T}
             className="validate"
-          />
+          /> */}
+
+          <select
+          type="text"
+          value={submit_book || singleCase.submit_book_transfer_check || ""}
+          name="submit_book_transfer_check"
+          onChange={handleChangeF2T}
+          className="browser-default"
+        >
+          <option value=""  disabled>
+            Vender
+        </option>
+          {venderOption()}
+
+        </select>
+        <button className="modal-trigger" href="#modalAddVender">Add</button>
+
         </div>
       </div>
       <Renderfooter />
+      <ModalAddVender />
     </div>
 
   )
