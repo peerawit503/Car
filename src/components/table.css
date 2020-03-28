@@ -195,6 +195,9 @@ input[type=number] {
     padding-left: 0px !important;
     margin-bottom: 0px !important;
 }
+.color-red{
+    color: #ff0000 !important;
+}
 /* .Li:hover{
     background-color: #F07124 !important;
 } */

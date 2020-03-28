@@ -3,6 +3,11 @@
     height:50em!important;
     width:55em!important;
 }
+#modalAddExcel{
+    top:10em!important;
+    height:25em!important;
+    width:55em!important;
+}
 #modalCancel{
     top:20%!important;
     height:30em!important;

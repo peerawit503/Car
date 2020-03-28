@@ -8,7 +8,7 @@ import ModalAddNote from './ModalAddNote';
 import ModalSummary from './ModalSummary';
 import ModalFastTrack from './ModalFastTrack';
 import ModalDeleteCase from './ModalDeleteCase';
-
+import ModalAddExcel from './ModalAddExcel';
 import url from '../../Utility/url'
 import axios from 'axios';
 import M from 'materialize-css/dist/js/materialize.min.js'
@@ -843,16 +843,16 @@ if(
             </div>
             <div className="new-button col m4 right">
               <div className="new-button-iner col m12">
-                <a className='dropdown-trigger btn tde-g'
-                  href='#'
-                  data-target='dropdown1'
+                <a className='modal-trigger btn tde-g'
+                  href='#modalAddExcel'
+                  
                   style={{ width: '100%' }}
                 >Excel
   
               </a>
 
                 {/* <!-- Dropdown Structure --> */}
-                <ul id='dropdown1' class='dropdown-content'>
+                {/* <ul id='dropdown1' class='dropdown-content'>
                   <li><a href={`${url}/case_excel_file?parameter=team&value=adc1&date=${Date()}`} target="_blank">Team ADC1</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=team&value=adc2&date=${Date()}`} target="_blank" >Team ADC2</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=team&value=adc3&date=${Date()}`} target="_blank" >Team ADC3</a></li>
@@ -860,7 +860,7 @@ if(
                   <li><a href={`${url}/case_excel_file?parameter=team&value=ทีมใหญ่KK&date=${Date()}`} target="_blank" >ทีมใหญ่ KK</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=case_source&value=Thanachart&date=${Date()}`} target="_blank">Thanachart Bank</a></li>
                   <li><a href={`${url}/case_excel_file?parameter=all&value=all&date=${Date()}`} target="_blank">All</a></li>
-                </ul>
+                </ul> */}
               </div>
 
             </div>
@@ -953,7 +953,7 @@ if(
           <ModalSummary singleCase={singleCase} kpi={kpi} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} translate={translate} saveProcess={saveProcess}/>
           <ModalAddCase saveNewCase={saveNewCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
           <ModalDeleteCase singleCase={singleCase} deleteCase={deleteCase} getAllCase={getAllCase} />
-          
+          <ModalAddExcel />
 
 
 

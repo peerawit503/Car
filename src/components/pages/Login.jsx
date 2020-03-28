@@ -33,8 +33,8 @@ const Login = (props) => {
             // set localstate
             // const {user_id, firstname, lastname, username, position, team, picture, token} = res.data.user
             // await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token)
-            const {user_id, firstname, lastname, username, position, team, picture, token,nickname} = res.data.user
-            await props.storeUserInfo(user_id, firstname, lastname, username, position, team, picture, token,nickname)
+            const {user_id, firstname, lastname, username, position, team_id, picture, token,nickname} = res.data.user
+            await props.storeUserInfo(user_id, firstname, lastname, username, position, team_id, picture, token,nickname)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("user", res.data.user)
           }else{

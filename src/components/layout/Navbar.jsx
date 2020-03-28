@@ -13,7 +13,6 @@ const uu = localStorage.getItem('user')
 const Navbar = (props) => {
   useEffect(() => {
     M.Sidenav.init(document.querySelector('.sidenav'), {})
-
   }, [])
 
   const defaultProps = {
