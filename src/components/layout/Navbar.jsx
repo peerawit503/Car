@@ -14,6 +14,7 @@ const uu = localStorage.getItem('user')
 const Navbar = (props) => {
   const[hover , setHover] = useState(false)
   useEffect(() => {
+    
     M.Sidenav.init(document.querySelector('.sidenav'), {})
     console.log('dddd' ,props.user)
   }, [])

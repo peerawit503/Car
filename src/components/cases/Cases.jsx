@@ -81,7 +81,7 @@ const Cases = (props) => {
     getOperatorS()
   }, [])
 
-
+  
 
   const getAllCase = () => {
     setisLoading(true);
@@ -354,12 +354,13 @@ const getKpi = () => {
       {
         title:'Total Date',
         field:'total_date',
-        defaultSort:'desc'
+        defaultSort:'desc',
+        render: rowData => <div className={colorFromDate(rowData , result)}>{rowData.total_date}</div>
       },
       {
         title:'Receive Date',
         field:'receive_date',
-      render: rowData => <div>{rowData.receive_date.split(" ")[1]+' ' + rowData.receive_date.split(" ")[2] + ' ' + rowData.receive_date.split(" ")[3]}</div>
+        render: rowData => <div>{rowData.receive_date.split(" ")[1]+' ' + rowData.receive_date.split(" ")[2] + ' ' + rowData.receive_date.split(" ")[3]}</div>
       },
    
       { title: 'JOB No', field: 'job_id' },
@@ -821,7 +822,7 @@ const getKpi = () => {
 
     console.log('date to now' ,caseInRow.case_id, datetomow )
     console.log('date to now orange' , caseInRow.next_status )
-    if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed]) {
+    if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed] && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
       if (caseInRow[noteDateString] === null || caseInRow[noteDateString] === '') {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
       } else {
@@ -830,7 +831,7 @@ const getKpi = () => {
     }
 
     else if (datetomow > kpiforuse[alertRed] ) {
-      if (caseInRow[noteDateString] == null || caseInRow[noteDateString] === '') {
+      if (caseInRow[noteDateString] == null || caseInRow[noteDateString] === '' && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
       } else {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon " alt="fireSpot" /></a>);
@@ -840,6 +841,32 @@ const getKpi = () => {
 
     return result;
   }
+
+
+function colorFromDate(caseInRow , kpiforuse){
+    // console.log(caseInRow.date_update)
+   
+    let statusDateString = caseInRow.status + '_date';
+    let datetomow = dateToNow(caseInRow[statusDateString]);
+    // console.log('case Id', caseInRow.case_id)
+   
+    let alertRed = caseInRow.next_status + "_red";
+    let alertOrange = caseInRow.next_status + "_orange";
+
+    console.log('date to now' ,caseInRow.case_id, datetomow )
+    console.log('date to now orange' , caseInRow.next_status )
+    if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed] && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
+      return 'color-yellow'
+    }
+
+    else if (datetomow > kpiforuse[alertRed]  && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
+     return 'color-red'
+    }
+  }
+
+    
+
+  
   function tabPanel(){
     let result = [];
     if(!param){

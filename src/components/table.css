@@ -198,6 +198,9 @@ input[type=number] {
 .color-red{
     color: #ff0000 !important;
 }
+.color-yellow{
+    color: #ffeb3b !important;
+}
 /* .Li:hover{
     background-color: #F07124 !important;
 } */
