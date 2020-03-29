@@ -62,83 +62,12 @@ const Cases = (props) => {
 
 
 
-  let columnObject = useState([
-    {
-      title: '',
-      render: rowData => <div style={{ width: 10, borderRadius: '50%' }}>{displayStarRating(rowData)}</div>,
-      cellstyle: {
-        width: 50
-      }
-    },
-    {
-      title:'Total Date',
-      field:'total_date',
-      defaultSort:'desc'
-    },
-    {
-      title:'Receive Date',
-      field:'receive_date',
-    render: rowData => <div>{rowData.receive_date.split(" ")[1]+' ' + rowData.receive_date.split(" ")[2] + ' ' + rowData.receive_date.split(" ")[3]}</div>
-    },
- 
-    { title: 'JOB No', field: 'job_id' },
-    {
-      title: 'Customers Name',
-      field: 'name',
-      render: rowData => <div className="customer-name-col">{rowData.name}</div>
-    },
-    { title: 'Car License', field: 'car_license' },
-    {
-      title: 'Case Status', field: 'next_status',
-      lookup: {
-        'receive': 'รอรับเคส',
-        'contact_customer': 'รอติดต่อลูกค้า',
-        'account_closing': 'รอปิดเล่ม',
-        'transfer_doc_submitted': 'รอยื่นชุดโอน',
-        'book_received': 'รอได้รับเล่ม',
-        'submit_book_transfer': 'รอส่งงานโอนทะเบียน',
-        'car_check_up': 'รอตรวจสภาพรถ',
-        'book_transfer': 'รอโอนเล่มทะเบียน',
-        'book_copy_received': 'รอรับสำเนาเล่ม',
-        'deposit_doc_to_new_bank': 'รอส่งเอกสารเบิกเงินธนาคารใหม่',
-        'cash_received': 'รอเงินเข้าบัญชีคาร์ทรัส',
-        'book_received_back': 'รอรับเล่มคืน',
-        'submit_book_to_new_finance': 'รอส่งเล่มให้ไฟแนนซ์ใหม่',
-        'submit_book_deposit_return': 'รอทำเรื่องเบิกมัดจำคืน',
-        'book_deposit_received': 'รอเงินมัดจำคืนเข้าบัญชี',
-        'complete':'เสร็จสิ้น'
-      },
-      //  defaultGroupOrder: 0,
-      sorting: false
-    },
-    {
-      title: 'Last Update',
-      field: 'status_date',
-      render: rowData => <div>{statusDate(rowData)}</div>
-    },
-    { title: 'Case receiver', field: 'case_receiver' },
-    {
-      title: 'Case Soure', field: 'case_source',
-      lookup: {
-        'Kiatnakin': 'Kiatnakin',
-        'Thanachart': 'Thanachart',
-        'Cartrust': 'Cartrust',
-        'Dealer': 'Dealer'
-      },
-    },
-    {
-      title: '',
-      render: rowData =>
-        <div className="menu-icon">
-          <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-          {alertCheck(rowData)}
-        </div>
-    }
+  const [columnObject , setColumnObject] = useState([
   ]);
 
 
   useEffect(() => {
-    
+    getKpi()
     M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
       coverTrigger: false,
       autoTrigger: true,
@@ -148,7 +77,7 @@ const Cases = (props) => {
     M.Modal.init(document.querySelectorAll('#ModalDeleteCase'), {})
     M.FormSelect.init(document.querySelectorAll('select'), {});
     getAllCase()
-    getKpi()
+   
     getOperatorS()
   }, [])
 
@@ -390,11 +319,18 @@ const Cases = (props) => {
 
     console.log(casesource , " : " , group)
   }
+const getKpi = () => {
+    axios.get(`${url}/date`)
+      .then(res => {
+        setKpiForUse(res.data.message);
 
+      })
+      .catch(err => console.log(err))
+  }
   
   const setKpiForUse = (kpiData) => {
 
-    var result = new Object();
+    var result = [];
     var red;
     var orange;
     for (var x of kpiData) {
@@ -406,18 +342,83 @@ const Cases = (props) => {
       result[orange] = x.orange;
 
     }
-
+    console.log('KPI' , result)
+    setColumnObject([
+      {
+        title: '',
+        render: rowData => <div style={{ width: 10, borderRadius: '50%' }}>{displayStarRating(rowData , result)}</div>,
+        cellstyle: {
+          width: 50
+        }
+      },
+      {
+        title:'Total Date',
+        field:'total_date',
+        defaultSort:'desc'
+      },
+      {
+        title:'Receive Date',
+        field:'receive_date',
+      render: rowData => <div>{rowData.receive_date.split(" ")[1]+' ' + rowData.receive_date.split(" ")[2] + ' ' + rowData.receive_date.split(" ")[3]}</div>
+      },
+   
+      { title: 'JOB No', field: 'job_id' },
+      {
+        title: 'Customers Name',
+        field: 'name',
+        render: rowData => <div className="customer-name-col">{rowData.name}</div>
+      },
+      { title: 'Car License', field: 'car_license' },
+      {
+        title: 'Case Status', field: 'next_status',
+        lookup: {
+          'receive': 'รอรับเคส',
+          'contact_customer': 'รอติดต่อลูกค้า',
+          'account_closing': 'รอปิดเล่ม',
+          'transfer_doc_submitted': 'รอยื่นชุดโอน',
+          'book_received': 'รอได้รับเล่ม',
+          'submit_book_transfer': 'รอส่งงานโอนทะเบียน',
+          'car_check_up': 'รอตรวจสภาพรถ',
+          'book_transfer': 'รอโอนเล่มทะเบียน',
+          'book_copy_received': 'รอรับสำเนาเล่ม',
+          'deposit_doc_to_new_bank': 'รอส่งเอกสารเบิกเงินธนาคารใหม่',
+          'cash_received': 'รอเงินเข้าบัญชีคาร์ทรัส',
+          'book_received_back': 'รอรับเล่มคืน',
+          'submit_book_to_new_finance': 'รอส่งเล่มให้ไฟแนนซ์ใหม่',
+          'submit_book_deposit_return': 'รอทำเรื่องเบิกมัดจำคืน',
+          'book_deposit_received': 'รอเงินมัดจำคืนเข้าบัญชี',
+          'complete':'เสร็จสิ้น'
+        },
+        //  defaultGroupOrder: 0,
+        sorting: false
+      },
+      {
+        title: 'Last Update',
+        field: 'status_date',
+        render: rowData => <div>{statusDate(rowData)}</div>
+      },
+      { title: 'Case receiver', field: 'case_receiver' },
+      {
+        title: 'Case Soure', field: 'case_source',
+        lookup: {
+          'Kiatnakin': 'Kiatnakin',
+          'Thanachart': 'Thanachart',
+          'Cartrust': 'Cartrust',
+          'Dealer': 'Dealer'
+        },
+      },
+      {
+        title: '',
+        render: rowData =>
+          <div className="menu-icon">
+            <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
+            {alertCheck(rowData)}
+          </div>
+      }])
     setKpi(result);
 
   }
-  const getKpi = () => {
-    axios.get(`${url}/date`)
-      .then(res => {
-        setKpiForUse(res.data.message);
-
-      })
-      .catch(err => console.log(err))
-  }
+  
 
   // const getCaseLimit = () => {
   //   axios.get(`${url}/case_limit?size=${limitPage}&page=${currPage}`)
@@ -559,7 +560,7 @@ const Cases = (props) => {
 
   const saveNote = (newNote, singleCase) => {
     // setNewNote({note : newNote.note, tracking: singleCase.status , user_id : 'mock'})
-    var data = JSON.stringify({ note_status: newNote.note, tracking: caseStatusShift(singleCase.status), user_id: 'mock' });
+    var data = JSON.stringify({ note_status: newNote.note, tracking: singleCase.next_status, user_id: 'mock' });
     console.log('###### data ########');
     console.log(data);
     axios.post(`${url}/note?case_id=${singleCase.case_id}`, data, {
@@ -570,7 +571,7 @@ const Cases = (props) => {
       console.log('#####  RES  ######');
       console.log('Case', res.data.message);
  
-      getAllCase()
+      getSpecificCase(currentCaseSource,currentCaseSource==='KK'?caseTable1:caseTable2)
     })
       .catch(err => console.log(err))
   }
@@ -808,27 +809,28 @@ const Cases = (props) => {
 
   }
 
-  function displayStarRating(caseInRow) {
+  function displayStarRating(caseInRow , kpiforuse) {
     // console.log(caseInRow.date_update)
     let result = [];
     let statusDateString = caseInRow.status + '_date';
     let datetomow = dateToNow(caseInRow[statusDateString]);
     // console.log('case Id', caseInRow.case_id)
-    let noteDateString = caseInRow.status + "_note";
-    let alertRed = caseInRow.status + "_red";
-    let alertOrange = caseInRow.status + "_orange";
+    let noteDateString = caseInRow.next_status + "_note";
+    let alertRed = caseInRow.next_status + "_red";
+    let alertOrange = caseInRow.next_status + "_orange";
 
-
-    if (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
-      if (caseInRow[noteDateString] == null) {
+    console.log('date to now' ,caseInRow.case_id, datetomow )
+    console.log('date to now orange' , caseInRow.next_status )
+    if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed]) {
+      if (caseInRow[noteDateString] === null || caseInRow[noteDateString] === '') {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
       } else {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon" alt="fireSpot" /></a>);
       }
     }
 
-    else if (datetomow >= kpi[alertRed] && caseInRow.status !== 'submit_book_to_new_finance') {
-      if (caseInRow[noteDateString] == null) {
+    else if (datetomow > kpiforuse[alertRed] ) {
+      if (caseInRow[noteDateString] == null || caseInRow[noteDateString] === '') {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
       } else {
         result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon " alt="fireSpot" /></a>);
@@ -1017,7 +1019,7 @@ if(
             <br />
             <MaterialTable
               title="Case"
-              columns={columnObject[0]}
+              columns={columnObject}
               isLoading={isLoading}
               data={cases}
               options={{

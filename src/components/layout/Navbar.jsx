@@ -8,9 +8,11 @@ import ActionUser from "../../actions/actionUser";
 import Box from '@material-ui/core/Box';
 
 import './style.css';
+import { useState } from 'react';
 const uu = localStorage.getItem('user')
 
 const Navbar = (props) => {
+  const[hover , setHover] = useState(false)
   useEffect(() => {
     M.Sidenav.init(document.querySelector('.sidenav'), {})
     console.log('dddd' ,props.user)
@@ -24,8 +26,17 @@ const Navbar = (props) => {
     
   };
 
-  
-
+  const over =()=>{
+    setHover(true)
+  }
+  const  unover =()=>{
+    setHover(false)
+  }
+  function genMenu(){
+    if(hover){
+      return(<li className="Li" ><Link className="white-text" to="/cases"><i className="material-icons white-text">work</i>My Cases</Link></li>)
+    }
+  }
   if (!props.user.isLogin)
     return <Redirect to='/' />;
   return (
@@ -56,8 +67,15 @@ const Navbar = (props) => {
         <li className="Li"><Link className="white-text" to="/dashboard"><i className="material-icons white-text">dashboard</i>Dashboard</Link></li>
         <li className="Li"><Link className="white-text" to="/users"><i className="material-icons white-text">assignment_ind</i>Account</Link></li>
         <li className="Li"><Link className="white-text" to="/customers"><i className="material-icons white-text">face</i>Customers</Link></li>
-
-        <li className="Li"><Link className="white-text" to="/cases"><i className="material-icons white-text">work</i>Cases</Link></li>
+        
+        <div  onMouseOver={ () => over() } onMouseOut={() =>unover()}>
+        <li className="Li"><Link className="white-text"><i className="material-icons white-text">work</i>Case</Link></li>
+        <li className={hover ?'Li':'hidden Li'} ><Link className="white-text subpadding" to="/cases"><i className="material-icons white-text">work</i>All Case</Link></li>
+        <li className={hover && (props.user.team_id===1 || props.user.team_id==='admin') ?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/CS"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        <li className={hover && (props.user.team_id===2 || props.user.team_id==='admin')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/TF"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        <li className={hover && (props.user.team_id===3 || props.user.team_id==='admin')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/FT"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        </div>
+        
         <li className="Li"><Link className="white-text" to="/executives"><i className="material-icons white-text">supervisor_account</i>Executive</Link></li>
         <li className="Li"><Link className="white-text" to="/"><i className="material-icons white-text">exit_to_app</i>Logout</Link></li>
       </ul>

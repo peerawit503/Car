@@ -16,4 +16,9 @@
     top:auto !important ;
     height: 100% !important;
 }
-
+.hidden{
+    visibility: hidden;
+}
+.subpadding{
+    padding-left: 55px !important;
+}
