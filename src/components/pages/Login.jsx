@@ -122,7 +122,7 @@ const mapDispatchToProps = dispatch => ({
     lastName,
     username,
     position,
-    team,
+    team_id,
     picture,
     token
     ,nickname
@@ -134,7 +134,7 @@ const mapDispatchToProps = dispatch => ({
       lastName: lastName,
       username: username,
       position: position,
-      team: team,
+      team_id: team_id,
       picture: picture,
       token: token
       ,nickname: nickname

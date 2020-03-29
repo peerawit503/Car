@@ -152,8 +152,8 @@ const ModalFastTrack = ({ singleCase, confirm, translate, statusDate, caseStatus
       if(Object.keys(vender).length === 0){
 
       }else{
-for (let ven of vender) {
-        console.log(ven)
+      for (let ven of vender) {
+        
         result.push(<option value={ven.vendor_name} ven_tel={ven.tel} ven_contact_name={ven.contact_name}>
           {ven.vendor_name}
         </option>)

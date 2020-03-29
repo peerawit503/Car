@@ -76,7 +76,7 @@ const mapDispatchToProps = dispatch => ({
     lastName,
     username,
     position,
-    team,
+    team_id,
     picture,
     token
   ) => {
@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
       lastName: lastName,
       username: username,
       position: position,
-      team: team,
+      team_id: team_id,
       picture: picture,
       token: token
     });

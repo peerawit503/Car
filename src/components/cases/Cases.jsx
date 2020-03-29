@@ -490,7 +490,7 @@ const Cases = (props) => {
     
 
   const confirm = (singleCase,date,checkCar) => {
-    console.log("deposit"+singleCase.f2_deposit_12);
+    //console.log("deposit"+singleCase.f2_deposit_12);
     
     if(singleCase.status === 'contact_customer' ||singleCase.status === 'deposit_doc_to_new_bank'||singleCase.status ==='submit_book_to_new_finance'  || singleCase.status === 'cash_received'){ // status contack_customer send tracking = account_closing and deposit_12
       var data = JSON.stringify({ tracking: caseStatusShift(singleCase.status), user_id: props.user.id ,date:date , deposit_12:singleCase.f2_deposit_12});
