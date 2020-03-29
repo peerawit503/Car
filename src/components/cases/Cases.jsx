@@ -81,7 +81,7 @@ const Cases = (props) => {
     getOperatorS()
   }, [])
 
-  
+
 
   const getAllCase = () => {
     setisLoading(true);
@@ -413,7 +413,7 @@ const getKpi = () => {
         render: rowData =>
           <div className="menu-icon">
             <a href="#modalSummary" className="modal-trigger" onClick={() => handleSingleCase(rowData)}> <img src={sumary} className="png-icon" alt="sumary-icon" /></a>
-            {alertCheck(rowData)}
+            {alertCheck(rowData , result)}
           </div>
       }])
     setKpi(result);
@@ -904,31 +904,36 @@ function colorFromDate(caseInRow , kpiforuse){
     }
     return result;
   }
-  function alertCheck(caseInRow) {
+  function alertCheck(caseInRow , kpiforuse) {
 
 
     let statusDateString = caseInRow.status + '_date';
     let datetomow = dateToNow(caseInRow[statusDateString]);
 
-    let noteDateString = caseInRow.status + "_note";
-    let alertRed = caseInRow.status + "_red";
-    let alertOrange = caseInRow.status + "_orange";
+    let noteDateString = caseInRow.next_status + "_note";
+    let alertRed = caseInRow.next_status + "_red";
+    let alertOrange = caseInRow.next_status + "_orange";
 
-if(
-  (caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 === 0) || //in case 16 และ ไม่มีมัดจำ
-    (caseInRow.status === 'book_deposit_received' && caseInRow.f2_deposit_12 > 0) || //in case 15 และ มีมัดจำ
-    ((caseInRow.status === 'cash_received' && caseInRow.f2_deposit_12 === 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer'))||// in case p14ไม่มีมัดจำ และ ct/dl
+// if(
+//   ((caseInRow.status === 'submit_book_to_new_finance' && caseInRow.f2_deposit_12 === 0) || //in case 16 และ ไม่มีมัดจำ
+//     (caseInRow.status === 'book_deposit_received' && caseInRow.f2_deposit_12 > 0) || //in case 15 และ มีมัดจำ
+//     ((caseInRow.status === 'cash_received' && caseInRow.f2_deposit_12 === 0) && (caseInRow.case_source ==='Cartrust' || caseInRow.case_source ==='Dealer')))||// in case p14ไม่มีมัดจำ และ ct/dl
 
-    (datetomow >= kpi[alertOrange] && datetomow < kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
-      (datetomow >= kpi[alertRed] && caseInRow[noteDateString] == null) ||//check alert
-      caseInRow.process === 'cancel' ){ //check alert
-      console.log("f2_deposit_12:"+caseInRow.f2_deposit_12);
+//     ((datetomow > kpiforuse[alertOrange]  && (caseInRow[noteDateString] === null || caseInRow[noteDateString] ===''))  ||//check alert
+//       caseInRow.process === 'cancel' || caseInRow.next_status==='complete' )){ //check alert
+//       console.log("f2_deposit_12:"+caseInRow.f2_deposit_12);
       
-      return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
-    }
-    else {
-      return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
-    }
+//       return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
+//     }
+//     else {
+//       return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
+//     }
+
+  if( (datetomow > kpiforuse[alertOrange]  && (caseInRow[noteDateString] === null || caseInRow[noteDateString] ==='')) ||caseInRow.process === 'complete'|| caseInRow.process === 'cancel' || caseInRow.next_status==='complete'){
+    return (<a disabled ><img src={confirmIconDisable} className="png-icon" alt="confirm-icon" /></a>);
+  }else{
+    return (<a href="#modalFastTrack" className="modal-trigger" onClick={() => handleSingleCase(caseInRow)}><img src={confirmIcon} className="png-icon" alt="confirm-icon" /></a>);
+  }
 
 
   }
