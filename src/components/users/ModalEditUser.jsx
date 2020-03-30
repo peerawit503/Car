@@ -18,7 +18,6 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
     position: "",
     address: "",
     picture: "",
-    attribute:"",
     type:"",
     line:"",
     nickname:""
@@ -76,7 +75,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
 
   const editUs = () => {
    
-    var data2 = {...user2 , role_1 : rol1 ,role_2 : rol2 ,role_3 : rol3 , type:'SE' }
+    var data2 = {...user2 }
     console.log(data2)
      axios.put(`${url}/edit_user?user_id=${edituser.user_id}`, data2)
       .then(res => {
@@ -224,7 +223,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                 >
                   <option value="DEFAULT" disabled>Choose your Team</option>
                   {listTeam1.map(t =>
-                    (<option key={`${t.id}${t.team_id}`} value={t.id}>{t.team_name}</option>)
+                    (<option key={`${t.id}${t.team_id}`} value={t.team_id}>{t.team_name}</option>)
                   )}
 
                 </select>

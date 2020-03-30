@@ -238,7 +238,7 @@ const ModalCreate = ({ addUser }) => {
                 >
                   <option value="DEFAULT" disabled>Choose your Team / เลือกทีม</option>
                   {listTeam1.map(t =>
-                    (<option key={`${t.id}${t.team_id}`} value={t.id}>{t.team_name}</option>)
+                    (<option key={`${t.id}${t.team_id}`} value={t.team_id}>{t.team_name}</option>)
                   )}
 
                 </select>

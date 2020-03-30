@@ -72,9 +72,9 @@ const Navbar = (props) => {
         <div  onMouseOver={ () => over() } onMouseOut={() =>unover()}>
         <li className="Li"><Link className="white-text"><i className="material-icons white-text">work</i>Case</Link></li>
         <li className={hover ?'Li':'hidden Li'} ><Link className="white-text subpadding" to="/cases"><i className="material-icons white-text">work</i>All Case</Link></li>
-        <li className={hover && (props.user.team_id===1 || props.user.team_id==='admin') ?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/CS"><i className="material-icons white-text">work</i>My Cases</Link></li>
-        <li className={hover && (props.user.team_id===2 || props.user.team_id==='admin')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/TF"><i className="material-icons white-text">work</i>My Cases</Link></li>
-        <li className={hover && (props.user.team_id===3 || props.user.team_id==='admin')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/FT"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        <li className={hover && (props.user.team_id==='T20-000002'|| props.user.team_id==='T20-000001') ?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/CS"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        <li className={hover && (props.user.team_id==='T20-000003' || props.user.team_id==='T20-000001')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/TF"><i className="material-icons white-text">work</i>My Cases</Link></li>
+        <li className={hover && (props.user.team_id==='T20-000004' || props.user.team_id==='T20-000001')?'Li':'hidden Li'}  ><Link className="white-text subpadding" to="/cases/FT"><i className="material-icons white-text">work</i>My Cases</Link></li>
         </div>
         
         <li className="Li"><Link className="white-text" to="/executives"><i className="material-icons white-text">supervisor_account</i>Executive</Link></li>
