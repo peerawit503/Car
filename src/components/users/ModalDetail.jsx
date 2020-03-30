@@ -81,15 +81,15 @@ const ModalDetail = ({ user }) => {
             />
           </div>
 
-          {/* <div className="col s6 m6 l6 content-radonly">
-            <label htmlFor="name">Last name</label>
+          <div className="col s6 m6 l6 content-radonly">
+            <label htmlFor="name">Nickname</label>
             <input
               type="text"
               name="nickname"
               value={user.nickname}
              
             />
-          </div> */}
+          </div>
 
           <div className="col s6 m6 l6 content-radonly">
             <label htmlFor="Email">Email</label>

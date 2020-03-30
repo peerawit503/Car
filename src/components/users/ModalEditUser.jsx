@@ -21,6 +21,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
     attribute:"",
     type:"",
     line:"",
+    nickname:""
     
   })
   const [listTeam1, setListTeam1] = useState([])
@@ -53,6 +54,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
       attribute:edituser.attribute ? edituser.attribute:"",
       type:edituser.type?edituser.type:"",
       line:edituser.line?edituser.line:"",
+      nickname:edituser.nickname?edituser.nickname:""
     })
   }, [edituser])
 
@@ -128,6 +130,16 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
               </div>
 
               <div className="col s6 m4 l4 content">
+                <label htmlFor="name">NickName</label>
+                <input
+                  type="text"
+                  name="nickname"
+                  value={user2.nickname}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className="col s6 m4 l4 content">
                 <label htmlFor="Email">Email</label>
                 <input
                   type="email"
@@ -190,7 +202,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                 />
               </div>
 
-              <div className="col s6 m4 l4 content">
+              {/* <div className="col s6 m4 l4 content">
                 <label htmlFor="Address">Attr</label>
                 <input
                   type="text"
@@ -198,7 +210,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                   value={user2.attribute}
                   onChange={onChange}
                 />
-              </div>
+              </div> */}
 
               <div className="col s6 m4 l4 content">
                 <label htmlFor="Phone">Team</label>
@@ -223,7 +235,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                 <input type="file" name="picture" onChange={onChangeFile} />
               </div>
 
-              <div className="col s12 m12  head-section no-col-padding">
+              {/* <div className="col s12 m12  head-section no-col-padding">
                 <h5>กําหนดสิทธิ์ผู้ใช้</h5>
               </div>
 
@@ -380,7 +392,7 @@ const ModalEdit = ({ edituser, getAllUsers}) => {
                     </label>
                   </span>
                 </div>
-              </div>
+              </div> */}
 
 
 

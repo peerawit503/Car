@@ -216,7 +216,7 @@ const ModalCreate = ({ addUser }) => {
                 />
               </div>
 
-              <div className="col s6 m4 l4 content">
+              {/* <div className="col s6 m4 l4 content">
                 <label htmlFor="Address">Attr </label>
                 <input
                   type="text"
@@ -224,7 +224,7 @@ const ModalCreate = ({ addUser }) => {
                   value={user.attribute}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
 
               <div className="col s6 m4 l4 content">
                 <label htmlFor="Phone">Team / ทีม</label>
@@ -249,7 +249,7 @@ const ModalCreate = ({ addUser }) => {
                 <input type="file" name="file" onChange={handleChangeFile} />
               </div>
 
-              <div className="col s12 m12  head-section no-col-padding">
+              {/* <div className="col s12 m12  head-section no-col-padding">
                 <h5>กําหนดสิทธิ์ผู้ใช้</h5>
               </div>
 
@@ -406,7 +406,7 @@ const ModalCreate = ({ addUser }) => {
                     </label>
                   </span>
                 </div>
-              </div>
+              </div> */}
 
 
 

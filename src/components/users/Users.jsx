@@ -75,12 +75,13 @@ const Users = () => {
       address: u.address,
       username: u.username,
       password: u.password,
-      role_1: u.role_1,
-      role_2: u.role_2,
-      role_3: u.role_3,
+      // role_1: u.role_1,
+      // role_2: u.role_2,
+      // role_3: u.role_3,
       type: u.type,
       line:u.line,
-      attribute: u.attribute
+      // attribute: u.attribute
+      nickname:u.nickname
     }
 
     console.log(JSON.stringify(body));
