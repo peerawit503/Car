@@ -242,6 +242,45 @@ const Cases = (props) => {
 
   const getCartrustCase = (casesource) => {
     setisLoading(true);
+    if(param){
+      if(param === 'CS'){
+        axios.get(`${url}/case_1_3?case_source=Cartrust`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'TF'){
+        axios.get(`${url}/case_4_14?case_source=Cartrust`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'FT'){
+        axios.get(`${url}/case_15_16?case_source=Cartrust`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }else{
+        setCases({});
+        setTotalCase(0);
+        setisLoading(false);
+      }
+    }else{
     axios.get(`${url}/case_cartrust`)
       .then(res => {
         setCases(res.data.message);
@@ -251,11 +290,52 @@ const Cases = (props) => {
         // console.log('Case' , res.data.message);
       })
       .catch(err => console.log(err))
-
+    }
 
   }
 
   const getDealerCase = (casesource) => {
+
+    if(param){
+      if(param === 'CS'){
+        axios.get(`${url}/case_1_3?case_source=Dealer`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'TF'){
+        axios.get(`${url}/case_4_14?case_source=Dealer`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }
+      else if(param === 'FT'){
+        axios.get(`${url}/case_15_16?case_source=Dealer`)
+      .then(res => {
+        setCases(res.data.message);
+        setTotalCase(res.data.message.length);
+        setisLoading(false);
+        // console.log("in getAllCase")
+        // console.log('Case' , res.data.message);
+      })
+      .catch(err => console.log(err))
+      }else{
+        setCases({});
+        setTotalCase(0);
+        setisLoading(false);
+      }
+    }else{
+
     setisLoading(true);
     axios.get(`${url}/case_dealer`)
       .then(res => {
@@ -267,7 +347,7 @@ const Cases = (props) => {
       })
       .catch(err => console.log(err))
 
-
+    }
   }
 
   const getSpecificCase = (casesource , group) =>{
@@ -277,34 +357,44 @@ const Cases = (props) => {
       getAllCase()
     }
     else if (casesource === 'KK'){
-     setCaseTable1(group)
-     if(group === 0){
+     if(param){
       getAllCaseWithCaseSource("Kiatnakin")
-     }
-     else if ( group === 1){
-       getKKCase_1_5("Kiatnakin")
-     }
-     else if (group === 2){
-       getKKCase_6_9("Kiatnakin")
-     }
-     else if (group === 3){
-       getKKCase_10_16("Kiatnakin")
-     }
-    }
-    else if (casesource === 'TB'){
-      setCaseTable2(group)
+     }else{
+      setCaseTable1(group)
       if(group === 0){
-        getAllCaseWithCaseSource("Thanachart")
+       getAllCaseWithCaseSource("Kiatnakin")
       }
       else if ( group === 1){
-        getKKCase_1_5("Thanachart")
+        getKKCase_1_5("Kiatnakin")
       }
       else if (group === 2){
-        getKKCase_6_9("Thanachart")
+        getKKCase_6_9("Kiatnakin")
       }
       else if (group === 3){
-        getKKCase_10_16("Thanachart")
+        getKKCase_10_16("Kiatnakin")
       }
+     }
+     
+    }
+    else if (casesource === 'TB'){
+      if(param){
+        getAllCaseWithCaseSource("Thanachart")
+      }else{
+        setCaseTable2(group)
+        if(group === 0){
+          getAllCaseWithCaseSource("Thanachart")
+        }
+        else if ( group === 1){
+          getKKCase_1_5("Thanachart")
+        }
+        else if (group === 2){
+          getKKCase_6_9("Thanachart")
+        }
+        else if (group === 3){
+          getKKCase_10_16("Thanachart")
+        }
+      }
+      
      }
 
     if (casesource === 'CT'){
