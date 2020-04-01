@@ -76,7 +76,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
       case_id : singleCase.case_id,
       date:date,
       tracking:currentProcess.process,
-      note:note
+      note:note || ""
     }
 
     saveProcess(data)

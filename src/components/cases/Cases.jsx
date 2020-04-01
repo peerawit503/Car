@@ -910,23 +910,26 @@ const getKpi = () => {
     let alertRed = caseInRow.next_status + "_red";
     let alertOrange = caseInRow.next_status + "_orange";
 
-    console.log('date to now' ,caseInRow.case_id, datetomow )
-    console.log('date to now orange' , caseInRow.next_status )
-    if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed] && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
-      if (caseInRow[noteDateString] === null || caseInRow[noteDateString] === '') {
-        result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
-      } else {
-        result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon" alt="fireSpot" /></a>);
+    // console.log('date to now' ,caseInRow.case_id, datetomow )
+    // console.log('date to now orange' , caseInRow.next_status )
+    if(caseInRow.next_status !== 'complete' && caseInRow.process ==='process'){
+      if (datetomow > kpiforuse[alertOrange] && datetomow <= kpiforuse[alertRed]) {
+        if (caseInRow[noteDateString] === null || caseInRow[noteDateString] === '') {
+          result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon blink-image" alt="fireSpot" /></a>);
+        } else {
+          result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)} ><img src={alertYellow} className="alert-icon" alt="fireSpot" /></a>);
+        }
+      }
+  
+      else if (datetomow > kpiforuse[alertRed] ) {
+        if ((caseInRow[noteDateString] == null || caseInRow[noteDateString] === '') ) {
+          result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
+        } else {
+          result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon " alt="fireSpot" /></a>);
+        }
       }
     }
-
-    else if (datetomow > kpiforuse[alertRed] ) {
-      if (caseInRow[noteDateString] == null || caseInRow[noteDateString] === '' && caseInRow.next_status !== 'complete' && caseInRow.process ==='process') {
-        result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon blink-image" alt="fireSpot" /></a>);
-      } else {
-        result.push(<a className="modal-trigger" href="#modalAddNote" onClick={() => handleSingleCase(caseInRow)}><img src={alert} className="alert-icon " alt="fireSpot" /></a>);
-      }
-    }
+    
 
 
     return result;
