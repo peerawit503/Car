@@ -136,10 +136,14 @@ td .png-icon{
 .no-col-margin{
     margin-bottom: 0px !important;
 }
-.content input, .content select{
+.content input, .content select {
     border: 1px solid #0000006b !important;
     background-color: #FFFFFF !important;
     height:2rem !important;
+}
+.content textarea{
+    border: 1px solid #0000006b !important;
+    background-color: #FFFFFF !important;
 }
 
 .contentred input{

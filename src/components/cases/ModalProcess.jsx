@@ -11,9 +11,12 @@ import url from '../../Utility/url'
 const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
 
    const [date, setDate] = useState()
-
+  const[note , setNote] = useState()
   const handleChange = (e) => {
     setDate( e.target.value )
+  }
+  const handleChangeNote = (e) =>{
+    setNote(e.target.value)
   }
  
 
@@ -72,7 +75,8 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
     let data = {
       case_id : singleCase.case_id,
       date:date,
-      tracking:currentProcess.process
+      tracking:currentProcess.process,
+      note:note
     }
 
     saveProcess(data)
@@ -106,7 +110,7 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
                 Process Recorder / ชื่อผู้ดำเนินการ
                 <input
                 thousandSeparator={true}
-                value={currentProcess.processTracker}
+                value={currentProcess.processTracker || "ข้อมูลผิดพลาด"}
                 name="approve_amount"
                 suffix =" บาท"
                 readOnly />
@@ -126,6 +130,18 @@ const ModalProcess = ({ currentProcess ,saveProcess , singleCase}) => {
                   onChange={handleChange}
                 />
              
+             </div>
+
+             <div className="col m12 content">
+            
+              Note / โน๊ต
+                <textarea
+                thousandSeparator={true}
+                value={note}
+                name="note"
+                onChange={handleChangeNote}
+                 />
+              
              </div>
 
             </div>
