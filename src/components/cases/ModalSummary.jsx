@@ -1365,7 +1365,7 @@ const ModalSummary = ({ singleCase , kpi , getAllCase , operatorS , getOperatorS
         </div>
       </div>
       <ModalAddF2 singleCase={singleCase} getAllCase={getAllCase} operatorS={operatorS} getOperatorS={getOperatorS} />
-      <ModalCancel singleCase={singleCase} />
+      <ModalCancel singleCase={singleCase} getAllCase={getAllCase} />
       <ModalAddContract singleCase={singleCase} />
       <ModalImage singleCase={singleCase} />
       <ModalProcess  currentProcess = {currentProcess} saveProcess={saveProcess} singleCase={singleCase}/>
